@@ -1,1 +1,1 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Novella.dir/link.d CMakeFiles/Novella.dir/main.cpp.o CMakeFiles/Novella.dir/src/Window.cpp.o -o Novella  /usr/lib/libraylib.so.6.0.0 -lm
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Novella.dir/link.d CMakeFiles/Novella.dir/main.cpp.o CMakeFiles/Novella.dir/src/Window.cpp.o CMakeFiles/Novella.dir/src/Font.cpp.o CMakeFiles/Novella.dir/src/Image.cpp.o CMakeFiles/Novella.dir/src/Texture.cpp.o -o Novella  /usr/lib/libraylib.so.6.0.0 -lm

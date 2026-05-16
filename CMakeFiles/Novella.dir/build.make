@@ -100,21 +100,69 @@ CMakeFiles/Novella.dir/src/Window.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Novella.dir/src/Window.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/line/projects/Novel/src/Window.cpp -o CMakeFiles/Novella.dir/src/Window.cpp.s
 
+CMakeFiles/Novella.dir/src/Font.cpp.o: CMakeFiles/Novella.dir/flags.make
+CMakeFiles/Novella.dir/src/Font.cpp.o: /home/line/projects/Novel/src/Font.cpp
+CMakeFiles/Novella.dir/src/Font.cpp.o: CMakeFiles/Novella.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/line/projects/Novel/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Novella.dir/src/Font.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Novella.dir/src/Font.cpp.o -MF CMakeFiles/Novella.dir/src/Font.cpp.o.d -o CMakeFiles/Novella.dir/src/Font.cpp.o -c /home/line/projects/Novel/src/Font.cpp
+
+CMakeFiles/Novella.dir/src/Font.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Novella.dir/src/Font.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/line/projects/Novel/src/Font.cpp > CMakeFiles/Novella.dir/src/Font.cpp.i
+
+CMakeFiles/Novella.dir/src/Font.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Novella.dir/src/Font.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/line/projects/Novel/src/Font.cpp -o CMakeFiles/Novella.dir/src/Font.cpp.s
+
+CMakeFiles/Novella.dir/src/Image.cpp.o: CMakeFiles/Novella.dir/flags.make
+CMakeFiles/Novella.dir/src/Image.cpp.o: /home/line/projects/Novel/src/Image.cpp
+CMakeFiles/Novella.dir/src/Image.cpp.o: CMakeFiles/Novella.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/line/projects/Novel/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Novella.dir/src/Image.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Novella.dir/src/Image.cpp.o -MF CMakeFiles/Novella.dir/src/Image.cpp.o.d -o CMakeFiles/Novella.dir/src/Image.cpp.o -c /home/line/projects/Novel/src/Image.cpp
+
+CMakeFiles/Novella.dir/src/Image.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Novella.dir/src/Image.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/line/projects/Novel/src/Image.cpp > CMakeFiles/Novella.dir/src/Image.cpp.i
+
+CMakeFiles/Novella.dir/src/Image.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Novella.dir/src/Image.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/line/projects/Novel/src/Image.cpp -o CMakeFiles/Novella.dir/src/Image.cpp.s
+
+CMakeFiles/Novella.dir/src/Texture.cpp.o: CMakeFiles/Novella.dir/flags.make
+CMakeFiles/Novella.dir/src/Texture.cpp.o: /home/line/projects/Novel/src/Texture.cpp
+CMakeFiles/Novella.dir/src/Texture.cpp.o: CMakeFiles/Novella.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/line/projects/Novel/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Novella.dir/src/Texture.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Novella.dir/src/Texture.cpp.o -MF CMakeFiles/Novella.dir/src/Texture.cpp.o.d -o CMakeFiles/Novella.dir/src/Texture.cpp.o -c /home/line/projects/Novel/src/Texture.cpp
+
+CMakeFiles/Novella.dir/src/Texture.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Novella.dir/src/Texture.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/line/projects/Novel/src/Texture.cpp > CMakeFiles/Novella.dir/src/Texture.cpp.i
+
+CMakeFiles/Novella.dir/src/Texture.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Novella.dir/src/Texture.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/line/projects/Novel/src/Texture.cpp -o CMakeFiles/Novella.dir/src/Texture.cpp.s
+
 # Object files for target Novella
 Novella_OBJECTS = \
 "CMakeFiles/Novella.dir/main.cpp.o" \
-"CMakeFiles/Novella.dir/src/Window.cpp.o"
+"CMakeFiles/Novella.dir/src/Window.cpp.o" \
+"CMakeFiles/Novella.dir/src/Font.cpp.o" \
+"CMakeFiles/Novella.dir/src/Image.cpp.o" \
+"CMakeFiles/Novella.dir/src/Texture.cpp.o"
 
 # External object files for target Novella
 Novella_EXTERNAL_OBJECTS =
 
 Novella: CMakeFiles/Novella.dir/main.cpp.o
 Novella: CMakeFiles/Novella.dir/src/Window.cpp.o
+Novella: CMakeFiles/Novella.dir/src/Font.cpp.o
+Novella: CMakeFiles/Novella.dir/src/Image.cpp.o
+Novella: CMakeFiles/Novella.dir/src/Texture.cpp.o
 Novella: CMakeFiles/Novella.dir/build.make
 Novella: CMakeFiles/Novella.dir/compiler_depend.ts
 Novella: /usr/lib/libraylib.so.6.0.0
 Novella: CMakeFiles/Novella.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/line/projects/Novel/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Novella"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/line/projects/Novel/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable Novella"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Novella.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

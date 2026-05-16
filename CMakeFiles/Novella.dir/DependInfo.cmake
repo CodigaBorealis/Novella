@@ -9,6 +9,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/line/projects/Novel/main.cpp" "CMakeFiles/Novella.dir/main.cpp.o" "gcc" "CMakeFiles/Novella.dir/main.cpp.o.d"
+  "/home/line/projects/Novel/src/Font.cpp" "CMakeFiles/Novella.dir/src/Font.cpp.o" "gcc" "CMakeFiles/Novella.dir/src/Font.cpp.o.d"
+  "/home/line/projects/Novel/src/Image.cpp" "CMakeFiles/Novella.dir/src/Image.cpp.o" "gcc" "CMakeFiles/Novella.dir/src/Image.cpp.o.d"
+  "/home/line/projects/Novel/src/Texture.cpp" "CMakeFiles/Novella.dir/src/Texture.cpp.o" "gcc" "CMakeFiles/Novella.dir/src/Texture.cpp.o.d"
   "/home/line/projects/Novel/src/Window.cpp" "CMakeFiles/Novella.dir/src/Window.cpp.o" "gcc" "CMakeFiles/Novella.dir/src/Window.cpp.o.d"
   "" "Novella" "gcc" "CMakeFiles/Novella.dir/link.d"
   )

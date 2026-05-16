@@ -160,6 +160,78 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/Font.o: src/Font.cpp.o
+.PHONY : src/Font.o
+
+# target to build an object file
+src/Font.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/src/Font.cpp.o
+.PHONY : src/Font.cpp.o
+
+src/Font.i: src/Font.cpp.i
+.PHONY : src/Font.i
+
+# target to preprocess a source file
+src/Font.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/src/Font.cpp.i
+.PHONY : src/Font.cpp.i
+
+src/Font.s: src/Font.cpp.s
+.PHONY : src/Font.s
+
+# target to generate assembly for a file
+src/Font.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/src/Font.cpp.s
+.PHONY : src/Font.cpp.s
+
+src/Image.o: src/Image.cpp.o
+.PHONY : src/Image.o
+
+# target to build an object file
+src/Image.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/src/Image.cpp.o
+.PHONY : src/Image.cpp.o
+
+src/Image.i: src/Image.cpp.i
+.PHONY : src/Image.i
+
+# target to preprocess a source file
+src/Image.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/src/Image.cpp.i
+.PHONY : src/Image.cpp.i
+
+src/Image.s: src/Image.cpp.s
+.PHONY : src/Image.s
+
+# target to generate assembly for a file
+src/Image.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/src/Image.cpp.s
+.PHONY : src/Image.cpp.s
+
+src/Texture.o: src/Texture.cpp.o
+.PHONY : src/Texture.o
+
+# target to build an object file
+src/Texture.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/src/Texture.cpp.o
+.PHONY : src/Texture.cpp.o
+
+src/Texture.i: src/Texture.cpp.i
+.PHONY : src/Texture.i
+
+# target to preprocess a source file
+src/Texture.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/src/Texture.cpp.i
+.PHONY : src/Texture.cpp.i
+
+src/Texture.s: src/Texture.cpp.s
+.PHONY : src/Texture.s
+
+# target to generate assembly for a file
+src/Texture.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Novella.dir/build.make CMakeFiles/Novella.dir/src/Texture.cpp.s
+.PHONY : src/Texture.cpp.s
+
 src/Window.o: src/Window.cpp.o
 .PHONY : src/Window.o
 
@@ -197,6 +269,15 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/Font.o"
+	@echo "... src/Font.i"
+	@echo "... src/Font.s"
+	@echo "... src/Image.o"
+	@echo "... src/Image.i"
+	@echo "... src/Image.s"
+	@echo "... src/Texture.o"
+	@echo "... src/Texture.i"
+	@echo "... src/Texture.s"
 	@echo "... src/Window.o"
 	@echo "... src/Window.i"
 	@echo "... src/Window.s"
