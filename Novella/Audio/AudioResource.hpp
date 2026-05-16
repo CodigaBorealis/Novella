@@ -7,13 +7,14 @@ namespace Novella::Audio{
  * @struct AudioResource
  * @brief Class that represents an item the AudioBackend must consume.
  */
-    struct AudioResource{
 
-        enum class AssetType{
+    enum class AssetType{
             
         Music,
         SFX
-     };
+    };
+    
+    struct AudioResource{
     
         AudioResource() = delete;
         AudioResource(const std::string& name, const std::filesystem::path& src, AssetType type)

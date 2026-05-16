@@ -43,7 +43,7 @@ namespace Novella{
 
     void Window::clear(const Graphics::Color& color){
 
-        ::ClearBackground(::Color{color.red, color.green, color.blue, color.alpha});
+        ::ClearBackground(color);
     }
 
     void Window::toggleFullscreen(){

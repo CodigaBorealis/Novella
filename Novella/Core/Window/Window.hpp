@@ -59,6 +59,7 @@ namespace Novella{
         void setFlags(unsigned int flags);
 
         void create(int width, int height, const std::string& title, int targetFPS);
+        
         private:
 
         std::string title;

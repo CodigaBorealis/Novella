@@ -12,11 +12,17 @@ add_executable(Novella
     main.cpp
     
     src/Window.cpp
+    
     src/Font.cpp
     src/Image.cpp
     src/Texture.cpp
 
-    
+    src/Renderer.cpp
+    src/ResourceManager.cpp
+
+    src/AudioBackend.cpp
+    src/AudioSystem.cpp
+    src/SoundRegistry.cpp
 )
 
 target_link_libraries(Novella

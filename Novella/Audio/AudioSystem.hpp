@@ -6,6 +6,7 @@
 #include "SoundRegistry.hpp"
 #include "AudioBackend.hpp"
 #include "SoundRegistry.hpp"
+#include "Command.hpp"
 
 namespace Novella::Audio {
 /**
@@ -22,7 +23,7 @@ namespace Novella::Audio {
  * @param name the alias
  * @param action the action struct to bind to.
  */
-        void createResource(const std::string& resourceName, const std::filesystem::path& src, AudioResource::AssetType type);
+        void createResource(const std::string& resourceName, const std::filesystem::path& src, AssetType type);
         
         void play(const std::string& resourceName);
 
@@ -45,32 +46,13 @@ namespace Novella::Audio {
 
         private:
 
-        struct AudioCommand{
-        
-            enum Type{
-
-            Play,
-            Stop,
-            SetVolume,
-            SetPan,
-            SetPitch
-            
-        };  
-        
-        Type type;
-        unsigned int id;
-        float value = 1.0f;
-
-        constexpr AudioCommand(Type t, unsigned int  i, float v) noexcept: type(t), id(i), value(v) {}
-        };
-
-        void addCommand(AudioCommand::Type,unsigned int id, float value);
-        std::vector<AudioCommand> consume();
+        void addCommand(Command::Type,unsigned int id, float value);
+        std::vector<Command> consume();
 
         unsigned int nextID();
         unsigned int resolve(const std::string& name);
 
-        std::vector<AudioCommand> commands;
+        std::vector<Command> commands;
         std::unordered_map<std::string, unsigned int> pipeline;
         SoundRegistry assets;
         AudioBackend backend;

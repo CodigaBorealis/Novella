@@ -1,16 +1,14 @@
 #pragma once
-#include "ResourceManager.hpp"
+#include "../Graphics/Texture.hpp"
+#include "../Graphics/Color.hpp"
 
-namespace Novella::Rendering {
+namespace Novella::Rendering{
 
     class Renderer{
 
         public:
-        
-        Renderer() = delete;
-        
-        private:
+                
+        static void drawTexture(const Graphics::Texture& texture, int x, int y, const Graphics::Color& tint);
 
-        ResourceManager* resources;
     };
 }

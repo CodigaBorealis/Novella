@@ -6,7 +6,7 @@
 #include <nlohmann/json.hpp>
 #include <unordered_map>
 
-namespace Novella{
+namespace Novella::Rendering{
 
     class ResourceManager{
 
@@ -54,6 +54,7 @@ namespace Novella{
 
         void clear();
 
+        private:
         std::unordered_map<std::string, ImageResource> images;
         std::unordered_map<std::string, TextureResource> textures;
         std::unordered_map<std::string, FontResource> fonts;
