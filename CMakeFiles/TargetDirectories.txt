@@ -1,3 +1,0 @@
-/home/line/projects/Novel/build/CMakeFiles/Novella.dir
-/home/line/projects/Novel/build/CMakeFiles/edit_cache.dir
-/home/line/projects/Novel/build/CMakeFiles/rebuild_cache.dir
