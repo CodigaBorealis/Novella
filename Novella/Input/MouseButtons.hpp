@@ -1,0 +1,12 @@
+#ifndef X
+#define X(name, raylib)
+#endif
+
+X(Left, MOUSE_BUTTON_LEFT)
+X(Right, MOUSE_BUTTON_RIGHT)
+X(Middle, MOUSE_BUTTON_MIDDLE)
+
+X(Side, MOUSE_BUTTON_SIDE)
+X(Extra, MOUSE_BUTTON_EXTRA)
+X(Forward, MOUSE_BUTTON_FORWARD)
+X(Back, MOUSE_BUTTON_BACK)

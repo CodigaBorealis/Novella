@@ -1,4 +1,4 @@
-#include "../Novella/Core/Window/Window.hpp"
+#include "../Novella/Window/Window.hpp"
 #include "../Novella/Graphics/Color.hpp"
 #include <raylib.h>
 #include <stdexcept>
@@ -28,17 +28,6 @@ namespace Novella{
     bool Window::isOpen() const{
 
         return ::IsWindowReady() && !::WindowShouldClose();
-    }
-
-    void Window::beginFrame() const{
-
-        ::BeginDrawing();
-
-    }
-
-    void Window::endFrame() const{
-
-        ::EndDrawing();
     }
 
     void Window::clear(const Graphics::Color& color){

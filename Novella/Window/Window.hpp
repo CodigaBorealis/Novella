@@ -1,8 +1,8 @@
 #pragma once
 #include <raylib.h>
 #include <string>
-#include "../../Math/Vector2x.hpp"
-#include "../../Graphics/Color.hpp"
+#include "../Math/Vector2x.hpp"
+#include "../Graphics/Color.hpp"
 
 namespace Novella{
 
@@ -24,9 +24,6 @@ namespace Novella{
         ~Window();
 
         bool isOpen() const;
-
-        void beginFrame() const;
-        void endFrame() const;
 
         void clear(const Graphics::Color& color);
 

@@ -1,21 +1,19 @@
 #pragma once
 #include <string>
+#include <nlohmann/json_fwd.hpp>
 
-namespace Novella::Core {
+namespace Novella::Attribute{
 
     struct Object{
         
         virtual ~Object() = default;
-
-        virtual void update(){}
-        virtual void render(){}
-
-        virtual void getType() = 0;
-        virtual void serialize() = 0;
         
         virtual std::string getID() const = 0;
 
-        int renderLayer() const;
+        virtual nlohmann::json serialize() const = 0;
+
+        virtual const std::string getType() const = 0;
+
     };
 
 }

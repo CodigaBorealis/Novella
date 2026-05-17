@@ -1,41 +1,29 @@
 #include "Novella/Audio/AudioResource.hpp"
-#include "Novella/Core/Window/Window.hpp"
-#include "Novella/Graphics/Color.hpp"
-#include "Novella/Rendering/Renderer.hpp"
-#include "Novella/Rendering/ResourceManager.hpp"
-#include "Novella/Audio/AudioSystem.hpp"
-#include <raylib.h>
+#include "Novella/Components/Character.hpp"
+#include "Novella/Engine.hpp"
+#include "Novella/Math/Vector2x.hpp"
 
 int main(){
 
-    auto window = Novella::Window(1000,1000, "2", 60);
+    Novella::Engine engine(1000, 1000, "test", 60);
 
-    Novella::Rendering::ResourceManager resources;
+    engine.resources().loadTexture("character", "/home/line/projects/Novel/Test/test.png");
 
-    Novella::Rendering::Renderer renderer;
+    engine.scene().createScene();
 
-    Novella::Audio::AudioSystem audio;
+    engine.scene().addObject<Novella::Components::Character>(
 
-    resources.loadTexture("test", "/home/line/projects/Novel/Test/test.png");
+        "character",
+        engine.resources().getTexture("character"),
+        Novella::Math::Vector2i{500, 500}
 
-    auto& texture = *resources.getTexture("test");
-
-    audio.createResource("test", "/home/line/projects/Novel/Test/bgm.ogg", Novella::Audio::AssetType::Music);
-
-    audio.play("test");
+    );
     
-    while(window.isOpen()){
+    engine.audio().createResource("audio", "/home/line/projects/Novel/Test/bgm.ogg", Novella::Audio::AssetType::Music);
 
-        audio.update();
-        
-        window.beginFrame();
-        
-        window.clear(Novella::Graphics::Colors::Green);
+    engine.audio().play("audio");
 
-        renderer.drawTexture(texture, 300, 300, Novella::Graphics::Colors::White);        
-
-        window.endFrame();
-    }
+    engine.run();
 
     return 0;
 } 

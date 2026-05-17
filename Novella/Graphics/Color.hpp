@@ -8,10 +8,10 @@ namespace Novella::Graphics{
 
         constexpr Color()
             :
-            red(0),
-            blue(0),
-            green(0),
-            alpha(0)
+            red(255),
+            blue(255),
+            green(255),
+            alpha(255)
             {}
 
         constexpr Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)

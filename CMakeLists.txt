@@ -23,6 +23,18 @@ add_executable(Novella
     src/AudioBackend.cpp
     src/AudioSystem.cpp
     src/SoundRegistry.cpp
+
+    src/Scene.cpp
+    src/SceneManager.cpp
+    src/SceneBuilder.cpp
+    src/ObjectFactory.cpp
+    
+    src/JsonSerializer.cpp
+    src/JsonValidator.cpp
+
+    src/Character.cpp
+    src/Engine.cpp
+    
 )
 
 target_link_libraries(Novella
