@@ -1,11 +1,12 @@
 #pragma once
+#include "Positionable.hpp"
 #include "Renderable.hpp"
 #include "Transformable.hpp"
 #include <memory>
 #include "Type.hpp"
 namespace Novella::Components {
 
-    class Background: public Attribute::Object, public Attribute::Renderable, public Attribute::Transformable{
+    class Background: public Attribute::Object, public Attribute::Renderable, public Attribute::Transformable, public Attribute::Positionable{
 
         public:
 
@@ -20,7 +21,7 @@ namespace Novella::Components {
         void setColor(const Graphics::Color& color) override;
         const Graphics::Color& getColor() const override;
 
-        std::string getID() const override;
+        const std::string& getID() const override;
 
         const std::string getType() const override;
 

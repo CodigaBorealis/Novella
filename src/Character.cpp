@@ -19,19 +19,19 @@ namespace Novella::Components{
             dimensions(dimensions)
             {}
             
-        std::string Character::getID() const{
+        const std::string& Character::getID() const{
 
-            return id;
+            return this->id;
         }
 
         void Character::draw(Rendering::Renderer& renderer){
 
-            renderer.drawTexture(*texture, position.x, position.y, tint);
+            renderer.drawTexture(*texture, position, tint);
         }
 
         int Character::renderLayer() const{
 
-            return rLayer;
+            return this->rLayer;
         }
 
         void Character::setPosition(const Math::Vector2i& position){
@@ -41,7 +41,7 @@ namespace Novella::Components{
 
         const Math::Vector2i& Character::getPosition() const{
 
-            return position;
+            return this->position;
         }
 
         nlohmann::json Character::serialize() const{
@@ -57,12 +57,12 @@ namespace Novella::Components{
 
         const Math::Vector2i& Character::getDimensions() const{
 
-            return dimensions;
+            return this->dimensions;
         }
 
         const std::string Character::getType() const{
 
-            return type;
+            return this->type;
         }
 
         void Character::setColor(const Graphics::Color& color){

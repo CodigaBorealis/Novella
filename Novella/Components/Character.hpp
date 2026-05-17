@@ -1,6 +1,7 @@
 #pragma once
 #include "../Graphics/Texture.hpp"
 #include "Object.hpp"
+#include "Positionable.hpp"
 #include "Renderable.hpp"
 #include "Transformable.hpp"
 #include "Type.hpp"
@@ -8,7 +9,7 @@
 
 namespace Novella::Components{
 
-    class Character : public Attribute::Object, public Attribute::Transformable, public Attribute::Renderable{
+    class Character : public Attribute::Object, public Attribute::Transformable, public Attribute::Positionable, public Attribute::Renderable{
 
         public:
 
@@ -17,7 +18,7 @@ namespace Novella::Components{
             Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position);
             Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position, int renderLayer, const Math::Vector2i& dimensions);
             
-            std::string getID() const override;
+            const std::string& getID() const override;
 
             void draw(Rendering::Renderer& renderer) override;
 

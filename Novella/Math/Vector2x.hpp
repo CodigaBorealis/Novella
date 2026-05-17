@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <cmath>
+#include <raylib.h>
 #include <type_traits>
 
 namespace Novella::Math{
@@ -8,6 +9,32 @@ namespace Novella::Math{
     template <typename T>
 
     struct Vector2x{
+
+        T x{};
+        T y{};
+
+        constexpr Vector2x() = default;
+
+        constexpr Vector2x(T x, T y)
+            :
+            x(x),
+            y(y)
+            {}
+
+        constexpr Vector2x(const ::Vector2& raylibVector)
+            :
+            x(static_cast<T>(raylibVector.x)),
+            y(static_cast<T>(raylibVector.y))
+            {}
+
+        constexpr operator ::Vector2() const{
+
+            return{
+
+                static_cast<float>(x),
+                static_cast<float>(y)
+            };
+        }     
 
         static_assert(std::is_arithmetic_v<T>, "Vector2i requires a numeric type");
 
@@ -54,12 +81,6 @@ namespace Novella::Math{
 
             return *this;
         }
-
-        T x{};
-        T y{};
-
-        constexpr Vector2x() = default;
-        constexpr Vector2x(T x, T y) : x(x), y(y){}
 
         auto length() const{
 

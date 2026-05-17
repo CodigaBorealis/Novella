@@ -17,7 +17,7 @@ namespace Novella::Components{
         
         void Background::draw(Rendering::Renderer& renderer){
 
-            renderer.drawTexture(*texture, position.x, position.y, tint);
+            renderer.drawTexture(*texture, position, tint);
         }
 
         int Background::renderLayer() const{
@@ -35,7 +35,7 @@ namespace Novella::Components{
             return this->tint;
         }
 
-        std::string Background::getID() const{
+        const std::string& Background::getID() const{
 
             return this->id;
         }

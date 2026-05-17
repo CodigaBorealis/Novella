@@ -4,14 +4,16 @@
 
 namespace Novella::Rendering{
 
-    void Renderer::drawTexture(const Graphics::Texture& texture, int x, int y){
+    void Renderer::drawTexture(const Graphics::Texture& texture, const Math::Vector2i& position, const Graphics::Color& tint){
 
-        ::DrawTexture(texture.getHandle(), x, y, Graphics::Colors::White);
+        ::DrawTexture(texture.getHandle(), position.x, position.y, tint);
     }
-    void Renderer::drawTexture(const Graphics::Texture& texture, int x, int y, const Graphics::Color& tint){
 
-        ::DrawTexture(texture.getHandle(), x, y, tint);
+    void Renderer::drawFont(const Graphics::Font& font, const std::string& text, const Math::Vector2i& position, int fontSize, float spacing, const Graphics::Color& tint){
+
+        ::DrawTextEx(font.getHandle(), text.c_str(), position, fontSize, spacing ,tint);
     }
+
 
     void Renderer::beginFrame(){
 

@@ -4,7 +4,7 @@
 #include "Novella/Engine.hpp"
 #include "Novella/Math/Vector2x.hpp"
 #include "Novella/Window/WindowFlags.hpp"
-
+#include "Novella/Components/Label.hpp"
 int main(){
 
     Novella::Engine engine(1000, 1000, "test", 60, "/home/line/projects/Novel/Test/backgroundTest.png",Novella::WindowFlags::Resizable);
@@ -13,6 +13,8 @@ int main(){
 
     engine.resources().loadTexture("background", "/home/line/projects/Novel/Test/backgroundTest.png");
 
+    engine.resources().loadFont("font", "/home/line/projects/Novel/Test/font.otf");
+    
     engine.scene().createScene();
 
     engine.scene().addObject<Novella::Components::Background>(
@@ -27,6 +29,16 @@ int main(){
         "character",
         engine.resources().getTexture("character"),
         Novella::Math::Vector2i{500, 500}
+
+    );
+
+    engine.scene().addObject<Novella::Components::Label>(
+
+    "label",
+    engine.resources().getFont("font"),
+    Novella::Math::Vector2i{500, 500},
+    25,
+    "did you know that sometimes you may or you may not or you could or you"
 
     );
 

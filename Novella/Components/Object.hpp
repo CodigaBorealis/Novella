@@ -8,7 +8,7 @@ namespace Novella::Attribute{
         
         virtual ~Object() = default;
         
-        virtual std::string getID() const = 0;
+        virtual const std::string& getID() const = 0;
 
         virtual nlohmann::json serialize() const = 0;
 

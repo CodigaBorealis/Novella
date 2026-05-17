@@ -46,7 +46,7 @@ namespace Novella{
 
             windowRenderer.beginFrame();
             
-            renderer().drawScene(sceneManager.getCurrentScene());
+            windowRenderer.drawScene(sceneManager.getCurrentScene());
 
             windowRenderer.endFrame();
 

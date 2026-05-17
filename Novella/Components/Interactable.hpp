@@ -7,9 +7,9 @@
 namespace Novella::Attribute{
 
     struct Interactable{
-        
-        private:
 
+        protected:
+        
         struct BindedAction{
 
         std::string name;
@@ -17,6 +17,7 @@ namespace Novella::Attribute{
         std::string target;
         };
 
+        std::unordered_map<Input::Keyboard, BindedAction> keyboardBinds;
         public:
         virtual ~Interactable() = default;
 
@@ -24,8 +25,6 @@ namespace Novella::Attribute{
             
         virtual void addKeyboardBind(Input::Keyboard, const std::string& name, const nlohmann::json& args, const std::string& target) = 0;
 
-        protected:
-        
-        std::unordered_map<Input::Keyboard, BindedAction> keyboardBinds;
+       
     };
 }

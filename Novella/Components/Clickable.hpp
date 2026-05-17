@@ -8,7 +8,7 @@ namespace Novella::Attribute{
 
     struct Clickable{
 
-        private:
+        protected:
 
         struct BindedAction{
 
@@ -16,6 +16,8 @@ namespace Novella::Attribute{
         nlohmann::json args;
         std::string target;
         };
+        
+        std::unordered_map<Input::Mouse, BindedAction> mouseBinds;
 
         public:
 
@@ -25,10 +27,7 @@ namespace Novella::Attribute{
             
         virtual void addMouseBind(Input::Mouse, const std::string& name, const nlohmann::json& args, const std::string& target) = 0;
             
-        virtual bool contains(const Math::Vector2i& mousePos) const = 0;
+        virtual bool contains(const Math::Vector2f& mousePos) const = 0;
         
-        protected:
-        
-        std::unordered_map<Input::Mouse, BindedAction> mouseBinds;
     };
 }
