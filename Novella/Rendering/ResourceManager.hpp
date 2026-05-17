@@ -34,6 +34,8 @@ namespace Novella::Rendering{
         
         public:
 
+        ~ResourceManager();
+        
         ResourceManager() = default;
 
         std::shared_ptr<Graphics::Image> loadImage(const std::string& name, const std::filesystem::path& src);

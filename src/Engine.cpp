@@ -2,6 +2,14 @@
 
 namespace Novella{
 
+    Engine::~Engine(){
+
+        resourceManager.clear();
+        sceneManager.clear();
+        audioSystem.clear();
+        displayWindow.close();
+    }
+
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps)
         :
         displayWindow(width, height , title, fps),

@@ -29,6 +29,10 @@ int main(){
         Novella::Math::Vector2i{500, 500}
 
     );
+
+    auto* c = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Character>("character");
+
+    c->setColor({100,0,100,255});
     
     engine.audio().createResource("audio", "/home/line/projects/Novel/Test/bgm.ogg", Novella::Audio::AssetType::Music);
 

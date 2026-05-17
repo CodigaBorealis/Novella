@@ -13,6 +13,8 @@ namespace Novella{
 
         public:
 
+        ~Engine();
+        
         Engine() = delete;
         
         Engine(const Engine&) = delete;
@@ -41,10 +43,11 @@ namespace Novella{
 
         IO::JsonSerializer serializer;
         SceneManager sceneManager;
-        Window displayWindow;
-        Rendering::Renderer windowRenderer;        
         Rendering::ResourceManager resourceManager;
+        Rendering::Renderer windowRenderer;        
         Audio::AudioSystem audioSystem;
+        Window displayWindow;
+
     };
 
 }

@@ -58,15 +58,6 @@ namespace Novella{
         setIcon(icon);
     }
 
-    Window::~Window(){
-
-        if(::IsWindowReady()){
-
-            ::CloseWindow();
-
-        }
-    }
-
     bool Window::isOpen() const{
 
         return ::IsWindowReady() && !::WindowShouldClose();

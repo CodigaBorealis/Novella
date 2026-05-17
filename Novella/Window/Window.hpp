@@ -27,10 +27,7 @@ namespace Novella{
         Window(int width, int height, const std::string& title, int targetFPS,const std::filesystem::path& icon);
 
         Window(int width, int height, const std::string& title, int targetFPS,const std::filesystem::path& icon, WindowFlags flags);
-
         
-        ~Window();
-
         bool isOpen() const;
 
         void clear(const Graphics::Color& color);

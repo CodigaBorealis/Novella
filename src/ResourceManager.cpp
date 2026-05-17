@@ -4,6 +4,10 @@
 
 namespace Novella::Rendering{
 
+    ResourceManager::~ResourceManager(){
+
+        clear();
+    };
         std::shared_ptr<Graphics::Image> ResourceManager::loadImage(const std::string& name, const std::filesystem::path& src){
 
         auto image = std::make_shared<Graphics::Image>(src);
@@ -108,6 +112,7 @@ namespace Novella::Rendering{
 
     void ResourceManager::clear(){
 
+        this->images.clear();
         this->textures.clear();
         this->fonts.clear();
     }

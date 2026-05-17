@@ -6,9 +6,16 @@
 namespace Novella::Audio{
     
     AudioSystem::AudioSystem()
-        :backend(assets){}
+        :
+        backend(assets)
+        {}
 
 
+    AudioSystem::~AudioSystem(){
+
+        backend.clear();
+    }
+    
     unsigned int AudioSystem::nextID(){
 
         return next ++;

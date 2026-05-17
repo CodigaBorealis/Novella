@@ -18,6 +18,8 @@ namespace Novella::Audio {
         public:
 
         AudioSystem();
+
+        ~AudioSystem();
 /**
  * @brief adds
  * @param name the alias
