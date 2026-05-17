@@ -7,4 +7,7 @@ namespace Novella::Components::Type{
     static constexpr const char* Character = "Character";//This is shit but i need a way to serialize components
 
     static constexpr const char* Label = "Label";//This is shit but i need a way to serialize components
+    
+    static constexpr const char* Button = "Label";//This is shit but i need a way to serialize components
+
 }

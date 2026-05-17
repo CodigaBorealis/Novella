@@ -35,6 +35,7 @@ add_executable(Novella
     src/Character.cpp
     src/Background.cpp
     src/Label.cpp
+    src/Button.cpp
     
     src/Engine.cpp
     

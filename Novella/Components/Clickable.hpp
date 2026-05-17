@@ -25,7 +25,7 @@ namespace Novella::Attribute{
 
         const std::unordered_map<Input::Mouse, BindedAction>& getMouseBinds(){ return  mouseBinds;}
             
-        virtual void addMouseBind(Input::Mouse, const std::string& name, const nlohmann::json& args, const std::string& target) = 0;
+        virtual void addMouseBind(Input::Mouse button, const std::string& name, const nlohmann::json& args, const std::string& target) = 0;
             
         virtual bool contains(const Math::Vector2f& mousePos) const = 0;
         

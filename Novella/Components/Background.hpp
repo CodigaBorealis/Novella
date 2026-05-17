@@ -40,7 +40,7 @@ namespace Novella::Components {
         Math::Vector2i dimensions{};
         Graphics::Color tint;
         std::string id;
-        int rLayer = 0;
+        int rLayer = -1;
 
         static constexpr const char* TYPE = Type::Background;//This is shit but i need a way to serialize components
 

@@ -43,7 +43,14 @@ namespace Novella::Components{
 
         nlohmann::json serialize() const override;
 
-        virtual const std::string getType() const override;
+        const std::string getType() const override;
+
+        void setText(const std::string& text);
+        const std::string& getText() const;
+        
+        void setFont(std::shared_ptr<Graphics::Font> font);
+
+        std::shared_ptr<Graphics::Font> getFont() const;
         
         private:
         

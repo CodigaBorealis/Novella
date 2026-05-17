@@ -63,7 +63,7 @@ namespace Novella::Components{
 
     void Label::addMouseBind(Input::Mouse button, const std::string& name, const nlohmann::json& args, const std::string& target){
 
-        if(mouseBinds.contains(button)) throw std::runtime_error("This label already has an action binded to this button");
+        if(mouseBinds.contains(button)) throw std::runtime_error(name + " could not be binded because this label already has an action for this mouse button");
 
         mouseBinds.emplace(button,BindedAction{name, args, target});
     };
@@ -109,5 +109,27 @@ namespace Novella::Components{
 
         return this->TYPE;
     }
+
+    void Label::setText(const std::string& text){
+
+        this->text = text;
+    }
+    
+    const std::string& Label::getText() const{
+
+        return this->text;
+    }
+        
+    void Label::setFont(std::shared_ptr<Graphics::Font> font){
+
+        if(!font) throw std::runtime_error("Cannot set the font to nullptr");
+
+        this->font = font;
+    }
+
+        std::shared_ptr<Graphics::Font> Label::getFont() const{
+
+            return this->font;
+        }
 
 }
