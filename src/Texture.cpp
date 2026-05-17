@@ -5,7 +5,7 @@ namespace Novella::Graphics{
 
     Texture::Texture(const std::filesystem::path& path)
     :
-    handle(::LoadTexture(path.c_str()))
+    handle(::LoadTexture(path.string().c_str()))
     {}
 
     Texture::~Texture(){

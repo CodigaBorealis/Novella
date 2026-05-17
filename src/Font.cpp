@@ -5,7 +5,7 @@ namespace Novella::Graphics{
 
     Font::Font(const std::filesystem::path& path)
     :
-    handle(::LoadFont(path.c_str()))
+    handle(::LoadFont(path.string().c_str()))
     {}
 
     Font::~Font(){

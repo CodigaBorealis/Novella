@@ -5,7 +5,7 @@ namespace Novella::Graphics{
 
     Image::Image(const std::filesystem::path& path)
     :
-    handle(::LoadImage(path.c_str()))
+    handle(::LoadImage(path.string().c_str()))
     {}
 
     Image::~Image(){

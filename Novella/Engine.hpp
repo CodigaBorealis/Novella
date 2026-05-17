@@ -5,6 +5,7 @@
 #include "Rendering/ResourceManager.hpp"
 #include "Scene/SceneManager.hpp"
 #include "IO/JsonSerializer.hpp"
+#include "Window/WindowFlags.hpp"
 
 namespace Novella{
 
@@ -22,18 +23,25 @@ namespace Novella{
 
         Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps);
 
+        Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, WindowFlags flags);
+
+        Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon);
+
+        Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon, WindowFlags flags);
+
         void run();
 
         Rendering::ResourceManager& resources();
         Rendering::Renderer& renderer();
         Audio::AudioSystem& audio();
         SceneManager& scene();
+        Window& window();
         
         private:
 
         IO::JsonSerializer serializer;
         SceneManager sceneManager;
-        Window window;
+        Window displayWindow;
         Rendering::Renderer windowRenderer;        
         Rendering::ResourceManager resourceManager;
         Audio::AudioSystem audioSystem;

@@ -1,8 +1,9 @@
 #include "../Novella/Window/Window.hpp"
 #include "../Novella/Graphics/Color.hpp"
+#include <filesystem>
 #include <raylib.h>
 #include <stdexcept>
-
+#include "../Novella/Graphics/Image.hpp"
 namespace Novella{
 
     Window::Window(int width, int height, const std::string& title, int targetFPS){
@@ -14,6 +15,47 @@ namespace Novella{
         ::SetTargetFPS(targetFPS);
 
         this->title = title;
+    }
+
+    Window::Window(int width, int height, const std::string& title, int targetFPS, WindowFlags flags){
+
+     if(::IsWindowReady()) return;
+
+        setFlags(flags);
+
+        ::InitWindow(width, height, title.c_str());
+        
+        ::SetTargetFPS(targetFPS);
+
+        this->title = title;
+    }
+
+    Window::Window(int width, int height, const std::string& title, int targetFPS, const std::filesystem::path& icon){
+
+        if(::IsWindowReady()) return;
+
+        ::InitWindow(width, height, title.c_str());
+
+        ::SetTargetFPS(targetFPS);
+
+        this->title = title;
+
+        setIcon(icon);
+    }
+
+    Window::Window(int width, int height, const std::string& title, int targetFPS, const std::filesystem::path& icon, WindowFlags flags){
+        
+        if(::IsWindowReady()) return;
+
+        setFlags(flags);
+
+        ::InitWindow(width, height, title.c_str());
+        
+        ::SetTargetFPS(targetFPS);
+
+        this->title = title;
+
+        setIcon(icon);
     }
 
     Window::~Window(){
@@ -77,12 +119,12 @@ namespace Novella{
 
     void Window::setSize(const Math::Vector2i& dimensions){
 
-        SetWindowSize(dimensions.x, dimensions.y);
+        ::SetWindowSize(dimensions.x, dimensions.y);
     }
 
     Math::Vector2i Window::getSize() const{
 
-        return{GetScreenWidth(), GetScreenHeight()};
+        return{::GetScreenWidth(), ::GetScreenHeight()};
     }
 
     bool Window::isResized() const{
@@ -122,11 +164,20 @@ namespace Novella{
         return ::GetFPS();
     }
 
-    void Window::setFlags(unsigned int flags){
+    void Window::setFlags(WindowFlags flags){
 
-        if(IsWindowReady()) throw std::runtime_error("Window flags must be set before initialization");
+        if(::IsWindowReady()) throw std::runtime_error("Window flags must be set before initialization");
         
-        ::SetConfigFlags(flags);
+        ::SetConfigFlags(static_cast<unsigned int>(flags));
+    }
+
+    void Window::setIcon(const std::filesystem::path& file){
+
+        if(!std::filesystem::exists(file)) throw std::runtime_error("File not found: " + file.string());
+
+        Graphics::Image icon{file};
+
+        ::SetWindowIcon(icon.getHandle());
     }
 
     

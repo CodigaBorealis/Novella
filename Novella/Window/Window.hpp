@@ -1,9 +1,10 @@
 #pragma once
 #include <raylib.h>
 #include <string>
+#include <filesystem>
 #include "../Math/Vector2x.hpp"
 #include "../Graphics/Color.hpp"
-
+#include "WindowFlags.hpp"
 namespace Novella{
 
     class Window{
@@ -20,6 +21,13 @@ namespace Novella{
         Window& operator=(Window&&) = delete;
 
         Window(int width, int height, const std::string& title, int targetFPS);
+
+        Window(int width, int height, const std::string& title, int targetFPS, WindowFlags flags);
+
+        Window(int width, int height, const std::string& title, int targetFPS,const std::filesystem::path& icon);
+
+        Window(int width, int height, const std::string& title, int targetFPS,const std::filesystem::path& icon, WindowFlags flags);
+
         
         ~Window();
 
@@ -38,6 +46,8 @@ namespace Novella{
         void maximize();
         bool isMaximized() const;
 
+        void setIcon(const std::filesystem::path& file);
+
         bool isFocused() const;
 
         void close();
@@ -53,9 +63,9 @@ namespace Novella{
         void setTargetFPS(int fps);
         int getFPS() const;
 
-        void setFlags(unsigned int flags);
+        void setFlags(WindowFlags flags);
 
-        void create(int width, int height, const std::string& title, int targetFPS);
+        void create();
         
         private:
 

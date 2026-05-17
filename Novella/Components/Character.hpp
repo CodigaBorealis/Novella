@@ -3,6 +3,7 @@
 #include "Object.hpp"
 #include "Renderable.hpp"
 #include "Transformable.hpp"
+#include "Type.hpp"
 #include <memory>
 
 namespace Novella::Components{
@@ -48,7 +49,7 @@ namespace Novella::Components{
             Graphics::Color tint;
 
             //std::vector<std::string> sounds;
-        static constexpr const char* type = "Character";//This is shit but i need a way to serialize components
+        static constexpr const char* type = Type::Character;//This is shit but i need a way to serialize components
 
     };
 }
