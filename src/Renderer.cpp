@@ -6,25 +6,43 @@
 
 namespace Novella::Rendering{
 
+    Renderer::~Renderer(){
+
+        if(canvas.id != 0){
+
+        ::UnloadRenderTexture(canvas);
+
+        }
+
+    }
+
+    Renderer::Renderer(int width, int height){
+
+        baseResolution = {float(width), float(height)};
+        
+        canvas = ::LoadRenderTexture(width, height);
+    }
+
     void Renderer::drawTexture(const Graphics::Texture& texture, const Math::Vector2i& position, const Math::Vector2i& dimensions, float rotation, const Graphics::Color& tint){
 
-        Math::Vector2f origin{dimensions / 2.0f};
+        Math::Vector2f origin{dimensions.x / 2.0f, dimensions.y / 2.0f};
 
         Math::Rectangle source{
-            0,
-            0,
+
+            0.0f,
+            0.0f,
             static_cast<float>(texture.width()),
             static_cast<float>(texture.height())
         };
 
         Math::Rectangle dest{
-
+            
             static_cast<float>(position.x),
             static_cast<float>(position.y),
             static_cast<float>(dimensions.x),
-            static_cast<float>(dimensions.y),
+            static_cast<float>(dimensions.y)
         };
-
+        
         ::DrawTexturePro(texture.getHandle(), source, dest, origin, rotation, tint);
     }
 
@@ -36,11 +54,29 @@ namespace Novella::Rendering{
 
     void Renderer::beginFrame(){
 
-        ::BeginDrawing();
+        ::BeginTextureMode(canvas);
+        ::ClearBackground(Graphics::Colors::Blue);
     }
     
     void Renderer::endFrame(){
+        
+        ::EndTextureMode();
 
+        ::BeginDrawing();
+        ::ClearBackground(Graphics::Colors::Blue);
+
+        Math::Rectangle source{0.0f, 0.0f, baseResolution.x, -baseResolution.y};//The texture is flipped otherwise
+
+        Math::Rectangle dest{
+
+            renderTargetOffset.x,
+            renderTargetOffset.y,
+            baseResolution.x * scale,
+            baseResolution.y * scale
+
+        };
+
+        ::DrawTexturePro(canvas.texture, source, dest, {0, 0}, 0.0f, WHITE);
         ::EndDrawing();
     }
 
@@ -77,4 +113,21 @@ namespace Novella::Rendering{
             }
         }
     }
+
+    void Renderer::resize(const Math::Vector2i& windowSize){
+
+        if(baseResolution.x == 0 || baseResolution.y == 0) return;
+
+        scale = std::min(
+            
+            static_cast<float>(windowSize.x) / baseResolution.x,
+            static_cast<float>(windowSize.y) / baseResolution.y
+
+        );
+
+        renderTargetOffset.x = (windowSize.x - (baseResolution.x * scale)) * 0.5f;
+        renderTargetOffset.y = (windowSize.y - (baseResolution.y * scale)) * 0.5f;
+
+    }
+    
 }

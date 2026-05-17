@@ -2,51 +2,54 @@
 
 namespace Novella{
 
-    Engine::~Engine(){
-
-        resourceManager.clear();
-        sceneManager.clear();
-        audioSystem.clear();
-        displayWindow.close();
-    }
-
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps)
         :
         displayWindow(width, height , title, fps),
         sceneManager(resourceManager,audioSystem, serializer),
-        serializer(resourceManager)
+        serializer(resourceManager),
+        windowRenderer(width, height)
         {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, WindowFlags flags)
         :
         displayWindow(width, height , title, fps, flags),
         sceneManager(resourceManager,audioSystem, serializer),
-        serializer(resourceManager)
+        serializer(resourceManager),
+        windowRenderer(width, height)
         {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon)
         :
         displayWindow(width, height , title, fps, icon),
         sceneManager(resourceManager,audioSystem, serializer),
-        serializer(resourceManager)
+        serializer(resourceManager),
+        windowRenderer(width, height)
         {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon, WindowFlags flags)
         :
         displayWindow(width, height , title, fps, icon, flags),
         sceneManager(resourceManager,audioSystem, serializer),
-        serializer(resourceManager)
+        serializer(resourceManager),
+        windowRenderer(width, height)
         {}
 
     void Engine::run(){
         
         while(displayWindow.isOpen()){
 
+            auto& currentScene = sceneManager.getCurrentScene();
+
             audioSystem.update();
 
-            windowRenderer.beginFrame();
+            if(displayWindow.isResized()){
+
+                windowRenderer.resize(displayWindow.getSize());
+            }
             
-            windowRenderer.drawScene(sceneManager.getCurrentScene());
+            windowRenderer.beginFrame();
+
+            windowRenderer.drawScene(currentScene);
 
             windowRenderer.endFrame();
 

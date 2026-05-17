@@ -9,19 +9,21 @@
 
 int main(){
 
-    Novella::Engine engine(1000, 1000, "test", 60, "/home/line/projects/Novel/Test/backgroundTest.png",Novella::WindowFlags::Resizable);
+    Novella::Engine engine(1000, 1000, "test", 60, "/home/line/projects/Novel/Test/MainMenu.png",Novella::WindowFlags::Resizable);
 
-    engine.resources().loadTexture("character", "/home/line/projects/Novel/Test/test.png");
+    engine.resources().loadTexture("character", "/home/line/projects/Novel/Test/character_1.png");
 
-    engine.resources().loadTexture("background", "/home/line/projects/Novel/Test/backgroundTest.png");
+    engine.resources().loadTexture("background", "/home/line/projects/Novel/Test/dialogueBG.png");
 
-    engine.resources().loadTexture("button", "/home/line/projects/Novel/Test/MainMenu.png");
+    engine.resources().loadTexture("button", "/home/line/projects/Novel/Test/backgroundTest.png");
+
+    engine.resources().loadTexture("button2", "/home/line/projects/Novel/Test/backgroundTest2.png");
 
     engine.resources().loadFont("font", "/home/line/projects/Novel/Test/font.otf");
     
     engine.scene().createScene();
 
-    engine.scene().addObject<Novella::Components::Background>(
+    auto& bg= engine.scene().addObject<Novella::Components::Background>(
 
         "background",
         engine.resources().getTexture("background")
@@ -52,7 +54,7 @@ int main(){
         "button",
         engine.resources().getTexture("button"),
         Novella::Math::Vector2i{50,50},
-        Novella::Math::Vector2i{900,900}
+        Novella::Math::Vector2i{1200,1200}
 
     );
 

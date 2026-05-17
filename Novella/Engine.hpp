@@ -12,8 +12,6 @@ namespace Novella{
     class Engine{
 
         public:
-
-        ~Engine();
         
         Engine() = delete;
         
@@ -41,12 +39,13 @@ namespace Novella{
         
         private:
 
-        IO::JsonSerializer serializer;
-        SceneManager sceneManager;
-        Rendering::ResourceManager resourceManager;
-        Rendering::Renderer windowRenderer;        
-        Audio::AudioSystem audioSystem;
         Window displayWindow;
+        Rendering::Renderer windowRenderer; 
+
+        Rendering::ResourceManager resourceManager;
+        SceneManager sceneManager;
+        Audio::AudioSystem audioSystem;
+        IO::JsonSerializer serializer;
 
     };
 

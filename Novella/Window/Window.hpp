@@ -11,6 +11,8 @@ namespace Novella{
 
         public:
 
+        ~Window();
+        
         Window() = delete;
         
         Window(const Window&) = delete;

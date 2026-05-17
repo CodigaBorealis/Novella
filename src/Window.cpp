@@ -6,6 +6,14 @@
 #include "../Novella/Graphics/Image.hpp"
 namespace Novella{
 
+    Window::~Window(){
+
+        if(::IsWindowReady()){
+
+            ::CloseWindow();
+        }
+    }
+    
     Window::Window(int width, int height, const std::string& title, int targetFPS){
         
         if(::IsWindowReady()) return;

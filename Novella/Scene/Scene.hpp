@@ -9,6 +9,7 @@
 #include <vector>
 #include <optional>
 #include <nlohmann/json.hpp>
+#include "../Math/Vector2x.hpp"
 
 namespace Novella{
 
@@ -74,6 +75,9 @@ namespace Novella{
 
         void clearDirtyFlag();
         bool needsSorting() const;
+
+        float getScale() const;
+
         private:
 
         bool dirty = false;
