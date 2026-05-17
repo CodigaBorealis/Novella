@@ -22,6 +22,7 @@ namespace Novella::Components{
 
             void draw(Rendering::Renderer& renderer) override;
 
+            void setRenderLayer(int layer);
             int renderLayer() const override;
 
             void setPosition(const Math::Vector2i& position) override;
@@ -39,6 +40,10 @@ namespace Novella::Components{
             void setColor(const Graphics::Color& color) override;
 
             const Graphics::Color& getColor() const override;
+            
+            void setRotation(float degrees);
+
+            float getRotation() const;
 
         private:
 
@@ -46,9 +51,9 @@ namespace Novella::Components{
             std::shared_ptr<Graphics::Texture> texture;
             Math::Vector2i position;
             int rLayer = 0;
-            Math::Vector2i dimensions{};
+            Math::Vector2i dimensions{texture->width(), texture->height()};
             Graphics::Color tint;
-
+            float rotation = 0;
             //std::vector<std::string> sounds;
         static constexpr const char* type = Type::Character;//This is shit but i need a way to serialize components
 

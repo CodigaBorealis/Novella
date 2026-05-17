@@ -17,7 +17,12 @@ namespace Novella::Components{
         
         void Background::draw(Rendering::Renderer& renderer){
 
-            renderer.drawTexture(*texture, position, tint);
+            renderer.drawTexture(*texture, position, dimensions, rotation, tint);
+        }
+
+        void Background::setRenderLayer(int layer){
+
+            this->rLayer = layer;
         }
 
         int Background::renderLayer() const{
@@ -68,6 +73,15 @@ namespace Novella::Components{
 
             return dimensions;
         }
-        
+
+        void Background::setRotation(float degrees){
+
+            this->rotation = degrees;
+        }
+            
+        float Background::getRotation() const{
+
+            return this->rotation;
+        }        
 
 }

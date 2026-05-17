@@ -28,13 +28,15 @@ int main(){
 
     );
 
-    engine.scene().addObject<Novella::Components::Character>(
+    auto& c = engine.scene().addObject<Novella::Components::Character>(
 
         "character",
         engine.resources().getTexture("character"),
         Novella::Math::Vector2i{500, 500}
 
     );
+    
+    c.setRenderLayer(-1000);
 
     engine.scene().addObject<Novella::Components::Label>(
 
@@ -45,14 +47,16 @@ int main(){
         "did you know that sometimes you may or you may not or you could or you"
     );
 
-    auto button = engine.scene().addObject<Novella::Components::Button>(
+    auto& button = engine.scene().addObject<Novella::Components::Button>(
 
         "button",
         engine.resources().getTexture("button"),
         Novella::Math::Vector2i{50,50},
-        Novella::Math::Vector2i{300,300}
+        Novella::Math::Vector2i{900,900}
 
     );
+
+    button.setRenderLayer(-2);
 
     auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>("label");
     

@@ -80,9 +80,13 @@ namespace Novella::Components{
 */
     void Button::draw(Rendering::Renderer& renderer){
 
-        renderer.drawTexture(*texture, position, tint);
+        renderer.drawTexture(*texture, position, dimensions, rotation, tint);
     }
 
+    void Button::setRenderLayer(int layer){
+
+        this->rLayer = layer;
+    }
     int Button::renderLayer() const{
 
         return this->rLayer;
@@ -98,5 +102,14 @@ namespace Novella::Components{
         return this->tint;
     }
         
+    void Button::setRotation(float degrees){
+
+        this->rotation = degrees;
+    }
+            
+    float Button::getRotation() const{
+
+        return this->rotation;
+    }
 
 }

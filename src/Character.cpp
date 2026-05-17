@@ -26,9 +26,14 @@ namespace Novella::Components{
 
         void Character::draw(Rendering::Renderer& renderer){
 
-            renderer.drawTexture(*texture, position, tint);
+            renderer.drawTexture(*texture, position, dimensions, rotation, tint);
         }
 
+        void Character::setRenderLayer(int layer){
+
+            this->rLayer = layer;
+        }
+        
         int Character::renderLayer() const{
 
             return this->rLayer;
@@ -73,5 +78,15 @@ namespace Novella::Components{
         const Graphics::Color& Character::getColor() const{
 
             return this->tint;
+        }
+
+        void Character::setRotation(float degrees){
+
+            this->rotation = degrees;
+        }
+            
+        float Character::getRotation() const{
+
+            return this->rotation;
         }
 }

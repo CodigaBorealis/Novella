@@ -40,6 +40,8 @@ namespace Novella{
 
             objs.push_back(std::move(obj));
 
+            this->dirty = true;
+            
             return ref;
         }
 
@@ -62,13 +64,19 @@ namespace Novella{
         Attribute::Object* findObjectByID(const std::string& id) const;
 
         const std::vector<std::unique_ptr<Attribute::Object>>& objects() const;
+
+        std::vector<std::unique_ptr<Attribute::Object>>& objects();
+
         
         bool hasBgm() const;
         const std::optional<std::string>& getBgm() const;
         void setBgm(const std::string&);
 
-       
+        void clearDirtyFlag();
+        bool needsSorting() const;
         private:
+
+        bool dirty = false;
 
         std::vector<std::unique_ptr<Attribute::Object>> objs;//For drawing
         std::unordered_map<std::string, Attribute::Object*> objectRegistry;//For lookups

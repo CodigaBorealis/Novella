@@ -1,12 +1,31 @@
 #include "../Novella/Rendering/Renderer.hpp"
 #include "../Novella/Components/Renderable.hpp"
+#include "../Novella/Math/Rectangle.hpp"
+#include <algorithm>
 #include <raylib.h>
 
 namespace Novella::Rendering{
 
-    void Renderer::drawTexture(const Graphics::Texture& texture, const Math::Vector2i& position, const Graphics::Color& tint){
+    void Renderer::drawTexture(const Graphics::Texture& texture, const Math::Vector2i& position, const Math::Vector2i& dimensions, float rotation, const Graphics::Color& tint){
 
-        ::DrawTexture(texture.getHandle(), position.x, position.y, tint);
+        Math::Vector2f origin{dimensions / 2.0f};
+
+        Math::Rectangle source{
+            0,
+            0,
+            static_cast<float>(texture.width()),
+            static_cast<float>(texture.height())
+        };
+
+        Math::Rectangle dest{
+
+            static_cast<float>(position.x),
+            static_cast<float>(position.y),
+            static_cast<float>(dimensions.x),
+            static_cast<float>(dimensions.y),
+        };
+
+        ::DrawTexturePro(texture.getHandle(), source, dest, origin, rotation, tint);
     }
 
     void Renderer::drawFont(const Graphics::Font& font, const std::string& text, const Math::Vector2i& position, int fontSize, float spacing, const Graphics::Color& tint){
@@ -25,7 +44,30 @@ namespace Novella::Rendering{
         ::EndDrawing();
     }
 
-    void Renderer::drawScene(const Scene &scene){
+    void Renderer::sortObjects(Scene& scene){
+
+        auto& objects = scene.objects();
+        
+        std::stable_sort(objects.begin(), objects.end(), [](const auto& a, const auto& b){
+
+            auto* renderableA = dynamic_cast<Attribute::Renderable*>(a.get());
+            auto* renderableB = dynamic_cast<Attribute::Renderable*>(b.get());
+
+            int layerA = renderableA ? renderableA->renderLayer() : 0;
+            int layerB = renderableB ? renderableB->renderLayer() : 0;
+
+            return layerA < layerB;
+        });
+
+        scene.clearDirtyFlag();
+    }
+    
+    void Renderer::drawScene(Scene &scene){
+
+        if(scene.needsSorting()){
+
+            sortObjects(scene);
+        }
 
         for(const auto& obj : scene.objects()){
 

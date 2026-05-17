@@ -15,11 +15,14 @@ namespace Novella::Rendering{
         static void beginFrame();
         static void endFrame();
 
-        static void drawTexture(const Graphics::Texture& texture, const Math::Vector2i& position, const Graphics::Color& tint);
+        static void drawTexture(const Graphics::Texture& texture, const Math::Vector2i& position, const Math::Vector2i& dimensions, float rotation, const Graphics::Color& tint);
 
         static void drawFont(const Graphics::Font& font, const std::string& text, const Math::Vector2i& position, int fontSize, float spacing, const Graphics::Color& tint);
 
-        void drawScene(const Scene& scene);
+        void drawScene(Scene& scene);
 
+        private:
+
+        static void sortObjects(Scene& scene);
     };
 }

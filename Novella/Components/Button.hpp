@@ -38,13 +38,18 @@ namespace Novella::Components{
         //Label* getLabel();
 
         void draw(Rendering::Renderer& renderer) override;
-
+        
+        void setRenderLayer(int layer);
         int renderLayer() const override;
 
         void setColor(const Graphics::Color& color) override;
         
         const Graphics::Color& getColor() const override;
         
+        void setRotation(float degrees);
+            
+        float getRotation() const;
+
         private:
 
         std::string id;
@@ -54,7 +59,7 @@ namespace Novella::Components{
         int rLayer = 0;
         //Label* label;
         Graphics::Color tint;
-
+        float rotation = 0;
         static constexpr const char* type = Type::Button;//This is shit but i need a way to serialize components
 
     };

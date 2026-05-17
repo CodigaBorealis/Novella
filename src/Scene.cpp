@@ -12,6 +12,8 @@ namespace Novella{
             objectRegistry[id] = obj.get();
 
             objs.push_back(std::move(obj));
+
+            this->dirty = true;
     
         }
     
@@ -23,9 +25,17 @@ namespace Novella{
 
             return obj->getID() == id;
         });
+
+        this->dirty = true;
+
     }
 
     const std::vector<std::unique_ptr<Attribute::Object>>& Scene::objects() const{
+
+        return objs;
+    }
+
+    std::vector<std::unique_ptr<Attribute::Object>>& Scene::objects(){
 
         return objs;
     }
@@ -46,24 +56,33 @@ namespace Novella{
             return obj->getID() == id;
         });
 
-            if(it == objs.end()) return nullptr;
+        if(it == objs.end()) return nullptr;
             
-            return it->get();
-        }
+        return it->get();
+    }
 
-        bool Scene::hasBgm() const{
+    bool Scene::hasBgm() const{
 
-            return this->bgm != std::nullopt;
-        }
+        return this->bgm != std::nullopt;
+    }
         
-        const std::optional<std::string>& Scene::getBgm() const{
+    const std::optional<std::string>& Scene::getBgm() const{
 
-            return bgm;
-        }
+        return bgm;
+    }
 
-        void Scene::setBgm(const std::string& id){
+    void Scene::setBgm(const std::string& id){
 
-            this->bgm = id;
-        }
-        
+        this->bgm = id;
+    }
+    
+    void Scene::clearDirtyFlag(){
+
+        this->dirty = false;
+    }
+
+    bool Scene::needsSorting() const{
+
+        return this->dirty;
+    }
 }
