@@ -14,5 +14,6 @@ namespace Novella::Attribute{
         virtual void setColor(const Graphics::Color& color) = 0;
         
         virtual const Graphics::Color& getColor() const = 0;
+
     };  
 }

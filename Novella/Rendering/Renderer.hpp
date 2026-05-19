@@ -5,6 +5,7 @@
 #include "../Graphics/Color.hpp"
 #include "../Scene/Scene.hpp"
 #include "../Math/Vector2x.hpp"
+#include "../Math/Rectangle.hpp"
 
 namespace Novella::Rendering{
 
@@ -21,13 +22,15 @@ namespace Novella::Rendering{
         void beginFrame();
         void endFrame();
 
-        void drawTexture(const Graphics::Texture& texture, const Math::Vector2i& position, const Math::Vector2i& dimensions, float rotation, const Graphics::Color& tint);
+        void drawTexture(const Graphics::Texture& texture, const Math::Rectangle& rect, float rotation, const Graphics::Color& tint);
 
-        void drawFont(const Graphics::Font& font, const std::string& text, const Math::Vector2i& position, int fontSize, float spacing, const Graphics::Color& tint);
+        void drawFont(const Graphics::Font& font, const std::string& text, const Math::Rectangle& rect, int fontSize, float spacing, const Graphics::Color& tint);
 
         void drawScene(Scene& scene);
         
         void resize(const Math::Vector2i& windowSize);
+
+        Math::Vector2f virtualResolution() const;
 
         private:
 

@@ -1,31 +1,28 @@
 #pragma once
+#include "Layoutable.hpp"
 #include "Object.hpp"
-#include "Positionable.hpp"
 #include "Clickable.hpp"
 #include "Renderable.hpp"
 #include "Type.hpp"
+#include "../Layout/Layout.hpp"
 
 namespace Novella::Components{
  
-    class Button : public Attribute::Object, public Attribute::Positionable, public Attribute::Clickable, public Attribute::Renderable{
+    class Button : public Attribute::Object, public Attribute::Clickable, public Attribute::Renderable, public Attribute::Layoutable{
 
         public:
 
         Button() = delete;
 
-        Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position, const Math::Vector2i& dimensions);
+        Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
 
-        Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position, const Math::Vector2i& dimensions, int renderLayer);
+        Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
 
         const std::string& getID() const override;
 
         nlohmann::json serialize() const override;
 
         const std::string getType() const override;
-
-        void setPosition(const Math::Vector2i& position) override;
-
-        const Math::Vector2i& getPosition() const override;
 
         void addMouseBind(Input::Mouse button, const std::string& name, const nlohmann::json& args, const std::string& target) override;
             
@@ -54,8 +51,6 @@ namespace Novella::Components{
 
         std::string id;
         std::shared_ptr<Graphics::Texture> texture;
-        Math::Vector2i position;
-        Math::Vector2i dimensions;
         int rLayer = 0;
         //Label* label;
         Graphics::Color tint;

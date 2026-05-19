@@ -1,22 +1,23 @@
 #include "../Novella/Components/Label.hpp"
+#include "../Novella/Layout/LayoutSystem.hpp"
 #include <raylib.h>
 #include <stdexcept>
 namespace Novella::Components{
 
-    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, const Math::Vector2i& position, int size, const std::string& text)
+    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout)
         :
         id(id),
         font(font),
-        position(position),
+        Attribute::Layoutable(layout),
         size(size),
         text(text)
         {}
 
-    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, const Math::Vector2i& position, int size, const std::string& text, int renderLayer)
+    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer)
         :
         id(id),
         font(font),
-        position(position),
+        Attribute::Layoutable(layout),
         size(size),
         rLayer(renderLayer)
         {}
@@ -24,7 +25,7 @@ namespace Novella::Components{
         
     void Label::draw(Rendering::Renderer& renderer){
 
-        renderer.drawFont(*font, text, position, size, spacing, tint);
+        renderer.drawFont(*font, text, computedRectangle, size, spacing, tint);
     }
 
     int Label::renderLayer() const{
@@ -39,16 +40,6 @@ namespace Novella::Components{
     const Graphics::Color& Label::getColor() const{
 
         return this->tint;
-    };
-
-    void Label::setPosition(const Math::Vector2i& position){
-
-        this->position = position;
-    };
-    
-    const Math::Vector2i& Label::getPosition() const{
-
-        return this->position;
     };
 
     void Label::setSize(unsigned int size){
@@ -90,8 +81,8 @@ namespace Novella::Components{
             this->spacing)
         };
 
-        return mousePos.x >= position.x && mousePos.x <= position.x + size.x &&
-               mousePos.y >= position.y && mousePos.y <= position.y + size.y;
+        return mousePos.x >= computedRectangle.x && mousePos.x <= computedRectangle.x + size.x &&
+               mousePos.y >= computedRectangle.y && mousePos.y <= computedRectangle.y + size.y;
 
     };
 
@@ -131,5 +122,11 @@ namespace Novella::Components{
 
             return this->font;
         }
+    //Must hook it into the loop somehow
+    void Label::computeSize(const Math::Vector2i& parentSize){
 
+        Math::Vector2f textSize {::MeasureTextEx(font->getHandle(), text.c_str(), float(size), spacing)};
+
+        computedRectangle = LayoutSystem::computeLabel(layout, textSize, parentSize);
+    }
 }

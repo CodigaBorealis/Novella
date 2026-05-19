@@ -3,20 +3,19 @@
 
 namespace Novella::Components{
 
-        Character::Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position)
+        Character::Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
             :
             id(id),
             texture(texture),
-            position(position)
+            Attribute::Layoutable(layout)
             {}
 
-        Character::Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position, int renderLayer, const Math::Vector2i& dimensions)
+        Character::Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
             :
             id(id),
             texture(texture),
-            position(position),
-            rLayer(renderLayer),
-            dimensions(dimensions)
+            Attribute::Layoutable(layout),
+            rLayer(renderLayer)
             {}
             
         const std::string& Character::getID() const{
@@ -26,7 +25,7 @@ namespace Novella::Components{
 
         void Character::draw(Rendering::Renderer& renderer){
 
-            renderer.drawTexture(*texture, position, dimensions, rotation, tint);
+            renderer.drawTexture(*texture, computedRectangle, rotation, tint);
         }
 
         void Character::setRenderLayer(int layer){
@@ -39,30 +38,10 @@ namespace Novella::Components{
             return this->rLayer;
         }
 
-        void Character::setPosition(const Math::Vector2i& position){
-
-            this->position = position;
-        }
-
-        const Math::Vector2i& Character::getPosition() const{
-
-            return this->position;
-        }
-
         nlohmann::json Character::serialize() const{
 
             return {};
 
-        }
-
-        void Character::setDimensions(const Math::Vector2i& dimensions){
-
-            this->dimensions = dimensions;
-        }
-
-        const Math::Vector2i& Character::getDimensions() const{
-
-            return this->dimensions;
         }
 
         const std::string Character::getType() const{

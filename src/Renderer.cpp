@@ -23,9 +23,9 @@ namespace Novella::Rendering{
         canvas = ::LoadRenderTexture(width, height);
     }
 
-    void Renderer::drawTexture(const Graphics::Texture& texture, const Math::Vector2i& position, const Math::Vector2i& dimensions, float rotation, const Graphics::Color& tint){
-
-        Math::Vector2f origin{dimensions.x / 2.0f, dimensions.y / 2.0f};
+    void Renderer::drawTexture(const Graphics::Texture& texture, const Math::Rectangle& rect, float rotation, const Graphics::Color& tint){
+        
+        Math::Vector2f origin{0.f, 0.f};
 
         Math::Rectangle source{
 
@@ -34,28 +34,20 @@ namespace Novella::Rendering{
             static_cast<float>(texture.width()),
             static_cast<float>(texture.height())
         };
-
-        Math::Rectangle dest{
-            
-            static_cast<float>(position.x),
-            static_cast<float>(position.y),
-            static_cast<float>(dimensions.x),
-            static_cast<float>(dimensions.y)
-        };
         
-        ::DrawTexturePro(texture.getHandle(), source, dest, origin, rotation, tint);
+        ::DrawTexturePro(texture.getHandle(), source, rect, origin, rotation, tint);
     }
 
-    void Renderer::drawFont(const Graphics::Font& font, const std::string& text, const Math::Vector2i& position, int fontSize, float spacing, const Graphics::Color& tint){
+    void Renderer::drawFont(const Graphics::Font& font, const std::string& text, const Math::Rectangle& rect, int fontSize, float spacing, const Graphics::Color& tint){
 
-        ::DrawTextEx(font.getHandle(), text.c_str(), position, fontSize, spacing ,tint);
+        ::DrawTextEx(font.getHandle(), text.c_str(), {rect.x, rect.y}, fontSize, spacing, tint);
     }
 
 
     void Renderer::beginFrame(){
 
         ::BeginTextureMode(canvas);
-        ::ClearBackground(Graphics::Colors::Blue);
+        ::ClearBackground(Graphics::Colors::Black);
     }
     
     void Renderer::endFrame(){
@@ -63,7 +55,7 @@ namespace Novella::Rendering{
         ::EndTextureMode();
 
         ::BeginDrawing();
-        ::ClearBackground(Graphics::Colors::Blue);
+        ::ClearBackground(Graphics::Colors::Black);
 
         Math::Rectangle source{0.0f, 0.0f, baseResolution.x, -baseResolution.y};//The texture is flipped otherwise
 
@@ -129,5 +121,11 @@ namespace Novella::Rendering{
         renderTargetOffset.y = (windowSize.y - (baseResolution.y * scale)) * 0.5f;
 
     }
+
+    Math::Vector2f Renderer::virtualResolution() const{
+
+        return baseResolution;
+    }
+
     
 }

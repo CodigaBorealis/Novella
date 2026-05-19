@@ -9,7 +9,6 @@
 #include <vector>
 #include <optional>
 #include <nlohmann/json.hpp>
-#include "../Math/Vector2x.hpp"
 
 namespace Novella{
 

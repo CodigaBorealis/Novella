@@ -45,7 +45,18 @@ namespace Novella{
             if(displayWindow.isResized()){
 
                 windowRenderer.resize(displayWindow.getSize());
+
             }
+            
+            Math::Vector2i virtualResolution = {
+
+                static_cast<int>(windowRenderer.virtualResolution().x),
+                
+                static_cast<int>(windowRenderer.virtualResolution().y)
+            
+            };
+
+            layoutSystem.compute(currentScene, virtualResolution);
             
             windowRenderer.beginFrame();
 
@@ -79,5 +90,10 @@ namespace Novella{
     Window& Engine::window(){
 
         return displayWindow;
+    }
+
+    LayoutSystem& Engine::layout(){
+
+        return layoutSystem;
     }
 }

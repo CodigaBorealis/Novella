@@ -107,7 +107,7 @@ namespace Novella{
         *it's ugly but i dont know where else to put this without
         *making myself lose even more sanity
         */
-        
+                /*
         //Builder
         factory.registerType("Character", makeBuilder<Components::Character>(
 
@@ -125,7 +125,7 @@ namespace Novella{
         },//Post build functions
             [this](const auto& data, auto& obj){applyColorMask(data, obj);}
         ));
-        /*
+
 
         factory.registerType("Background",makeBuilder<Components::Background>(
 

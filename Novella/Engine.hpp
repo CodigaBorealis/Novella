@@ -1,5 +1,6 @@
 #pragma once
 #include "Audio/AudioSystem.hpp"
+#include "Layout/LayoutSystem.hpp"
 #include "Window/Window.hpp"
 #include "Rendering/Renderer.hpp"
 #include "Rendering/ResourceManager.hpp"
@@ -36,7 +37,8 @@ namespace Novella{
         Audio::AudioSystem& audio();
         SceneManager& scene();
         Window& window();
-        
+        LayoutSystem& layout();
+
         private:
 
         Window displayWindow;
@@ -45,6 +47,7 @@ namespace Novella{
         Rendering::ResourceManager resourceManager;
         SceneManager sceneManager;
         Audio::AudioSystem audioSystem;
+        LayoutSystem layoutSystem;
         IO::JsonSerializer serializer;
 
     };

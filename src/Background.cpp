@@ -2,22 +2,24 @@
 
 namespace Novella::Components{
 
-       Background::Background(const std::string& id, std::shared_ptr<Graphics::Texture> texture)
-            :
-            texture(texture),
-            id(id)
-            {}
-
-        Background::Background(const std::string& id, std::shared_ptr<Graphics::Texture> texture, int renderLayer)
+       Background::Background(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
             :
             texture(texture),
             id(id),
+            Attribute::Layoutable(layout)
+            {}
+
+        Background::Background(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
+            :
+            texture(texture),
+            id(id),
+            Attribute::Layoutable(layout),
             rLayer(renderLayer)
             {}
         
         void Background::draw(Rendering::Renderer& renderer){
 
-            renderer.drawTexture(*texture, position, dimensions, rotation, tint);
+            renderer.drawTexture(*texture, computedRectangle, rotation, tint);
         }
 
         void Background::setRenderLayer(int layer){
@@ -53,25 +55,6 @@ namespace Novella::Components{
         nlohmann::json Background::serialize() const{
 
             return {};
-        }
-
-        void Background::setPosition(const Math::Vector2i& position){
-
-            this->position = position;
-        }
-
-        const Math::Vector2i& Background::getPosition() const{
-
-            return this->position;
-        }
-
-        void Background::setDimensions(const Math::Vector2i& dimensions){
-
-            this->dimensions = dimensions;
-        }
-        const Math::Vector2i& Background::getDimensions() const{
-
-            return dimensions;
         }
 
         void Background::setRotation(float degrees){

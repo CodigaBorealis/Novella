@@ -1,22 +1,23 @@
 #pragma once
 #include "../Graphics/Font.hpp"
 #include "Object.hpp"
-#include "Positionable.hpp"
 #include "Renderable.hpp"
 #include "Clickable.hpp"
 #include "Type.hpp"
 #include <memory>
+#include "../Layout/Layout.hpp"
+#include "Layoutable.hpp"
 
 namespace Novella::Components{
 
-    class Label: public Attribute::Object, public Attribute::Renderable, public Attribute::Positionable, public Attribute::Clickable{
+    class Label: public Attribute::Object, public Attribute::Renderable, public Attribute::Clickable, public Attribute::Layoutable{
 
         public:
 
         Label() = delete;
 
-        Label(const std::string& id, std::shared_ptr<Graphics::Font> font, const Math::Vector2i& position, int size, const std::string& text);
-        Label(const std::string& id, std::shared_ptr<Graphics::Font> font, const Math::Vector2i& position, int size, const std::string& text, int renderLayer);
+        Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout);
+        Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer);
         
         void draw(Rendering::Renderer& renderer) override;
 
@@ -24,9 +25,6 @@ namespace Novella::Components{
 
         void setColor(const Graphics::Color& color) override;
         const Graphics::Color& getColor() const override;
-
-        void setPosition(const Math::Vector2i& position) override;
-        const Math::Vector2i& getPosition() const override;
 
         void setSize(unsigned int size);
         unsigned int getSize() const;
@@ -52,13 +50,14 @@ namespace Novella::Components{
 
         std::shared_ptr<Graphics::Font> getFont() const;
         
+        void computeSize(const Math::Vector2i& parentSize);
+
         private:
         
         std::string text;
         std::shared_ptr<Graphics::Font> font;
         int size;
         float spacing = 1.0f;
-        Math::Vector2i position;
         std::string id;
         int rLayer;
         Graphics::Color tint;

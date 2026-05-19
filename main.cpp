@@ -3,19 +3,21 @@
 #include "Novella/Components/Button.hpp"
 #include "Novella/Components/Character.hpp"
 #include "Novella/Engine.hpp"
-#include "Novella/Math/Vector2x.hpp"
+#include "Novella/Layout/Anchor.hpp"
+#include "Novella/Layout/SizeMode.hpp"
+#include "Novella/Layout/Layout.hpp"
 #include "Novella/Window/WindowFlags.hpp"
 #include "Novella/Components/Label.hpp"
-
+#include "iostream"
 int main(){
 
-    Novella::Engine engine(1000, 1000, "test", 60, "/home/line/projects/Novel/Test/MainMenu.png",Novella::WindowFlags::Resizable);
+    Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novel/Test/MainMenu.png",Novella::WindowFlags::Resizable);
 
     engine.resources().loadTexture("character", "/home/line/projects/Novel/Test/character_1.png");
 
-    engine.resources().loadTexture("background", "/home/line/projects/Novel/Test/dialogueBG.png");
+    engine.resources().loadTexture("button", "/home/line/projects/Novel/Test/dialogueBG.png");
 
-    engine.resources().loadTexture("button", "/home/line/projects/Novel/Test/backgroundTest.png");
+    engine.resources().loadTexture("background", "/home/line/projects/Novel/Test/backgroundTest.png");
 
     engine.resources().loadTexture("button2", "/home/line/projects/Novel/Test/backgroundTest2.png");
 
@@ -26,15 +28,23 @@ int main(){
     auto& bg= engine.scene().addObject<Novella::Components::Background>(
 
         "background",
-        engine.resources().getTexture("background")
+        engine.resources().getTexture("background"),
+        Novella::Layout{            
+            .anchor = Novella::Anchor::TopLeft,
+            .widthMode = Novella::SizeMode::FitWidth,
+            .heightMode = Novella::SizeMode::FitHeight
+        },
+        -12        
 
     );
+
+    std::cout<<"From main: " << static_cast<int>(bg.getLayout().widthMode);
 
     auto& c = engine.scene().addObject<Novella::Components::Character>(
 
         "character",
         engine.resources().getTexture("character"),
-        Novella::Math::Vector2i{500, 500}
+        Novella::Layout{}
 
     );
     
@@ -44,21 +54,30 @@ int main(){
 
         "label",
         engine.resources().getFont("font"),
-        Novella::Math::Vector2i{500, 500},
         25,
-        "did you know that sometimes you may or you may not or you could or you"
+        "did you know that sometimes you may or you may not or you could or you",
+        Novella::Layout{
+            .anchor = Novella::Anchor::Center,
+            .offset = {10, 23}
+        }
     );
 
     auto& button = engine.scene().addObject<Novella::Components::Button>(
 
         "button",
         engine.resources().getTexture("button"),
-        Novella::Math::Vector2i{50,50},
-        Novella::Math::Vector2i{1200,1200}
+        Novella::Layout{
+            .anchor = Novella::Anchor::Center,
+            .widthMode = Novella::SizeMode::Fixed,
+            .heightMode = Novella::SizeMode::Fixed,
+            .width = 500,
+            .height = 1000,
+            .offset = {10, 20}
+        }
 
     );
 
-    button.setRenderLayer(-2);
+    button.setRenderLayer(22);
 
     auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>("label");
     
@@ -70,7 +89,9 @@ int main(){
 
     engine.window().setTitle("hola");
 
+    std::cout << "Background values: " <<"Width:" << bg.getLayout().width << " Height: " << bg.getLayout().height << " X:" << bg.getLayout().offset.x << " Y:" << bg.getLayout().offset.x <<"\n";
     engine.run();
 
     return 0;
 } 
+

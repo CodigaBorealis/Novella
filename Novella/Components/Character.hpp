@@ -1,22 +1,22 @@
 #pragma once
 #include "../Graphics/Texture.hpp"
 #include "Object.hpp"
-#include "Positionable.hpp"
 #include "Renderable.hpp"
-#include "Transformable.hpp"
 #include "Type.hpp"
 #include <memory>
+#include "../Layout/Layout.hpp"
+#include "Layoutable.hpp"
 
 namespace Novella::Components{
 
-    class Character : public Attribute::Object, public Attribute::Transformable, public Attribute::Positionable, public Attribute::Renderable{
+    class Character : public Attribute::Object, public Attribute::Renderable, public Attribute::Layoutable{
 
         public:
 
             Character() = delete;
 
-            Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position);
-            Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position, int renderLayer, const Math::Vector2i& dimensions);
+            Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
+            Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
             
             const std::string& getID() const override;
 
@@ -25,22 +25,14 @@ namespace Novella::Components{
             void setRenderLayer(int layer);
             int renderLayer() const override;
 
-            void setPosition(const Math::Vector2i& position) override;
-
-            const Math::Vector2i& getPosition() const override;
-
             nlohmann::json serialize() const override;
-
-            void setDimensions(const Math::Vector2i& dimensions) override;
-
-            const Math::Vector2i& getDimensions() const override;
 
             const std::string getType() const override;
 
             void setColor(const Graphics::Color& color) override;
 
             const Graphics::Color& getColor() const override;
-            
+
             void setRotation(float degrees);
 
             float getRotation() const;
@@ -49,9 +41,7 @@ namespace Novella::Components{
 
             std::string id;
             std::shared_ptr<Graphics::Texture> texture;
-            Math::Vector2i position;
             int rLayer = 0;
-            Math::Vector2i dimensions{texture->width(), texture->height()};
             Graphics::Color tint;
             float rotation = 0;
             //std::vector<std::string> sounds;

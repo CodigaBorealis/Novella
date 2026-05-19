@@ -1,24 +1,28 @@
 #include "../Novella/Components/Button.hpp"
-#include <stdexcept>
 
 namespace Novella::Components{
 
-    Button::Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position, const Math::Vector2i& dimensions)
+    Button::Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
         :
         id(id),
         texture(texture),
-        position(position),
-        dimensions(dimensions)
+        Attribute::Layoutable(layout)
         {}
-
-    Button::Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Math::Vector2i& position, const Math::Vector2i& dimensions, int renderLayer)
+    
+    Button::Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
         :
         id(id),
         texture(texture),
-        position(position),
-        dimensions(dimensions),
+        Attribute::Layoutable(layout),
         rLayer(renderLayer)
         {}
+
+    void Button::addMouseBind(Input::Mouse button, const std::string& name, const nlohmann::json& args, const std::string& target){
+
+        if(mouseBinds.contains(button)) throw std::runtime_error(name + " could not be binded because this label already has an action for this mouse button");
+
+        mouseBinds.emplace(button, BindedAction{name, args, target});
+    }
 
     const std::string& Button::getID() const{
 
@@ -34,28 +38,11 @@ namespace Novella::Components{
 
         return this->type;
     }
-
-    void Button::setPosition(const Math::Vector2i& position){
-
-        this->position = position;
-    }
-
-    const Math::Vector2i& Button::getPosition() const{
-
-        return this->position;
-    }
-
-    void Button::addMouseBind(Input::Mouse button, const std::string& name, const nlohmann::json& args, const std::string& target){
-
-        if(mouseBinds.contains(button)) throw std::runtime_error(name + " could not be binded because this label already has an action for this mouse button");
-
-        mouseBinds.emplace(button, BindedAction{name, args, target});
-    }
             
     bool Button::contains(const Math::Vector2f& mousePos) const{
 
-        return mousePos.x >= position.x && mousePos.x <= position.x + dimensions.x &&
-               mousePos.y >= position.y && mousePos.y <= position.y + dimensions.y;
+        return mousePos.x >= computedRectangle.x && mousePos.x <= computedRectangle.x + computedRectangle.width &&
+               mousePos.y >= computedRectangle.y && mousePos.y <= computedRectangle.y + computedRectangle.height;
 
     }
 /*
@@ -80,7 +67,7 @@ namespace Novella::Components{
 */
     void Button::draw(Rendering::Renderer& renderer){
 
-        renderer.drawTexture(*texture, position, dimensions, rotation, tint);
+        renderer.drawTexture(*texture, computedRectangle, rotation, tint);
     }
 
     void Button::setRenderLayer(int layer){
