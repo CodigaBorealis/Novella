@@ -31,7 +31,7 @@ namespace Novella::Input{
 
         if(it == commands.end()) throw std::runtime_error("This command is not registered in the scene: " + command.name);
 
-        it->second(*target, command.args);
+        it->second(scene, *target, command.args);
     }
 
 }
