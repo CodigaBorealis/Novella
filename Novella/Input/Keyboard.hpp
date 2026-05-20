@@ -1,8 +1,8 @@
 #pragma once
 
-namespace Novella::Input{
+namespace Novella::Input::Keyboard{
 
-    enum class Keyboard{
+    enum class Key{
 
         Unknown,
 

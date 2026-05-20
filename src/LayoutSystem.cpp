@@ -1,7 +1,6 @@
 #include "../Novella/Layout/LayoutSystem.hpp"
 #include <algorithm>
 #include "../Novella/Components/Layoutable.hpp"
-#include <iostream>
 
 namespace Novella{
 

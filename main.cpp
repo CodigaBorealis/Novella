@@ -3,12 +3,13 @@
 #include "Novella/Components/Button.hpp"
 #include "Novella/Components/Character.hpp"
 #include "Novella/Engine.hpp"
+#include "Novella/Input/Target.hpp"
 #include "Novella/Layout/Anchor.hpp"
 #include "Novella/Layout/SizeMode.hpp"
 #include "Novella/Layout/Layout.hpp"
 #include "Novella/Window/WindowFlags.hpp"
 #include "Novella/Components/Label.hpp"
-#include "iostream"
+#include "Novella/Input/MouseButtons.hpp"
 int main(){
 
     Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novel/Test/MainMenu.png",Novella::WindowFlags::Resizable);
@@ -38,8 +39,6 @@ int main(){
 
     );
 
-    std::cout<<"From main: " << static_cast<int>(bg.getLayout().widthMode);
-
     auto& c = engine.scene().addObject<Novella::Components::Character>(
 
         "character",
@@ -54,14 +53,14 @@ int main(){
 
         "label",
         engine.resources().getFont("font"),
-        25,
+        50,
         "did you know that sometimes you may or you may not or you could or you",
         Novella::Layout{
             .anchor = Novella::Anchor::Center,
             .offset = {10, 23}
         }
     );
-
+//Label breaks if you use the constructor with the render label somehow
     auto& button = engine.scene().addObject<Novella::Components::Button>(
 
         "button",
@@ -73,11 +72,13 @@ int main(){
             .width = 500,
             .height = 1000,
             .offset = {10, 20}
-        }
+        },200
 
     );
 
     button.setRenderLayer(22);
+
+    button.addMouseBind(Novella::Input::Mouse::Button::Left, "test", nlohmann::json(), Novella::Input::Target::SELF);
 
     auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>("label");
     
@@ -89,7 +90,6 @@ int main(){
 
     engine.window().setTitle("hola");
 
-    std::cout << "Background values: " <<"Width:" << bg.getLayout().width << " Height: " << bg.getLayout().height << " X:" << bg.getLayout().offset.x << " Y:" << bg.getLayout().offset.x <<"\n";
     engine.run();
 
     return 0;

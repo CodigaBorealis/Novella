@@ -2,27 +2,27 @@
 #include "Keyboard.hpp"
 #include <raylib.h>
 
-namespace Novella::Input{
+namespace Novella::Input::Keyboard{
 
-    inline Keyboard fromRaylib(int key){
+    inline Key fromRaylib(int key){
 
         switch(key){
 
-            #define X(name, raylib) case raylib: return Keyboard::name;
+            #define X(name, raylib) case raylib: return Key::name;
             #include "Keys.hpp"
             #undef X
 
             default:
 
-                return Keyboard::Unknown;
+                return Key::Unknown;
         }
     }
 
-    inline int toRaylib(Keyboard key){
+    inline int toRaylib(Key key){
 
         switch(key){
 
-            #define X(name, raylib) case Keyboard::name: return raylib;
+            #define X(name, raylib) case Key::name: return raylib;
             #include "Keys.hpp"
             #undef X
 
@@ -32,7 +32,7 @@ namespace Novella::Input{
         }
     }
 
-    inline bool isPressed(Keyboard key){
+    inline bool isPressed(Key key){
 
         return ::IsKeyDown(toRaylib(key));
     }

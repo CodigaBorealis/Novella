@@ -3,29 +3,23 @@
 #include <nlohmann/json.hpp>
 #include "../Input/Mouse.hpp"
 #include "../Math/Vector2x.hpp"
+#include "../Input/ActionCommand.hpp"
 
 namespace Novella::Attribute{
 
     struct Clickable{
 
         protected:
-
-        struct BindedAction{
-
-        std::string name;
-        nlohmann::json args;
-        std::string target;
-        };
         
-        std::unordered_map<Input::Mouse, BindedAction> mouseBinds;
+        std::unordered_map<Input::Mouse::Button, Input::ActionCommand> mouseBinds;
 
         public:
 
         virtual ~Clickable() = default;
 
-        const std::unordered_map<Input::Mouse, BindedAction>& getMouseBinds(){ return  mouseBinds;}
+        const std::unordered_map<Input::Mouse::Button, Input::ActionCommand>& getMouseBinds() const{ return  mouseBinds;}
             
-        virtual void addMouseBind(Input::Mouse button, const std::string& name, const nlohmann::json& args, const std::string& target) = 0;
+        virtual void addMouseBind(Input::Mouse::Button button, const std::string& name, const nlohmann::json& args, const std::string& target) = 0;
             
         virtual bool contains(const Math::Vector2f& mousePos) const = 0;
         

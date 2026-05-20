@@ -31,6 +31,8 @@ namespace Novella::Rendering{
         void resize(const Math::Vector2i& windowSize);
 
         Math::Vector2f virtualResolution() const;
+        
+        Math::Vector2f toVirtualCoordinates(const Math::Vector2f& mousePosition) const;
 
         private:
 

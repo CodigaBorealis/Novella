@@ -1,4 +1,5 @@
 #include "../Novella/Engine.hpp"
+#include "../Novella/Input/InputSystem.hpp"
 
 namespace Novella{
 
@@ -8,7 +9,7 @@ namespace Novella{
         sceneManager(resourceManager,audioSystem, serializer),
         serializer(resourceManager),
         windowRenderer(width, height)
-        {}
+            {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, WindowFlags flags)
         :
@@ -16,7 +17,7 @@ namespace Novella{
         sceneManager(resourceManager,audioSystem, serializer),
         serializer(resourceManager),
         windowRenderer(width, height)
-        {}
+            {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon)
         :
@@ -24,7 +25,7 @@ namespace Novella{
         sceneManager(resourceManager,audioSystem, serializer),
         serializer(resourceManager),
         windowRenderer(width, height)
-        {}
+            {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon, WindowFlags flags)
         :
@@ -32,7 +33,7 @@ namespace Novella{
         sceneManager(resourceManager,audioSystem, serializer),
         serializer(resourceManager),
         windowRenderer(width, height)
-        {}
+            {}
 
     void Engine::run(){
         
@@ -56,8 +57,14 @@ namespace Novella{
             
             };
 
+            Math::Vector2f virtualMouse = windowRenderer.toVirtualCoordinates(Input::InputSystem::mousePosition());
+
             layoutSystem.compute(currentScene, virtualResolution);
-            
+
+            interactionSystem.handleKeyboardInput(currentScene);
+
+            interactionSystem.handleMouseInput(currentScene, virtualMouse);
+
             windowRenderer.beginFrame();
 
             windowRenderer.drawScene(currentScene);
@@ -69,31 +76,37 @@ namespace Novella{
 
     Rendering::ResourceManager& Engine::resources(){
 
-        return resourceManager;
+        return this->resourceManager;
     }
 
     Rendering::Renderer& Engine::renderer(){
 
-        return windowRenderer;
+        return this->windowRenderer;
     }
 
     Audio::AudioSystem& Engine::audio(){
 
-        return audioSystem;
+        return this->audioSystem;
     }
 
     SceneManager& Engine::scene(){
 
-        return sceneManager;
+        return this->sceneManager;
     }
 
     Window& Engine::window(){
 
-        return displayWindow;
+        return this->displayWindow;
     }
 
     LayoutSystem& Engine::layout(){
 
-        return layoutSystem;
+        return this->layoutSystem;
     }
+
+    Input::InteractionSystem& Engine::input(){
+
+        return this->interactionSystem;
+    }
+
 }

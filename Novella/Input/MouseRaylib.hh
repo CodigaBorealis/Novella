@@ -2,27 +2,27 @@
 #include "Mouse.hpp"
 #include <raylib.h>
 
-namespace Novella::Input{
+namespace Novella::Input::Mouse{
 
-    inline Mouse fromRaylib(int button){
+    inline Button fromRaylib(int button){
 
         switch(button){
             
-            #define X(name, raylib) case raylib: return Mouse::name;
+            #define X(name, raylib) case raylib: return Button::name;
             #include "MouseButtons.hpp"
             #undef X
 
             default:
 
-                return Mouse::Unknown;
+                return Button::Unknown;
         }
     }
 
-    inline int toRaylib(Mouse button){
+    inline int toRaylib(Button button){
 
         switch (button) {
             
-            #define X(name, raylib) case Mouse::name: return raylib;
+            #define X(name, raylib) case Button::name: return raylib;
             #include "MouseButtons.hpp"
             #undef X
 
@@ -32,5 +32,5 @@ namespace Novella::Input{
         }
     }
 
-    inline bool isPressed(Mouse button){return ::IsMouseButtonDown(toRaylib(button));}
+    inline bool isPressed(Button button){return ::IsMouseButtonDown(toRaylib(button));}
 }

@@ -1,5 +1,5 @@
 #include "../Novella/Scene/SceneBuilder.hpp"
-#include "../Novella/Components/Character.hpp"
+//#include "../Novella/Components/Character.hpp"
 //#include "../../../Include/Moon/Components/Background.hpp"
 //#include "../../../Include/Moon/Components/Button.hpp"
 //#include "../../../Include/Moon/Components/DialogueBox.hpp"
@@ -28,7 +28,7 @@ namespace Novella{
 
                     if(bind.contains("key") && bind.contains("action")){
 
-                        component.addKeyboardBind(static_cast<Input::Keyboard>(bind["key"]), bind["action"], bind["args"], bind["target"]);
+                        component.addKeyboardBind(static_cast<Input::Keyboard::Key>(bind["key"]), bind["action"], bind["args"], bind["target"]);
 
                     }
 
@@ -44,7 +44,7 @@ namespace Novella{
                     
                     if(bind.contains("button") && bind.contains("action")){
 
-                        component.addMouseBind(static_cast<Input::Mouse>(bind["button"]), bind["action"], bind["args"], bind["target"]);
+                        component.addMouseBind(static_cast<Input::Mouse::Button>(bind["button"]), bind["action"], bind["args"], bind["target"]);
 
                     }
                 }

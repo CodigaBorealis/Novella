@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Novella::Commands::Target{
+namespace Novella::Input::Target{
 
     static constexpr const char* SELF = "@SELF";
 

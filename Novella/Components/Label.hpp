@@ -33,7 +33,7 @@ namespace Novella::Components{
 
         float getSpacing() const;
 
-        void addMouseBind(Input::Mouse button, const std::string& name, const nlohmann::json& args, const std::string& target) override;
+        void addMouseBind(Input::Mouse::Button button, const std::string& name, const nlohmann::json& args, const std::string& target) override;
 
         bool contains(const Math::Vector2f& mousePos) const override;
 

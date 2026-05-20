@@ -1,8 +1,8 @@
 #pragma once
 
-namespace Novella::Input{
+namespace Novella::Input::Mouse{
 
-    enum class Mouse{
+    enum class Button{
 
         Unknown,
 

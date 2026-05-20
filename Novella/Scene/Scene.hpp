@@ -5,7 +5,7 @@
 #include <type_traits>
 #include <memory>
 #include <unordered_map>
-#include "../Commands/Target.hpp"
+#include "../Input/Target.hpp"
 #include <vector>
 #include <optional>
 #include <nlohmann/json.hpp>
@@ -28,9 +28,9 @@ namespace Novella{
 
             const std::string& id = obj->getID();
 
-            if(id == Novella::Commands::Target::SELF) throw std::runtime_error("Scene::CreateObJECT: @SELF is reserved for targeting the component, use other id");
+            if(id == Novella::Input::Target::SELF) throw std::runtime_error("Scene::CreateObJECT: @SELF is reserved for targeting the component, use other id");
 
-            if(id == Novella::Commands::Target::ALL) throw std::runtime_error("Scene::CreateObJECT: @SELF is reserved for targeting everything, use other id");
+            if(id == Novella::Input::Target::ALL) throw std::runtime_error("Scene::CreateObJECT: @SELF is reserved for targeting everything, use other id");
 
             if(objectRegistry.contains(id)) throw std::runtime_error("Scene::createObject: id already exists: " + id);
 

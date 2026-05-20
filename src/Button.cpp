@@ -1,5 +1,5 @@
 #include "../Novella/Components/Button.hpp"
-
+#include "../Novella/Input/ActionCommand.hpp"
 namespace Novella::Components{
 
     Button::Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
@@ -17,11 +17,11 @@ namespace Novella::Components{
         rLayer(renderLayer)
         {}
 
-    void Button::addMouseBind(Input::Mouse button, const std::string& name, const nlohmann::json& args, const std::string& target){
+    void Button::addMouseBind(Input::Mouse::Button button, const std::string& name, const nlohmann::json& args, const std::string& target){
 
-        if(mouseBinds.contains(button)) throw std::runtime_error(name + " could not be binded because this label already has an action for this mouse button");
+        if(mouseBinds.contains(button)) throw std::runtime_error(name + " could not be binded because this button already has an action for this mouse button");
 
-        mouseBinds.emplace(button, BindedAction{name, args, target});
+        mouseBinds.emplace(button, Input::ActionCommand{name, args, target});
     }
 
     const std::string& Button::getID() const{

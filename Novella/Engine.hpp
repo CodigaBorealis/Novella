@@ -7,7 +7,7 @@
 #include "Scene/SceneManager.hpp"
 #include "IO/JsonSerializer.hpp"
 #include "Window/WindowFlags.hpp"
-
+#include "Input/InteractionSystem.hpp"
 namespace Novella{
 
     class Engine{
@@ -38,7 +38,8 @@ namespace Novella{
         SceneManager& scene();
         Window& window();
         LayoutSystem& layout();
-
+        Input::InteractionSystem& input();
+        
         private:
 
         Window displayWindow;
@@ -49,7 +50,7 @@ namespace Novella{
         Audio::AudioSystem audioSystem;
         LayoutSystem layoutSystem;
         IO::JsonSerializer serializer;
-
+        Input::InteractionSystem interactionSystem;
     };
 
 }

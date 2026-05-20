@@ -127,5 +127,12 @@ namespace Novella::Rendering{
         return baseResolution;
     }
 
-    
+    Math::Vector2f Renderer::toVirtualCoordinates(const Math::Vector2f& mousePosition) const{
+
+        return{
+            
+            (mousePosition.x - renderTargetOffset.x) / scale,
+            (mousePosition.y - renderTargetOffset.y) / scale
+        };
+    }    
 }
