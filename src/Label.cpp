@@ -12,13 +12,14 @@ namespace Novella::Components{
         size(size),
         text(text)
         {}
-
+//I'm stupid
     Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer)
         :
         id(id),
         font(font),
         Attribute::Layoutable(layout),
         size(size),
+        text(text),
         rLayer(renderLayer)
         {}
         

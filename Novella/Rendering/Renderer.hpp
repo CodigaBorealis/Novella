@@ -1,7 +1,6 @@
 #pragma once
 #include "../Graphics/Texture.hpp"
 #include "../Graphics/Font.hpp"
-#include "../Graphics/Image.hpp"
 #include "../Graphics/Color.hpp"
 #include "../Scene/Scene.hpp"
 #include "../Math/Vector2x.hpp"

@@ -58,7 +58,8 @@ int main(){
         Novella::Layout{
             .anchor = Novella::Anchor::Center,
             .offset = {10, 23}
-        }
+        },
+        1000
     );
 //Label breaks if you use the constructor with the render label somehow
     auto& button = engine.scene().addObject<Novella::Components::Button>(
