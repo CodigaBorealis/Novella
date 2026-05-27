@@ -24,7 +24,7 @@ namespace Novella::Components{
 
         const std::string getType() const override;
 
-        void addMouseBind(Input::Mouse::Button button, const std::string& name, const nlohmann::json& args, const std::string& target) override;
+        void addMouseBind(Input::Mouse::Button button, const Input::ActionCommand& command) override;
             
         bool contains(const Math::Vector2f& mousePos) const override;
 

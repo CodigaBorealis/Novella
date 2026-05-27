@@ -53,11 +53,11 @@ namespace Novella::Components{
         return this->size;
     };
 
-    void Label::addMouseBind(Input::Mouse::Button button, const std::string& name, const nlohmann::json& args, const std::string& target){
+    void Label::addMouseBind(const Input::Mouse::Button button, const Input::ActionCommand& command){
 
-        if(mouseBinds.contains(button)) throw std::runtime_error(name + " could not be binded because this label already has an action for this mouse button");
+        if(mouseBinds.contains(button)) throw std::runtime_error(command.name + " could not be binded because this label already has an action for this mouse button");
 
-        mouseBinds.emplace(button, Input::ActionCommand{name, args, target});
+        mouseBinds.emplace(button, command);
     };
 
     void Label::setSpacing(float spacing){

@@ -43,7 +43,7 @@ namespace Novella::Input{
                         std::cout << times;
                         std::cout<< "clicked\n";
                         
-                        //dispatcher.trigger(scene, bind.second);
+                        dispatcher.trigger(scene, bind.second);
                     }
                 }
 

@@ -3,13 +3,15 @@
 #include "Novella/Components/Button.hpp"
 #include "Novella/Components/Character.hpp"
 #include "Novella/Engine.hpp"
+#include "Novella/Input/ActionCommand.hpp"
 #include "Novella/Input/Target.hpp"
 #include "Novella/Layout/Anchor.hpp"
 #include "Novella/Layout/SizeMode.hpp"
 #include "Novella/Layout/Layout.hpp"
 #include "Novella/Window/WindowFlags.hpp"
 #include "Novella/Components/Label.hpp"
-#include "Novella/Input/MouseButtons.hpp"
+#include "Novella/Input/Mouse.hpp"
+
 int main(){
 
     Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novel/Test/MainMenu.png",Novella::WindowFlags::Resizable);
@@ -76,10 +78,10 @@ int main(){
         },200
 
     );
-
+    
     button.setRenderLayer(22);
 
-    button.addMouseBind(Novella::Input::Mouse::Button::Left, "test", nlohmann::json(), Novella::Input::Target::SELF);
+    button.addMouseBind(Novella::Input::Mouse::Button::Left, Novella::Input::ActionCommand{"test", nlohmann::json(), Novella::Input::Target::SELF});
 
     auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>("label");
     
