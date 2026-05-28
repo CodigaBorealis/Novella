@@ -1,11 +1,13 @@
 #include "../Novella/Input/CommandDispatcher.hpp"
+#include "../Novella/Scene/Scene.hpp"
+#include "../Novella/Input/ActionCommand.hpp"
 #include <stdexcept>
 
 namespace Novella::Input{
 
-    Attribute::Object* CommandDispatcher::resolveTarget(Scene& scene, const std::string& target) const{
+    Attribute::Object* CommandDispatcher::resolveTarget(Scene& scene, unsigned int targetID) const{
 
-        auto* targetObject = scene.findObjectByID(target);
+        auto* targetObject = scene.findObjectByID(targetID);
 
         if(targetObject != nullptr){
 
@@ -13,7 +15,7 @@ namespace Novella::Input{
 
         }else{
 
-            throw std::runtime_error("Object not found in the scene: " + target);
+            throw std::runtime_error("Object not found in the scene: " + std::to_string(targetID));
         }
 
     }

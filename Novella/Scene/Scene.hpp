@@ -1,14 +1,18 @@
 #pragma once
-#include "../Components/Object.hpp"
 #include <concepts>
 #include <stdexcept>
 #include <type_traits>
 #include <memory>
 #include <unordered_map>
-#include "../Input/Target.hpp"
 #include <vector>
 #include <optional>
 #include <nlohmann/json.hpp>
+
+namespace Novella::Attribute{
+
+    class Object;
+
+}
 
 namespace Novella{
 
@@ -28,10 +32,6 @@ namespace Novella{
 
             const std::string& id = obj->getID();
 
-            if(id == Novella::Input::Target::SELF) throw std::runtime_error("Scene::CreateObJECT: @SELF is reserved for targeting the component, use other id");
-
-            if(id == Novella::Input::Target::ALL) throw std::runtime_error("Scene::CreateObJECT: @SELF is reserved for targeting everything, use other id");
-
             if(objectRegistry.contains(id)) throw std::runtime_error("Scene::createObject: id already exists: " + id);
 
             T& ref = *obj;
@@ -48,11 +48,11 @@ namespace Novella{
         //For recovering the specific implementation of the object
         template<typename T>
 
-        T* getObjectAs(const std::string& id){
+        T* getObjectAs(unsigned int id){
 
             auto* base = findObjectByID(id);
 
-            if(!base) throw std::runtime_error("Scene::getObjectAs: id not found: " + id);
+            if(!base) throw std::runtime_error("Scene::getObjectAs: id not found: " + std::to_string(id));
 
             return dynamic_cast<T*>(base);
         }
@@ -60,8 +60,8 @@ namespace Novella{
         void addObject(std::unique_ptr<Attribute::Object> obj);
         void removeObject(const std::string& id);
 
-        Attribute::Object* findObjectByID(const std::string& id);
-        Attribute::Object* findObjectByID(const std::string& id) const;
+        Attribute::Object* findObjectByID(unsigned int id);
+        Attribute::Object* findObjectByID(unsigned int id) const;
 
         const std::vector<std::unique_ptr<Attribute::Object>>& objects() const;
 

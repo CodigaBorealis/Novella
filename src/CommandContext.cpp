@@ -2,4 +2,4 @@
 #include "../Novella/Audio/AudioSystem.hpp"
 #include "../Novella/Rendering/Renderer.hpp"
 #include "../Novella/Scene/Scene.hpp"
-#include "../Novella/Components/Object.hpp"
+#include "../Novella/Attribute/Object.hpp"

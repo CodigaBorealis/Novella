@@ -1,4 +1,7 @@
 #include "../Novella/Audio/AudioBackend.hpp"
+#include "../Novella/Audio/AudioResource.hpp"
+#include "../Novella/Audio/Command.hpp"
+#include "../Novella/Audio/SoundRegistry.hpp"
 #include <raylib.h>
 #include <stdexcept>
 

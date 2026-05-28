@@ -97,9 +97,9 @@ namespace Novella::Components{
         return {};
     }
 
-    const std::string Label::getType() const{
+    Type Label::getType() const{
 
-        return this->TYPE;
+        return this->type;
     }
 
     void Label::setText(const std::string& text){

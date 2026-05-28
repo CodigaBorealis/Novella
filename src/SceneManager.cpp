@@ -1,13 +1,13 @@
 #include "../Novella/Scene/SceneManager.hpp"
 #include "../Novella/Audio/AudioSystem.hpp"
-#include "../Novella/IO/JsonSerializer.hpp"
+#include "../Novella/Scene/SceneManager.hpp"
+#include "../Novella/Attribute/Object.hpp"
 namespace Novella{
 
-    SceneManager::SceneManager(Rendering::ResourceManager& resourceManager, Audio::AudioSystem& audio, IO::JsonSerializer& serializer)
+    SceneManager::SceneManager(Rendering::ResourceManager& resourceManager, Audio::AudioSystem& audio)
         :
         resourceManager(resourceManager),
-        audioSystem(audio),
-        serializer(serializer)
+        audioSystem(audio)
         {}
 
     void SceneManager::loadScene(std::unique_ptr<Scene> scene){
@@ -33,18 +33,6 @@ namespace Novella{
         currentScene = std::make_unique<Scene>();
 
         return *currentScene;
-    }
-
-    void SceneManager::saveCurrentScene(const std::filesystem::path& location, const std::string& name){
-
-        if(!currentScene) return;
-
-        serializer.saveScene(name, location, *currentScene);
-    }
-
-    void SceneManager::saveScene(const std::string& name,const std::filesystem::path& location, const Scene& scene){
-
-        serializer.saveScene(name, location, scene);
     }
 
     void SceneManager::clear(){

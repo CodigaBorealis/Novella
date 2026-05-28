@@ -3,8 +3,18 @@
 #include <unordered_map>
 #include <functional>
 #include <memory>
-#include "../Components/Object.hpp"
-#include "../Rendering/ResourceManager.hpp"
+
+namespace Novella::Attribute{
+
+    class Object;
+
+}
+
+namespace Novella::Rendering{
+
+    class ResourceManager;
+
+}
 
 namespace Novella{
 

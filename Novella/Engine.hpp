@@ -5,9 +5,10 @@
 #include "Rendering/Renderer.hpp"
 #include "Rendering/ResourceManager.hpp"
 #include "Scene/SceneManager.hpp"
-#include "IO/JsonSerializer.hpp"
 #include "Window/WindowFlags.hpp"
 #include "Input/InteractionSystem.hpp"
+#include "Attribute/Object.hpp"
+
 namespace Novella{
 
     class Engine{
@@ -49,7 +50,6 @@ namespace Novella{
         SceneManager sceneManager;
         Audio::AudioSystem audioSystem;
         LayoutSystem layoutSystem;
-        IO::JsonSerializer serializer;
         Input::InteractionSystem interactionSystem;
     };
 

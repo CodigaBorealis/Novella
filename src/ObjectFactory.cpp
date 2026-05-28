@@ -1,4 +1,5 @@
 #include "../Novella/Scene/ObjectFactory.hpp"
+#include "../Novella/Attribute/Object.hpp"
 #include <stdexcept>
 
 namespace Novella{

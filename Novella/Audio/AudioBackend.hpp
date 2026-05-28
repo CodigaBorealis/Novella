@@ -1,8 +1,12 @@
-#include "AudioResource.hpp"
 #include <raylib.h>
-#include "SoundRegistry.hpp"
-#include "Command.hpp"
+#include <vector>
+#include <unordered_map>
+
 namespace Novella::Audio {
+
+    class AudioResource;
+    class SoundRegistry;
+    struct Command;
 
     class AudioBackend {
 

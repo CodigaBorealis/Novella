@@ -1,6 +1,11 @@
 #include "../Novella/Rendering/Renderer.hpp"
-#include "../Novella/Components/Renderable.hpp"
+#include "../Novella/Attribute/Renderable.hpp"
 #include "../Novella/Math/Rectangle.hpp"
+#include "../Novella/Graphics/Color.hpp"
+#include "../Novella/Graphics/Texture.hpp"
+#include "../Novella/Graphics/Font.hpp"
+#include "../Novella/Scene/Scene.hpp"
+#include "../Novella/Attribute/Object.hpp"
 #include <algorithm>
 #include <raylib.h>
 

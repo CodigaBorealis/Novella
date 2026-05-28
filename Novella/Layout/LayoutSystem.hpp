@@ -1,8 +1,18 @@
 #pragma once
 #include "../Math/Rectangle.hpp"
 #include "../Math/Vector2x.hpp"
-#include "Layout.hpp"
-#include "../Scene/Scene.hpp"
+
+namespace Novella{
+
+    struct Layout;    
+
+}
+
+namespace Novella{
+
+    class Scene;
+
+}
 
 namespace Novella{
 

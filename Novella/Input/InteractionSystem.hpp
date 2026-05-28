@@ -1,6 +1,7 @@
 #pragma once
 #include "CommandDispatcher.hpp"
 #include "../Math/Vector2x.hpp"
+
 namespace Novella::Input{
 
     class InteractionSystem{

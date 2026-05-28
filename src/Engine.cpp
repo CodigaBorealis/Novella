@@ -6,32 +6,28 @@ namespace Novella{
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps)
         :
         displayWindow(width, height , title, fps),
-        sceneManager(resourceManager,audioSystem, serializer),
-        serializer(resourceManager),
+        sceneManager(resourceManager,audioSystem),
         windowRenderer(width, height)
             {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, WindowFlags flags)
         :
         displayWindow(width, height , title, fps, flags),
-        sceneManager(resourceManager,audioSystem, serializer),
-        serializer(resourceManager),
+        sceneManager(resourceManager,audioSystem),
         windowRenderer(width, height)
             {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon)
         :
         displayWindow(width, height , title, fps, icon),
-        sceneManager(resourceManager,audioSystem, serializer),
-        serializer(resourceManager),
+        sceneManager(resourceManager,audioSystem),
         windowRenderer(width, height)
             {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon, WindowFlags flags)
         :
         displayWindow(width, height , title, fps, icon, flags),
-        sceneManager(resourceManager,audioSystem, serializer),
-        serializer(resourceManager),
+        sceneManager(resourceManager,audioSystem),
         windowRenderer(width, height)
             {}
 

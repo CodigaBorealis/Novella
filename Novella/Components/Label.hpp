@@ -1,12 +1,13 @@
 #pragma once
 #include "../Graphics/Font.hpp"
-#include "Object.hpp"
-#include "Renderable.hpp"
-#include "Clickable.hpp"
+#include "../Graphics/Color.hpp"
+#include "../Attribute/Object.hpp"
+#include "../Attribute/Renderable.hpp"
+#include "../Attribute/Clickable.hpp"
 #include "Type.hpp"
 #include <memory>
 #include "../Layout/Layout.hpp"
-#include "Layoutable.hpp"
+#include "../Attribute/Layoutable.hpp"
 
 namespace Novella::Components{
 
@@ -37,11 +38,11 @@ namespace Novella::Components{
 
         bool contains(const Math::Vector2f& mousePos) const override;
 
-        const std::string& getID() const override;
+        unsigned int getID() const override;
 
         nlohmann::json serialize() const override;
 
-        const std::string getType() const override;
+        Type getType() const override;
 
         void setText(const std::string& text);
         const std::string& getText() const;
@@ -61,7 +62,7 @@ namespace Novella::Components{
         std::string id;
         int rLayer;
         Graphics::Color tint;
-        static constexpr const char* TYPE = Type::Label;//This is shit but i need a way to serialize components
+        Type type = Type::Label;//This is shit but i need a way to serialize components
 
 
 

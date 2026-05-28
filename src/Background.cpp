@@ -1,4 +1,5 @@
 #include "../Novella/Components/Background.hpp"
+#include <nlohmann/json.hpp>
 
 namespace Novella::Components{
 
@@ -42,14 +43,14 @@ namespace Novella::Components{
             return this->tint;
         }
 
-        const std::string& Background::getID() const{
+        unsigned int Background::getID() const{
 
             return this->id;
         }
 
-        const std::string Background::getType() const{
+        Type Background::getType() const{
 
-            return this->TYPE;
+            return this->type;
         }
 
         nlohmann::json Background::serialize() const{

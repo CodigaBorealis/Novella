@@ -81,7 +81,7 @@ int main(){
     
     button.setRenderLayer(22);
 
-    button.addMouseBind(Novella::Input::Mouse::Button::Left, Novella::Input::ActionCommand{"test", nlohmann::json(), Novella::Input::Target::SELF});
+    button.addMouseBind(Novella::Input::Mouse::Button::Left, Novella::Input::ActionCommand{"test", nlohmann::json(), Novella::Input::Target::self});
 
     auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>("label");
     

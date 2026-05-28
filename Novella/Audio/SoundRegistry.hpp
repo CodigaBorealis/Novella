@@ -4,6 +4,8 @@
 
 namespace Novella::Audio{
 
+    class AudioResource;
+    
     class SoundRegistry{
     
         public:

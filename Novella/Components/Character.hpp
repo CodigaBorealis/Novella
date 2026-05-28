@@ -1,11 +1,12 @@
 #pragma once
 #include "../Graphics/Texture.hpp"
-#include "Object.hpp"
-#include "Renderable.hpp"
+#include "../Attribute/Object.hpp"
+#include "../Attribute/Renderable.hpp"
 #include "Type.hpp"
 #include <memory>
 #include "../Layout/Layout.hpp"
-#include "Layoutable.hpp"
+#include "../Attribute/Layoutable.hpp"
+#include "../Graphics/Color.hpp"
 
 namespace Novella::Components{
 
@@ -18,7 +19,7 @@ namespace Novella::Components{
             Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
             Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
             
-            const std::string& getID() const override;
+            unsigned int getID() const override;
 
             void draw(Rendering::Renderer& renderer) override;
 
@@ -27,7 +28,7 @@ namespace Novella::Components{
 
             nlohmann::json serialize() const override;
 
-            const std::string getType() const override;
+            Type getType() const override;
 
             void setColor(const Graphics::Color& color) override;
 
@@ -45,7 +46,7 @@ namespace Novella::Components{
             Graphics::Color tint;
             float rotation = 0;
             //std::vector<std::string> sounds;
-        static constexpr const char* type = Type::Character;//This is shit but i need a way to serialize components
+            Type type = Type::Character;//This is shit but i need a way to serialize components
 
     };
 }

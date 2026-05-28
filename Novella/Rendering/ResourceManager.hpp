@@ -1,10 +1,12 @@
 #pragma once
-#include "../Graphics/Image.hpp"
-#include "../Graphics/Texture.hpp"
-#include "../Graphics/Font.hpp"
 #include <memory>
-#include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
 #include <unordered_map>
+#include <filesystem>
+#include "../Graphics/Texture.hpp"
+#include "../Graphics/Image.hpp"
+#include "../Graphics/Font.hpp"
+
 
 namespace Novella::Rendering{
 

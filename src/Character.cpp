@@ -1,4 +1,5 @@
 #include "../Novella/Components/Character.hpp"
+#include <nlohmann/json.hpp>
 #include <raylib.h>
 
 namespace Novella::Components{
@@ -44,7 +45,7 @@ namespace Novella::Components{
 
         }
 
-        const std::string Character::getType() const{
+        Type Character::getType() const{
 
             return this->type;
         }

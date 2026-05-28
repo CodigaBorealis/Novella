@@ -1,10 +1,22 @@
 #pragma once
+#include "WindowFlags.hpp"
 #include <raylib.h>
 #include <string>
 #include <filesystem>
 #include "../Math/Vector2x.hpp"
-#include "../Graphics/Color.hpp"
-#include "WindowFlags.hpp"
+
+namespace Novella{
+
+    enum class WindowFlags : unsigned int;
+
+}
+
+namespace Novella::Graphics {
+
+    class Color;
+
+}
+
 namespace Novella{
 
     class Window{

@@ -1,10 +1,23 @@
 #pragma once
-#include "../Graphics/Texture.hpp"
-#include "../Graphics/Font.hpp"
-#include "../Graphics/Color.hpp"
-#include "../Scene/Scene.hpp"
 #include "../Math/Vector2x.hpp"
-#include "../Math/Rectangle.hpp"
+#include <string>
+namespace Novella::Graphics{
+
+    class Texture;
+    class Font;
+    class Color;
+}
+
+namespace Novella::Math{
+
+    struct Rectangle;
+}
+
+namespace Novella{
+
+    class Scene;
+
+}
 
 namespace Novella::Rendering{
 

@@ -1,10 +1,11 @@
 #pragma once
-#include "Layoutable.hpp"
-#include "Object.hpp"
-#include "Clickable.hpp"
-#include "Renderable.hpp"
+#include "../Attribute/Layoutable.hpp"
+#include "../Attribute/Object.hpp"
+#include "../Attribute/Clickable.hpp"
+#include "../Attribute/Renderable.hpp"
 #include "Type.hpp"
 #include "../Layout/Layout.hpp"
+#include "../Graphics/Color.hpp"
 
 namespace Novella::Components{
  
@@ -18,11 +19,11 @@ namespace Novella::Components{
 
         Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
 
-        const std::string& getID() const override;
+        unsigned int getID() const override;
 
         nlohmann::json serialize() const override;
 
-        const std::string getType() const override;
+        Type getType() const override;
 
         void addMouseBind(Input::Mouse::Button button, const Input::ActionCommand& command) override;
             
@@ -49,13 +50,13 @@ namespace Novella::Components{
 
         private:
 
-        std::string id;
+        unsigned int id;
         std::shared_ptr<Graphics::Texture> texture;
         int rLayer = 0;
         //Label* label;
         Graphics::Color tint;
         float rotation = 0;
-        static constexpr const char* type = Type::Button;//This is shit but i need a way to serialize components
+        Type type = Type::Button;//This is shit but i need a way to serialize components
 
     };
 }

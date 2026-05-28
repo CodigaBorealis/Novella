@@ -1,5 +1,7 @@
 #include "../Novella/Components/Button.hpp"
 #include "../Novella/Input/ActionCommand.hpp"
+#include <nlohmann/json.hpp>
+
 namespace Novella::Components{
 
     Button::Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
@@ -34,7 +36,7 @@ namespace Novella::Components{
         return {};
     }
 
-    const std::string Button::getType() const{
+    Type Button::getType() const{
 
         return this->type;
     }

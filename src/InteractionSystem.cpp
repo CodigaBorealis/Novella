@@ -1,8 +1,9 @@
 #include "../Novella/Input/InteractionSystem.hpp"
-#include "../Novella/Components/Interactable.hpp"
-#include "../Novella/Components/Clickable.hpp"
+#include "../Novella/Attribute/Object.hpp"
+#include "../Novella/Attribute/Interactable.hpp"
+#include "../Novella/Attribute/Clickable.hpp"
 #include "../Novella/Input/InputSystem.hpp"
-#include <iostream>
+#include "../Novella/Scene/Scene.hpp"
 
 namespace Novella::Input{
 //Can probably optimize this and avoid dynamic cast by actually
@@ -17,8 +18,6 @@ namespace Novella::Input{
 
                     if(InputSystem::isKeyPressed(bind.first)){
 
-                        std::cout<< "pressed the key";
-
                         //dispatcher.trigger(scene, bind.second);
                     }
                 }
@@ -29,8 +28,6 @@ namespace Novella::Input{
     }
     void InteractionSystem::handleMouseInput(Scene& scene, const Math::Vector2f& mousePosition){
 
-        static int times = 0;
-
         for(const auto& obj : scene.objects()){
 
             if(const auto* clickable = dynamic_cast<Attribute::Clickable*>(obj.get())){
@@ -38,10 +35,6 @@ namespace Novella::Input{
                 for(const auto& bind: clickable->getMouseBinds()){
 
                     if(InputSystem::isMouseButtonPressed(bind.first) && clickable->contains(mousePosition)){
-
-                        times ++;
-                        std::cout << times;
-                        std::cout<< "clicked\n";
                         
                         dispatcher.trigger(scene, bind.second);
                     }

@@ -1,14 +1,43 @@
 #pragma once
-#include "../Rendering/ResourceManager.hpp"
-#include "../Scene/Scene.hpp"
-#include "../Math/Vector2x.hpp"
 #include "ObjectFactory.hpp"
 #include <memory>
 #include <nlohmann/json_fwd.hpp>
-#include "../Components/Interactable.hpp"
-#include "../Components/Clickable.hpp"
-#include "../Components/DialogueBox.hpp"
-#include "../Components/Renderable.hpp"
+#include <functional>
+#include "../Math/Vector2x.hpp"
+
+namespace Novella::Rendering{
+
+    class ResourceManager;
+
+}
+
+namespace Novella{
+
+    class Scene;
+
+}
+
+namespace Novella::Attribute{
+
+    class Clickable;
+    class Interactable;
+    class Renderable;
+
+}
+
+namespace Novella::Graphics{
+
+    class Texture;
+    class Font;
+
+}
+
+namespace Novella::Components{
+
+    class DialogueBox;
+
+}
+
 namespace Novella{
 
     class SceneBuilder{

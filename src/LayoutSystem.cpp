@@ -1,6 +1,8 @@
 #include "../Novella/Layout/LayoutSystem.hpp"
 #include <algorithm>
-#include "../Novella/Components/Layoutable.hpp"
+#include "../Novella/Attribute/Layoutable.hpp"
+#include "../Novella/Scene/Scene.hpp"
+#include "../Novella/Attribute/Object.hpp"
 
 namespace Novella{
 

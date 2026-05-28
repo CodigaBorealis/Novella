@@ -1,10 +1,29 @@
 #pragma once
-#include <nlohmann/json.hpp>
-#include <stdexcept>
+#include <nlohmann/json_fwd.hpp>
 #include <string>
-#include "../Components/Object.hpp"
-#include "ActionCommand.hpp"
-#include "../Scene/Scene.hpp"
+#include <functional>
+#include <unordered_map>
+#include <stdexcept>
+
+namespace Novella::Input{
+
+    enum class Target : unsigned int;
+
+}
+namespace Novella::Attribute{
+
+    class Object;
+}
+
+namespace Novella::Input{
+
+    class ActionCommand;
+}
+
+namespace Novella{
+
+    class Scene;
+}
 
 namespace Novella::Input{
 
@@ -30,7 +49,7 @@ namespace Novella::Input{
         
         using Func = std::function<void(Scene& scene, Attribute::Object&, const nlohmann::json&)>;
 
-        Attribute::Object* resolveTarget(Scene& scene, const std::string& target) const;
+        Attribute::Object* resolveTarget(Scene& scene, unsigned int targetID) const;
         
         template<typename T>
 

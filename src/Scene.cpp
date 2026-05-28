@@ -1,6 +1,6 @@
 #include "../Novella/Scene/Scene.hpp"
 #include <algorithm>
-
+#include "../Novella/Attribute/Object.hpp"
 namespace Novella{
 
     void Scene::addObject(std::unique_ptr<Attribute::Object> obj){
@@ -40,16 +40,16 @@ namespace Novella{
         return objs;
     }
 
-    Attribute::Object* Scene::findObjectByID(const std::string& id){
+    Attribute::Object* Scene::findObjectByID(unsigned int targetID){
 
-            auto it = objectRegistry.find(id);
+            auto it = objectRegistry.find(targetID);
 
             if(it == objectRegistry.end()) return nullptr;
             
             return it->second;
         }
 
-    Attribute::Object* Scene::findObjectByID(const std::string& id) const{
+    Attribute::Object* Scene::findObjectByID(unsigned int targetID) const{
 
         auto it = std::find_if(objs.begin(), objs.end(), [&](const auto& obj){
 

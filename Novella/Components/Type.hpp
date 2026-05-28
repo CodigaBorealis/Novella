@@ -1,13 +1,12 @@
 #pragma once
 
-namespace Novella::Components::Type{
+namespace Novella::Components{
 
-    static constexpr const char* Background = "Background";//This is shit but i need a way to serialize components
+    enum class Type : unsigned int{
 
-    static constexpr const char* Character = "Character";//This is shit but i need a way to serialize components
-
-    static constexpr const char* Label = "Label";//This is shit but i need a way to serialize components
-    
-    static constexpr const char* Button = "Label";//This is shit but i need a way to serialize components
-
+        Background,
+        Character,
+        Label,
+        Button
+    };
 }

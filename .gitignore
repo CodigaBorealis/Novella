@@ -12,5 +12,4 @@ Makefile
 *.so
 *.dylib
 *.exe
-.clangd
 /Test/

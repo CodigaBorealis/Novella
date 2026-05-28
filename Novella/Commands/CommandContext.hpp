@@ -11,10 +11,6 @@
         
     }
 
-    class Scene;
-        
-    class Window;
-
     namespace Attribute{
         
         class Object;
@@ -23,6 +19,10 @@
 
 namespace Novella{
 
+    class Scene;
+        
+    class Window;
+    
     struct CommandContext{
 
         public:

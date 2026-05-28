@@ -1,7 +1,10 @@
 #pragma once
 #include <nlohmann/json_fwd.hpp>
-#include "CommandContext.hpp"
-#include <raylib.h>
+
+namespace Novella{
+
+    class CommandContext;
+}
 
 namespace Novella::Commands{
 
