@@ -1,4 +1,5 @@
 #include "../Novella/Rendering/ResourceManager.hpp"
+#include <filesystem>
 #include <memory>
 #include <nlohmann/json.hpp>
 
@@ -25,6 +26,8 @@ namespace Novella::Rendering{
 
     std::shared_ptr<Graphics::Texture>ResourceManager::loadTexture(const std::string& name, const std::filesystem::path& src){
 
+        if(!std::filesystem::exists(src)) throw std::runtime_error("File not found: " + src.string());
+
         auto texture = std::make_shared<Graphics::Texture>(src);
 
         if(!texture) throw std::runtime_error("Failed  to load a texture: " + name);
@@ -39,6 +42,8 @@ namespace Novella::Rendering{
     }
 
     std::shared_ptr<Graphics::Font> ResourceManager::loadFont(const std::string& name, const std::filesystem::path& src){
+
+        if(!std::filesystem::exists(src)) throw std::runtime_error("File not found: " + src.string());
 
         auto font = std::make_shared<Graphics::Font>(src);
 

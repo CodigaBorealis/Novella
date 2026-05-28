@@ -3,17 +3,15 @@
 
 namespace Novella::Components{
 
-       Background::Background(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
+       Background::Background(std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
             :
             texture(texture),
-            id(id),
             Attribute::Layoutable(layout)
             {}
 
-        Background::Background(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
+        Background::Background(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
             :
             texture(texture),
-            id(id),
             Attribute::Layoutable(layout),
             rLayer(renderLayer)
             {}
@@ -43,9 +41,14 @@ namespace Novella::Components{
             return this->tint;
         }
 
-        unsigned int Background::getID() const{
+        uint64_t Background::getID() const{
 
             return this->id;
+        }
+
+        void Background::setID(uint64_t id){
+
+        this->id = id;
         }
 
         Type Background::getType() const{

@@ -15,11 +15,12 @@ namespace Novella::Components{
 
         Button() = delete;
 
-        Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
+        Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
 
-        Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
+        Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
 
-        unsigned int getID() const override;
+        uint64_t getID() const override;
+        void setID(uint64_t id) override;
 
         nlohmann::json serialize() const override;
 
@@ -50,7 +51,7 @@ namespace Novella::Components{
 
         private:
 
-        unsigned int id;
+        uint64_t id;
         std::shared_ptr<Graphics::Texture> texture;
         int rLayer = 0;
         //Label* label;

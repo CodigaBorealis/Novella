@@ -4,16 +4,14 @@
 
 namespace Novella::Components{
 
-    Button::Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
+    Button::Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
         :
-        id(id),
         texture(texture),
         Attribute::Layoutable(layout)
         {}
     
-    Button::Button(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
+    Button::Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
         :
-        id(id),
         texture(texture),
         Attribute::Layoutable(layout),
         rLayer(renderLayer)
@@ -26,9 +24,14 @@ namespace Novella::Components{
         mouseBinds.emplace(button, command);
     }
 
-    const std::string& Button::getID() const{
+    uint64_t Button::getID() const{
 
         return this->id;
+    }
+
+    void Button::setID(uint64_t id){
+
+        this->id = id;
     }
 
     nlohmann::json Button::serialize() const{
@@ -100,5 +103,7 @@ namespace Novella::Components{
 
         return this->rotation;
     }
+
+
 
 }

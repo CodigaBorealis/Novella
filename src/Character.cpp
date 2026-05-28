@@ -4,24 +4,27 @@
 
 namespace Novella::Components{
 
-        Character::Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
+        Character::Character(std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
             :
-            id(id),
             texture(texture),
             Attribute::Layoutable(layout)
             {}
 
-        Character::Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
+        Character::Character(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
             :
-            id(id),
             texture(texture),
             Attribute::Layoutable(layout),
             rLayer(renderLayer)
             {}
             
-        const std::string& Character::getID() const{
+        uint64_t Character::getID() const{
 
             return this->id;
+        }
+
+        void Character::setID(uint64_t id){
+
+        this->id = id;
         }
 
         void Character::draw(Rendering::Renderer& renderer){

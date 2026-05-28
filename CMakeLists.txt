@@ -29,9 +29,6 @@ add_executable(Novella
     src/SceneBuilder.cpp
     src/ObjectFactory.cpp
 
-    src/JsonSerializer.cpp
-    src/JsonValidator.cpp
-
     src/Character.cpp
     src/Background.cpp
     src/Label.cpp

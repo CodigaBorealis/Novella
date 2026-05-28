@@ -62,7 +62,7 @@ namespace Novella{
             for(auto& objectData : objects){
 
                 const auto& props = objectData["properties"];
-                const std::string& id = props["id"];
+                const uint64_t id = props["id"].get<uint64_t>();
 
                 auto* object = scene.findObjectByID(id);
 

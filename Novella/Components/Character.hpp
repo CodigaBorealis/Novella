@@ -16,10 +16,11 @@ namespace Novella::Components{
 
             Character() = delete;
 
-            Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
-            Character(const std::string id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
+            Character(std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
+            Character(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
             
-            unsigned int getID() const override;
+            uint64_t getID() const override;
+            void setID(uint64_t id) override;
 
             void draw(Rendering::Renderer& renderer) override;
 
@@ -40,7 +41,7 @@ namespace Novella::Components{
 
         private:
 
-            std::string id;
+            uint64_t id;
             std::shared_ptr<Graphics::Texture> texture;
             int rLayer = 0;
             Graphics::Color tint;

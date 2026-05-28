@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
 #include <nlohmann/json.hpp>
+#include <cstdint>
 
 namespace Novella::Input{
 
-    enum class Target : unsigned int;
+    enum class Target : uint64_t;
 
     struct ActionCommand{
 

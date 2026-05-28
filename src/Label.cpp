@@ -1,21 +1,20 @@
 #include "../Novella/Components/Label.hpp"
 #include "../Novella/Layout/LayoutSystem.hpp"
+#include <cstdint>
 #include <raylib.h>
 #include <stdexcept>
 namespace Novella::Components{
 
-    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout)
+    Label::Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout)
         :
-        id(id),
         font(font),
         Attribute::Layoutable(layout),
         size(size),
         text(text)
         {}
 //I'm stupid
-    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer)
+    Label::Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer)
         :
-        id(id),
         font(font),
         Attribute::Layoutable(layout),
         size(size),
@@ -87,11 +86,16 @@ namespace Novella::Components{
 
     };
 
-    const std::string& Label::getID() const{
+    uint64_t Label::getID() const{
 
         return this->id;
     };
 
+    void Label::setID(uint64_t id){
+
+        this->id = id;
+    }
+    
     nlohmann::json Label::serialize() const{
 
         return {};

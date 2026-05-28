@@ -4,7 +4,6 @@
 #include "Novella/Components/Character.hpp"
 #include "Novella/Engine.hpp"
 #include "Novella/Input/ActionCommand.hpp"
-#include "Novella/Input/Target.hpp"
 #include "Novella/Layout/Anchor.hpp"
 #include "Novella/Layout/SizeMode.hpp"
 #include "Novella/Layout/Layout.hpp"
@@ -14,23 +13,22 @@
 
 int main(){
 
-    Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novel/Test/MainMenu.png",Novella::WindowFlags::Resizable);
+    Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novella/Test/2026-05-27_17-52.png",Novella::WindowFlags::Resizable);
 
-    engine.resources().loadTexture("character", "/home/line/projects/Novel/Test/character_1.png");
+    engine.resources().loadTexture("character", "/home/line/projects/Novella/Test/2026-05-27_17-52.png");
 
-    engine.resources().loadTexture("button", "/home/line/projects/Novel/Test/dialogueBG.png");
+    engine.resources().loadTexture("button", "/home/line/projects/Novella/Test/2026-05-27_18-51.png");
 
-    engine.resources().loadTexture("background", "/home/line/projects/Novel/Test/backgroundTest.png");
+    engine.resources().loadTexture("background", "/home/line/projects/Novella/Test/2026-05-27_18-59.png");
 
-    engine.resources().loadTexture("button2", "/home/line/projects/Novel/Test/backgroundTest2.png");
+    engine.resources().loadTexture("button2", "/home/line/projects/Novella/Test/135284394.png");
 
-    engine.resources().loadFont("font", "/home/line/projects/Novel/Test/font.otf");
+    engine.resources().loadFont("font", "/home/line/projects/Novella/Test/test.ttf");
     
     engine.scene().createScene();
 
     auto& bg= engine.scene().addObject<Novella::Components::Background>(
 
-        "background",
         engine.resources().getTexture("background"),
         Novella::Layout{            
             .anchor = Novella::Anchor::TopLeft,
@@ -43,7 +41,6 @@ int main(){
 
     auto& c = engine.scene().addObject<Novella::Components::Character>(
 
-        "character",
         engine.resources().getTexture("character"),
         Novella::Layout{}
 
@@ -53,7 +50,6 @@ int main(){
 
     engine.scene().addObject<Novella::Components::Label>(
 
-        "label",
         engine.resources().getFont("font"),
         50,
         "did you know that sometimes you may or you may not or you could or you",
@@ -66,7 +62,6 @@ int main(){
 //Label breaks if you use the constructor with the render label somehow
     auto& button = engine.scene().addObject<Novella::Components::Button>(
 
-        "button",
         engine.resources().getTexture("button"),
         Novella::Layout{
             .anchor = Novella::Anchor::Center,
@@ -81,13 +76,13 @@ int main(){
     
     button.setRenderLayer(22);
 
-    button.addMouseBind(Novella::Input::Mouse::Button::Left, Novella::Input::ActionCommand{"test", nlohmann::json(), Novella::Input::Target::self});
+    button.addMouseBind(Novella::Input::Mouse::Button::Left, Novella::Input::ActionCommand{"test", nlohmann::json(), Novella::Input::Target{0}});
 
-    auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>("label");
+    //auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>(0);
     
-    label->setColor({100,0,100,255});
+    //label->setColor({100,0,100,255});
     
-    engine.audio().createResource("audio", "/home/line/projects/Novel/Test/bgm.ogg", Novella::Audio::AssetType::Music);
+    engine.audio().createResource("audio", "/home/line/projects/Novella/Test/bgm.ogg", Novella::Audio::AssetType::Music);
 
     engine.audio().play("audio");
 

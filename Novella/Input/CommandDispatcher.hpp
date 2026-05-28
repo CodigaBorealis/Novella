@@ -7,7 +7,7 @@
 
 namespace Novella::Input{
 
-    enum class Target : unsigned int;
+    enum class Target : uint64_t;
 
 }
 namespace Novella::Attribute{

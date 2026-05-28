@@ -27,7 +27,7 @@ namespace Novella::Input{
                 
     void CommandDispatcher::trigger(Scene& scene, const ActionCommand& command){
         
-        auto* target = resolveTarget(scene, command.target);
+        auto* target = resolveTarget(scene, static_cast<uint64_t>(command.target));
 
         auto it = commands.find(command.name);
 

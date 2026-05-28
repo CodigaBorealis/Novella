@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include <nlohmann/json_fwd.hpp>
+#include <cstdint>
 
 namespace Novella::Components{
 
@@ -14,7 +14,9 @@ namespace Novella::Attribute{
         
         virtual ~Object() = default;
         
-        virtual unsigned int getID() const = 0;
+        virtual uint64_t  getID() const = 0;
+        
+        virtual void setID(uint64_t) = 0;
 
         virtual nlohmann::json serialize() const = 0;
 
