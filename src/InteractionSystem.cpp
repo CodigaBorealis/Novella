@@ -7,8 +7,12 @@
 #include <iostream>
 
 namespace Novella::Input{
-//Can probably optimize this and avoid dynamic cast by actually
-//Putting each object into their own container when adding them to the scene and then just traversing it once
+
+
+//Dynamic casting each frame might cost some performance but its easier to reason about and maintain
+//Over separating each object onto their own vector because the gameplay loop isnt really affected
+//By the overhead of the cast, since most visual novels don't have 10k objects crammed at once on a scene
+
     void InteractionSystem::handleKeyboardInput(Scene& scene){
 
         for(const auto& obj : scene.objects()){

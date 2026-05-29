@@ -1,15 +1,15 @@
 #pragma once
 #include <nlohmann/json_fwd.hpp>
-#include <string>
 #include <functional>
 #include <unordered_map>
 #include <stdexcept>
+#include "../Commands/CommandContext.hpp"
 
-namespace Novella::Input{
+namespace Novella {
 
-    enum class Target : uint64_t;
-
+    enum class Alias : unsigned int;
 }
+
 namespace Novella::Attribute{
 
     class Object;
@@ -31,7 +31,7 @@ namespace Novella::Input{
 
         public:
 
-        CommandDispatcher() = default;
+        CommandDispatcher();
         
         CommandDispatcher(const CommandDispatcher&) = delete;
 
@@ -41,55 +41,22 @@ namespace Novella::Input{
     
         CommandDispatcher& operator=(CommandDispatcher&&) = delete;
 
-        bool registered(const std::string& name) const;
+        bool registered(Alias alias) const;
                 
-        void trigger(Scene& scene, const ActionCommand& command);
+        void trigger(const ActionCommand& command, CommandContext& context);
 
         private:
         
-        using Func = std::function<void(Scene& scene, Attribute::Object&, const nlohmann::json&)>;
-
-        Attribute::Object* resolveTarget(Scene& scene, unsigned int targetID) const;
+        using Func = std::function<void(CommandContext& context, const nlohmann::json& args)>;
         
-        template<typename T>
-
-        struct CommandTraits;
-
-        template<typename T>
-
-        
-        struct CommandTraits<void(*)(T&, const nlohmann::json&)>{
-
-            using ObjectType = T;
-        };
-
         template<typename Func>
 
-        void registerCommand(const std::string& name, Func function){
+        void registerCommand(Alias commandAlias, Func function){
 
-            commands.emplace(name, bindCommand(function));
+            commands.emplace(commandAlias, function);
         }
 
-        template<typename Func> 
-
-        auto bindCommand(Func function){
-
-            using T = typename CommandTraits<Func>::ObjectType;
-            
-            return [function](Attribute::Object& object, const nlohmann::json& args){
-
-                if(auto* casted = dynamic_cast<T*>(&object)){
-
-                    function(*casted, args);
-
-                }else{
-
-                    throw std::runtime_error("Moon::System::CommandDispatcher:bindCommand: Invalid object type for command");
-                }
-            };
-        }
-
-        std::unordered_map<std::string, Func> commands;
+        std::unordered_map<Alias, Func> commands;
         
     };
 

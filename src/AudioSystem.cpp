@@ -43,16 +43,31 @@ namespace Novella::Audio{
 
     void AudioSystem::play(const std::string& resourceName){
 
-        addCommand(Command::Type::Play, resolve(resourceName), 0);
+        unsigned int resourceID = resolve(resourceName);
 
-        currentBgm = resourceName;
+        addCommand(Command::Type::Play, resourceID, 0);
+
+        const auto& resource = assets.get(resourceID);
+
+        if(resource.type == AssetType::Music){
+
+            currentBgm = resourceName;
+        }
     }
 
     void AudioSystem::stop(const std::string& resourceName){
 
-        addCommand(Command::Type::Stop, resolve(resourceName), 0);
+        unsigned int resourceID = resolve(resourceName);
 
-        if(currentBgm == resourceName) currentBgm.reset();
+        addCommand(Command::Type::Stop, resourceID, 0);
+
+        const auto& resource = assets.get(resourceID);
+
+        if(resource.type == AssetType::Music){
+
+            if(currentBgm == resourceName) currentBgm.reset();
+        
+        }
     }
 
     void AudioSystem::volume(const std::string& resourceName, float volume){

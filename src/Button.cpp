@@ -19,7 +19,7 @@ namespace Novella::Components{
 
     void Button::addMouseBind(Input::Mouse::Button button, const Input::ActionCommand& command){
 
-        if(mouseBinds.contains(button)) throw std::runtime_error(command.name + " could not be binded because this button already has an action for this mouse button");
+        if(mouseBinds.contains(button)) throw std::runtime_error("Could not bind the action because this button is already in use");
 
         mouseBinds.emplace(button, command);
     }

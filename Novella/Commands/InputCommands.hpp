@@ -10,11 +10,11 @@ namespace Novella::Commands{
 
     void setMousePosition(CommandContext& context, const nlohmann::json& args);
 
-    void ShowCursor();
+    void showCursor(CommandContext& context, const nlohmann::json& args);
 
-    void HideCursor();
+    void hideCursor(CommandContext& context, const nlohmann::json& args);
 
-    void enableCursor();
+    void enableCursor(CommandContext& context, const nlohmann::json& args);
     
-    void disableCursor();
+    void disableCursor(CommandContext& context, const nlohmann::json& args);
 }

@@ -54,7 +54,7 @@ namespace Novella::Components{
 
     void Label::addMouseBind(const Input::Mouse::Button button, const Input::ActionCommand& command){
 
-        if(mouseBinds.contains(button)) throw std::runtime_error(command.name + " could not be binded because this label already has an action for this mouse button");
+        if(mouseBinds.contains(button)) throw std::runtime_error("Could not bind the action because this button is already in use");
 
         mouseBinds.emplace(button, command);
     };
@@ -95,7 +95,7 @@ namespace Novella::Components{
 
         this->id = id;
     }
-    
+
     nlohmann::json Label::serialize() const{
 
         return {};

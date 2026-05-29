@@ -83,7 +83,7 @@ namespace Novella{
         bool dirty = false;
 
         uint64_t nextID = 0;
-        std::vector<std::unique_ptr<Attribute::Object>> objs;//Should contain only renderables
+        std::vector<std::unique_ptr<Attribute::Object>> objs;//For drawing
         std::unordered_map<uint64_t, Attribute::Object*> objectRegistry;//This could be a vector but i dont want to deal with invalid indexes right now
         std::optional<std::string> bgm;//What audio should start playing after creating the scene
 

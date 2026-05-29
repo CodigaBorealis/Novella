@@ -1,37 +1,52 @@
 #pragma once
+#include <cstdint>
+#include <stdexcept>
+#include <string>
+#include "../Scene/Scene.hpp"
 
-    namespace Audio{
+    namespace Novella::Audio{
 
         class AudioSystem;
     }
 
-    namespace Rendering{
+    namespace Novella::Rendering{
 
         class Renderer;
         
     }
 
-    namespace Attribute{
+    namespace Novella::Attribute{
         
         class Object;
 
     }
 
 namespace Novella{
-
-    class Scene;
         
     class Window;
     
     struct CommandContext{
 
-        public:
         Scene* scene = nullptr;
-        Attribute::Object* target = nullptr;
         Audio::AudioSystem* audio = nullptr;
         Rendering::Renderer* renderer = nullptr;
         Window* window = nullptr;
-        
+        uint64_t targetID;
+
+        template<typename T>
+
+        T& target() const{
+
+            auto* object = scene->findObjectByID(targetID);
+
+            if(!object) throw std::runtime_error("Target not found: " + std::to_string(targetID));
+
+            auto* casted = dynamic_cast<T*>(object);
+
+            if(!casted) throw std::runtime_error("Invalid target type, id: " + std::to_string(targetID));
+
+            return *casted;
+        }
     };
 
 }

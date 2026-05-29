@@ -1,26 +1,23 @@
 #pragma once
-#include <string>
 #include <nlohmann/json.hpp>
 #include <cstdint>
-
+#include "../Commands/Alias.hpp"
 namespace Novella::Input{
-
-    enum class Target : uint64_t;
 
     struct ActionCommand{
 
         ActionCommand() = delete;
 
-        ActionCommand(const std::string& name, const nlohmann::json& args, Target target)
+        ActionCommand(Alias alias, const nlohmann::json& args, uint64_t targetID)
             :
-            name(name),
+            alias(alias),
             args(args),
-            target(target)
+            targetID(targetID)
             {};
 
-        std::string name;
+        Alias alias;
         nlohmann::json args;
-        Target target;
+        uint64_t targetID;
     };
 
 }

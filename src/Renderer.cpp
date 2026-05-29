@@ -104,6 +104,10 @@ namespace Novella::Rendering{
 
         for(const auto& obj : scene.objects()){
 
+            //Same as with the InteractionSystem
+            //Causes a small overhead but makes the rendering loop far simpler than splitting renderables
+            //Onto their own containers and trying to keep everything synced
+
             if(auto* renderable = dynamic_cast<Attribute::Renderable*>(obj.get())){
 
                 renderable->draw(*this);

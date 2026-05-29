@@ -13,15 +13,15 @@ namespace Novella::Components{
 
 namespace Novella::Commands{
 
-    void resize(CommandContext& context, Components::Object& object, const nlohmann::json& args);
+    void resize(CommandContext& context, const nlohmann::json& args);
 
-    void move(CommandContext& context, Components::Object& object, const nlohmann::json& args);
+    void move(CommandContext& context, const nlohmann::json& args);
 
-    void setPosition(CommandContext& context, Components::Object& object, const nlohmann::json& args);
+    void setPosition(CommandContext& context, const nlohmann::json& args);
 
-    void setColor(CommandContext& context, Components::Object& object, const nlohmann::json& args);
+    void setColor(CommandContext& context, const nlohmann::json& args);
 
-    void setTransparency(CommandContext& context, Components::Object& object, const nlohmann::json &args);
+    void setTransparency(CommandContext& context, const nlohmann::json& args);
 
-    void setText(CommandContext& context, Components::Object& object, const nlohmann::json &args);
+    void setText(CommandContext& context, const nlohmann::json& args);
 }

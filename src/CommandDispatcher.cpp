@@ -1,39 +1,32 @@
 #include "../Novella/Input/CommandDispatcher.hpp"
-#include "../Novella/Scene/Scene.hpp"
 #include "../Novella/Input/ActionCommand.hpp"
 #include <stdexcept>
-
+#include <string>
+#include "../Novella/Commands/CommandTable.hpp"
 namespace Novella::Input{
 
-    Attribute::Object* CommandDispatcher::resolveTarget(Scene& scene, unsigned int targetID) const{
+    CommandDispatcher::CommandDispatcher(){
 
-        auto* targetObject = scene.findObjectByID(targetID);
+        for(const auto& command : commandTable){
 
-        if(targetObject != nullptr){
-
-            return targetObject;
-
-        }else{
-
-            throw std::runtime_error("Object not found in the scene: " + std::to_string(targetID));
-        }
-
+            registerCommand(command.alias, command.function);
+        }       
     }
 
-    bool CommandDispatcher::registered(const std::string& name) const{
+    bool CommandDispatcher::registered(Alias alias) const{
 
-        return commands.contains(name);
+        return commands.contains(alias);
     }
                 
-    void CommandDispatcher::trigger(Scene& scene, const ActionCommand& command){
+    void CommandDispatcher::trigger(const ActionCommand& command, CommandContext& context){
         
-        auto* target = resolveTarget(scene, static_cast<uint64_t>(command.target));
+        auto it = commands.find(command.alias);
 
-        auto it = commands.find(command.name);
+        if(it == commands.end()) throw std::runtime_error("Command not registered " + std::to_string(static_cast<int>(command.alias)));
 
-        if(it == commands.end()) throw std::runtime_error("This command is not registered in the scene: " + command.name);
-
-        it->second(scene, *target, command.args);
+        context.targetID = command.targetID;
+        
+        it->second(context, command.args);
     }
 
 }

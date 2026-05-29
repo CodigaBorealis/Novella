@@ -1,15 +1,17 @@
 #include "../Novella/Scene/Scene.hpp"
-#include <algorithm>
 #include "../Novella/Attribute/Object.hpp"
+#include <algorithm>
+#include <string>
+
 namespace Novella{
 
     void Scene::addObject(std::unique_ptr<Attribute::Object> obj){
 
-            const uint64_t id = nextID++;
+            uint64_t id = obj->getID();
 
-            obj->setID(id);
+            if(objectRegistry.contains(id)) throw std::runtime_error("Scene::addObject: An object with this id already exists in the scene: " + std::to_string(id));
 
-            objectRegistry.emplace(id, obj.get());
+            objectRegistry[id] = obj.get();
 
             objs.push_back(std::move(obj));
 
@@ -40,20 +42,20 @@ namespace Novella{
         return objs;
     }
 
-    Attribute::Object* Scene::findObjectByID(uint64_t targetID){
+    Attribute::Object* Scene::findObjectByID(uint64_t id){
 
-            auto it = objectRegistry.find(targetID);
+            auto it = objectRegistry.find(id);
 
             if(it == objectRegistry.end()) return nullptr;
             
             return it->second;
         }
 
-    Attribute::Object* Scene::findObjectByID(uint64_t targetID) const{
+    Attribute::Object* Scene::findObjectByID(uint64_t id) const{
 
         auto it = std::find_if(objs.begin(), objs.end(), [&](const auto& obj){
 
-            return obj->getID() == targetID;
+            return obj->getID() == id;
         });
 
         if(it == objs.end()) return nullptr;

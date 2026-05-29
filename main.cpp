@@ -10,7 +10,7 @@
 #include "Novella/Window/WindowFlags.hpp"
 #include "Novella/Components/Label.hpp"
 #include "Novella/Input/Mouse.hpp"
-
+#include "Novella/Commands/Alias.hpp"
 int main(){
 
     Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novella/Test/2026-05-27_17-52.png",Novella::WindowFlags::Resizable);
@@ -76,7 +76,7 @@ int main(){
     
     button.setRenderLayer(22);
 
-    button.addMouseBind(Novella::Input::Mouse::Button::Left, Novella::Input::ActionCommand{"test", nlohmann::json(), Novella::Input::Target{0}});
+    button.addMouseBind(Novella::Input::Mouse::Button::Left, Novella::Input::ActionCommand{Novella::Alias::CloseWindow, nlohmann::json(), 0});
 
     //auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>(0);
     
