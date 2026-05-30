@@ -1,8 +1,11 @@
 #include "../Novella/Input/CommandDispatcher.hpp"
-#include "../Novella/Input/ActionCommand.hpp"
+#include "../Novella/Commands/CommandTable.hpp"
+#include "../Novella/Input/ClickEvent.hpp"
+#include "../Novella/Input/KeyEvent.hpp"
+#include <cstdint>
 #include <stdexcept>
 #include <string>
-#include "../Novella/Commands/CommandTable.hpp"
+
 namespace Novella::Input{
 
     CommandDispatcher::CommandDispatcher(){
@@ -13,20 +16,50 @@ namespace Novella::Input{
         }       
     }
 
-    bool CommandDispatcher::registered(Alias alias) const{
+    void CommandDispatcher::execute(uint64_t targetID, Alias alias, const nlohmann::json& args, CommandContext& context){
 
-        return commands.contains(alias);
-    }
-                
-    void CommandDispatcher::trigger(const ActionCommand& command, CommandContext& context){
-        
-        auto it = commands.find(command.alias);
+        auto it = commands.find(alias);
 
-        if(it == commands.end()) throw std::runtime_error("Command not registered " + std::to_string(static_cast<int>(command.alias)));
+        if(it == commands.end()) throw std::runtime_error("Command not found\n ID:" + std::to_string(static_cast<unsigned int>(alias)));
 
-        context.targetID = command.targetID;
-        
-        it->second(context, command.args);
+        context.targetID = targetID;
+
+        it->second(context, args);
     }
 
+    void CommandDispatcher::dispatch(const KeyEvent& event, CommandContext& context){
+
+        for(const auto& bind : keyBindings){
+
+            if(bind.objectID == event.objectID && bind.key == event.key){
+
+                execute(bind.objectID, bind.alias, bind.args, context);
+
+                return;
+            }
+        }        
+    }
+
+    void CommandDispatcher::dispatch(const ClickEvent& event, CommandContext& context){
+
+        for(const auto& bind : clickBindings){
+
+            if(bind.objectID == event.objectID && bind.button == event.button){
+
+                execute(bind.objectID,bind.alias, bind.args, context);
+
+                return;
+            }
+        }        
+    }
+
+    void CommandDispatcher::addClickBinding(uint64_t objectID, Mouse::Button button, Alias commandAlias, const nlohmann::json& args){
+
+        clickBindings.push_back({objectID, button, commandAlias, args});
+    };
+
+    void CommandDispatcher::addKeyBinding(uint64_t objectID, Keyboard::Key key, Alias commandAlias, const nlohmann::json& args){
+
+        keyBindings.push_back({objectID, key, commandAlias, args});
+    };
 }

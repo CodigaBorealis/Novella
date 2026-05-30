@@ -1,9 +1,12 @@
 #pragma once
+#include <cstdint>
 #include <nlohmann/json_fwd.hpp>
 #include <functional>
 #include <unordered_map>
-#include <stdexcept>
+#include <vector>
 #include "../Commands/CommandContext.hpp"
+#include "Keyboard.hpp"
+#include "Mouse.hpp"
 
 namespace Novella {
 
@@ -27,7 +30,17 @@ namespace Novella{
 
 namespace Novella::Input{
 
+    class KeyEvent;
+    class ClickEvent;
+
+}
+
+namespace Novella::Input{
+
     class CommandDispatcher{
+
+        using Func = std::function<void(CommandContext& context, const nlohmann::json& args)>;
+
 
         public:
 
@@ -40,24 +53,68 @@ namespace Novella::Input{
         CommandDispatcher(CommandDispatcher&&) = delete;
     
         CommandDispatcher& operator=(CommandDispatcher&&) = delete;
+        
+        void execute(uint64_t targetID, Alias alias, const nlohmann::json& args, CommandContext& context);
 
-        bool registered(Alias alias) const;
-                
-        void trigger(const ActionCommand& command, CommandContext& context);
+        void dispatch(const KeyEvent& event, CommandContext& context);
+        void dispatch(const ClickEvent& event, CommandContext& context);
+
+        void addClickBinding(uint64_t objectID, Mouse::Button button, Alias commandAlias, const nlohmann::json& args);
+        void addKeyBinding(uint64_t objectID, Keyboard::Key key, Alias commandAlias, const nlohmann::json& args);
 
         private:
         
-        using Func = std::function<void(CommandContext& context, const nlohmann::json& args)>;
-        
+        struct ClickBinding {
+
+            ClickBinding() = delete;
+
+            ClickBinding(uint64_t objectID, Mouse::Button button, Alias alias, const nlohmann::json& args)
+                :
+                objectID(objectID),
+                button(button),
+                alias(alias),
+                args(args)
+                {}
+
+            uint64_t objectID;
+            Mouse::Button button;
+
+            Alias alias;
+            nlohmann::json args;
+        };
+
+        struct KeyBinding{
+
+            KeyBinding() = delete;
+
+            KeyBinding(uint64_t objectID, Keyboard::Key key, Alias alias, const nlohmann::json& args)
+                :
+                objectID(objectID),
+                key(key),
+                alias(alias),
+                args(args)
+                {}
+            uint64_t objectID;
+            Keyboard::Key key;
+
+            Alias alias;
+            nlohmann::json args;
+        };
+
+
         template<typename Func>
 
         void registerCommand(Alias commandAlias, Func function){
 
             commands.emplace(commandAlias, function);
         }
-
-        std::unordered_map<Alias, Func> commands;
         
+        std::unordered_map<Alias, Func> commands;
+
+        std::vector<ClickBinding> clickBindings;
+        std::vector<KeyBinding> keyBindings;
+
+
     };
 
 }

@@ -39,6 +39,11 @@ add_executable(Novella
     src/InteractionSystem.cpp
     src/CommandDispatcher.cpp
 
+    src/AudioCommands.cpp
+    src/InputCommands.cpp
+    src/SceneCommands.cpp
+    src/TransformationCommands.cpp
+    src/WindowCommands.cpp
     
     src/Engine.cpp
     

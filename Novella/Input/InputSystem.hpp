@@ -2,6 +2,7 @@
 #include "Keyboard.hpp"
 #include "../Math/Vector2x.hpp"
 #include "Mouse.hpp"
+#include <optional>
 
 namespace Novella::Input {
 
@@ -48,6 +49,9 @@ namespace Novella::Input {
     static void disableCursor();
     static bool isCursorHidden();
     static bool isCursorOnScreen();
+
+    static std::optional<Mouse::Button> getMouseButtonPressed();
+    static std::optional<Keyboard::Key> getKeyboardKeyPressed();
 
 };
 }

@@ -1,5 +1,4 @@
 #include "../Novella/Components/Button.hpp"
-#include "../Novella/Input/ActionCommand.hpp"
 #include <nlohmann/json.hpp>
 
 namespace Novella::Components{
@@ -16,13 +15,6 @@ namespace Novella::Components{
         Attribute::Layoutable(layout),
         rLayer(renderLayer)
         {}
-
-    void Button::addMouseBind(Input::Mouse::Button button, const Input::ActionCommand& command){
-
-        if(mouseBinds.contains(button)) throw std::runtime_error("Could not bind the action because this button is already in use");
-
-        mouseBinds.emplace(button, command);
-    }
 
     uint64_t Button::getID() const{
 

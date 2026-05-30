@@ -78,6 +78,8 @@ namespace Novella{
 
         void create();
         
+        void setPosition(const Math::Vector2i& position);
+        
         private:
 
         std::string title;

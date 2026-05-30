@@ -3,7 +3,6 @@
 #include "Novella/Components/Button.hpp"
 #include "Novella/Components/Character.hpp"
 #include "Novella/Engine.hpp"
-#include "Novella/Input/ActionCommand.hpp"
 #include "Novella/Layout/Anchor.hpp"
 #include "Novella/Layout/SizeMode.hpp"
 #include "Novella/Layout/Layout.hpp"
@@ -11,6 +10,8 @@
 #include "Novella/Components/Label.hpp"
 #include "Novella/Input/Mouse.hpp"
 #include "Novella/Commands/Alias.hpp"
+#include <iostream>
+
 int main(){
 
     Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novella/Test/2026-05-27_17-52.png",Novella::WindowFlags::Resizable);
@@ -76,7 +77,7 @@ int main(){
     
     button.setRenderLayer(22);
 
-    button.addMouseBind(Novella::Input::Mouse::Button::Left, Novella::Input::ActionCommand{Novella::Alias::CloseWindow, nlohmann::json(), 0});
+    std::cout << button.getID();
 
     //auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>(0);
     

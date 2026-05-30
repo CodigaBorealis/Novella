@@ -1,4 +1,5 @@
 #include "../Novella/Input/InputSystem.hpp"
+#include <optional>
 #include <raylib.h>
 
 namespace Novella::Input{
@@ -118,5 +119,32 @@ namespace Novella::Input{
 
         return ::IsCursorOnScreen();
     }
+
+    std::optional<Mouse::Button> InputSystem::getMouseButtonPressed(){
+
+        for(int x = 0; x <= ::MOUSE_BUTTON_BACK; ++x){
+
+            if(::IsMouseButtonPressed(x)){
+
+                return Mouse::Button(x);
+            }
+        }
+
+        return std::nullopt;
+    }
+
+    std::optional<Keyboard::Key> InputSystem::getKeyboardKeyPressed(){
+
+        for(int x = 0; x <= ::KEY_KB_MENU; ++x){
+
+            if(::IsKeyPressed(x)){
+
+                return Keyboard::Key(x);
+            }
+        }
+
+        return std::nullopt;
+    }
+
 
 }

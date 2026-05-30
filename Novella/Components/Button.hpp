@@ -25,8 +25,6 @@ namespace Novella::Components{
         nlohmann::json serialize() const override;
 
         Type getType() const override;
-
-        void addMouseBind(Input::Mouse::Button button, const Input::ActionCommand& command) override;
             
         bool contains(const Math::Vector2f& mousePos) const override;
 

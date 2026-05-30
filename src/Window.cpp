@@ -179,5 +179,8 @@ namespace Novella{
         ::SetWindowIcon(icon.getHandle());
     }
 
-    
+    void Window::setPosition(const Math::Vector2i& position){
+
+        ::SetWindowPosition(position.x, position.y);
+    }
 }

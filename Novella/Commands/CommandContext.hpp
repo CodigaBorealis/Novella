@@ -3,23 +3,18 @@
 #include <stdexcept>
 #include <string>
 #include "../Scene/Scene.hpp"
+#include "../Attribute/Object.hpp"
 
-    namespace Novella::Audio{
+namespace Novella::Audio{
 
-        class AudioSystem;
-    }
+    class AudioSystem;
+}
 
-    namespace Novella::Rendering{
+namespace Novella::Rendering{
 
-        class Renderer;
+    class Renderer;
         
-    }
-
-    namespace Novella::Attribute{
-        
-        class Object;
-
-    }
+}
 
 namespace Novella{
         

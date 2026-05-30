@@ -1,10 +1,10 @@
 #include "../Novella/Input/InteractionSystem.hpp"
 #include "../Novella/Scene/Scene.hpp"
-#include "../Novella/Attribute/Object.hpp"
-#include "../Novella/Attribute/Interactable.hpp"
 #include "../Novella/Attribute/Clickable.hpp"
+#include "../Novella/Attribute/Interactable.hpp"
 #include "../Novella/Input/InputSystem.hpp"
-#include <iostream>
+#include "../Novella/Input/ClickEvent.hpp"
+#include <variant>
 
 namespace Novella::Input{
 
@@ -15,46 +15,53 @@ namespace Novella::Input{
 
     void InteractionSystem::handleKeyboardInput(Scene& scene){
 
+        auto pressed = InputSystem::getKeyboardKeyPressed();
+
+        if(!pressed) return;
+        //It shouldnt work likke this but i will leave it for now
         for(const auto& obj : scene.objects()){
 
-            if(const auto* interactable = dynamic_cast<Attribute::Interactable*>(obj.get())){
+            if(const auto* Interactable = dynamic_cast<Attribute::Interactable*>(obj.get())){
 
-                for(const auto& bind: interactable->getKeyboardBinds()){
-
-                    if(InputSystem::isKeyPressed(bind.first)){
-
-                        std::cout<< "pressed the key";
-
-                        //dispatcher.trigger(scene, bind.second);
-                    }
-                }
+                eventQueue.push(Novella::Input::KeyEvent{obj->getID(), *pressed});
 
             }
         }
-
     }
+
     void InteractionSystem::handleMouseInput(Scene& scene, const Math::Vector2f& mousePosition){
 
         static int times = 0;
+
+        auto pressed = InputSystem::getMouseButtonPressed();
+
+        if(!pressed) return;
 
         for(const auto& obj : scene.objects()){
 
             if(const auto* clickable = dynamic_cast<Attribute::Clickable*>(obj.get())){
 
-                for(const auto& bind: clickable->getMouseBinds()){
+                if(!clickable->contains(mousePosition)) continue;
 
-                    if(InputSystem::isMouseButtonPressed(bind.first) && clickable->contains(mousePosition)){
-
-                        times ++;
-                        std::cout << times;
-                        std::cout << "clicked\n";
-                    
-                        //dispatcher.trigger(scene, bind.second);
-                    }
-                }
+                eventQueue.push(Novella::Input::ClickEvent{obj->getID(), *pressed, mousePosition});
 
             }
         }
     }
 
+    void InteractionSystem::handleInteractions(CommandContext& context){
+
+        while(!eventQueue.empty()){
+
+            auto event = std::move(eventQueue.front());
+
+            eventQueue.pop();
+
+            std::visit([&](auto&& e){
+
+                dispatcher.dispatch(e, context);
+
+            }, event);
+        }
+    }
 }

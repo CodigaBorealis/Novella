@@ -34,8 +34,6 @@ namespace Novella::Components{
 
         float getSpacing() const;
 
-        void addMouseBind(Input::Mouse::Button button, const Input::ActionCommand& command) override;
-
         bool contains(const Math::Vector2f& mousePos) const override;
 
         uint64_t getID() const override;
