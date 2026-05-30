@@ -5,7 +5,6 @@
 #include <cstdint>
 #include <stdexcept>
 #include <string>
-#include <iostream>
 namespace Novella::Input{
 
     CommandDispatcher::CommandDispatcher(){
@@ -42,13 +41,9 @@ namespace Novella::Input{
 
         for(const auto& bind : clickBindings){
 
-            std::cout<< "EventID: "<< event.objectID << " ButtonID: " << static_cast<int>(event.button) << "\n";
-
-            std::cout << "Check Binding id:" << bind.objectID << ",  Button: " << (int)bind.button << "\n";
 
             if(bind.objectID == event.objectID && bind.button == event.button){
 
-                std::cout <<"Math found\n";
                 execute(bind.objectID,bind.alias, bind.args, context);
 
                 return;
