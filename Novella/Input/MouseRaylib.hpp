@@ -14,7 +14,7 @@ namespace Novella::Input::Mouse{
 
             default:
 
-                return Button::Unknown;
+                return Button::Left;
         }
     }
 

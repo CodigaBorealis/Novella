@@ -39,7 +39,7 @@ namespace Novella::Input{
 
     class CommandDispatcher{
 
-        using Func = std::function<void(CommandContext& context, const nlohmann::json& args)>;
+        using Func = std::function<void(uint64_t, CommandContext& context, const nlohmann::json& args)>;
 
 
         public:

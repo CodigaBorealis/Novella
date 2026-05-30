@@ -4,7 +4,7 @@
 
 namespace Novella::Commands{
 
-    void setMousePosition(CommandContext& context, const nlohmann::json& args){
+    void setMousePosition(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("setMousePosition: expected object");
 
@@ -22,28 +22,28 @@ namespace Novella::Commands{
         Input::InputSystem::setMousePosition({x, y});
     }
 
-    void showCursor(CommandContext& context, const nlohmann::json& args){
+    void showCursor(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(args.size() != 0) throw std::runtime_error("showCursor: expected 0 arguments, got: " + std::to_string(args.size()));
 
         Input::InputSystem::showCursor();
     }
 
-    void hideCursor(CommandContext& context, const nlohmann::json& args){
+    void hideCursor(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(args.size() != 0) throw std::runtime_error("hideCursor: expected 0 arguments, got: " + std::to_string(args.size()));
 
         Input::InputSystem::hideCursor();
     }
 
-    void enableCursor(CommandContext& context, const nlohmann::json& args){
+    void enableCursor(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(args.size() != 0) throw std::runtime_error("enableCursor: expected 0 arguments, got: " + std::to_string(args.size()));
 
         Input::InputSystem::enableCursor();
     }
     
-    void disableCursor(CommandContext& context, const nlohmann::json& args){
+    void disableCursor(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(args.size() != 0) throw std::runtime_error("disableCursor: expected 0 arguments, got: " + std::to_string(args.size()));
 

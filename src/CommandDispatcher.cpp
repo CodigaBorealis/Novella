@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <stdexcept>
 #include <string>
-
+#include <iostream>
 namespace Novella::Input{
 
     CommandDispatcher::CommandDispatcher(){
@@ -22,9 +22,7 @@ namespace Novella::Input{
 
         if(it == commands.end()) throw std::runtime_error("Command not found\n ID:" + std::to_string(static_cast<unsigned int>(alias)));
 
-        context.targetID = targetID;
-
-        it->second(context, args);
+        it->second(targetID, context, args);
     }
 
     void CommandDispatcher::dispatch(const KeyEvent& event, CommandContext& context){
@@ -44,8 +42,13 @@ namespace Novella::Input{
 
         for(const auto& bind : clickBindings){
 
+            std::cout<< "EventID: "<< event.objectID << " ButtonID: " << static_cast<int>(event.button) << "\n";
+
+            std::cout << "Check Binding id:" << bind.objectID << ",  Button: " << (int)bind.button << "\n";
+
             if(bind.objectID == event.objectID && bind.button == event.button){
 
+                std::cout <<"Math found\n";
                 execute(bind.objectID,bind.alias, bind.args, context);
 
                 return;

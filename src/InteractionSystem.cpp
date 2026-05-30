@@ -5,7 +5,7 @@
 #include "../Novella/Input/InputSystem.hpp"
 #include "../Novella/Input/ClickEvent.hpp"
 #include <variant>
-
+#include <iostream>
 namespace Novella::Input{
 
 
@@ -63,5 +63,17 @@ namespace Novella::Input{
 
             }, event);
         }
+
     }
+
+    void InteractionSystem::addClickBinding(uint64_t objectID, Mouse::Button button, Alias commandAlias, const nlohmann::json& args){
+
+        dispatcher.addClickBinding(objectID, button, commandAlias, args);
+
+    };
+
+    void InteractionSystem::addKeyBinding(uint64_t objectID, Keyboard::Key key, Alias commandAlias, const nlohmann::json& args){
+
+        dispatcher.addKeyBinding(objectID, key, commandAlias, args);
+    };
 }

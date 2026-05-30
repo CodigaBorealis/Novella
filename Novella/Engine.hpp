@@ -43,6 +43,10 @@ namespace Novella{
         
         private:
 
+        void computeLayout(Scene* currentScene);
+        void handleInput(Scene* currentScene);
+        void handleRendering(Scene* currentScene);
+
         Window displayWindow;
         Rendering::Renderer windowRenderer; 
 

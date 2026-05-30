@@ -26,6 +26,9 @@ namespace Novella::Input{
         void handleMouseInput(Scene& scene, const Math::Vector2f& mousePosition);
         void handleInteractions(CommandContext& context);
 
+        void addClickBinding(uint64_t objectID, Mouse::Button button, Alias commandAlias, const nlohmann::json& args);
+        void addKeyBinding(uint64_t objectID, Keyboard::Key key, Alias commandAlias, const nlohmann::json& args);
+        
         private:
         
         using Event = std::variant<KeyEvent, ClickEvent>;

@@ -1,12 +1,13 @@
 #include "../Novella/Commands/AudioCommands.hpp"
 #include "../Novella/Commands/CommandContext.hpp"
 #include "../Novella/Audio/AudioSystem.hpp"
+#include <cstdint>
 #include <stdexcept>
 #include <string>
 
 namespace Novella::Commands{
 
-    void playSound(CommandContext &context, const nlohmann::json &args){
+    void playSound(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("playSound: expected object");
 
@@ -21,7 +22,7 @@ namespace Novella::Commands{
         context.audio->play(resourceID);
     }
 
-    void playMusic(CommandContext &context, const nlohmann::json &args){
+    void playMusic(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("playMusic: expected object");
 
@@ -31,14 +32,14 @@ namespace Novella::Commands{
 
         if(!context.audio) throw std::runtime_error("playMusic: audio not initialized");
 
-        std::string resourceID = args.at(0).get<std::string>();
+        std::string resourceID = args.at("id").get<std::string>();
 
-        stopMusic(context, nlohmann::json{});
+        stopMusic(target,context, nlohmann::json{});
 
         context.audio->play(resourceID);
     }
 
-    void stopSound(CommandContext &context, const nlohmann::json &args){
+    void stopSound(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("stopSound: expected object");
 
@@ -48,12 +49,12 @@ namespace Novella::Commands{
 
         if(!context.audio) throw std::runtime_error("stopSound: audio not initialized");
 
-        std::string resourceID = args.at(0).get<std::string>();
+        std::string resourceID = args.at("id").get<std::string>();
 
         context.audio->stop(resourceID);
     }
 
-    void stopMusic(CommandContext &context, const nlohmann::json &args){
+    void stopMusic(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(args.size() != 0) throw std::runtime_error("stopMusic: expected 0 arguments, got: " + std::to_string(args.size()));
 

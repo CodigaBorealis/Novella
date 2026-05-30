@@ -26,7 +26,6 @@ add_executable(Novella
 
     src/Scene.cpp
     src/SceneManager.cpp
-    src/ObjectFactory.cpp
 
     src/Character.cpp
     src/Background.cpp

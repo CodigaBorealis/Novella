@@ -1,6 +1,5 @@
 #include "../Novella/Engine.hpp"
 #include "../Novella/Input/InputSystem.hpp"
-
 namespace Novella{
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps)
@@ -44,29 +43,13 @@ namespace Novella{
                 windowRenderer.resize(displayWindow.getSize());
 
             }
-            
-            Math::Vector2i virtualResolution = {
 
-                static_cast<int>(windowRenderer.virtualResolution().x),
-                
-                static_cast<int>(windowRenderer.virtualResolution().y)
-            
-            };
+            computeLayout(&currentScene);
+            handleInput(&currentScene);
+            handleRendering(&currentScene);
 
-            Math::Vector2f virtualMouse = windowRenderer.toVirtualCoordinates(Input::InputSystem::mousePosition());
-
-            layoutSystem.compute(currentScene, virtualResolution);
-
-            interactionSystem.handleKeyboardInput(currentScene);
-
-            interactionSystem.handleMouseInput(currentScene, virtualMouse);
-
-            windowRenderer.beginFrame();
-
-            windowRenderer.drawScene(currentScene);
-
-            windowRenderer.endFrame();
-
+            auto music = audioSystem.getCurrentBgm();
+        
         }
     }
 
@@ -105,4 +88,46 @@ namespace Novella{
         return this->interactionSystem;
     }
 
+    void Engine::computeLayout(Scene* currentScene){
+
+        if(!currentScene) return;
+
+        Math::Vector2i virtualResolution = {
+
+                static_cast<int>(windowRenderer.virtualResolution().x),
+                
+                static_cast<int>(windowRenderer.virtualResolution().y)
+            
+        };
+
+        layoutSystem.compute(*currentScene, virtualResolution);
+        
+    }
+        void Engine::handleInput(Scene* currentScene){
+
+            if(!currentScene) return;
+            
+            Math::Vector2f virtualMouse = windowRenderer.toVirtualCoordinates(Input::InputSystem::mousePosition());
+
+            interactionSystem.handleKeyboardInput(*currentScene);
+
+            interactionSystem.handleMouseInput(*currentScene, virtualMouse);
+
+            CommandContext context{currentScene, &audioSystem, &windowRenderer, &displayWindow};
+
+            interactionSystem.handleInteractions(context);
+        }
+
+        void Engine::handleRendering(Scene* currentScene){
+
+            windowRenderer.beginFrame();
+
+            if(currentScene){
+
+                windowRenderer.drawScene(*currentScene);
+
+            }
+
+            windowRenderer.endFrame();
+        }
 }

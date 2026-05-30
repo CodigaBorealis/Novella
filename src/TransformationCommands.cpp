@@ -9,27 +9,27 @@
 
 namespace Novella::Commands{
 
-    void resize(CommandContext& context, const nlohmann::json& args){
+    void resize(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
-        auto& object = context.target<Attribute::Renderable>();
+        auto& object = context.target<Attribute::Renderable>(target);
 
         
     }
 
-    void move(CommandContext& context, const nlohmann::json& args){
+    void move(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
-        auto& object = context.target<Attribute::Layoutable>();
+        auto& object = context.target<Attribute::Layoutable>(target);
 
         Layout currentLayout = object.getLayout();
         //Do stuff
     }
 
-    void setPosition(CommandContext& context, const nlohmann::json& args){
+    void setPosition(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         
     }
 
-    void setColor(CommandContext& context, const nlohmann::json& args){
+    void setColor(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("setColor: expected object");
 
@@ -62,7 +62,7 @@ namespace Novella::Commands{
 
         if(a > 255) throw std::runtime_error("setColor: overflow for argument 'alpha' expected value is between 0 and 255");
 
-        auto& object = context.target<Attribute::Renderable>();
+        auto& object = context.target<Attribute::Renderable>(target);
         
             uint8_t red = args.at("red").get<uint8_t>();
             uint8_t green = args.at("green").get<uint8_t>();
@@ -72,7 +72,7 @@ namespace Novella::Commands{
             object.setColor({red, green, blue, alpha});
     }
 
-    void setTransparency(CommandContext& context, const nlohmann::json& args){
+    void setTransparency(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("setTransparency: expected object");
 
@@ -84,7 +84,7 @@ namespace Novella::Commands{
 
         if(a > 255) throw std::runtime_error("setTransparency: overflow for argument 'alpha' expected value is between 0 and 255");
 
-        auto& object = context.target<Attribute::Renderable>();
+        auto& object = context.target<Attribute::Renderable>(target);
         
         uint8_t alpha = args.at("alpha").get<uint8_t>();
 
@@ -94,7 +94,7 @@ namespace Novella::Commands{
 
     }
 
-    void setText(CommandContext& context, const nlohmann::json& args){
+    void setText(uint64_t target,CommandContext &context, const nlohmann::json &args){
 
         
     }

@@ -1,7 +1,7 @@
 #include "../Novella/Input/InputSystem.hpp"
 #include <optional>
 #include <raylib.h>
-
+#include <iostream>
 namespace Novella::Input{
 
     bool InputSystem::isKeyPressed(Keyboard::Key key){
@@ -122,10 +122,11 @@ namespace Novella::Input{
 
     std::optional<Mouse::Button> InputSystem::getMouseButtonPressed(){
 
-        for(int x = 0; x <= ::MOUSE_BUTTON_BACK; ++x){
+        for(int x = 0; x < ::MOUSE_BUTTON_BACK; x++){
 
             if(::IsMouseButtonPressed(x)){
 
+                std::cout << "Button: " << x << "\n";
                 return Mouse::Button(x);
             }
         }
@@ -135,7 +136,7 @@ namespace Novella::Input{
 
     std::optional<Keyboard::Key> InputSystem::getKeyboardKeyPressed(){
 
-        for(int x = 0; x <= ::KEY_KB_MENU; ++x){
+        for(int x = 0; x < ::KEY_KB_MENU; x++){
 
             if(::IsKeyPressed(x)){
 

@@ -11,7 +11,6 @@
 #include "Novella/Input/Mouse.hpp"
 #include "Novella/Commands/Alias.hpp"
 #include <iostream>
-
 int main(){
 
     Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novella/Test/2026-05-27_17-52.png",Novella::WindowFlags::Resizable);
@@ -76,16 +75,20 @@ int main(){
     );
     
     button.setRenderLayer(22);
+    //Right does not work somehow
+    std::cout << "ENUM CHECK -> Left: " << (int)Novella::Input::Mouse::Button::Left 
+          << ", Right: " << (int)Novella::Input::Mouse::Button::Right 
+          << ", Middle: " << (int)Novella::Input::Mouse::Button::Middle << "\n";
+    engine.input().addClickBinding(3, Novella::Input::Mouse::Button::Right, Novella::Alias::StopMusic,{});
 
-    std::cout << button.getID();
+    engine.input().addClickBinding(3, Novella::Input::Mouse::Button::Middle, Novella::Alias::StopMusic,{});
 
-    //auto* label = engine.scene().getCurrentScene().getObjectAs<Novella::Components::Label>(0);
-    
-    //label->setColor({100,0,100,255});
+
+    engine.input().addClickBinding(3, Novella::Input::Mouse::Button::Left, Novella::Alias::PlayMusic,{{"id", "audio"}});
     
     engine.audio().createResource("audio", "/home/line/projects/Novella/Test/bgm.ogg", Novella::Audio::AssetType::Music);
 
-    engine.audio().play("audio");
+    //engine.audio().play("audio");
 
     engine.window().setTitle("hola");
 

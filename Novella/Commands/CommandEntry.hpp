@@ -6,7 +6,7 @@ namespace Novella{
 
     class CommandContext;
 
-    using CommandFunction = std::function<void(CommandContext&, const nlohmann::json&)>;
+    using CommandFunction = std::function<void(uint64_t, CommandContext&, const nlohmann::json&)>;
 
     enum class Alias : unsigned int;
 

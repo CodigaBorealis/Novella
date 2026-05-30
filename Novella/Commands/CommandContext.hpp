@@ -22,15 +22,24 @@ namespace Novella{
     
     struct CommandContext{
 
+        CommandContext() = delete;
+
+        CommandContext(Scene* scene, Audio::AudioSystem* audio, Rendering::Renderer* renderer, Window* window)
+            :
+            scene(scene),
+            audio(audio),
+            renderer(renderer),
+            window(window)
+            {}
+            
         Scene* scene = nullptr;
         Audio::AudioSystem* audio = nullptr;
         Rendering::Renderer* renderer = nullptr;
         Window* window = nullptr;
-        uint64_t targetID;
 
         template<typename T>
 
-        T& target() const{
+        T& target(uint64_t targetID) const{
 
             auto* object = scene->findObjectByID(targetID);
 
