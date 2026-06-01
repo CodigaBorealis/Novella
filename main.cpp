@@ -10,10 +10,11 @@
 #include "Novella/Components/Label.hpp"
 #include "Novella/Input/Mouse.hpp"
 #include "Novella/Commands/Alias.hpp"
+#include "Novella/Syntax/Scene/SceneDefinition.hpp"
 int main(){
 
     Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novella/Test/2026-05-27_17-52.png",Novella::WindowFlags::Resizable);
-
+/*
     engine.resources().loadTexture("character", "/home/line/projects/Novella/Test/2026-05-27_17-52.png");
 
     engine.resources().loadTexture("button", "/home/line/projects/Novella/Test/2026-05-27_18-51.png");
@@ -26,7 +27,7 @@ int main(){
     
     engine.scene().createScene();
 
-    auto& bg= engine.scene().addObject<Novella::Components::Background>(
+    auto& bg = engine.scene().addObject<Novella::Components::Background>(
 
         engine.resources().getTexture("background"),
         Novella::Layout{            
@@ -87,6 +88,8 @@ int main(){
     //engine.audio().play("audio");
 
     engine.window().setTitle("hola");
+*/
+
 
     engine.run();
 
