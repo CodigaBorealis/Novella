@@ -89,6 +89,7 @@ namespace Novella::Syntax::Scene{
 
     Token Lexer::number(){
 
+        short dotCount = 0;
         std::string value;
 
         if(peek() == '-') value += advance();
@@ -98,13 +99,34 @@ namespace Novella::Syntax::Scene{
             char c = peek();
 
             if(std::isdigit(c) || c == '.'){
-
+                
                 value += advance();
+
+                if(c == '.'){
+                    
+                    dotCount ++;
+
+                    if(dotCount > 1) throw std::runtime_error(std::string("Repeated '.' character +  at : " + std::to_string(line) + ":" + std::to_string(column)));
+                    
+                    char nextChar = peek();
+
+                    if(nextChar == '-' || nextChar == '.') throw std::runtime_error("Malformed number literal at " + std::to_string(line) + ":" + std::to_string(column));
+
+                }
 
             }else{
 
                 break;
             }
+        }
+        
+        if(!value.empty() && value.back() == '.') throw std::runtime_error("Malformed number literal at " + std::to_string(line) + ":" + std::to_string(column));
+        
+        if(!eof()){
+
+            char trailing = peek();
+            
+            if(trailing == '-' || trailing == '.') throw std::runtime_error("Malformed number literal at " + std::to_string(line) + ":" + std::to_string(column));
         }
 
         return{Token::Type::Number, value};
@@ -173,7 +195,7 @@ namespace Novella::Syntax::Scene{
 
             }else if(c == '#'){
 
-                while(!eof() && peek() != '\n' && peek() != 'r'){
+                while(!eof() && peek() != '\n' && peek() != '\r'){
 
                     advance();
                 }
@@ -184,5 +206,4 @@ namespace Novella::Syntax::Scene{
             }
         }
     }
-
 }

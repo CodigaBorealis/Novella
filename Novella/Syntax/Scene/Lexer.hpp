@@ -36,6 +36,7 @@ namespace Novella::Syntax::Scene{
         size_t currentCharacter = 0;
         size_t line = 1;
         size_t column = 1;
+
     };
 
 }
