@@ -44,6 +44,10 @@ add_executable(Novella
     src/TransformationCommands.cpp
     src/WindowCommands.cpp
     
+    src/FileReader.cpp
+    
+    src/Lexer.cpp
+
     src/Engine.cpp
     
 )

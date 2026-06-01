@@ -1,0 +1,24 @@
+#include "../Novella/IO/FileReader.hpp"
+#include <filesystem>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
+
+
+namespace Novella::IO{
+
+    std::string FileReader::getContents(const std::filesystem::path& src){
+
+        std::ifstream file(src);
+
+        if(!file.is_open()) throw std::runtime_error("FileReader: could not open file " + src.string());
+
+        std::ostringstream contents;
+
+        contents << file.rdbuf();
+
+        return contents.str();
+
+    }
+
+}

@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-namespace Novella::Syntax{
+namespace Novella::Syntax::Scene{
 
     struct Value{
 
