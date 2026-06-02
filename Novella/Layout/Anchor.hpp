@@ -2,7 +2,7 @@
 
 namespace Novella{
 
-    enum class Anchor{
+    enum class Anchor : int{
 
         TopLeft,
         TopCenter,

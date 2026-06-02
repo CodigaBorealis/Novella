@@ -2,7 +2,7 @@
 
 namespace Novella{
 
-    enum class SizeMode{
+    enum class SizeMode : int{
 
         Fixed,
         Percent,

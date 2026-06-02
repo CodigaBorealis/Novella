@@ -7,6 +7,7 @@
 #include "Novella/Layout/Anchor.hpp"
 #include "Novella/Layout/SizeMode.hpp"
 #include "Novella/Layout/Layout.hpp"
+#include "Novella/Syntax/Scene/Parser.hpp"
 #include "Novella/Syntax/Scene/Token.hpp"
 #include "Novella/Window/WindowFlags.hpp"
 #include "Novella/Components/Label.hpp"
@@ -16,7 +17,7 @@
 #include <iostream>
 int main(){
 
-    //Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novella/Test/2026-05-27_17-52.png",Novella::WindowFlags::Resizable);
+    Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novella/Test/2026-05-27_17-52.png",Novella::WindowFlags::Resizable);
 /*
     engine.resources().loadTexture("character", "/home/line/projects/Novella/Test/2026-05-27_17-52.png");
 
@@ -93,22 +94,10 @@ int main(){
     engine.window().setTitle("hola");
 */
 
-
-    //engine.run();
-
     std::filesystem::path source = "/home/line/projects/Novella/Test/Hallway.nsc";
-    std::string contents = Novella::IO::FileReader::getContents(source);
 
-    Novella::Syntax::Scene::Lexer lexer(contents);
-
-    while(true){
-
-        Novella::Syntax::Scene::Token token = lexer.next();
-
-        std::cout << static_cast<int>(token.type) << " : " << token.text << "\n";
-
-        if(token.type == Novella::Syntax::Scene::Token::Type::EndOfFile) break;
-    }
+    engine.loadSceneFromFile(source);
+    engine.run();
     return 0;
 } 
 

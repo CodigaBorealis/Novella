@@ -7,7 +7,7 @@
 
 namespace Novella::IO{
 
-    std::string FileReader::getContents(const std::filesystem::path& src){
+    std::string FileReader::getContentsFromFile(const std::filesystem::path& src){
 
         std::ifstream file(src);
 

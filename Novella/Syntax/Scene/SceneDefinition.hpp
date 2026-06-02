@@ -49,6 +49,7 @@ namespace Novella::Syntax::Scene{
 
         std::string targetName;
         std::string input;
+        std::string inputType;
         std::string commandAlias;
     };
 

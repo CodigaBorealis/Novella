@@ -8,10 +8,7 @@ namespace Novella::IO{
 
         public:
         
-        static std::string getContents(const std::filesystem::path& src);
-
-        private:
-
+        static std::string getContentsFromFile(const std::filesystem::path& src);
 
     };
 

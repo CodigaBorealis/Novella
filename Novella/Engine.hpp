@@ -7,8 +7,7 @@
 #include "Scene/SceneManager.hpp"
 #include "Window/WindowFlags.hpp"
 #include "Input/InteractionSystem.hpp"
-#include "Attribute/Object.hpp"
-
+#include "IO/InputOutputSystem.hpp"
 namespace Novella{
 
     class Engine{
@@ -32,6 +31,7 @@ namespace Novella{
         Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon, WindowFlags flags);
 
         void run();
+        void loadSceneFromFile(const std::filesystem::path& src);
 
         Rendering::ResourceManager& resources();
         Rendering::Renderer& renderer();
@@ -40,7 +40,8 @@ namespace Novella{
         Window& window();
         LayoutSystem& layout();
         Input::InteractionSystem& input();
-        
+        IO::InputOutputSystem& io();
+
         private:
 
         void computeLayout(Scene* currentScene);
@@ -55,6 +56,7 @@ namespace Novella{
         Audio::AudioSystem audioSystem;
         LayoutSystem layoutSystem;
         Input::InteractionSystem interactionSystem;
+        IO::InputOutputSystem inputOutputSystem;
     };
 
 }
