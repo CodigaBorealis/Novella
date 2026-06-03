@@ -78,49 +78,7 @@ namespace Novella::Rendering{
         return fonts.at(name).font;
 
     }
-
-    nlohmann::json ResourceManager::serialize() const{
-
-        nlohmann::json data;
-
-        data["textures"] = nlohmann::json::array();
-        data["fonts"] = nlohmann::json::array();
-
-        for(const auto& [id, texture] : textures){
-
-            data["textures"].push_back({
-
-                {"id", id},
-                {"path",texture.src.string()}
-            
-            });
-        }
-
-        for(const auto& [id, font] : fonts){
-
-            data["fonts"].push_back({
-
-                {"id",id},
-                {"path", font.src.string()}
-            });
-        }
-
-        return data;
-    }
-
-    void ResourceManager::deserialize(const nlohmann::json& data){
-
-        for(const auto& texture : data["textures"]){
-
-            loadTexture(texture["id"], texture["path"]);
-        }
-
-        for(const auto& font : data["fonts"]){
-
-            loadFont(font["id"], font["path"]);
-        }
-    }
-
+    
     void ResourceManager::clear(){
 
         this->images.clear();

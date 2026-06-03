@@ -92,11 +92,6 @@ namespace Novella::Components{
         this->id = id;
     }
 
-    nlohmann::json Label::serialize() const{
-
-        return {};
-    }
-
     const std::string& Label::getType() const{
 
         return this->type;

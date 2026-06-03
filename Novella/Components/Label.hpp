@@ -38,8 +38,6 @@ namespace Novella::Components{
         const std::string& getID() const override;
         void setID(const std::string& id) override;
 
-        nlohmann::json serialize() const override;
-
         const std::string& getType() const override;
 
         void setText(const std::string& text);

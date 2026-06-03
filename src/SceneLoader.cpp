@@ -81,19 +81,15 @@ namespace Novella::SceneLoader{
                 std::cout << "  Child: " << child.objectType << "\n";
             }
 
-            if(object.objectType == Components::Type::Background){
+            if(object.objectType == Components::Type::Sprite){
 
-                ComponentBuilder::buildBackground(engine, object);
+                ComponentBuilder::buildSprite(engine, object);
 
             }else if(object.objectType == Components::Type::Button){
 
                 ComponentBuilder::buildButton(engine, object);
 
-            }else if(object.objectType == Components::Type::Character){
-
-                ComponentBuilder::buildCharacter(engine, object);
-
-            } else if(object.objectType == Components::Type::Label){
+            }else if(object.objectType == Components::Type::Label){
 
                 ComponentBuilder::buildLabel(engine, object);
             } 

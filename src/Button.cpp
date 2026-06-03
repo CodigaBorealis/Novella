@@ -29,11 +29,6 @@ namespace Novella::Components{
         this->id = id;
     }
 
-    nlohmann::json Button::serialize() const{
-
-        return {};
-    }
-
     const std::string& Button::getType() const{
 
         return this->type;

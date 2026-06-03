@@ -1,5 +1,4 @@
 #pragma once
-#include <nlohmann/json_fwd.hpp>
 #include <string>
 
 namespace Novella::Attribute{
@@ -19,8 +18,6 @@ namespace Novella::Attribute{
         virtual const std::string&  getID() const = 0;
         
         virtual void setID(const std::string& id) = 0;
-
-        virtual nlohmann::json serialize() const = 0;
 
         virtual const std::string& getType() const = 0;
         

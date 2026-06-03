@@ -53,10 +53,6 @@ namespace Novella::Rendering{
 
         std::shared_ptr<Graphics::Font> getFont(const std::string& name) const;
 
-        nlohmann::json serialize() const;
-
-        void deserialize(const nlohmann::json& data);
-
         void clear();
 
         size_t size() const;

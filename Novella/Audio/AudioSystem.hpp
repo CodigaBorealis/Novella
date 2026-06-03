@@ -42,9 +42,6 @@ namespace Novella::Audio {
         
         const std::optional<std::string>& getCurrentBgm() const;
 
-        nlohmann::json serialize() const;
-        void deserialize(const nlohmann::json& data);
-
         private:
 
         void addCommand(Command::Type,unsigned int id, float value);

@@ -108,29 +108,6 @@ namespace Novella::Audio{
         backend.update();
     }
 
-    nlohmann::json AudioSystem::serialize() const{
-
-        nlohmann::json data;
-
-        data["audio"] = nlohmann::json::array();
-
-        for(const auto& [id, resource] : assets.getAll()){
-
-            data["audio"].push_back(resource.toJson());
-        }
-
-        return data;
-    }
-
-    void AudioSystem::deserialize(const nlohmann::json& data){
-
-        for(const auto& sound : data["audio"]){
-
-            createResource(sound.at("id"), sound.at("path"), static_cast<AssetType>(sound.at("type")));
-
-        }
-    }
-
     void AudioSystem::clear(){
 
         this->commands.clear();

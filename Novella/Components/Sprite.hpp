@@ -9,14 +9,14 @@
 
 namespace Novella::Components{
 
-    class Character : public Attribute::Object, public Attribute::Renderable, public Attribute::Layoutable{
+    class Sprite : public Attribute::Object, public Attribute::Renderable, public Attribute::Layoutable{
 
         public:
 
-            Character() = delete;
+            Sprite() = delete;
 
-            Character(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
-            Character(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
+            Sprite(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
+            Sprite(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
             
             const std::string& getID() const override;
             void setID(const std::string& id) override;
@@ -25,8 +25,6 @@ namespace Novella::Components{
 
             void setRenderLayer(int layer);
             int renderLayer() const override;
-
-            nlohmann::json serialize() const override;
 
             const std::string& getType() const override;
 

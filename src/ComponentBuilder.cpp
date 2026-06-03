@@ -3,15 +3,14 @@
 #include "../Novella/Syntax/Scene/Parser.hpp"
 #include "../Novella/Layout/Layout.hpp"
 #include "../Novella/Layout/SizeMode.hpp"
-#include "../Novella/Components/Background.hpp"
 #include "../Novella/Components/Button.hpp"
-#include "../Novella/Components/Character.hpp"
 #include "../Novella/Components/Label.hpp"
+#include "../Novella/Components/Sprite.hpp"
 #include <stdexcept>
 
 namespace Novella::SceneLoader{
 
-    void ComponentBuilder::buildBackground(Engine& engine, const Syntax::Scene::ObjectDefinition& definition){
+    void ComponentBuilder::buildSprite(Engine& engine, const Syntax::Scene::ObjectDefinition& definition){
 
             if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
             
@@ -29,7 +28,7 @@ namespace Novella::SceneLoader{
 
             int renderLayer = getInt(*rlayer);
 
-            engine.scene().addObject<Components::Background>(
+            engine.scene().addObject<Components::Sprite>(
 
             definition.objectName,
 
@@ -62,37 +61,6 @@ namespace Novella::SceneLoader{
         int renderLayer = getInt(*rlayer);
 
         engine.scene().addObject<Components::Button>(
-
-            definition.objectName,
-
-            engine.resources().getTexture(texture),
-
-            constructedLayout,
-
-            renderLayer
-
-        );
-    }
-
-    void ComponentBuilder::buildCharacter(Engine &engine, const Syntax::Scene::ObjectDefinition &definition){
-        
-        if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
-            
-        auto* tex = findProperty(definition, "texture");
-
-        if(!tex) throw std::runtime_error("Missing texture property for '" + definition.objectName + "'");
-
-        std::string texture = getString(*tex);
-
-        Layout constructedLayout = getLayout(definition);
-
-        auto* rlayer = findProperty(definition, "renderLayer");
-
-        if(!rlayer) throw std::runtime_error("Missing renderLayer property for '" + definition.objectName + "'");
-
-        int renderLayer = getInt(*rlayer);
-
-        engine.scene().addObject<Components::Character>(
 
             definition.objectName,
 
