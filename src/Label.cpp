@@ -1,20 +1,21 @@
 #include "../Novella/Components/Label.hpp"
 #include "../Novella/Layout/LayoutSystem.hpp"
-#include <cstdint>
 #include <raylib.h>
 #include <stdexcept>
 namespace Novella::Components{
 
-    Label::Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout)
+    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout)
         :
+        Attribute::Object(id, Type::Label),
         font(font),
         Attribute::Layoutable(layout),
         size(size),
         text(text)
         {}
 //I'm stupid
-    Label::Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer)
+    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer)
         :
+        Attribute::Object(id, Type::Label),
         font(font),
         Attribute::Layoutable(layout),
         size(size),
@@ -79,12 +80,12 @@ namespace Novella::Components{
 
     };
 
-    uint64_t Label::getID() const{
+    const std::string& Label::getID() const{
 
         return this->id;
     };
 
-    void Label::setID(uint64_t id){
+    void Label::setID(const std::string& id){
 
         this->id = id;
     }
@@ -94,7 +95,7 @@ namespace Novella::Components{
         return {};
     }
 
-    Type Label::getType() const{
+    const std::string& Label::getType() const{
 
         return this->type;
     }

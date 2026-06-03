@@ -8,14 +8,14 @@ namespace Novella{
 
 namespace Novella::Commands{
 
-    void setWindowTitle(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void setWindowTitle(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
-    void setWindowIcon(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void setWindowIcon(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
-    void setWindowPosition(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void setWindowPosition(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
-    void setWindowSize(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void setWindowSize(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
-    void closeWindow(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void closeWindow(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
 }

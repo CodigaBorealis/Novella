@@ -16,11 +16,11 @@ namespace Novella::Components{
 
             Character() = delete;
 
-            Character(std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
-            Character(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
+            Character(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
+            Character(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
             
-            uint64_t getID() const override;
-            void setID(uint64_t id) override;
+            const std::string& getID() const override;
+            void setID(const std::string& id) override;
 
             void draw(Rendering::Renderer& renderer) override;
 
@@ -29,7 +29,7 @@ namespace Novella::Components{
 
             nlohmann::json serialize() const override;
 
-            Type getType() const override;
+            const std::string& getType() const override;
 
             void setColor(const Graphics::Color& color) override;
 
@@ -41,13 +41,11 @@ namespace Novella::Components{
 
         private:
 
-            uint64_t id;
             std::shared_ptr<Graphics::Texture> texture;
             int rLayer = 0;
             Graphics::Color tint;
             float rotation = 0;
             //std::vector<std::string> sounds;
-            Type type = Type::Character;//This is shit but i need a way to serialize components
 
     };
 }

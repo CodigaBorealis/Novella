@@ -19,7 +19,7 @@ namespace Novella::IO{
 
         public:
         
-        Scene loadSceneFromFile(Engine& engine, const std::filesystem::path& src);
+        void loadSceneFromFile(Engine& engine, const std::filesystem::path& src);
 
         private:
         

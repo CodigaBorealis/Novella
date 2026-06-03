@@ -17,8 +17,8 @@ namespace Novella::Components{
 
         Label() = delete;
 
-        Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout);
-        Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer);
+        Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout);
+        Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer);
         
         void draw(Rendering::Renderer& renderer) override;
 
@@ -36,12 +36,12 @@ namespace Novella::Components{
 
         bool contains(const Math::Vector2f& mousePos) const override;
 
-        uint64_t getID() const override;
-        void setID(uint64_t id) override;
+        const std::string& getID() const override;
+        void setID(const std::string& id) override;
 
         nlohmann::json serialize() const override;
 
-        Type getType() const override;
+        const std::string& getType() const override;
 
         void setText(const std::string& text);
         const std::string& getText() const;
@@ -58,10 +58,9 @@ namespace Novella::Components{
         std::shared_ptr<Graphics::Font> font;
         int size;
         float spacing = 1.0f;
-        uint64_t id;
         int rLayer;
         Graphics::Color tint;
-        Type type = Type::Label;//This is shit but i need a way to serialize components
+        std::string type = Type::Label;//This is shit but i need a way to serialize components
 
 
 

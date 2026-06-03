@@ -1,12 +1,8 @@
 #pragma once
+namespace Novella::Components::Type{
 
-namespace Novella::Components{
-
-    enum class Type : unsigned int{
-
-        Background,
-        Character,
-        Label,
-        Button
-    };
+    static constexpr const char* Background = "Background";
+    static constexpr const char* Character = "Character";
+    static constexpr const char* Label = "Label";
+    static constexpr const char* Button = "Button";
 }

@@ -1,16 +1,18 @@
 #pragma once
 #include "Alias.hpp"
 #include "AudioCommands.hpp"
-#include "CommandEntry.hpp"
 #include "InputCommands.hpp"
 #include "SceneCommands.hpp"
 #include "TransformationCommands.hpp"
 #include "WindowCommands.hpp"
-#include <array>
+#include <functional>
+#include <unordered_map>
 
 namespace Novella{
 
-    static const std::array<CommandEntry, 23> commandTable{{
+    using CommandFunction = std::function<void(const std::string&, CommandContext&, const nlohmann::json&)>;
+
+    const std::unordered_map<std::string, CommandFunction> commandTable = {
 
         {Alias::PlaySound, Commands::playSound},
         {Alias::PlayMusic, Commands::playMusic},
@@ -36,5 +38,5 @@ namespace Novella{
         {Alias::SetWindowSize, Commands::setWindowSize},
         {Alias::CloseWindow, Commands::closeWindow}
 
-    }};
+    };
 }

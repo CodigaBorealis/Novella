@@ -1,7 +1,6 @@
 #pragma once
-#include <cstdint>
+#include <string>
 #include "Mouse.hpp"
-#include "MouseRaylib.hpp"
 #include "../Math/Vector2x.hpp"
 
 namespace Novella::Input {
@@ -10,14 +9,14 @@ namespace Novella::Input {
 
         ClickEvent() = delete;
         
-        ClickEvent(uint64_t objectID, Mouse::Button button, const Math::Vector2f& position)
+        ClickEvent(const std::string& objectID, Mouse::Button button, const Math::Vector2f& position)
             :
             objectID(objectID),
             button(button),
             position(position)
             {}
             
-        uint64_t objectID;
+        std::string objectID;
         Mouse::Button button;
         Math::Vector2f position;
 

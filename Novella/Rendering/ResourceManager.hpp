@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 #include <memory>
 #include <nlohmann/json_fwd.hpp>
 #include <unordered_map>
@@ -58,10 +59,13 @@ namespace Novella::Rendering{
 
         void clear();
 
+        size_t size() const;
+
         private:
         std::unordered_map<std::string, ImageResource> images;
         std::unordered_map<std::string, TextureResource> textures;
         std::unordered_map<std::string, FontResource> fonts;
 
+        size_t totalSize = 0;
     };
 }

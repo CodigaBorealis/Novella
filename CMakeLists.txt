@@ -46,7 +46,10 @@ add_executable(Novella
     
     src/InputOutputSystem.cpp
     src/FileReader.cpp
+
     src/SceneLoader.cpp
+    src/ComponentBuilder.cpp
+    src/InputBuilder.cpp
 
     src/Lexer.cpp
     src/Parser.cpp

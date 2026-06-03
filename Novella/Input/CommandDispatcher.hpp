@@ -1,17 +1,14 @@
 #pragma once
+#include <cstddef>
 #include <cstdint>
 #include <nlohmann/json_fwd.hpp>
 #include <functional>
+#include <string>
 #include <unordered_map>
 #include <vector>
 #include "../Commands/CommandContext.hpp"
 #include "Keyboard.hpp"
 #include "Mouse.hpp"
-
-namespace Novella {
-
-    enum class Alias : unsigned int;
-}
 
 namespace Novella::Attribute{
 
@@ -39,7 +36,7 @@ namespace Novella::Input{
 
     class CommandDispatcher{
 
-        using Func = std::function<void(uint64_t, CommandContext& context, const nlohmann::json& args)>;
+        using Func = std::function<void(const std::string&, CommandContext& context, const nlohmann::json& args)>;
 
 
         public:
@@ -54,13 +51,13 @@ namespace Novella::Input{
     
         CommandDispatcher& operator=(CommandDispatcher&&) = delete;
         
-        void execute(uint64_t targetID, Alias alias, const nlohmann::json& args, CommandContext& context);
+        void execute(const std::string& targetID, const std::string&  alias, const nlohmann::json& args, CommandContext& context);
 
         void dispatch(const KeyEvent& event, CommandContext& context);
         void dispatch(const ClickEvent& event, CommandContext& context);
 
-        void addClickBinding(uint64_t objectID, Mouse::Button button, Alias commandAlias, const nlohmann::json& args);
-        void addKeyBinding(uint64_t objectID, Keyboard::Key key, Alias commandAlias, const nlohmann::json& args);
+        void addClickBinding(const std::string& objectID, Mouse::Button button, const std::string& commandAlias, const nlohmann::json& args);
+        void addKeyBinding(const std::string& objectID, Keyboard::Key key, const std::string& commandAlias, const nlohmann::json& args);
 
         private:
         
@@ -68,7 +65,7 @@ namespace Novella::Input{
 
             ClickBinding() = delete;
 
-            ClickBinding(uint64_t objectID, Mouse::Button button, Alias alias, const nlohmann::json& args)
+            ClickBinding(const std::string&  objectID, Mouse::Button button, const std::string&  alias, const nlohmann::json& args)
                 :
                 objectID(objectID),
                 button(button),
@@ -76,10 +73,10 @@ namespace Novella::Input{
                 args(args)
                 {}
 
-            uint64_t objectID;
+            std::string objectID;
             Mouse::Button button;
 
-            Alias alias;
+            std::string alias;
             nlohmann::json args;
         };
 
@@ -87,33 +84,33 @@ namespace Novella::Input{
 
             KeyBinding() = delete;
 
-            KeyBinding(uint64_t objectID, Keyboard::Key key, Alias alias, const nlohmann::json& args)
+            KeyBinding(const std::string&  objectID, Keyboard::Key key, const std::string&  alias, const nlohmann::json& args)
                 :
                 objectID(objectID),
                 key(key),
                 alias(alias),
                 args(args)
                 {}
-            uint64_t objectID;
+
+            std::string objectID;
             Keyboard::Key key;
 
-            Alias alias;
+            std::string alias;
             nlohmann::json args;
         };
 
 
         template<typename Func>
 
-        void registerCommand(Alias commandAlias, Func function){
+        void registerCommand(const std::string& commandAlias, Func function){
 
             commands.emplace(commandAlias, function);
         }
         
-        std::unordered_map<Alias, Func> commands;
+        std::unordered_map<std::string, Func> commands;
 
         std::vector<ClickBinding> clickBindings;
         std::vector<KeyBinding> keyBindings;
-
 
     };
 

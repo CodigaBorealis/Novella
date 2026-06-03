@@ -3,25 +3,27 @@
 
 namespace Novella::Components{
 
-    Button::Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
+    Button::Button(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
         :
+        Attribute::Object(id, Type::Button),
         texture(texture),
         Attribute::Layoutable(layout)
         {}
     
-    Button::Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
+    Button::Button(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
         :
+        Attribute::Object(id, Type::Button),
         texture(texture),
         Attribute::Layoutable(layout),
         rLayer(renderLayer)
         {}
 
-    uint64_t Button::getID() const{
+    const std::string& Button::getID() const{
 
         return this->id;
     }
 
-    void Button::setID(uint64_t id){
+    void Button::setID(const std::string& id){
 
         this->id = id;
     }
@@ -31,7 +33,7 @@ namespace Novella::Components{
         return {};
     }
 
-    Type Button::getType() const{
+    const std::string& Button::getType() const{
 
         return this->type;
     }

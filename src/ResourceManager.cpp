@@ -1,4 +1,5 @@
 #include "../Novella/Rendering/ResourceManager.hpp"
+#include <cstddef>
 #include <filesystem>
 #include <memory>
 #include <nlohmann/json.hpp>
@@ -21,6 +22,7 @@ namespace Novella::Rendering{
 
         images.emplace(name, std::move(resource));
 
+        totalSize ++;
         return image;
     }
 
@@ -38,6 +40,8 @@ namespace Novella::Rendering{
 
         textures.emplace(name, std::move(resource));
 
+        totalSize ++;
+
         return texture;
     }
 
@@ -54,6 +58,8 @@ namespace Novella::Rendering{
         FontResource resource(src, font);
 
         fonts.emplace(name, std::move(resource));
+
+        totalSize ++;
 
         return font;
     }
@@ -120,5 +126,10 @@ namespace Novella::Rendering{
         this->images.clear();
         this->textures.clear();
         this->fonts.clear();
+    }
+
+    size_t ResourceManager::size() const{
+
+        return this->totalSize;
     }
 }

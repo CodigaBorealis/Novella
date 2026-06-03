@@ -8,13 +8,13 @@ namespace Novella{
 
 namespace Novella::Commands{
 
-    void setMousePosition(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void setMousePosition(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
-    void showCursor(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void showCursor(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
-    void hideCursor(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void hideCursor(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
-    void enableCursor(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void enableCursor(const std::string& target,CommandContext &context, const nlohmann::json &args);
     
-    void disableCursor(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void disableCursor(const std::string& target,CommandContext &context, const nlohmann::json &args);
 }

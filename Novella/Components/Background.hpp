@@ -15,8 +15,8 @@ namespace Novella::Components {
 
         Background() = delete;
 
-        Background(std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
-        Background(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
+        Background(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
+        Background(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
         
         void draw(Rendering::Renderer& renderer) override;
 
@@ -26,10 +26,10 @@ namespace Novella::Components {
         void setColor(const Graphics::Color& color) override;
         const Graphics::Color& getColor() const override;
 
-        uint64_t getID() const override;
-        void setID(uint64_t id) override;
+        const std::string& getID() const override;
+        void setID(const std::string& id) override;
 
-        Type getType() const override;
+        const std::string& getType() const override;
 
         nlohmann::json serialize() const override;
 
@@ -41,11 +41,8 @@ namespace Novella::Components {
         
         std::shared_ptr<Graphics::Texture> texture;
         Graphics::Color tint;
-        uint64_t id;
         int rLayer = -1;
         float rotation = 0;
-        Type type = Type::Background;//This is shit but i need a way to serialize components
-
 
     };
 

@@ -1,20 +1,20 @@
 #pragma once
 #include <cstdint>
-#include "KeyboardRaylib.hpp"
-
+#include "Keyboard.hpp"
+#include <string>
 namespace Novella::Input {
 
     struct KeyEvent{
 
         KeyEvent() = delete;
 
-        KeyEvent(uint64_t objectID, Keyboard::Key key)
+        KeyEvent(const std::string& objectID, Keyboard::Key key)
             :
             objectID(objectID),
             key(key)
             {}
         
-        uint64_t objectID;
+        std::string objectID;
         Keyboard::Key key;
 
     };

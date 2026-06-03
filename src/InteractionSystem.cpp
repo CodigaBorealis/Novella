@@ -4,8 +4,9 @@
 #include "../Novella/Attribute/Interactable.hpp"
 #include "../Novella/Input/InputSystem.hpp"
 #include "../Novella/Input/ClickEvent.hpp"
+#include <cstddef>
 #include <variant>
-#include <iostream>
+#include "../Novella/Attribute/Object.hpp"
 namespace Novella::Input{
 
 
@@ -66,14 +67,22 @@ namespace Novella::Input{
 
     }
 
-    void InteractionSystem::addClickBinding(uint64_t objectID, Mouse::Button button, Alias commandAlias, const nlohmann::json& args){
+    void InteractionSystem::addClickBinding(const std::string& objectID, Mouse::Button button, const std::string& commandAlias, const nlohmann::json& args){
 
         dispatcher.addClickBinding(objectID, button, commandAlias, args);
 
+        totalBinds ++;
     };
 
-    void InteractionSystem::addKeyBinding(uint64_t objectID, Keyboard::Key key, Alias commandAlias, const nlohmann::json& args){
+    void InteractionSystem::addKeyBinding(const std::string&  objectID, Keyboard::Key key, const std::string& commandAlias, const nlohmann::json& args){
 
         dispatcher.addKeyBinding(objectID, key, commandAlias, args);
+
+        totalBinds ++;
     };
+
+    size_t InteractionSystem::size() const{
+
+        return totalBinds;
+    }
 }

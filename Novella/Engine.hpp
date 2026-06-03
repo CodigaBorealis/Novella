@@ -30,8 +30,9 @@ namespace Novella{
 
         Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon, WindowFlags flags);
 
-        void run();
         void loadSceneFromFile(const std::filesystem::path& src);
+        
+        void run();
 
         Rendering::ResourceManager& resources();
         Rendering::Renderer& renderer();

@@ -1,5 +1,4 @@
 #pragma once
-#include <cstdint>
 #include <stdexcept>
 #include <string>
 #include "../Scene/Scene.hpp"
@@ -39,15 +38,15 @@ namespace Novella{
 
         template<typename T>
 
-        T& target(uint64_t targetID) const{
+        T& target(const std::string& targetID) const{
 
             auto* object = scene->findObjectByID(targetID);
 
-            if(!object) throw std::runtime_error("Target not found: " + std::to_string(targetID));
+            if(!object) throw std::runtime_error("Target not found: " + targetID);
 
             auto* casted = dynamic_cast<T*>(object);
 
-            if(!casted) throw std::runtime_error("Invalid target type, id: " + std::to_string(targetID));
+            if(!casted) throw std::runtime_error("Invalid target type, id: " + targetID);
 
             return *casted;
         }

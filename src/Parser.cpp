@@ -201,7 +201,7 @@ namespace Novella::Syntax::Scene{
                 throw std::runtime_error("Unexpected token inside object body: '" + current().text + "' at index " + std::to_string(position));
             }
 
-            if(position == startPosition) throw std::runtime_error("Parser error: Stalled at token '" + current().text + "'");
+            if(position == startPosition) throw std::runtime_error("Parser error: Stalled at token '" + current().text + "' position " + std::to_string(position));
 
         }
 
@@ -255,6 +255,8 @@ namespace Novella::Syntax::Scene{
             }
 
             while(true){
+
+                if(current().type == Token::Type::LParen) throw std::runtime_error("Unsuported nested array at position " + std::to_string(position));
 
                 value.arrayValues.push_back(parseValue());
 

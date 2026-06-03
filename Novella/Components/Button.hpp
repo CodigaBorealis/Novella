@@ -15,16 +15,16 @@ namespace Novella::Components{
 
         Button() = delete;
 
-        Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
+        Button(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
 
-        Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
+        Button(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
 
-        uint64_t getID() const override;
-        void setID(uint64_t id) override;
+        const std::string& getID() const override;
+        void setID(const std::string& id) override;
 
         nlohmann::json serialize() const override;
 
-        Type getType() const override;
+        const std::string& getType() const override;
             
         bool contains(const Math::Vector2f& mousePos) const override;
 
@@ -49,13 +49,11 @@ namespace Novella::Components{
 
         private:
 
-        uint64_t id;
         std::shared_ptr<Graphics::Texture> texture;
         int rLayer = 0;
         //Label* label;
         Graphics::Color tint;
         float rotation = 0;
-        Type type = Type::Button;//This is shit but i need a way to serialize components
 
     };
 }

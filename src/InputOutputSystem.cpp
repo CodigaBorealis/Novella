@@ -1,12 +1,15 @@
 #include "../Novella/IO/InputOutputSystem.hpp"
-#include "../Novella/Scene/Scene.hpp"
-#include "../Novella/Attribute/Object.hpp"
 #include "../Novella/IO/SceneLoader.hpp"
+#include <stdexcept>
 
 namespace Novella::IO{
 
-    Scene InputOutputSystem::loadSceneFromFile(Engine& engine,const std::filesystem::path& src){
+    void InputOutputSystem::loadSceneFromFile(Engine& engine,const std::filesystem::path& src){
 
-        return SceneLoader::load(engine, src);
+        const std::string extension = src.extension().string();
+
+        if(extension != ".nsc") throw std::runtime_error("Could not load the scene: expected a .nsc file got '" + extension + "'");
+
+        SceneLoader::Loader::load(engine, src);
     }
 }

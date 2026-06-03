@@ -5,7 +5,7 @@
 
 namespace Novella::Commands{
 
-    void setWindowTitle(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void setWindowTitle(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("setWindowTitle: expected object");
 
@@ -18,7 +18,7 @@ namespace Novella::Commands{
         context.window->setTitle(title);
     }
 
-    void setWindowIcon(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void setWindowIcon(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("setWindowIcon: expected object");
 
@@ -31,7 +31,7 @@ namespace Novella::Commands{
         context.window->setIcon(src);
     }
 
-    void setWindowPosition(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void setWindowPosition(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("setWindowPosition: expected object");
 
@@ -48,10 +48,9 @@ namespace Novella::Commands{
 
         context.window->setPosition({x, y});
 
-
     }
 
-    void setWindowSize(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void setWindowSize(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("setWindowSize: expected object");
 
@@ -70,7 +69,7 @@ namespace Novella::Commands{
 
     }
 
-    void closeWindow(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void closeWindow(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         if(args.size() != 0) throw std::runtime_error("closeWindow: expected 0 arguments, got: " + std::to_string(args.size()));
 

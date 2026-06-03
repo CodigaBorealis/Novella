@@ -8,10 +8,10 @@ namespace Novella{
 
 namespace Novella::Commands{
 
-    void changeScene(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void changeScene(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
-    void spawnObject(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void spawnObject(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
-    void RemoveObject(uint64_t target,CommandContext &context, const nlohmann::json &args);
+    void RemoveObject(const std::string& target,CommandContext &context, const nlohmann::json &args);
 
 }

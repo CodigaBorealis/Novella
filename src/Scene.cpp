@@ -7,9 +7,9 @@ namespace Novella{
 
     void Scene::addObject(std::unique_ptr<Attribute::Object> obj){
 
-            uint64_t id = obj->getID();
+            std::string id = obj->getID();
 
-            if(objectRegistry.contains(id)) throw std::runtime_error("Scene::addObject: An object with this id already exists in the scene: " + std::to_string(id));
+            if(objectRegistry.contains(id)) throw std::runtime_error("Scene::addObject: An object with this id already exists in the scene: " + id);
 
             objectRegistry[id] = obj.get();
 
@@ -19,7 +19,7 @@ namespace Novella{
     
         }
     
-    void Scene::removeObject(uint64_t id){
+    void Scene::removeObject(const std::string& id){
 
         objectRegistry.erase(id);
 
@@ -42,7 +42,7 @@ namespace Novella{
         return objs;
     }
 
-    Attribute::Object* Scene::findObjectByID(uint64_t id){
+    Attribute::Object* Scene::findObjectByID(const std::string& id){
 
             auto it = objectRegistry.find(id);
 
@@ -51,7 +51,7 @@ namespace Novella{
             return it->second;
         }
 
-    Attribute::Object* Scene::findObjectByID(uint64_t id) const{
+    Attribute::Object* Scene::findObjectByID(const std::string& id) const{
 
         auto it = std::find_if(objs.begin(), objs.end(), [&](const auto& obj){
 

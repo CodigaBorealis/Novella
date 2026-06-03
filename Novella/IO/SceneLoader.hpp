@@ -1,12 +1,7 @@
 #pragma once
 #include <filesystem>
-
-namespace Novella::Syntax::Scene{
-
-    struct SceneDefinition;
-    struct ObjectDefinition;
-    struct Property;
-};
+#include <string>
+#include "../Syntax/Scene/SceneDefinition.hpp"
 
 namespace Novella {
 
@@ -17,34 +12,46 @@ namespace Novella {
     struct Layout;
 
     enum class Anchor : int;
+
+    enum class SizeMode : int;
 };
 
+namespace Novella::Input{
 
-namespace Novella::IO{
+    namespace Keyboard{
+        
+        enum class Key;
 
-    class SceneLoader{
+    }
+
+    namespace Mouse{
+
+        enum class Button;
+    
+    }
+
+}
+
+namespace Novella::SceneLoader{
+
+    class Loader{
 
         public:
 
-        static Scene load(Engine& engine, const std::filesystem::path& file);
+        static void load(Engine& engine, const std::filesystem::path& file);
 
         private:
 
-        static Scene build(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
+        static void build(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
 
         static void buildObject(Engine& engine, const Syntax::Scene::ObjectDefinition& object);
 
-        static int getRenderLayer(const Syntax::Scene::ObjectDefinition& object);
+        static void loadResources(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
+        static void loadObjects(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
+        static void loadBinds(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
 
-        static Layout getLayout(const Syntax::Scene::ObjectDefinition& object);
+        static void buildInput(Engine& engine, const Syntax::Scene::InputBindingDefinition& object);
 
-        static Anchor getAnchor(const Syntax::Scene::Property* anchorProperty);
-
-        static const Syntax::Scene::Property* findProperty(const Syntax::Scene::ObjectDefinition& object, const std::string& name);
-
-        static std::string getIdentifier(const Syntax::Scene::ObjectDefinition& object, const std::string& name);
-
-        static const Syntax::Scene::ObjectDefinition* findChild(const Syntax::Scene::ObjectDefinition& object, const std::string& name);
     };
 
 }

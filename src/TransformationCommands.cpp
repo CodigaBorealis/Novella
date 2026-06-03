@@ -9,14 +9,14 @@
 
 namespace Novella::Commands{
 
-    void resize(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void resize(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         auto& object = context.target<Attribute::Renderable>(target);
 
         
     }
 
-    void move(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void move(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         auto& object = context.target<Attribute::Layoutable>(target);
 
@@ -24,12 +24,12 @@ namespace Novella::Commands{
         //Do stuff
     }
 
-    void setPosition(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void setPosition(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         
     }
 
-    void setColor(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void setColor(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("setColor: expected object");
 
@@ -72,7 +72,7 @@ namespace Novella::Commands{
             object.setColor({red, green, blue, alpha});
     }
 
-    void setTransparency(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void setTransparency(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         if(!args.is_object()) throw std::runtime_error("setTransparency: expected object");
 
@@ -94,7 +94,7 @@ namespace Novella::Commands{
 
     }
 
-    void setText(uint64_t target,CommandContext &context, const nlohmann::json &args){
+    void setText(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
         
     }

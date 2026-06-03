@@ -3,6 +3,7 @@
 #include "CommandDispatcher.hpp"
 #include "../Math/Vector2x.hpp"
 #include "KeyEvent.hpp"
+#include <cstddef>
 #include <variant>
 #include <queue>
 
@@ -26,9 +27,11 @@ namespace Novella::Input{
         void handleMouseInput(Scene& scene, const Math::Vector2f& mousePosition);
         void handleInteractions(CommandContext& context);
 
-        void addClickBinding(uint64_t objectID, Mouse::Button button, Alias commandAlias, const nlohmann::json& args);
-        void addKeyBinding(uint64_t objectID, Keyboard::Key key, Alias commandAlias, const nlohmann::json& args);
+        void addClickBinding(const std::string& objectID, Mouse::Button button, const std::string& , const nlohmann::json& args);
+        void addKeyBinding(const std::string& objectID, Keyboard::Key key, const std::string& , const nlohmann::json& args);
         
+        size_t size() const;
+
         private:
         
         using Event = std::variant<KeyEvent, ClickEvent>;
@@ -36,6 +39,7 @@ namespace Novella::Input{
         CommandDispatcher dispatcher;
         std::queue<Event> eventQueue;
 
+        size_t totalBinds = 0;
     };
 
 }
