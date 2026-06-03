@@ -31,14 +31,14 @@ scene MainMenu {
 
         #After the name use a '=' symbol followed by the location of the resource
 
-        texture character = "assets/textures/yourFile.png"
-        texture button = "assets/textures/yourFile2.png"
-        texture background = "assets/textures/yourFile3.png"
-        texture button2 = "assets/textures/yourFile4.png"
+        texture character = "/home/line/projects/Novella/Test/2026-05-27_17-52.png"
+        texture button = "/home/line/projects/Novella/Test/2026-05-27_18-59.png"
+        texture background = "/home/line/projects/Novella/Test/2026-05-27_18-59.png"
+        texture button2 = "/home/line/projects/Novella/Test/135284394.png"
 
-        font font = "assets/fonts/yourFont.ttf"
+        font font = "/home/line/projects/Novella/Test/test.ttf"
 
-        music audio = "assets/sound/yourSound.ogg"
+        music audio = "/home/line/projects/Novella/Test/bgm.ogg"
     }
 
     input {
@@ -72,7 +72,7 @@ scene MainMenu {
 
     Background bg {
         texture = background
-        renderLayer = -12
+        renderLayer = -1200
 
         layout {
             anchor = TopLeft
@@ -84,11 +84,19 @@ scene MainMenu {
         texture = character
         renderLayer = -1000
         #ignore this
+
+
+        layout {
+            anchor = Center
+            widthMode = Fixed
+            heightMode = FitHeight
+            width = 1000
+        }
     }
 
     Label title {
         font = font
-        size = 10 #Avoid negative values
+        size = 60 #Avoid negative values
         text = "did you know that sometimes you may or you may not"
 
         renderLayer = -10
@@ -101,17 +109,17 @@ scene MainMenu {
 
     Button playButton {
         texture = button
-        renderLayer = 22
+        renderLayer = 220
 
         layout {
-            anchor = Center
+            anchor = TopRight
             widthMode = Fixed
             heightMode = Fixed
 
-            width = 500.2
-            height = 1000
+            width = 200
+            height = 800
 
-            offset = (10, 20)
+            offset = (10,2)
         }
     }
 }

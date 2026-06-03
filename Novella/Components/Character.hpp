@@ -2,7 +2,6 @@
 #include "../Graphics/Texture.hpp"
 #include "../Attribute/Object.hpp"
 #include "../Attribute/Renderable.hpp"
-#include "Type.hpp"
 #include <memory>
 #include "../Layout/Layout.hpp"
 #include "../Attribute/Layoutable.hpp"

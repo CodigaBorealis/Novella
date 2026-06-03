@@ -1,6 +1,6 @@
 #include "../Novella/Components/Background.hpp"
 #include <nlohmann/json.hpp>
-
+#include "../Novella/Components/Type.hpp"
 namespace Novella::Components{
 
        Background::Background(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)

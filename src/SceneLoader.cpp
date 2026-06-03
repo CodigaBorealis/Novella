@@ -84,7 +84,19 @@ namespace Novella::SceneLoader{
             if(object.objectType == Components::Type::Background){
 
                 ComponentBuilder::buildBackground(engine, object);
-            }            
+
+            }else if(object.objectType == Components::Type::Button){
+
+                ComponentBuilder::buildButton(engine, object);
+
+            }else if(object.objectType == Components::Type::Character){
+
+                ComponentBuilder::buildCharacter(engine, object);
+
+            } else if(object.objectType == Components::Type::Label){
+
+                ComponentBuilder::buildLabel(engine, object);
+            } 
         }
     }
 

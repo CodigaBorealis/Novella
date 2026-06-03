@@ -126,6 +126,8 @@ namespace Novella::Rendering{
         this->images.clear();
         this->textures.clear();
         this->fonts.clear();
+        
+        totalSize = 0;
     }
 
     size_t ResourceManager::size() const{

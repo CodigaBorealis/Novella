@@ -33,6 +33,12 @@ namespace Novella::SceneLoader{
     
         static void buildBackground(Engine& engine, const Syntax::Scene::ObjectDefinition& definition);
 
+        static void buildButton(Engine& engine, const Syntax::Scene::ObjectDefinition& definition);
+
+        static void buildCharacter(Engine& engine, const Syntax::Scene::ObjectDefinition& definition);
+
+        static void buildLabel(Engine& engine, const Syntax::Scene::ObjectDefinition& definition);
+
         private:
 
         static int getInt(const Syntax::Scene::Property& property);

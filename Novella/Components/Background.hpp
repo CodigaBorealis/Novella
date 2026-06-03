@@ -1,7 +1,6 @@
 #pragma once
 #include "../Attribute/Renderable.hpp"
 #include <memory>
-#include "Type.hpp"
 #include "../Layout/Layout.hpp"
 #include "../Attribute/Layoutable.hpp"
 #include "../Attribute/Object.hpp"

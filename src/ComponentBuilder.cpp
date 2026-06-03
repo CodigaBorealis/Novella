@@ -1,10 +1,12 @@
 #include "../Novella/IO/ComponentBuilder.hpp"
 #include "../Novella/Engine.hpp"
 #include "../Novella/Syntax/Scene/Parser.hpp"
-#include "../Novella/Attribute/Object.hpp"
 #include "../Novella/Layout/Layout.hpp"
 #include "../Novella/Layout/SizeMode.hpp"
 #include "../Novella/Components/Background.hpp"
+#include "../Novella/Components/Button.hpp"
+#include "../Novella/Components/Character.hpp"
+#include "../Novella/Components/Label.hpp"
 #include <stdexcept>
 
 namespace Novella::SceneLoader{
@@ -12,8 +14,6 @@ namespace Novella::SceneLoader{
     void ComponentBuilder::buildBackground(Engine& engine, const Syntax::Scene::ObjectDefinition& definition){
 
             if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
-
-            Layout objectLayout = getLayout(definition);
             
             auto* tex = findProperty(definition, "texture");
 
@@ -43,6 +43,113 @@ namespace Novella::SceneLoader{
         
     }
 
+    void ComponentBuilder::buildButton(Engine &engine, const Syntax::Scene::ObjectDefinition &definition){
+            
+        if(definition.objectName.empty()) throw std::runtime_error("Can't create button object without an id");
+            
+        auto* tex = findProperty(definition, "texture");
+
+        if(!tex) throw std::runtime_error("Missing texture property for '" + definition.objectName + "'");
+
+        std::string texture = getString(*tex);
+
+        Layout constructedLayout = getLayout(definition);
+
+        auto* rlayer = findProperty(definition, "renderLayer");
+
+        if(!rlayer) throw std::runtime_error("Missing renderLayer property for '" + definition.objectName + "'");
+
+        int renderLayer = getInt(*rlayer);
+
+        engine.scene().addObject<Components::Button>(
+
+            definition.objectName,
+
+            engine.resources().getTexture(texture),
+
+            constructedLayout,
+
+            renderLayer
+
+        );
+    }
+
+    void ComponentBuilder::buildCharacter(Engine &engine, const Syntax::Scene::ObjectDefinition &definition){
+        
+        if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
+            
+        auto* tex = findProperty(definition, "texture");
+
+        if(!tex) throw std::runtime_error("Missing texture property for '" + definition.objectName + "'");
+
+        std::string texture = getString(*tex);
+
+        Layout constructedLayout = getLayout(definition);
+
+        auto* rlayer = findProperty(definition, "renderLayer");
+
+        if(!rlayer) throw std::runtime_error("Missing renderLayer property for '" + definition.objectName + "'");
+
+        int renderLayer = getInt(*rlayer);
+
+        engine.scene().addObject<Components::Character>(
+
+            definition.objectName,
+
+            engine.resources().getTexture(texture),
+
+            constructedLayout,
+
+            renderLayer
+
+        );
+    }
+
+    void ComponentBuilder::buildLabel(Engine &engine, const Syntax::Scene::ObjectDefinition &definition){
+        
+        if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
+            
+        auto* fnt = findProperty(definition, "font");
+
+        if(!fnt) throw std::runtime_error("Missing font property for '" + definition.objectName + "'");
+
+        auto* sz = findProperty(definition, "size");
+        
+        if(!sz) throw std::runtime_error("Missing size property for '" + definition.objectName + "'");
+
+        int size = getInt(*sz);
+
+        std::string font = getString(*fnt);
+
+        auto* txt = findProperty(definition, "text");
+        
+        if(!txt) throw std::runtime_error("Missing text property for '" + definition.objectName + "'");
+        
+        std::string text = getString(*txt);
+        
+        Layout constructedLayout = getLayout(definition);
+
+        auto* rlayer = findProperty(definition, "renderLayer");
+
+        if(!rlayer) throw std::runtime_error("Missing renderLayer property for '" + definition.objectName + "'");
+
+        int renderLayer = getInt(*rlayer);
+
+        engine.scene().addObject<Components::Label>(
+
+            definition.objectName,
+
+            engine.resources().getFont(font),
+            
+            size,
+            
+            text,
+            constructedLayout,
+            
+            renderLayer
+
+        );
+    }
     SizeMode ComponentBuilder::getSizeMode(const Syntax::Scene::Property& property){
 
         if(property.value.StringValue == "Fixed"){
@@ -80,7 +187,7 @@ namespace Novella::SceneLoader{
         
         if(auto* height = findProperty(*layoutNode, "height")){
 
-            layout.width = getInt(*height);
+            layout.height = getInt(*height);
         }
 
         if(auto* anchor = findProperty(*layoutNode, "anchor")){

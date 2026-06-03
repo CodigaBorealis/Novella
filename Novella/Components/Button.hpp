@@ -3,7 +3,6 @@
 #include "../Attribute/Object.hpp"
 #include "../Attribute/Clickable.hpp"
 #include "../Attribute/Renderable.hpp"
-#include "Type.hpp"
 #include "../Layout/Layout.hpp"
 #include "../Graphics/Color.hpp"
 

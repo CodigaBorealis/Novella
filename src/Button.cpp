@@ -1,5 +1,6 @@
 #include "../Novella/Components/Button.hpp"
 #include <nlohmann/json.hpp>
+#include "../Novella/Components/Type.hpp"
 
 namespace Novella::Components{
 
@@ -97,7 +98,5 @@ namespace Novella::Components{
 
         return this->rotation;
     }
-
-
 
 }

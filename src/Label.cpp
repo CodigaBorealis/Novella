@@ -2,6 +2,8 @@
 #include "../Novella/Layout/LayoutSystem.hpp"
 #include <raylib.h>
 #include <stdexcept>
+#include "../Novella/Components/Type.hpp"
+
 namespace Novella::Components{
 
     Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout)

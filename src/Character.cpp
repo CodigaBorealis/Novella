@@ -1,6 +1,7 @@
 #include "../Novella/Components/Character.hpp"
 #include <nlohmann/json.hpp>
 #include <raylib.h>
+#include "../Novella/Components/Type.hpp"
 
 namespace Novella::Components{
 

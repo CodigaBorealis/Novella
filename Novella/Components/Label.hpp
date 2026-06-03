@@ -4,7 +4,6 @@
 #include "../Attribute/Object.hpp"
 #include "../Attribute/Renderable.hpp"
 #include "../Attribute/Clickable.hpp"
-#include "Type.hpp"
 #include <memory>
 #include "../Layout/Layout.hpp"
 #include "../Attribute/Layoutable.hpp"
@@ -60,9 +59,6 @@ namespace Novella::Components{
         float spacing = 1.0f;
         int rLayer;
         Graphics::Color tint;
-        std::string type = Type::Label;//This is shit but i need a way to serialize components
-
-
 
     };
 }
