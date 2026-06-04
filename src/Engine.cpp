@@ -1,5 +1,6 @@
 #include "../Novella/Engine.hpp"
 #include "../Novella/Input/InputSystem.hpp"
+#include <exception>
 #include <iostream>
 namespace Novella{
 
@@ -39,9 +40,17 @@ namespace Novella{
             
             if(sceneManager.modifiedSceneFile()){
 
-                std::cout <<"FIle has been modified\n";
+            try{
 
-                loadSceneFromFile(sceneManager.currentSceneFile());
+                sceneManager.loadSceneFromFile(*this, sceneManager.currentSceneFile());
+
+                lastError.clear();
+
+            }catch(const std::exception& e){
+
+                lastError = e.what();
+            }
+
             }
 
             if(displayWindow.isResized()){
@@ -131,6 +140,11 @@ namespace Novella{
 
                 windowRenderer.drawScene(*currentScene);
 
+            }
+
+            if(!lastError.empty()){
+
+                windowRenderer.drawErrorMessage(lastError);
             }
 
             windowRenderer.endFrame();

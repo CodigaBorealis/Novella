@@ -75,7 +75,7 @@ namespace Novella::SceneLoader{
 
     void ComponentBuilder::buildLabel(Engine &engine, const Syntax::Scene::ObjectDefinition &definition){
         
-        if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
+        if(definition.objectName.empty()) throw std::runtime_error("Can't create Label object without an id");
             
         auto* fnt = findProperty(definition, "font");
 

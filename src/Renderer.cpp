@@ -144,4 +144,10 @@ namespace Novella::Rendering{
             (mousePosition.y - renderTargetOffset.y) / scale
         };
     }    
+
+    void Renderer::drawErrorMessage(const std::string& error){
+
+        ::DrawText(error.c_str(), 10, 10, 40, Graphics::Colors::Red);
+    }
+
 }

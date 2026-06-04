@@ -39,9 +39,11 @@ namespace Novella::Rendering{
         void drawFont(const Graphics::Font& font, const std::string& text, const Math::Rectangle& rect, int fontSize, float spacing, const Graphics::Color& tint);
 
         void drawScene(Scene& scene);
-        
+                
         void resize(const Math::Vector2i& windowSize);
 
+        void drawErrorMessage(const std::string& error);
+        
         Math::Vector2f virtualResolution() const;
         
         Math::Vector2f toVirtualCoordinates(const Math::Vector2f& mousePosition) const;

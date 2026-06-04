@@ -50,6 +50,8 @@ namespace Novella{
         void handleRendering(Scene* currentScene);
         void handleAudio(Scene* currentScene);
         
+        std::string lastError = "";
+
         Window displayWindow;
         Rendering::Renderer windowRenderer; 
 
