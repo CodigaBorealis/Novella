@@ -19,8 +19,6 @@ namespace Novella::IO{
 
         public:
         
-        void loadSceneFromFile(Engine& engine, const std::filesystem::path& src);
-
         private:
         
         FileReader reader;

@@ -1,13 +1,16 @@
 #pragma once
 #include "Scene.hpp"
-#include <filesystem>
+#include "SceneWatcher.hpp"
 #include <memory>
 #include <nlohmann/json_fwd.hpp>
 #include <stdexcept>
 #include <utility>
+#include "../Attribute/Object.hpp"
 
 namespace Novella{
-
+    
+    class Engine;
+    
     namespace Rendering {
         
         class ResourceManager;
@@ -30,8 +33,13 @@ namespace Novella{
         
         void loadScene(std::unique_ptr<Scene> scene);
 
-        Scene& getCurrentScene();
+        void loadSceneFromFile(Engine& engine, const std::filesystem::path& src);
+
+        Scene* getCurrentScene();
         Scene& createScene();
+
+        bool modifiedSceneFile();
+        const std::filesystem::path currentSceneFile() const;
 
         template<typename T, typename ... Args>
         
@@ -46,7 +54,8 @@ namespace Novella{
 
         private:
 
-        std::unique_ptr<Scene> currentScene;
+        std::unique_ptr<Scene> currentScene = nullptr;
+        SceneWatcher sceneWatcher;
         Rendering::ResourceManager& resourceManager;
         Audio::AudioSystem& audioSystem;
     };

@@ -28,6 +28,12 @@ namespace Novella::SceneLoader{
 
     void Loader::build(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
 
+        engine.audio().clear();
+        engine.input().clear();
+        engine.resources().clear();
+        
+        engine.scene().clear();
+
         engine.scene().createScene();
         
         loadResources(engine, scene);
@@ -36,7 +42,7 @@ namespace Novella::SceneLoader{
 
         loadObjects(engine, scene);
 
-        std::cout << "Total loaded objects:" << engine.scene().getCurrentScene().objects().size() << "\n";
+        std::cout << "Total loaded objects:" << engine.scene().getCurrentScene()->objects().size() << "\n";
 
         loadBinds(engine, scene);
 

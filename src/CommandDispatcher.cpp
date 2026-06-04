@@ -64,4 +64,10 @@ namespace Novella::Input{
 
     };
 
+    void CommandDispatcher::clear(){
+
+        keyBindings.clear();
+        clickBindings.clear();
+        commands.clear();
+    }
 }

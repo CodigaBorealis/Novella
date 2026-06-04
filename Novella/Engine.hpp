@@ -48,7 +48,8 @@ namespace Novella{
         void computeLayout(Scene* currentScene);
         void handleInput(Scene* currentScene);
         void handleRendering(Scene* currentScene);
-
+        void handleAudio(Scene* currentScene);
+        
         Window displayWindow;
         Rendering::Renderer windowRenderer; 
 

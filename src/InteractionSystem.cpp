@@ -5,6 +5,7 @@
 #include "../Novella/Input/InputSystem.hpp"
 #include "../Novella/Input/ClickEvent.hpp"
 #include <cstddef>
+#include <queue>
 #include <variant>
 #include "../Novella/Attribute/Object.hpp"
 namespace Novella::Input{
@@ -84,5 +85,16 @@ namespace Novella::Input{
     size_t InteractionSystem::size() const{
 
         return totalBinds;
+    }
+
+    void InteractionSystem::clear(){
+
+        dispatcher.clear();
+
+        std::queue<Event> cleanQueue;
+
+        eventQueue.swap(cleanQueue);
+
+        totalBinds = 0;
     }
 }

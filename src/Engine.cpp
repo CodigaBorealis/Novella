@@ -1,5 +1,6 @@
 #include "../Novella/Engine.hpp"
 #include "../Novella/Input/InputSystem.hpp"
+#include <iostream>
 namespace Novella{
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps)
@@ -34,9 +35,14 @@ namespace Novella{
         
         while(displayWindow.isOpen()){
 
-            auto& currentScene = sceneManager.getCurrentScene();
+            auto* currentScene = sceneManager.getCurrentScene();
+            
+            if(sceneManager.modifiedSceneFile()){
 
-            audioSystem.update();
+                std::cout <<"FIle has been modified\n";
+
+                loadSceneFromFile(sceneManager.currentSceneFile());
+            }
 
             if(displayWindow.isResized()){
 
@@ -44,12 +50,11 @@ namespace Novella{
 
             }
 
-            computeLayout(&currentScene);
-            handleInput(&currentScene);
-            handleRendering(&currentScene);
-
-            auto music = audioSystem.getCurrentBgm();
-        
+            handleAudio(currentScene);
+            computeLayout(currentScene);
+            handleInput(currentScene);
+            handleRendering(currentScene);         
+                 
         }
     }
 
@@ -133,7 +138,14 @@ namespace Novella{
 
     void Engine::loadSceneFromFile(const std::filesystem::path& src){
 
-        inputOutputSystem.loadSceneFromFile(*this, src);
-        
+        sceneManager.loadSceneFromFile(*this, src);
+    
+    }
+
+    void Engine::handleAudio(Scene* scene){
+
+        if(!scene) return;
+
+        audioSystem.update();
     }
 }

@@ -26,7 +26,8 @@ add_executable(Novella
 
     src/Scene.cpp
     src/SceneManager.cpp
-
+    src/SceneWatcher.cpp
+    
     src/Sprite.cpp
     src/Label.cpp
     src/Button.cpp

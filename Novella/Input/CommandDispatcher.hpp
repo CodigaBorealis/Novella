@@ -59,6 +59,8 @@ namespace Novella::Input{
         void addClickBinding(const std::string& objectID, Mouse::Button button, const std::string& commandAlias, const nlohmann::json& args);
         void addKeyBinding(const std::string& objectID, Keyboard::Key key, const std::string& commandAlias, const nlohmann::json& args);
 
+        void clear();
+        
         private:
         
         struct ClickBinding {
