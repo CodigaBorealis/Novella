@@ -4,15 +4,17 @@
 #include "../Novella/IO/SceneLoader.hpp"
 #include "../Novella/Attribute/Object.hpp"
 #include "../Novella/Engine.hpp"
+#include <memory>
+
 namespace Novella{
 
-    SceneManager::SceneManager(Rendering::ResourceManager& resourceManager, Audio::AudioSystem& audio)
+    SceneManager::SceneManager(Resources::ResourceManager& resourceManager, Audio::AudioSystem& audio)
         :
         resourceManager(resourceManager),
         audioSystem(audio)
         {}
 
-    void SceneManager::loadScene(std::unique_ptr<Scene> scene){
+    void SceneManager::swapScene(std::unique_ptr<Scene> scene){
 
         currentScene = std::move(scene);
 
@@ -24,8 +26,6 @@ namespace Novella{
     }
 
     Scene* SceneManager::getCurrentScene(){
-
-        if(!currentScene) throw std::runtime_error("SceneManager::getCurrentScene: CurrentScene cannot be null");
 
         return currentScene.get();
     }

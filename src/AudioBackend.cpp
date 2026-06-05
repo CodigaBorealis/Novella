@@ -1,17 +1,15 @@
 #include "../Novella/Audio/AudioBackend.hpp"
-#include "../Novella/Audio/AudioResource.hpp"
-#include "../Novella/Audio/Command.hpp"
-#include "../Novella/Audio/SoundRegistry.hpp"
+#include <optional>
 #include <raylib.h>
 #include <stdexcept>
-
 namespace Novella::Audio{
 
-    AudioBackend::AudioBackend(const SoundRegistry& registry):
-        registry(registry){
+    AudioBackend::AudioBackend(Resources::ResourceManager& resources)
+        :
+        resources(resources.audio())
+        {
 
-            ::InitAudioDevice();
-            
+            ::InitAudioDevice();           
         }
 
     AudioBackend::~AudioBackend(){
@@ -21,168 +19,116 @@ namespace Novella::Audio{
 
     }
 
-    ::Music& AudioBackend::getMusic(const AudioResource& asset){
+    const Resources::ResourceManager::AudioResource& AudioBackend::getResource(const std::string& name){
 
-        auto it = musicStreams.find(asset.id);
+        auto it = resources.find(name);
 
-        if(it != musicStreams.end()){
+        if(it == resources.end()) throw std::runtime_error("audio resource not found '" + name + "'");
 
-            return it->second;
-        }
+        return it->second;
 
-        auto [insertedIt, inserted] = musicStreams.try_emplace(asset.id, ::LoadMusicStream(asset.src.string().c_str()));
-
-        if(insertedIt->second.ctxData == nullptr) throw std::runtime_error("Failed to load music: " + asset.name);
-
-        return insertedIt->second;
     }
 
-    ::Sound& AudioBackend::getSound(const AudioResource& asset){
+    ::Music& AudioBackend::getMusicStream(const std::string& name){
 
-        auto it = sounds.find(asset.id);
+        auto it = musicStreams.find(name);
 
-        if(it == sounds.end()){
-
-            return it->second;
-        }
-
-        auto [insertedIt, inserted] = sounds.try_emplace(asset.id, ::LoadSound(asset.src.string().c_str()));
-
-        if(insertedIt->second.stream.buffer == nullptr) throw std::runtime_error("Failed to load sound: " + asset.name);
-
-        return insertedIt->second;
+        if(it == musicStreams.end()) throw std::runtime_error("resource has not been loaded as music '" + name + "'");
+        
+        return it->second;
     }
 
-    void AudioBackend::play(const AudioResource& asset){
+    ::Sound& AudioBackend::getSoundStream(const std::string& name){
 
-        if(asset.type == AssetType::Music){
+       auto it = soundStreams.find(name);
 
-            auto& music = getMusic(asset);
+        if(it == soundStreams.end()) throw std::runtime_error("resource has not been loaded as sfx '" + name + "'");
+        
+        return it->second;
+    }
 
-            if(music.ctxData == nullptr) throw std::runtime_error("nolkkldaljkdakjlda");
+    void AudioBackend::play(const std::string& name){
+
+        auto& resource = getResource(name);
+
+        if(resource.type == "music"){
+            
+            auto& music = getMusicStream(name);
+
             ::PlayMusicStream(music);
 
+            currentBGM = name;
+
+        }else if(resource.type == "sfx"){
+
+            ::PlaySound(getSoundStream(name));
+
         }else{
-
-            auto& sound = getSound(asset);
-
-            ::PlaySound(sound);
+            
+            throw std::runtime_error("There is no resource registered under this name '" + name + "'");
         }
     }
 
-    void AudioBackend::stop(const AudioResource& asset){
+    void AudioBackend::stop(const std::string& name){
 
-        if(asset.type == AssetType::Music){
+        auto& resource = getResource(name);
 
-            auto& music = getMusic(asset);
+        if(resource.type == "music"){
 
-            ::StopMusicStream(music);
+            ::StopMusicStream(getMusicStream(name));
 
-        }else{
+            currentBGM = std::nullopt;
 
-            auto& sound = getSound(asset);
+        }else if(resource.type == "sfx"){
 
-            ::StopSound(sound);
+            ::StopSound(getSoundStream(name));
         }
     }
 
-    void AudioBackend::volume(const AudioResource& asset, float volume){
+    void AudioBackend::volume(const std::string& name, float volume){
         
-        if(asset.type == AssetType::Music){
+        auto& resource = getResource(name);
 
-            auto& music = getMusic(asset);
+        if(resource.type == "music"){
 
-            ::SetMusicVolume(music, volume);
+
+            ::SetMusicVolume(getMusicStream(name), volume);
 
         }else{
 
-            auto& sound = getSound(asset);
 
-            ::SetSoundVolume(sound, volume);
+            ::SetSoundVolume(getSoundStream(name), volume);
         }
     }
 
-    void AudioBackend::pitch(const AudioResource& asset, float volume){
+    void AudioBackend::pitch(const std::string& name, float volume){
 
-        if(asset.type == AssetType::Music){
+        auto& resource = getResource(name);
 
-            auto& music = getMusic(asset);
+        if(resource.type == "music"){
 
-            ::SetMusicPitch(music, volume);
-
-        }else{
-
-            auto& sound = getSound(asset);
-
-            ::SetSoundPitch(sound, volume);
-        }        
-    }
-
-    void AudioBackend::pan(const AudioResource& asset, float volume){
-
-        if(asset.type == AssetType::Music){
-
-            auto& music = getMusic(asset);
-
-            ::SetMusicPan(music, volume);
+            ::SetMusicPitch(getMusicStream(name), volume);
 
         }else{
 
-            auto& sound = getSound(asset);
-
-            ::SetSoundPan(sound, volume);
+            ::SetSoundPitch(getSoundStream(name), volume);
         }        
     }
 
-    void AudioBackend::execute(const std::vector<Command>& commands){
+    void AudioBackend::pan(const std::string& name, float volume){
 
-        for(const auto& command: commands){
+        auto& resource = getResource(name);
 
-            if(!registry.contains(command.id)) continue;
+        if(resource.type == "music"){
 
-            const AudioResource& asset = registry.get(command.id);//?????
 
-            switch (command.type){
+            ::SetMusicPan(getMusicStream(name), volume);
 
-                case Command::Play:{
+        }else{
 
-                    play(asset);
 
-                    break;
-                }
-
-                case Command::Stop:{
-
-                    stop(asset);
-
-                    break;
-                }
-
-                case Command::SetVolume:{
-
-                    volume(asset, command.value);
-                    break;
-                }
-
-                case Command::SetPitch:{
-
-                    pitch(asset, command.value);
-                    break;
-                }
-
-                case Command::SetPan:{
-
-                    pan(asset, command.value);
-                    break;
-                }
-
-                default:
-
-                break;
-
-            }
-        }
-
+            ::SetSoundPan(getSoundStream(name), volume);
+        }        
     }
 
     void AudioBackend::update(){
@@ -197,17 +143,58 @@ namespace Novella::Audio{
 
     void AudioBackend::clear(){
 
-        for(auto& [id, sound] : sounds){
+        for(auto& [id, sound] : soundStreams){
 
+            ::StopSound(sound);
             ::UnloadSound(sound);
         }
 
         for(auto& [id, music] : musicStreams){
 
+            ::StopMusicStream(music);
             ::UnloadMusicStream(music);
         }
 
         this->musicStreams.clear();
-        this->sounds.clear();
+        this->soundStreams.clear();
+    }
+
+    const std::optional<std::string> AudioBackend::getCurrentBGM() const{
+
+        return this->currentBGM;
+    }
+
+    void AudioBackend::reloadResources(){
+        
+        auto bgm = currentBGM;
+        
+        clear();
+
+        loadResources();
+
+        if(bgm && musicStreams.contains(bgm.value())){
+
+            play(bgm.value());
+        }
+    }
+
+    void AudioBackend::loadResources(){
+        
+        for(const auto& resource : resources){
+
+            if(resource.second.type == "music"){
+
+                musicStreams.emplace(resource.first, ::LoadMusicStream(resource.second.src.string().c_str()));
+
+            }else if(resource.second.type == "sfx"){
+
+                soundStreams.emplace(resource.first, ::LoadSound(resource.second.src.string().c_str()));
+
+            }else{
+
+                throw std::runtime_error("Invalid type for audio resource '" + resource.second.type + "'");
+            }
+         
+        }
     }
 }

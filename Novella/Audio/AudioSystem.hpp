@@ -1,11 +1,8 @@
 #pragma once
 #include <nlohmann/json_fwd.hpp>
+#include <optional>
 #include <string>
-#include "AudioResource.hpp"
-#include "SoundRegistry.hpp"
 #include "AudioBackend.hpp"
-#include "SoundRegistry.hpp"
-#include "Command.hpp"
 
 namespace Novella::Audio {
 /**
@@ -16,45 +13,36 @@ namespace Novella::Audio {
 
         public:
 
-        AudioSystem();
+        AudioSystem() = delete;
+
+        AudioSystem(Resources::ResourceManager& resources);
 
         ~AudioSystem();
 /**
  * @brief adds
  * @param name the alias
  * @param action the action struct to bind to.
- */
-        void createResource(const std::string& resourceName, const std::filesystem::path& src, AssetType type);
-        
-        void play(const std::string& resourceName);
+ */        
+        void play(const std::string& name);
 
-        void stop(const std::string& resourceName);
+        void stop(const std::string& name);
 
-        void volume(const std::string& resourceName, float volume);
+        void volume(const std::string& name, float volume);
 
-        void pitch(const std::string& resourceName, float pitch);
+        void pitch(const std::string& name, float pitch);
 
-        void pan(const std::string& resourceName, float pan);
+        void pan(const std::string& name, float pan);
         
         void update();
         
         void clear();
-        
-        const std::optional<std::string>& getCurrentBgm() const;
+                
+        void reloadResources();
+
+        const std::optional<std::string> getCurrentBGM() const;
 
         private:
 
-        void addCommand(Command::Type,unsigned int id, float value);
-        std::vector<Command> consume();
-
-        unsigned int nextID();
-        unsigned int resolve(const std::string& name);
-
-        std::vector<Command> commands;
-        std::unordered_map<std::string, unsigned int> pipeline;
-        SoundRegistry assets;
         AudioBackend backend;
-        uint32_t next = 0;
-        std::optional<std::string> currentBgm;
     };
 }

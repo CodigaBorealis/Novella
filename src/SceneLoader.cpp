@@ -6,10 +6,8 @@
 #include "../Novella/Engine.hpp"
 #include <stdexcept>
 #include "../Novella/Components/Type.hpp"
-#include <iostream>
 #include "../Novella/IO/ComponentBuilder.hpp"
 #include "../Novella/IO/InputBuilder.hpp"
-
 namespace Novella::SceneLoader{
 
     void Loader::load(Engine &engine, const std::filesystem::path& file){
@@ -27,26 +25,23 @@ namespace Novella::SceneLoader{
     }
 
     void Loader::build(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
-
+                
         engine.audio().clear();
         engine.input().clear();
         engine.resources().clear();
-        
+
         engine.scene().clear();
 
         engine.scene().createScene();
         
         loadResources(engine, scene);
 
-        std::cout << "Total loaded resources: " << engine.resources().size() << "\n";
+        engine.audio().reloadResources();
 
         loadObjects(engine, scene);
 
-        std::cout << "Total loaded objects:" << engine.scene().getCurrentScene()->objects().size() << "\n";
-
         loadBinds(engine, scene);
 
-        std::cout << "Total loaded binds: " << engine.input().size() << "\n";
     }
 
     void Loader::loadResources(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
@@ -63,11 +58,11 @@ namespace Novella::SceneLoader{
             
             }else if(resource.type == "music"){
 
-                engine.audio().createResource(resource.name, resource.path, Audio::AssetType::Music);
+                engine.resources().loadAudio(resource.name, resource.path, "music");
 
             }else if(resource.type == "sfx"){
 
-                engine.audio().createResource(resource.name, resource.path, Audio::AssetType::SFX);
+                engine.resources().loadAudio(resource.name, resource.path, "sfx");
 
             }else{
 
@@ -80,13 +75,6 @@ namespace Novella::SceneLoader{
 
         for(const auto& object : scene.objects){
 
-            std::cout << "Object: " << object.objectType << " " << object.objectName << "\n";
-
-            for(const auto& child : object.children){
-
-                std::cout << "  Child: " << child.objectType << "\n";
-            }
-
             if(object.objectType == Components::Type::Sprite){
 
                 ComponentBuilder::buildSprite(engine, object);
@@ -98,7 +86,12 @@ namespace Novella::SceneLoader{
             }else if(object.objectType == Components::Type::Label){
 
                 ComponentBuilder::buildLabel(engine, object);
-            } 
+
+            }else{
+                
+                throw std::runtime_error("Invalid component type '" + object.objectType + "'");
+
+            }
         }
     }
 

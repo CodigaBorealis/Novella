@@ -1,11 +1,13 @@
+#pragma once
+#include <optional>
 #include <raylib.h>
-#include <vector>
 #include <unordered_map>
+#include <vector>
+#include <string>
+#include "../Rendering/ResourceManager.hpp"
 
 namespace Novella::Audio {
 
-    class AudioResource;
-    class SoundRegistry;
     struct Command;
 
     class AudioBackend {
@@ -13,6 +15,8 @@ namespace Novella::Audio {
         public: 
 
         AudioBackend() = delete;
+
+        AudioBackend(Resources::ResourceManager& resources);
         
         AudioBackend(const AudioBackend&) = delete;
 
@@ -21,34 +25,40 @@ namespace Novella::Audio {
         AudioBackend(AudioBackend&&) = delete;
         AudioBackend& operator=(AudioBackend&&) = delete;
 
-        AudioBackend(const SoundRegistry& registry);
         
         ~AudioBackend();
         
-        void play(const AudioResource& resource);
+        void play(const std::string& name);
 
-        void stop(const AudioResource& resource);
+        void stop(const std::string& name);
 
-        void volume(const AudioResource& resource, float volume);
+        void volume(const std::string& name, float volume);
 
-        void pitch(const AudioResource& resource, float pitch);
+        void pitch(const std::string& name, float pitch);
 
-        void pan(const AudioResource& resource, float pan);
+        void pan(const std::string& name, float pan);
 
         void update();
         void clear();
+        
+        void reloadResources();
+        void loadResources();
 
         void execute(const std::vector<Command>& commands);
 
+        ::Music& getMusicStream(const std::string& name);
+        ::Sound& getSoundStream(const std::string& name);
+
+        const std::optional<std::string> getCurrentBGM() const;
         private:
+        
+        const Resources::ResourceManager::AudioResource& getResource(const std::string& name);
+        
+        std::unordered_map<std::string, Resources::ResourceManager::AudioResource>& resources;
 
-        ::Sound& getSound(const AudioResource& asset);
+        std::unordered_map<std::string, ::Music> musicStreams;
+        std::unordered_map<std::string, ::Sound> soundStreams;
 
-        ::Music& getMusic(const AudioResource& asset);
-
-        const SoundRegistry& registry;
-        std::unordered_map<unsigned int, ::Music> musicStreams;
-        std::unordered_map<unsigned int, ::Sound> sounds;
-
+        std::optional<std::string> currentBGM;
 };
 }

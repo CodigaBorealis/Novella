@@ -60,7 +60,7 @@ namespace Novella::Commands{
 
         if(!context.audio) throw std::runtime_error("stopSound: audio not initialized");
 
-        auto currentBgm = context.audio->getCurrentBgm();
+        auto currentBgm = context.audio->getCurrentBGM();
 
         if(!currentBgm) return;
 

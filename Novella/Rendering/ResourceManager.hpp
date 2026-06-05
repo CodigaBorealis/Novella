@@ -9,11 +9,11 @@
 #include "../Graphics/Font.hpp"
 
 
-namespace Novella::Rendering{
+namespace Novella::Resources{
 
     class ResourceManager{
 
-        private:
+        public:
 
         struct ImageResource{
 
@@ -35,17 +35,24 @@ namespace Novella::Rendering{
             std::shared_ptr<Graphics::Font> font;
         };
         
-        public:
+        struct AudioResource{
+        
+            std::string name;
+            std::filesystem::path src;        
+            std::string type;
+        };
 
         ~ResourceManager();
         
         ResourceManager() = default;
 
-        std::shared_ptr<Graphics::Image> loadImage(const std::string& name, const std::filesystem::path& src);
+        void loadImage(const std::string& name, const std::filesystem::path& src);
         
-        std::shared_ptr<Graphics::Texture> loadTexture(const std::string& name, const std::filesystem::path& src);
+        void loadTexture(const std::string& name, const std::filesystem::path& src);
 
-        std::shared_ptr<Graphics::Font> loadFont(const std::string& name, const std::filesystem::path& src);
+        void loadFont(const std::string& name, const std::filesystem::path& src);
+
+        void loadAudio(const std::string& name, const std::filesystem::path& src, const std::string& type);
 
         std::shared_ptr<Graphics::Image> getImage(const std::string& name) const;
 
@@ -53,15 +60,32 @@ namespace Novella::Rendering{
 
         std::shared_ptr<Graphics::Font> getFont(const std::string& name) const;
 
+        const AudioResource& getAudio(const std::string& name) const;
+        
+        std::unordered_map<std::string, ImageResource>& images();
+
+        const std::unordered_map<std::string, ImageResource>& images() const;
+        
+        const std::unordered_map<std::string, TextureResource>& textures() const;
+
+        std::unordered_map<std::string, TextureResource>& textures();
+        
+        const std::unordered_map<std::string, FontResource>& fonts() const;
+
+        std::unordered_map<std::string, FontResource>& fonts();
+
+        const std::unordered_map<std::string, AudioResource>& audio() const;
+
+        std::unordered_map<std::string, AudioResource>& audio();
+
         void clear();
 
         size_t size() const;
 
         private:
-        std::unordered_map<std::string, ImageResource> images;
-        std::unordered_map<std::string, TextureResource> textures;
-        std::unordered_map<std::string, FontResource> fonts;
-
-        size_t totalSize = 0;
+        std::unordered_map<std::string, ImageResource> imageResources;
+        std::unordered_map<std::string, TextureResource> textureResources;
+        std::unordered_map<std::string, FontResource> fontResources;
+        std::unordered_map<std::string, AudioResource> soundResources;
     };
 }

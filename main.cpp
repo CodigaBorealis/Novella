@@ -8,6 +8,8 @@ int main(){
 
     engine.loadSceneFromFile(source);
 
+    engine.audio().play("bgm");
+    
     engine.run();
     
     return 0;

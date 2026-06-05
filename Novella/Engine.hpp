@@ -34,7 +34,7 @@ namespace Novella{
         
         void run();
 
-        Rendering::ResourceManager& resources();
+        Resources::ResourceManager& resources();
         Rendering::Renderer& renderer();
         Audio::AudioSystem& audio();
         SceneManager& scene();
@@ -55,9 +55,9 @@ namespace Novella{
         Window displayWindow;
         Rendering::Renderer windowRenderer; 
 
-        Rendering::ResourceManager resourceManager;
-        SceneManager sceneManager;
+        Resources::ResourceManager resourceManager;
         Audio::AudioSystem audioSystem;
+        SceneManager sceneManager;
         LayoutSystem layoutSystem;
         Input::InteractionSystem interactionSystem;
         IO::InputOutputSystem inputOutputSystem;

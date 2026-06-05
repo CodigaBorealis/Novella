@@ -38,7 +38,7 @@ namespace Novella::Syntax::Scene{
 
     void Parser::expect(Token::Type type){
 
-        if(current().type != type) throw std::runtime_error("Unexpected token: " + current().text);
+        if(current().type != type) throw std::runtime_error("Unexpected token: " + current().text + " at position " + std::to_string(position) );
 
         consume();
     }

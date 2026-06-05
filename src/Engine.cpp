@@ -1,43 +1,46 @@
 #include "../Novella/Engine.hpp"
 #include "../Novella/Input/InputSystem.hpp"
 #include <exception>
-#include <iostream>
 namespace Novella{
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps)
         :
         displayWindow(width, height , title, fps),
         sceneManager(resourceManager,audioSystem),
-        windowRenderer(width, height)
+        windowRenderer(width, height),
+        audioSystem(resourceManager)
             {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, WindowFlags flags)
         :
         displayWindow(width, height , title, fps, flags),
         sceneManager(resourceManager,audioSystem),
-        windowRenderer(width, height)
+        windowRenderer(width, height),
+        audioSystem(resourceManager)
+
             {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon)
         :
         displayWindow(width, height , title, fps, icon),
         sceneManager(resourceManager,audioSystem),
-        windowRenderer(width, height)
+        windowRenderer(width, height),
+        audioSystem(resourceManager)
+
             {}
 
     Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon, WindowFlags flags)
         :
         displayWindow(width, height , title, fps, icon, flags),
         sceneManager(resourceManager,audioSystem),
-        windowRenderer(width, height)
+        windowRenderer(width, height),
+        audioSystem(resourceManager)
             {}
 
     void Engine::run(){
         
         while(displayWindow.isOpen()){
-
-            auto* currentScene = sceneManager.getCurrentScene();
-            
+                        
             if(sceneManager.modifiedSceneFile()){
 
             try{
@@ -59,15 +62,15 @@ namespace Novella{
 
             }
 
-            handleAudio(currentScene);
-            computeLayout(currentScene);
-            handleInput(currentScene);
-            handleRendering(currentScene);         
+            handleAudio(sceneManager.getCurrentScene());
+            computeLayout(sceneManager.getCurrentScene());
+            handleInput(sceneManager.getCurrentScene());
+            handleRendering(sceneManager.getCurrentScene());         
                  
         }
     }
 
-    Rendering::ResourceManager& Engine::resources(){
+    Resources::ResourceManager& Engine::resources(){
 
         return this->resourceManager;
     }
@@ -151,9 +154,9 @@ namespace Novella{
         }
 
     void Engine::loadSceneFromFile(const std::filesystem::path& src){
-
+        
         sceneManager.loadSceneFromFile(*this, src);
-    
+        
     }
 
     void Engine::handleAudio(Scene* scene){

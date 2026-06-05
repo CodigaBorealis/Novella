@@ -25,6 +25,7 @@ namespace Novella {
     void SceneWatcher::setSceneFile(const std::filesystem::path& file){
 
         sceneFile = file;
+        lastWriteTime = std::filesystem::last_write_time(file);
     }
 
 }

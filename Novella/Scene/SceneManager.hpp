@@ -11,7 +11,7 @@ namespace Novella{
     
     class Engine;
     
-    namespace Rendering {
+    namespace Resources {
         
         class ResourceManager;
 
@@ -29,9 +29,9 @@ namespace Novella{
 
         SceneManager() = delete;
 
-        SceneManager(Rendering::ResourceManager& resourceManager, Audio::AudioSystem& audio);
+        SceneManager(Resources::ResourceManager& resourceManager, Audio::AudioSystem& audio);
         
-        void loadScene(std::unique_ptr<Scene> scene);
+        void swapScene(std::unique_ptr<Scene> scene);
 
         void loadSceneFromFile(Engine& engine, const std::filesystem::path& src);
 
@@ -40,6 +40,8 @@ namespace Novella{
 
         bool modifiedSceneFile();
         const std::filesystem::path currentSceneFile() const;
+
+        void swapScene(Scene* scene);
 
         template<typename T, typename ... Args>
         
@@ -56,7 +58,7 @@ namespace Novella{
 
         std::unique_ptr<Scene> currentScene = nullptr;
         SceneWatcher sceneWatcher;
-        Rendering::ResourceManager& resourceManager;
+        Resources::ResourceManager& resourceManager;
         Audio::AudioSystem& audioSystem;
     };
 
