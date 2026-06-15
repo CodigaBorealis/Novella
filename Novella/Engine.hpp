@@ -7,7 +7,7 @@
 #include "Scene/SceneManager.hpp"
 #include "Window/WindowFlags.hpp"
 #include "Input/InteractionSystem.hpp"
-#include "IO/InputOutputSystem.hpp"
+
 namespace Novella{
 
     class Engine{
@@ -41,7 +41,6 @@ namespace Novella{
         Window& window();
         LayoutSystem& layout();
         Input::InteractionSystem& input();
-        IO::InputOutputSystem& io();
 
         private:
 
@@ -60,7 +59,6 @@ namespace Novella{
         SceneManager sceneManager;
         LayoutSystem layoutSystem;
         Input::InteractionSystem interactionSystem;
-        IO::InputOutputSystem inputOutputSystem;
     };
 
 }

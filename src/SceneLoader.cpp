@@ -1,5 +1,5 @@
 #include "../Novella/IO/SceneLoader.hpp"
-#include "../Novella/Scene/Scene.hpp"
+#include "../Novella/Scene/Scene.hpp"//clangd swears this file is unused, it IS used
 #include "../Novella/IO/FileReader.hpp"
 #include "../Novella/Syntax/Scene/Lexer.hpp"
 #include "../Novella/Syntax/Scene/Parser.hpp"
