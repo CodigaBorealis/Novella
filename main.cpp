@@ -1,16 +1,25 @@
 #include "Novella/Engine.hpp"
+#include <exception>
+#include <iostream>
 
 int main(){
 
-    Novella::Engine engine(1920, 1200, "test", 60, "/home/line/projects/Novella/Test/2026-05-27_17-52.png",Novella::WindowFlags::Resizable);
+    Novella::Engine engine;
 
-    std::filesystem::path source = "/home/line/projects/Novella/Test/Hallway.nsc";
+    const std::filesystem::path source = "/home/line/projects/Novella/Test/Hallway.nsc";
+
+    try{
 
     engine.loadSceneFromFile(source);
 
     engine.audio().play("bgm");
     
     engine.run();
+
+    }catch(std::exception& e){
+
+        std::cerr << e.what();
+    }
     
     return 0;
 } 

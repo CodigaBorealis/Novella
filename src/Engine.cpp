@@ -3,37 +3,19 @@
 #include <exception>
 namespace Novella{
 
-    Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps)
+    Engine::Engine()
         :
-        displayWindow(width, height , title, fps),
-        sceneManager(resourceManager,audioSystem),
-        windowRenderer(width, height),
+        displayWindow(1280, 720, "Novella Engine", 60),
+        sceneManager(resourceManager, audioSystem),
+        windowRenderer(1280, 720),
         audioSystem(resourceManager)
-            {}
-
-    Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, WindowFlags flags)
+        {}
+        
+    Engine::Engine(const EngineConfig& config)
         :
-        displayWindow(width, height , title, fps, flags),
+        displayWindow(config.width, config.height , config.title, config.targetFPS),
         sceneManager(resourceManager,audioSystem),
-        windowRenderer(width, height),
-        audioSystem(resourceManager)
-
-            {}
-
-    Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon)
-        :
-        displayWindow(width, height , title, fps, icon),
-        sceneManager(resourceManager,audioSystem),
-        windowRenderer(width, height),
-        audioSystem(resourceManager)
-
-            {}
-
-    Engine::Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon, WindowFlags flags)
-        :
-        displayWindow(width, height , title, fps, icon, flags),
-        sceneManager(resourceManager,audioSystem),
-        windowRenderer(width, height),
+        windowRenderer(config.width, config.height),
         audioSystem(resourceManager)
             {}
 

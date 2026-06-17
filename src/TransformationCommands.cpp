@@ -6,7 +6,6 @@
 #include <cstdint>
 #include <stdexcept>
 
-
 namespace Novella::Commands{
 
     void resize(const std::string& target,CommandContext &context, const nlohmann::json &args){
@@ -96,6 +95,5 @@ namespace Novella::Commands{
 
     void setText(const std::string& target,CommandContext &context, const nlohmann::json &args){
 
-        
     }
 }

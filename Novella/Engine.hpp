@@ -10,11 +10,23 @@
 
 namespace Novella{
 
+    struct EngineConfig{
+
+        unsigned int width = 1280;
+        unsigned int height = 720;
+
+        std::string title = "Novella Engine";
+        unsigned int targetFPS = 60;
+        std::filesystem::path icon{};
+        WindowFlags flags = Novella::WindowFlags::None;
+
+    };
+
     class Engine{
 
         public:
         
-        Engine() = delete;
+        Engine();
         
         Engine(const Engine&) = delete;
         Engine& operator=(const Engine&) = delete;
@@ -22,13 +34,7 @@ namespace Novella{
         Engine(Engine&&) noexcept = delete;
         Engine& operator=(Engine&&) noexcept = delete;
 
-        Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps);
-
-        Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, WindowFlags flags);
-
-        Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon);
-
-        Engine(unsigned int width, unsigned int height, const std::string& title, unsigned int fps, const std::filesystem::path& icon, WindowFlags flags);
+        Engine(const EngineConfig& config);
 
         void loadSceneFromFile(const std::filesystem::path& src);
         

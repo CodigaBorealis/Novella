@@ -1,0 +1,129 @@
+#The core idea is that scripts work should by just calling functions in the same way you would do it in raylib or other c libraries
+#All validation will be done somewhere else so the user does not have to worry about whenever a particular component
+#Has a method or not, basically make it like a lego set
+#I should document all of this so you can just look it up
+
+import 'WINDOW' as window; #import the handle for the window, could later be extended to importing other scripts
+
+#export is optional, not exporting a module forbids it from being included in other files
+
+export module ButtonTriggers{
+
+    #Do this once when the module is loaded and never execute it again(optional)
+    #Each module has their own
+
+    onFirstLoad{
+
+        var firstRun = true;#implicitly persistent
+    }
+
+    define main(){
+
+        var button = getButton("button");
+            
+        var closeButton = getButton("close");
+
+        onClick(closeButton, "LEFT", closeGame());
+
+        #"LEFT" is a constant used by the interpreter that can be resolved to either the button left or the key left depending on who calls it
+
+        #target, input, a single call to an internal function or a user-made function
+        onClick(button, "LEFT", modifyButton(1, button));
+
+        onClick(button, "RIGHT", stopMusic());
+
+        var singleCharacter = 'b';#even if c++ treats chars as 8 bit integers is better to keep them separated from actual numbers on the script for semantics
+
+        var values = [24, 24, 24 , 22, singleCharacter, "hello"];#handled internally as a std::vector of std::variant so no typing needed
+    }
+
+    define modifyButton(option, button){
+        
+        persistent var count = 0;
+
+        if(firstRun){
+
+            firstRun = false;
+
+            showMessage("Not in first run mode anymore");
+        }
+
+        if(!isInteger(option)){#equivalent to doing !isInteger in c
+
+            showError("Invalid parameter");
+        };
+
+        if(option == 0){#equivalent to doing option == 0 in c
+
+            setColor(button, [255,255,255,255]);#validated in runtime
+        }
+                
+        if(option == 1){
+
+            setPosition(button, [10, 24]);
+        }
+
+        if(option == 2){
+
+            showMessage("Clicked" + toString(count));
+        }
+
+        if(count < 1){
+
+            showMessage("First click!");
+        }
+            
+        if(count > 10){
+
+            showMessage("Has been clicked over 10 times!");
+
+        }else{
+
+            showMessage("Has not been clicked over 10 times");
+        }
+
+        if(option >= 10){
+
+            showError("Invalid option " + toString(option));
+        }
+
+        count ++;
+    }
+
+}
+
+export module Math{
+
+    define sum(a, b){
+
+        const additionalConstant = 10;
+
+        return a + b + additionalConstant;
+    }
+
+}
+
+#Could later be something like from "scripts/button.nvs" import 'ButtonTriggers' as triggers;
+#As to how to run this, the interpreter can just run whatever functions it finds being called outside the modules on a while loop
+
+#ButtonTriggers.main(); 
+#or from an external file: from "scripts/button.nvs" import 'ButtonTriggers' as triggers
+#triggers.main();
+
+#reserved words:
+#var
+#script
+#module
+#define
+#return
+#export
+#import
+#as
+#from
+#if
+#else
+#persistent
+#const
+#onFirstLoad
+#true
+#false

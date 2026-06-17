@@ -46,7 +46,6 @@ add_executable(Novella
     src/TransformationCommands.cpp
     src/WindowCommands.cpp
     
-    src/InputOutputSystem.cpp
     src/FileReader.cpp
 
     src/SceneLoader.cpp
