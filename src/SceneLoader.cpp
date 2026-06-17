@@ -97,10 +97,10 @@ namespace Novella::SceneLoader{
 
     void Loader::loadBinds(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
 
-        for(const auto& input : scene.inputs){
+        /*for(const auto& input : scene.inputs){
 
             InputBuilder::buildInput(engine, input);
 
-        }
+        }*/
     }
 }

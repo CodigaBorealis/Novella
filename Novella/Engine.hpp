@@ -34,7 +34,7 @@ namespace Novella{
         Engine(Engine&&) noexcept = delete;
         Engine& operator=(Engine&&) noexcept = delete;
 
-        Engine(const EngineConfig& config);
+        explicit Engine(const EngineConfig& config);
 
         void loadSceneFromFile(const std::filesystem::path& src);
         

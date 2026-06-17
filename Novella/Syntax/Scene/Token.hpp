@@ -9,6 +9,7 @@ namespace Novella::Syntax::Scene{
             Identifier,
             String,
             Number,
+            Boolean,
 
             Equals,
 

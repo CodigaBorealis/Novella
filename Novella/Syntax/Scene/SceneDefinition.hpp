@@ -45,28 +45,18 @@ namespace Novella::Syntax::Scene{
         std::string path;
     };
 
-    struct InputBindingDefinition{
+    struct ScriptDefinition{
 
-        std::string targetName;
-        std::string input;
-        std::string inputType;
-        std::string commandAlias;
-    };
-
-    struct TransitionDefinition{
-
-        std::string sceneName;
-        std::string sceneFile;
+        std::string name;
+        std::string path;
     };
 
     struct SceneDefinition{
 
-        std::string name;
+        std::vector<Property> windowProperties;
         std::vector<ResourceDefinition> resources;
         std::vector<ObjectDefinition> objects;
-        std::vector<InputBindingDefinition> inputs;
-        std::vector<TransitionDefinition> transitions;
-
+        std::vector<ScriptDefinition> scripts;
     };
 
 }

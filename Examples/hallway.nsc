@@ -6,12 +6,11 @@ Window{
     width = 1920
     height = 1080
     title = "My visual novel"    
+
 #optional data
+
     targetFPS = 60
     icon = "/home/line/projects/Novella/Test/2026-05-27_17-52.png"
-
-#optinal flags
-    Flags{
 
     fullscreen = false
     resizable = true
@@ -29,7 +28,6 @@ Window{
     interlaced = false
 
     }
-}
 
 Resources {
 
@@ -128,5 +126,6 @@ Components{
 
 Scripts{
 
-    source buttonLogic = "button.nvs"
+    buttonLogic = "/home/line/projects/Novella/Examples/button.nvs"
+    
 }

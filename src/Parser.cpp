@@ -48,39 +48,70 @@ namespace Novella::Syntax::Scene{
         return parseScene();
     }
 
+    void Parser::registerSeenSection(const std::string& section){
+
+        auto& registry = parseRegistry.at(ParseRegistry::stringToSection(section));
+
+        if(registry.firstDefinitionIndex == -1) registry.firstDefinitionIndex = position;//Is off by a lot but i will fix it later
+
+        registry.evalCount ++;
+    }
+
     SceneDefinition Parser::parseScene(){
-
-        if(current().text != "scene") throw std::runtime_error("Expected scene section");
-
-        consume();
 
         SceneDefinition scene{};
 
-        std::string sceneName = current().text;
+        while(current().type != Token::Type::EndOfFile){
 
-        scene.name = sceneName;
+        if(current().text == "Window"){
+            
+            registerSeenSection(current().text);
 
+            parseWindow(scene);
+
+        }else if(current().text == "Resources"){
+
+            registerSeenSection(current().text);
+
+            parseResources(scene); 
+
+        }else if(current().text == "Components"){
+            
+            registerSeenSection(current().text);
+
+            parseComponents(scene);
+
+        }else if(current().text == "Scripts"){
+            
+            registerSeenSection(current().text);
+
+            parseScripts(scene);
+
+        }else{
+
+            throw std::runtime_error("Unexpected section: " + current().text + " at position: "+ std::to_string(position));
+        }
+        
+        }
+
+        checkIntegrity(parseRegistry);
+
+        return scene;
+
+    }
+    
+    void Parser::parseWindow(SceneDefinition& scene){
+        
         expect(Token::Type::Identifier);
 
         expect(Token::Type::LBrace);
-
-        if(current().text != "resources") throw std::runtime_error("Expected resources section");
-
-        parseResources(scene);
-
-        if(current().text != "input") throw std::runtime_error("Expected input section");
-
-        parseInput(scene); 
-
+        
         while(current().type != Token::Type::RBrace){
-
-            scene.objects.push_back(parseObject());
-
+            
+            scene.windowProperties.push_back(parseProperty());
         }
 
         expect(Token::Type::RBrace);
-
-        return scene;
 
     }
 
@@ -113,58 +144,6 @@ namespace Novella::Syntax::Scene{
 
         expect(Token::Type::RBrace);
 
-    }
-
-    void Parser::parseInput(SceneDefinition& scene){
-
-        expect(Token::Type::Identifier);
-
-        expect(Token::Type::LBrace);
-
-        while(current().type != Token::Type::RBrace){
-
-            InputBindingDefinition binding{};
-
-            if(current().text != "click" && current().text != "key") throw std::runtime_error("Expected 'click' or 'key'");
-
-            binding.inputType = current().text;
-
-            consume();
-
-            binding.input = current().text;
-
-            expect(Token::Type::Identifier);
-
-            expect(Token::Type::LBrace);
-
-            while(current().type != Token::Type::RBrace){
-
-                std::string property = current().text;
-
-                expect(Token::Type::Identifier);
-
-                expect(Token::Type::Equals);
-
-                std::string value = current().text;
-
-                consume();
-
-                if(property == "alias"){
-
-                    binding.commandAlias = value;
-
-                }else if (property == "id"){
-
-                    binding.targetName = value;
-                }
-            }
-
-            expect(Token::Type::RBrace);
-
-            scene.inputs.push_back(binding);
-        }
-
-        expect(Token::Type::RBrace);
     }
 
     ObjectDefinition Parser::parseObject(){
@@ -231,6 +210,19 @@ namespace Novella::Syntax::Scene{
 
         Value value{};
 
+        if(current().type == Token::Type::Boolean){
+
+            value.type = Value::Type::Boolean;
+            
+            if(current().text != "true" && current().text != "false") throw std::runtime_error("Boolean value can only be 'true' or 'false' at index: " + std::to_string(position));
+
+            current().text == "true" ? value.boolValue = true : value.boolValue = false;
+
+            consume();
+
+            return value;
+        }
+
         if(current().type == Token::Type::String){
 
             value.type = Value::Type::String;
@@ -293,4 +285,58 @@ namespace Novella::Syntax::Scene{
         throw std::runtime_error("Invalid value");
     }
 
-}
+    void Parser::parseComponents(SceneDefinition& scene){
+        
+        expect(Token::Type::Identifier);
+
+        expect(Token::Type::LBrace);
+
+        while(current().type != Token::Type::RBrace){
+
+            scene.objects.push_back(parseObject());
+
+        }
+
+        expect(Token::Type::RBrace);
+    }
+    
+    void Parser::parseScripts(SceneDefinition& scene){
+
+        expect(Token::Type::Identifier);
+        
+        expect(Token::Type::LBrace);
+
+        while(current().type != Token::Type::RBrace){
+
+            ScriptDefinition script{};
+
+            script.name = current().text;
+
+            expect(Token::Type::Identifier);
+
+            expect(Token::Type::Equals);
+
+            script.path = current().text;
+
+            expect(Token::Type::String);
+
+            scene.scripts.push_back(script);
+        }
+
+        expect(Token::Type::RBrace);
+    }
+
+    void Parser::checkIntegrity(const std::unordered_map<Section, ParseRegistry>& parseRegistry){
+
+        for(const auto& [section, value]: parseRegistry){
+
+            auto& registry = parseRegistry.at(section);
+
+            if(registry.evalCount > 1) throw std::runtime_error("Redefinition for section '" + ParseRegistry::sectionToString(section) +"' previous definition at index: " + std::to_string(registry.firstDefinitionIndex));
+            
+            if(!registry.optional && registry.evalCount == 0) throw std::runtime_error("Missing neccesary section '" + ParseRegistry::sectionToString(section) + "'");
+
+            }
+        
+        }
+    }

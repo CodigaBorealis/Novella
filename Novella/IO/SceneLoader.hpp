@@ -50,7 +50,7 @@ namespace Novella::SceneLoader{
         static void loadObjects(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
         static void loadBinds(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
 
-        static void buildInput(Engine& engine, const Syntax::Scene::InputBindingDefinition& object);
+        //static void buildInput(Engine& engine, const Syntax::Scene::InputBindingDefinition& object);
 
     };
 

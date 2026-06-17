@@ -2,14 +2,14 @@
 #include "../Novella/Input/Mouse.hpp"
 #include "../Novella/Input/Keyboard.hpp"
 #include <stdexcept>
-#include <unordered_map>
-#include "../Novella/Syntax/Scene/SceneDefinition.hpp"
+//#include <unordered_map>
+//#include "../Novella/Syntax/Scene/SceneDefinition.hpp"
 #include "../Novella/Engine.hpp"
 
 namespace Novella::SceneLoader{
 
     void InputBuilder::buildInput(Engine &engine, const Syntax::Scene::InputBindingDefinition &input){
-
+/*
         std::unordered_map<std::string, std::string> args;
 
         if(!input.targetName.empty()){
@@ -33,8 +33,9 @@ namespace Novella::SceneLoader{
 
         throw std::runtime_error("Invalid input type '" + input.inputType + "'");
 
-    
+    */
     }
+
     Input::Mouse::Button InputBuilder::getMouseButton(const std::string& button){
 
         if(button == "Left") return Input::Mouse::Button::Left;
