@@ -80,13 +80,6 @@ namespace Novella::Syntax::NovellaScript{
                     return {Token::Type::Increment, "++"};
                 }
 
-                if(peek() == '='){
-
-                    advance();
-
-                    return {Token::Type::PlusEquals, "+="};
-                }
-
                 return {Token::Type::Plus, "+"};
             
             case '-':
@@ -100,23 +93,11 @@ namespace Novella::Syntax::NovellaScript{
                     return {Token::Type::Decrement, "--"};
                 }
 
-                if(peek() == '='){
-
-                    advance();
-
-                    return {Token::Type::MinusEquals, "-="};
-                }
-
                 return {Token::Type::Minus, "-"};
 
             case '*':
 
                 advance();
-
-                if(peek() == '='){
-
-                    return {Token::Type::MultiplyEquals, "*="};
-                }
 
                 return {Token::Type::Multiply, "*"};
 
@@ -124,21 +105,11 @@ namespace Novella::Syntax::NovellaScript{
 
                 advance();
 
-                if(peek() == '='){
-
-                    return {Token::Type::DivideEquals, "/="};
-                }
-
                 return {Token::Type::Divide, "/"};
             
             case '%':
 
                 advance();
-
-                if(peek() == '='){
-
-                    return {Token::Type::ModuloEquals, "%="};
-                }
 
                 return {Token::Type::Modulo, "%"};
 
