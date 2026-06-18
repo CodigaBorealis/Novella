@@ -1,6 +1,7 @@
 #pragma once
 #include "Audio/AudioSystem.hpp"
 #include "Layout/LayoutSystem.hpp"
+#include "Syntax/NovellaScript/Interpreter.hpp"
 #include "Window/Window.hpp"
 #include "Rendering/Renderer.hpp"
 #include "Rendering/ResourceManager.hpp"
@@ -47,6 +48,7 @@ namespace Novella{
         Window& window();
         LayoutSystem& layout();
         Input::InteractionSystem& input();
+        Syntax::NovellaScript::Interpreter& script();
 
         private:
 
@@ -54,6 +56,7 @@ namespace Novella{
         void handleInput(Scene* currentScene);
         void handleRendering(Scene* currentScene);
         void handleAudio(Scene* currentScene);
+        void handleScripting(Scene* currentScene);
         
         std::string lastError = "";
 
@@ -64,6 +67,7 @@ namespace Novella{
         Audio::AudioSystem audioSystem;
         SceneManager sceneManager;
         LayoutSystem layoutSystem;
+        Syntax::NovellaScript::Interpreter interpreter;
         Input::InteractionSystem interactionSystem;
     };
 

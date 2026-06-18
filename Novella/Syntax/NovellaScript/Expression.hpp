@@ -41,27 +41,27 @@ namespace Novella::Syntax::NovellaScript{
 
         std::string functionName;
         std::vector<Expression> arguments;
-        std::unique_ptr<Expression> answer;
+        std::shared_ptr<Expression> answer;
     };
 
     struct UnaryExpression{
 
         Token::Type operation;
-        std::unique_ptr<Expression> operand;
+        std::shared_ptr<Expression> operand;
     };
 
     struct BinaryExpression{
 
         Token::Type operation;
 
-        std::unique_ptr<Expression> left;
-        std::unique_ptr<Expression> right;
+        std::shared_ptr<Expression> left;
+        std::shared_ptr<Expression> right;
     };            
 
     struct AssignmentExpression{
         
-        std::unique_ptr<Expression> variable;
-        std::unique_ptr<Expression> value;
+        std::shared_ptr<Expression> variable;
+        std::shared_ptr<Expression> value;
     };
 
     struct ArrayExpression{
@@ -71,19 +71,19 @@ namespace Novella::Syntax::NovellaScript{
 
     struct MemberExpression{
 
-        std::unique_ptr<Expression> object;
+        std::shared_ptr<Expression> object;
         std::string member;
     };
 
     struct IndexExpression{
 
-        std::unique_ptr<Expression> object;
-        std::unique_ptr<Expression> index;
+        std::shared_ptr<Expression> object;
+        std::shared_ptr<Expression> index;
     };
 
     struct PostFixExpression{
 
-        std::unique_ptr<Expression> operand;
+        std::shared_ptr<Expression> operand;
         Token::Type operation;
     };
 }

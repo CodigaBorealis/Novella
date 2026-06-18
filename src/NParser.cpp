@@ -7,6 +7,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <iostream>
 
 namespace Novella::Syntax::NovellaScript{
 
@@ -36,17 +37,21 @@ namespace Novella::Syntax::NovellaScript{
 
     void Parser::consume(){
 
+
+        std::system("clear");
+
+        static std::string parsed;
+
+        parsed += current().text;
+
+        std::cout << "PARSED UP TO THIS POINT:\n" << parsed << "\n";
+        
         if(position < tokens.size() - 1) ++ position;
-    }
-
-    void Parser::backtrack(){
-
-        if(position > 0) -- position;
     }
 
     void Parser::expect(Token::Type type){
 
-        if(current().type != type) throw std::runtime_error("Unexpected token: " + current().text + " at position " + std::to_string(position) );
+        if(current().type != type) throw std::runtime_error("Unexpected token: " + current().text + " at position " + std::to_string(position) + " Token: " + current().text);
 
         consume();
 
@@ -67,7 +72,7 @@ namespace Novella::Syntax::NovellaScript{
             
             if(!std::holds_alternative<VariableExpression>(operand) && !std::holds_alternative<MemberExpression>(operand) && !std::holds_alternative<IndexExpression>(operand)){
 
-                throw std::runtime_error("Invalid '++' operand at " + std::to_string(position));
+                throw std::runtime_error("Invalid '++' operand at " + std::to_string(position) + " Token: " + current().text);
             }
             
             UnaryExpression unary{};
@@ -86,7 +91,7 @@ namespace Novella::Syntax::NovellaScript{
             
             if(!std::holds_alternative<VariableExpression>(operand) && !std::holds_alternative<MemberExpression>(operand) && !std::holds_alternative<IndexExpression>(operand)){
 
-                throw std::runtime_error("Invalid '--' operand at " + std::to_string(position));
+                throw std::runtime_error("Invalid '--' operand at " + std::to_string(position) + " Token: " + current().text);
             }
             
             UnaryExpression unary{};
@@ -266,7 +271,7 @@ namespace Novella::Syntax::NovellaScript{
 
         if(current().type == Token::Type::Boolean){
 
-            if(current().text != "true" && current().text != "false") throw std::runtime_error("Boolean values can only be 'true' or 'false' at " + std::to_string(position));
+            if(current().text != "true" && current().text != "false") throw std::runtime_error("Boolean values can only be 'true' or 'false' at " + std::to_string(position) + " Token: " + current().text);
 
             bool value;
 
@@ -336,7 +341,7 @@ namespace Novella::Syntax::NovellaScript{
             return expression;
         }
 
-        throw std::runtime_error("Expected expression at " + std::to_string(position));
+        throw std::runtime_error("Expected expression at " + std::to_string(position) + " Token: " + current().text);
     }
 
     Expression Parser::parseAssignment(){
@@ -347,7 +352,7 @@ namespace Novella::Syntax::NovellaScript{
 
             if(!std::holds_alternative<VariableExpression>(left) && !std::holds_alternative<MemberExpression>(left) && !std::holds_alternative<IndexExpression>(left)){
 
-                throw std::runtime_error("Invalid assigment target at " + std::to_string(position));
+                throw std::runtime_error("Invalid assigment target at " + std::to_string(position) + " Token: " + current().text);
             }
 
             consume();
@@ -419,14 +424,19 @@ namespace Novella::Syntax::NovellaScript{
 
             consume();
 
+            expect(Token::Type::Var);
+
         }else if(current().type == Token::Type::Const){
 
             isConst = true;
 
             consume();
-        }
 
-        expect(Token::Type::Var);
+        }else{
+
+            expect(Token::Type::Var);
+
+        }
 
         std::string name = current().text;
 
@@ -442,7 +452,7 @@ namespace Novella::Syntax::NovellaScript{
 
         }else if(isConst){
 
-            throw std::runtime_error("Uninitialized constant at " + std::to_string(position));
+            throw std::runtime_error("Uninitialized constant at " + std::to_string(position) + " Token: " + current().text);
         }
 
         expect(Token::Type::SemiColon);
@@ -574,7 +584,7 @@ namespace Novella::Syntax::NovellaScript{
 
                 if(!std::holds_alternative<VariableExpression>(expression) && !std::holds_alternative<MemberExpression>(expression) && !std::holds_alternative<IndexExpression>(expression)){
 
-                    throw std::runtime_error("Invalid '++' operand at " + std::to_string(position));
+                    throw std::runtime_error("Invalid '++' operand at " + std::to_string(position) + " Token: " + current().text);
                 }
 
                 PostFixExpression postFix{};
@@ -591,7 +601,7 @@ namespace Novella::Syntax::NovellaScript{
                 
                 if(!std::holds_alternative<VariableExpression>(expression) && !std::holds_alternative<MemberExpression>(expression) && !std::holds_alternative<IndexExpression>(expression)){
 
-                    throw std::runtime_error("Invalid '++' operand at " + std::to_string(position));
+                    throw std::runtime_error("Invalid '++' operand at " + std::to_string(position) + " Token: " + current().text);
                 }
 
                 PostFixExpression postFix{};
@@ -659,9 +669,9 @@ namespace Novella::Syntax::NovellaScript{
 
         expect(Token::Type::Import);
 
-        if(current().type != Token::Type::String){
+        if(current().type != Token::Type::String && current().type != Token::Type::Identifier){
 
-            throw std::runtime_error("Expected string literal for import path at" + std::to_string(position));
+            throw std::runtime_error("Invalid literal for import path at " + std::to_string(position) + " Token: " + current().text);
         }
 
         std::string pathOrModule = current().text;
@@ -672,7 +682,7 @@ namespace Novella::Syntax::NovellaScript{
 
         if(current().type != Token::Type::Identifier){
 
-            throw std::runtime_error("Expected identifier alias at " + std::to_string(position));
+            throw std::runtime_error("Expected identifier alias at " + std::to_string(position) + " Token: " + current().text);
         }
 
         std::string alias = current().text;
@@ -698,7 +708,7 @@ namespace Novella::Syntax::NovellaScript{
 
         }else{
 
-            throw std::runtime_error("Expected function name identifier at" + std::to_string(position));
+            throw std::runtime_error("Expected function name identifier at" + std::to_string(position) + " Token: " + current().text);
         }
 
         expect(Token::Type::LParen);
@@ -709,7 +719,7 @@ namespace Novella::Syntax::NovellaScript{
 
                 if(current().type != Token::Type::Identifier){
 
-                    throw std::runtime_error("Expected parameter name at" + std::to_string(position));
+                    throw std::runtime_error("Expected parameter name at" + std::to_string(position) + " Token: " + current().text);
                 }
 
                 definition.parameters.push_back(current().text);
@@ -751,7 +761,7 @@ namespace Novella::Syntax::NovellaScript{
 
         }else{
 
-            throw std::runtime_error("Expected module name identifier at " + std::to_string(position));
+            throw std::runtime_error("Expected module name identifier at " + std::to_string(position) + " Token: " + current().text);
         }
 
         expect(Token::Type::LBrace);

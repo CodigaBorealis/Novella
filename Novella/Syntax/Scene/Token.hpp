@@ -12,7 +12,7 @@ namespace Novella::Syntax::Scene{
             String,
             Number,
             Boolean,
-
+            
             Equals,
 
             LBrace,
@@ -22,7 +22,7 @@ namespace Novella::Syntax::Scene{
             RParen,
 
             Comma,
-
+        
             EndOfFile
         };
 

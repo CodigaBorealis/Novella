@@ -30,7 +30,6 @@ namespace Novella::Syntax::NovellaScript{
         Token& peek(size_t offset);
 
         void consume();
-        void backtrack();
 
         void expect(Token::Type type);
 

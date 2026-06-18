@@ -1,6 +1,7 @@
 #pragma once
 namespace Novella::Alias{
 
+    static constexpr const char* ShowMessage = "ShowMessage";
     static constexpr const char* PlaySound = "PlaySound";
     static constexpr const char* PlayMusic = "PlayMusic";
     static constexpr const char* StopSound = "StopSound";

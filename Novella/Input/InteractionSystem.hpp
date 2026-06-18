@@ -1,19 +1,44 @@
 #pragma once
 #include "ClickEvent.hpp"
-#include "CommandDispatcher.hpp"
 #include "../Math/Vector2x.hpp"
 #include "KeyEvent.hpp"
-#include <cstddef>
 #include <variant>
 #include <queue>
+#include <nlohmann/json_fwd.hpp>
+
+namespace Novella{
+
+    class Scene;
+
+    class CommandContext;
+
+}
+
+namespace Novella::Syntax::NovellaScript{
+
+    class Interpreter;
+}
 
 namespace Novella::Input{
 
     class InteractionSystem{
 
+        struct ScriptCallback{
+
+            std::string moduleName;
+            std::string functionName;
+
+            std::vector<nlohmann::json> args;
+        };
+
         public:
 
-        InteractionSystem() = default;
+        InteractionSystem() = delete;
+
+        InteractionSystem(Syntax::NovellaScript::Interpreter& interpreter)
+            :
+            interpreter(interpreter)
+            {}
 
         InteractionSystem(const InteractionSystem&) = delete;
 
@@ -27,21 +52,17 @@ namespace Novella::Input{
         void handleMouseInput(Scene& scene, const Math::Vector2f& mousePosition);
         void handleInteractions(CommandContext& context);
 
-        void addClickBinding(const std::string& objectID, Mouse::Button button, const std::string& , const nlohmann::json& args);
-        void addKeyBinding(const std::string& objectID, Keyboard::Key key, const std::string& , const nlohmann::json& args);
-        
+        void popEvents();
+
         void clear();
         
-        size_t size() const;
-
         private:
         
         using Event = std::variant<KeyEvent, ClickEvent>;
 
-        CommandDispatcher dispatcher;
         std::queue<Event> eventQueue;
 
-        size_t totalBinds = 0;
+        Syntax::NovellaScript::Interpreter& interpreter;
     };
 
 }

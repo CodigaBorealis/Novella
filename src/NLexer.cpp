@@ -196,6 +196,10 @@ namespace Novella::Syntax::NovellaScript{
             case '"':
 
                 return string();
+                
+            case '\'':
+
+                return character();
         }
 
         if(std::isdigit(c)) return number();

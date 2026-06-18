@@ -1,6 +1,5 @@
 #pragma once
 #include <filesystem>
-#include <string>
 #include "../Syntax/Scene/SceneDefinition.hpp"
 
 namespace Novella {
@@ -48,10 +47,7 @@ namespace Novella::SceneLoader{
 
         static void loadResources(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
         static void loadObjects(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
-        static void loadBinds(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
-
-        //static void buildInput(Engine& engine, const Syntax::Scene::InputBindingDefinition& object);
-
+        static void loadScripts(Engine& engine, const Syntax::Scene::SceneDefinition& scene);
     };
 
 }

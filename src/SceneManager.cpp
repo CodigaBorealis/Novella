@@ -63,5 +63,4 @@ namespace Novella{
         SceneLoader::Loader::load(engine, src);
 
     }
-
 }

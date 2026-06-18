@@ -13,6 +13,8 @@ namespace Novella::Syntax::NovellaScript{
         {"var", Token::Type::Var},
         {"const", Token::Type::Const},
         {"persistent", Token::Type::Persistent},
+        {"as", Token::Type::As},
+        {"exec_once", Token::Type::OnFirstLoad},
         {"define", Token::Type::Define},
         {"return", Token::Type::Return},
         {"module", Token::Type::Module},

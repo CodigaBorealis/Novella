@@ -1,5 +1,7 @@
 #include "../Novella/Engine.hpp"
 #include "../Novella/Input/InputSystem.hpp"
+#include "../Novella/Commands/CommandContext.hpp"
+
 #include <exception>
 namespace Novella{
 
@@ -8,7 +10,8 @@ namespace Novella{
         displayWindow(1280, 720, "Novella Engine", 60),
         sceneManager(resourceManager, audioSystem),
         windowRenderer(1280, 720),
-        audioSystem(resourceManager)
+        audioSystem(resourceManager),
+        interactionSystem(interpreter)
         {}
         
     Engine::Engine(const EngineConfig& config)
@@ -16,7 +19,8 @@ namespace Novella{
         displayWindow(config.width, config.height , config.title, config.targetFPS),
         sceneManager(resourceManager,audioSystem),
         windowRenderer(config.width, config.height),
-        audioSystem(resourceManager)
+        audioSystem(resourceManager),
+        interactionSystem(interpreter)
             {}
 
     void Engine::run(){
@@ -87,6 +91,11 @@ namespace Novella{
         return this->interactionSystem;
     }
 
+    Syntax::NovellaScript::Interpreter& Engine::script(){
+
+        return this->interpreter;
+    }
+
     void Engine::computeLayout(Scene* currentScene){
 
         if(!currentScene) return;
@@ -146,5 +155,11 @@ namespace Novella{
         if(!scene) return;
 
         audioSystem.update();
+    }
+
+    void Engine::handleScripting(Scene* scene){
+
+        if(!scene) return;
+
     }
 }

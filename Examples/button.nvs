@@ -3,8 +3,8 @@
 #Has a method or not, basically make it like a lego set
 #I should document all of this so you can just look it up
 
-import 'WINDOW' as window; #import libraries from the engine itself
-#import '/MyModule.nvs' as myModule#import other scripts, must always start with / to refer to current directory
+import WINDOW as window; #import libraries from the engine itself
+#import "/MyModule.nvs" as myModule;#import other scripts, must always start with / to refer to current directory
 #export is optional, not exporting a module forbids it from being included in other files
 
 export module ButtonTriggers{
@@ -13,9 +13,9 @@ export module ButtonTriggers{
     #Each module has their own
     #Uncallable
     #these variables go out of scope as soon as the function ends
-    onFirstLoad(){
+    exec_once(){
 
-        var firstRun = true;
+        showMessage("HELLO WORLD");
     }
 
     define main(){
@@ -45,7 +45,7 @@ export module ButtonTriggers{
         if(!isInteger(option)){#equivalent to doing !isInteger in c
 
             showError("Invalid parameter");
-        };
+        }
 
         if(option == 0){#equivalent to doing option == 0 in c
 
@@ -107,7 +107,7 @@ export module Math{
 #reserved words:
 #var
 #module
-#define
+#func
 #return
 #export
 #import

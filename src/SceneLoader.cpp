@@ -40,7 +40,9 @@ namespace Novella::SceneLoader{
 
         loadObjects(engine, scene);
 
-        loadBinds(engine, scene);
+        engine.script().clear();
+
+        loadScripts(engine, scene);
 
     }
 
@@ -95,12 +97,11 @@ namespace Novella::SceneLoader{
         }
     }
 
-    void Loader::loadBinds(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
+    void Loader::loadScripts(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
 
-        /*for(const auto& input : scene.inputs){
+        for(const auto& script : scene.scripts){
 
-            InputBuilder::buildInput(engine, input);
-
-        }*/
+            engine.script().loadScript(script);
+        }
     }
 }

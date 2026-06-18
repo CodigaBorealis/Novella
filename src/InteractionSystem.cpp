@@ -4,10 +4,11 @@
 #include "../Novella/Attribute/Interactable.hpp"
 #include "../Novella/Input/InputSystem.hpp"
 #include "../Novella/Input/ClickEvent.hpp"
-#include <cstddef>
 #include <queue>
 #include <variant>
 #include "../Novella/Attribute/Object.hpp"
+#include "../Novella/Syntax/NovellaScript/Interpreter.hpp"
+
 namespace Novella::Input{
 
 
@@ -57,44 +58,17 @@ namespace Novella::Input{
 
             auto event = std::move(eventQueue.front());
 
+            this->interpreter.interpretEvent(event, context);
+
             eventQueue.pop();
-
-            std::visit([&](auto&& e){
-
-                dispatcher.dispatch(e, context);
-
-            }, event);
         }
 
     }
 
-    void InteractionSystem::addClickBinding(const std::string& objectID, Mouse::Button button, const std::string& commandAlias, const nlohmann::json& args){
-
-        dispatcher.addClickBinding(objectID, button, commandAlias, args);
-
-        totalBinds ++;
-    };
-
-    void InteractionSystem::addKeyBinding(const std::string&  objectID, Keyboard::Key key, const std::string& commandAlias, const nlohmann::json& args){
-
-        dispatcher.addKeyBinding(objectID, key, commandAlias, args);
-
-        totalBinds ++;
-    };
-
-    size_t InteractionSystem::size() const{
-
-        return totalBinds;
-    }
-
     void InteractionSystem::clear(){
-
-        dispatcher.clear();
 
         std::queue<Event> cleanQueue;
 
         eventQueue.swap(cleanQueue);
-
-        totalBinds = 0;
     }
 }
