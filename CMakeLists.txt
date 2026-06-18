@@ -8,8 +8,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(raylib 5.0 REQUIRED)
 
-add_compile_options(-fsanitize=address -g -O0)
-add_link_options(-fsanitize=address)
 
 add_executable(Novella
     main.cpp

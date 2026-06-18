@@ -1,10 +1,27 @@
 #pragma once
 #include <cstddef>
 #include <string_view>
+#include <unordered_map>
+#include "Token.hpp"
 
 namespace Novella::Syntax::NovellaScript{
+    
+    static const std::unordered_map<std::string, Token::Type> keywords = {
 
-struct Token;
+        {"if", Token::Type::If},
+        {"else", Token::Type::Else},
+        {"var", Token::Type::Var},
+        {"const", Token::Type::Const},
+        {"persistent", Token::Type::Persistent},
+        {"define", Token::Type::Define},
+        {"return", Token::Type::Return},
+        {"module", Token::Type::Module},
+        {"import", Token::Type::Import},
+        {"export", Token::Type::Export},
+        {"true", Token::Type::Boolean},
+        {"false", Token::Type::Boolean}
+
+    };
 
     class Lexer{
 
@@ -22,9 +39,11 @@ struct Token;
         Token number();
 
         Token string();
+        
+        Token character();
 
         private:
-
+        
         char peek();
         char advance();
 

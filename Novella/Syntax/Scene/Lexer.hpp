@@ -22,7 +22,7 @@ namespace Novella::Syntax::Scene{
         Token number();
 
         Token string();
-
+                
         private:
 
         char peek();

@@ -1,0 +1,48 @@
+#pragma once
+#include <variant>
+#include <vector>
+#include "Expression.hpp"
+
+namespace Novella::Syntax::NovellaScript{
+    
+    using Expression = std::variant<LiteralExpression, VariableExpression, FunctionCallExpression,
+    UnaryExpression, BinaryExpression, AssignmentExpression, ArrayExpression, MemberExpression, IndexExpression,
+    PostFixExpression>;
+
+    struct ImportStatement{
+
+        std::string source;
+        std::string alias;
+    };
+
+    struct ReturnStatement{
+
+        Expression value;
+    };
+
+    struct IfStatement{
+
+        Expression condition;
+        std::vector<Statement> body;
+        std::vector<Statement> elseBody;
+    };
+
+    struct VariableStatement{
+
+        bool persistent;
+        bool constant;
+
+        std::string name;
+        Expression value;
+    };
+
+    struct FunctionCallStatement{
+
+        FunctionCallExpression call;
+    };    
+
+    struct ExpressionStatement{
+
+        Expression expression;
+    };
+}

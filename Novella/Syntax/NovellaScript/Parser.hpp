@@ -1,18 +1,15 @@
 #pragma once
-#include "Script.hpp"
 #include "Token.hpp"
 #include <cstddef>
 #include <vector>
+#include "ScriptFwd.hpp"
+#include "Definition.hpp"
 
 namespace Novella::Syntax::NovellaScript{
 
     class Lexer;
 
-    struct SceneDefinition;
-
-    struct ObjectDefinition;
-
-    struct Property;
+    struct Script;
 
     struct Value;
 
@@ -22,10 +19,10 @@ namespace Novella::Syntax::NovellaScript{
         
         explicit Parser(Lexer& lexer);
 
-        SceneDefinition parse();
+        Script parse();
 
         private:
-        
+
         std::vector<Token> tokens;
         size_t position = 0;
         
@@ -33,15 +30,38 @@ namespace Novella::Syntax::NovellaScript{
         Token& peek(size_t offset);
 
         void consume();
+        void backtrack();
+
         void expect(Token::Type type);
 
-        void parseResources(SceneDefinition& scene);
-        void parseInput(SceneDefinition& scene);
+        void Parse(Script& scene);
 
-        SceneDefinition parseScene();
-        ObjectDefinition parseObject();
-        Property parseProperty();
-        Value parseValue();
+        Script parseScript();
+        Statement parseStatement();
+        ExpressionStatement parseExpressionStatement();
+        ReturnStatement parseReturn();
+        IfStatement parseIf();
+        VariableStatement parseVariable();
+        std::vector<Statement> parseBlock();
+
+        Definition parseDefinition();
+        ModuleImportDefinition parseImport();
+
+        FunctionDefinition parseFunctionDefinition();
+        ModuleDefinition parseModuleDefinition();
+
+        Expression parseAssignment();
+        Expression parsePrimary();
+        Expression parseUnary();
+        Expression parseFactor();
+        Expression parseTerm();
+        Expression parseComparison();
+        Expression parseEquality();
+        Expression parseLogicalAnd();
+        Expression parseLogicalOr();
+        Expression parseExpression();
+        Expression parseArrayExpresion();
+        Expression parsePostFix();
     };
 
 }

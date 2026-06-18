@@ -336,7 +336,7 @@ namespace Novella::Syntax::Scene{
             
             if(!registry.optional && registry.evalCount == 0) throw std::runtime_error("Missing neccesary section '" + ParseRegistry::sectionToString(section) + "'");
 
-            }
-        
         }
+        
     }
+}

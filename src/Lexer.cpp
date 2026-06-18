@@ -15,6 +15,8 @@ namespace Novella::Syntax::Scene{
 
         char c = peek();
 
+        if(c == '-' && currentCharacter + 1 < source.size() && std::isdigit(source[currentCharacter + 1])) return  number();
+
         switch(c){
 
             case '=':
@@ -59,8 +61,6 @@ namespace Novella::Syntax::Scene{
         }
 
         if(std::isdigit(c)) return number();
-
-        if(c == '-' && currentCharacter + 1 < source.size() && std::isdigit(source[currentCharacter + 1])) return  number();
 
         if(std::isalpha(c) || c == '_') return identifier();
                 

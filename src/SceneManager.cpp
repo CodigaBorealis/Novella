@@ -56,7 +56,7 @@ namespace Novella{
         
         const std::string extension = src.extension().string();
         
-        if(extension != ".nsc") throw std::runtime_error("Could not load the scene: expected a .nsc file got '" + extension + "'");
+        if(extension != ".nsc") throw std::runtime_error("Could not load the scene: expected a '.nsc' file got '" + extension + "'");
 
         sceneWatcher.setSceneFile(src);
 

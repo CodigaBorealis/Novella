@@ -4,6 +4,8 @@ namespace Novella::Syntax::Scene{
 
     struct Token{
 
+        Token() = delete;
+
         enum class Type : int{
 
             Identifier,
@@ -24,6 +26,12 @@ namespace Novella::Syntax::Scene{
             EndOfFile
         };
 
+        Token(Type type, const std::string& text)
+            :
+            type(type),
+            text(text)
+            {}
+            
         Type type;
 
         std::string text;

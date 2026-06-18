@@ -1,20 +1,21 @@
-#The core idea is that scripts work should by just calling functions in the same way you would do it in raylib or other c libraries
+#The core idea is that scripts work should by just calling functions in the same way you would do it in raylib or other c 
 #All validation will be done somewhere else so the user does not have to worry about whenever a particular component
 #Has a method or not, basically make it like a lego set
 #I should document all of this so you can just look it up
 
-import 'WINDOW' as window; #import the handle for the window, could later be extended to importing other scripts
-
+import 'WINDOW' as window; #import libraries from the engine itself
+#import '/MyModule.nvs' as myModule#import other scripts, must always start with / to refer to current directory
 #export is optional, not exporting a module forbids it from being included in other files
 
 export module ButtonTriggers{
 
     #Do this once when the module is loaded and never execute it again(optional)
     #Each module has their own
+    #Uncallable
+    #these variables go out of scope as soon as the function ends
+    onFirstLoad(){
 
-    onFirstLoad{
-
-        var firstRun = true;#implicitly persistent
+        var firstRun = true;
     }
 
     define main(){
@@ -34,19 +35,12 @@ export module ButtonTriggers{
 
         var singleCharacter = 'b';#even if c++ treats chars as 8 bit integers is better to keep them separated from actual numbers on the script for semantics
 
-        var values = [24, 24, 24 , 22, singleCharacter, "hello"];#handled internally as a std::vector of std::variant so no typing needed
+        var values = [24, 24, 24 , 22, singleCharacter, "hello"];#handled internally as a std::tuple so no typing needed
     }
 
     define modifyButton(option, button){
         
         persistent var count = 0;
-
-        if(firstRun){
-
-            firstRun = false;
-
-            showMessage("Not in first run mode anymore");
-        }
 
         if(!isInteger(option)){#equivalent to doing !isInteger in c
 
@@ -112,7 +106,6 @@ export module Math{
 
 #reserved words:
 #var
-#script
 #module
 #define
 #return
