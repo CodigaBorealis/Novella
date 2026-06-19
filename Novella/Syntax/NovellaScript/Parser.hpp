@@ -41,7 +41,6 @@ namespace Novella::Syntax::NovellaScript{
         ReturnStatement parseReturn();
         IfStatement parseIf();
         VariableStatement parseVariable();
-        std::vector<Statement> parseBlock();
 
         Definition parseDefinition();
         ModuleImportDefinition parseImport();
@@ -59,7 +58,7 @@ namespace Novella::Syntax::NovellaScript{
         Expression parseLogicalAnd();
         Expression parseLogicalOr();
         Expression parseExpression();
-        Expression parseArrayExpresion();
+        Expression parseArrayExpression();
         Expression parsePostFix();
     };
 

@@ -14,20 +14,11 @@ namespace Novella::Syntax::NovellaScript{
 
         char c = peek();
 
-        if(c == '-' && currentCharacter + 1 < source.size() && std::isdigit(source[currentCharacter + 1])) return  number();
-
         switch(c){
 
             case '=':
 
                 advance();
-                
-                if(peek() == '='){
-
-                    advance();
-
-                    return {Token::Type::Equals, "=="};
-                }
 
                 return {Token::Type::Assign, "="};
             
@@ -42,7 +33,7 @@ namespace Novella::Syntax::NovellaScript{
                     return {Token::Type::NotEquals, "!="};
                 }
 
-                return {Token::Type::Not, "!"};
+                throw std::runtime_error("Expected '=' token at " + std::to_string(line) + ":" + std::to_string(column));
             
             case '<':
 
@@ -114,44 +105,6 @@ namespace Novella::Syntax::NovellaScript{
 
                 return {Token::Type::Modulo, "%"};
 
-            case '&':
-
-                advance();
-                
-                if(peek() == '&'){
-
-                    advance();
-
-                    return {Token::Type::And, "&&"};
-                }
-
-                throw std::runtime_error("Expected a second '&' token at: " + std::to_string(line) + ":" + std::to_string(column));
-
-            case '|':
-
-                advance();
-
-                if(peek() ==  '|'){
-
-                    advance();
-                    
-                    return {Token::Type::Or, "||"};
-                }
-
-                throw std::runtime_error("Expected a second '|' token at: " + std::to_string(line) + ":" + std::to_string(column));
-
-            case '{':
-
-                advance();
-
-                return {Token::Type::LBrace, "{"};
-
-            case '}':
-
-                advance();
-                
-                return {Token::Type::RBrace, "}"};
-
             case '(':
 
                 advance();
@@ -197,15 +150,17 @@ namespace Novella::Syntax::NovellaScript{
             case '"':
 
                 return string();
-                
-            case '\'':
+            
+            case ':':
 
-                return character();
+                advance();
+
+                return {Token::Type::Colon, ":"};
         }
 
         if(std::isdigit(c)) return number();
 
-        if(std::isalpha(c) || c == '_') return identifier();
+        if(std::isalnum(static_cast<unsigned char>(c)) || c == '_') return identifier();
                 
         throw std::runtime_error(std::string("Unexpected character '" ) + c + "' at : " + std::to_string(line) + ":" + std::to_string(column));
     }
@@ -218,7 +173,7 @@ namespace Novella::Syntax::NovellaScript{
 
             char c = peek();
 
-            if(std::isalnum(c) || c == '_'){
+            if(std::isalnum(static_cast<unsigned char>(c)) || c == '_'){
 
                 value += advance();
 
@@ -243,13 +198,11 @@ namespace Novella::Syntax::NovellaScript{
         short dotCount = 0;
         std::string value;
 
-        if(peek() == '-') value += advance();
-
         while(!eof()){
 
             char c = peek();
 
-            if(std::isdigit(c) || c == '.'){
+            if(std::isdigit(static_cast<unsigned char>(c)) || c == '.'){
                 
                 value += advance();
 
@@ -257,7 +210,7 @@ namespace Novella::Syntax::NovellaScript{
                     
                     dotCount ++;
 
-                    if(dotCount > 1) throw std::runtime_error(std::string("Repeated '.' character +  at : " + std::to_string(line) + ":" + std::to_string(column)));
+                    if(dotCount > 1) throw std::runtime_error(std::string("Repeated '.' character at : " + std::to_string(line) + ":" + std::to_string(column)));
                     
                     char nextChar = peek();
 
@@ -272,13 +225,6 @@ namespace Novella::Syntax::NovellaScript{
         }
         
         if(!value.empty() && value.back() == '.') throw std::runtime_error("Malformed number literal at " + std::to_string(line) + ":" + std::to_string(column));
-        
-        if(!eof()){
-
-            char trailing = peek();
-            
-            if(trailing == '-' || trailing == '.') throw std::runtime_error("Malformed number literal at " + std::to_string(line) + ":" + std::to_string(column));
-        }
 
         return{Token::Type::Number, value};
     }
@@ -294,7 +240,9 @@ namespace Novella::Syntax::NovellaScript{
             value += advance();
         }
 
-        if(peek() == '"') advance();
+        if(eof()) throw std::runtime_error("Unterminated string literal at " + std::to_string(line) + ":" + std::to_string(column));
+
+        advance();
 
         return{Token::Type::String, value};
     }
@@ -358,18 +306,4 @@ namespace Novella::Syntax::NovellaScript{
         }
     }    
 
-    Token Lexer::character(){
-
-        advance();
-
-        if(eof()) throw std::runtime_error("Undetermined character literal at " + std::to_string(line) + ":" + std::to_string(column));
-
-        char c = advance();
-
-        if(peek() != '\'') throw std::runtime_error("Expected closing quote at " + std::to_string(line) + ":" + std::to_string(column));
-
-        advance();
-
-        return {Token::Type::Character, std::string(1, c)};
-    }
 }

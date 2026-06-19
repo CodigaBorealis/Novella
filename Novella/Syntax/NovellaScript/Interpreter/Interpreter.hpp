@@ -67,7 +67,6 @@ namespace Novella::Syntax::NovellaScript{
         void executeStatement(const Statement& statement);
 
         void interpret(const Script& script);
-        void execOnce(const Script& script);
     };
 
 }

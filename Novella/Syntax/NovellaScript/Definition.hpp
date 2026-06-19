@@ -3,7 +3,7 @@
 #include <vector>
 
 namespace Novella::Syntax::NovellaScript {
-    
+
     struct ModuleImportDefinition{
 
         std::string source;
@@ -36,8 +36,7 @@ namespace Novella::Syntax::NovellaScript {
     struct ModuleDefinition{
 
         std::string name;
-        bool exported;
-        std::vector<Statement> firstLoad;
+        std::vector<VariableStatement> variables;
         std::vector<FunctionDefinition> functions;
     };
 }

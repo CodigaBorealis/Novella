@@ -11,17 +11,21 @@ namespace Novella::Syntax::NovellaScript{
         {"if", Token::Type::If},
         {"else", Token::Type::Else},
         {"var", Token::Type::Var},
-        {"const", Token::Type::Const},
-        {"persistent", Token::Type::Persistent},
         {"as", Token::Type::As},
-        {"exec_once", Token::Type::OnFirstLoad},
-        {"define", Token::Type::Define},
+        {"fn", Token::Type::Define},
         {"return", Token::Type::Return},
         {"module", Token::Type::Module},
         {"import", Token::Type::Import},
-        {"export", Token::Type::Export},
         {"true", Token::Type::Boolean},
-        {"false", Token::Type::Boolean}
+        {"false", Token::Type::Boolean},
+        {"then", Token::Type::Then},
+        {"endIf", Token::Type::EndIf},
+        {"endModule", Token::Type::EndModule},
+        {"endFunction", Token::Type::EndFunction},
+        {"and", Token::Type::And},
+        {"or", Token::Type::Or},
+        {"not", Token::Type::Not},
+        {"is", Token::Type::Equals}
 
     };
 
@@ -42,8 +46,6 @@ namespace Novella::Syntax::NovellaScript{
 
         Token string();
         
-        Token character();
-
         private:
         
         char peek();

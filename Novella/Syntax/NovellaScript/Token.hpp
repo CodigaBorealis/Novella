@@ -10,21 +10,21 @@ namespace Novella::Syntax::NovellaScript{
 
             Identifier,
             String,
-            Character,
             Number,
             Boolean,
 
             If,
+            Then,
+            EndIf,
+            EndFunction,
+            EndModule,
+
             Else,
             Var,
-            Const,
-            Persistent,
             Module,
             Import,
-            Export,
             Define,
             Return,
-            OnFirstLoad,
             From,
             As,
 
@@ -54,9 +54,6 @@ namespace Novella::Syntax::NovellaScript{
             Or,
             Not,
 
-            LBrace,
-            RBrace,
-
             LParen,
             RParen,
 
@@ -65,7 +62,9 @@ namespace Novella::Syntax::NovellaScript{
 
             Comma,
             SemiColon,
+            Colon,
             Dot,
+
 
             EndOfFile
         };

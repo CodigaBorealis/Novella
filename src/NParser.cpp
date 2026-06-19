@@ -39,15 +39,14 @@ namespace Novella::Syntax::NovellaScript{
 
         static std::string parsed;
 
+        //std::system("clear");
         parsed += current().text + "\n";
         
         if(position < tokens.size() - 1) ++ position;
 
-        if(position == tokens.size() - 1){
+        //std::cout << "PARSED TOKENS:\n" << parsed << "\n";
 
-            std::cout << "PARSED TOKENS:\n" << parsed << "\n";
-
-        }
+        
     }
 
     void Parser::expect(Token::Type type){
@@ -325,21 +324,7 @@ namespace Novella::Syntax::NovellaScript{
 
         if(current().type == Token::Type::LBracket){
 
-            return parseArrayExpresion();
-        }
-        
-        if(current().type == Token::Type::Character){
-
-            char c = current().text.at(0);
-
-            consume();
-
-            LiteralExpression expression{};
-
-            expression.value.type = Value::Type::Character;
-            expression.value.underlyingValue = c;
-
-            return expression;
+            return parseArrayExpression();
         }
 
         throw std::runtime_error("Expected expression at " + std::to_string(position) + " Token: " + current().text);
@@ -392,52 +377,37 @@ namespace Novella::Syntax::NovellaScript{
 
         expect(Token::Type::If);
 
-        expect(Token::Type::LParen);
-
         Expression condition = parseExpression();
 
-        expect(Token::Type::RParen);
+        expect(Token::Type::Then);
 
         IfStatement statement{};
 
         statement.condition = std::move(condition);
 
-        statement.body = parseBlock();
+        while(current().type != Token::Type::Else && current().type != Token::Type::EndIf && current().type != Token::Type::EndOfFile){
+
+            statement.body.push_back(parseStatement());
+        }
 
         if(current().type == Token::Type::Else){
 
             consume();
 
-            statement.elseBody = parseBlock();
+            while(current().type != Token::Type::EndIf && current().type != Token::Type::EndOfFile){
+
+                statement.elseBody.push_back(parseStatement());
+            }
         }
+
+        expect(Token::Type::EndIf);
 
         return statement;
     }
 
     VariableStatement Parser::parseVariable(){
 
-        bool isPersistent = false;
-        bool isConst = false;
-
-        if(current().type == Token::Type::Persistent){
-
-            isPersistent = true;
-
-            consume();
-
-            expect(Token::Type::Var);
-
-        }else if(current().type == Token::Type::Const){
-
-            isConst = true;
-
-            consume();
-
-        }else{
-
-            expect(Token::Type::Var);
-
-        }
+        expect(Token::Type::Var);
 
         std::string name = current().text;
 
@@ -445,20 +415,13 @@ namespace Novella::Syntax::NovellaScript{
 
         Expression initializer{};
 
-        if(current().type == Token::Type::Assign){
+        expect(Token::Type::Assign);
 
-            consume();
-
-            initializer = parseExpression();
-
-        }else if(isConst){
-
-            throw std::runtime_error("Uninitialized constant at " + std::to_string(position) + " Token: " + current().text);
-        }
+        initializer = parseExpression();
 
         expect(Token::Type::SemiColon);
 
-        return VariableStatement{isPersistent, isConst, name, std::move(initializer)};
+        return VariableStatement{name, std::move(initializer)};
 
     }
 
@@ -494,7 +457,7 @@ namespace Novella::Syntax::NovellaScript{
         return statement;
     }
     
-    Expression Parser::parseArrayExpresion(){
+    Expression Parser::parseArrayExpression(){
 
         ArrayExpression array{};
 
@@ -627,8 +590,6 @@ namespace Novella::Syntax::NovellaScript{
         switch(current().type){
             
             case Token::Type::Var: return parseVariable();
-            case Token::Type::Const: return parseVariable();
-            case Token::Type::Persistent: return parseVariable();
 
             case Token::Type::If: return parseIf();
 
@@ -638,23 +599,6 @@ namespace Novella::Syntax::NovellaScript{
         }
 
     }
-
-    std::vector<Statement> Parser::parseBlock(){
-
-        std::vector<Statement> statements;
-
-        expect(Token::Type::LBrace);
-
-        while(current().type != Token::Type::RBrace){
-
-            statements.push_back(parseStatement());
-        }
-
-        expect(Token::Type::RBrace);
-
-        return statements;
-    }
-
 
     Expression Parser::parseExpression(){
 
@@ -700,7 +644,7 @@ namespace Novella::Syntax::NovellaScript{
         FunctionDefinition definition{};
 
         expect(Token::Type::Define);
-
+        
         if(current().type == Token::Type::Identifier){
 
             definition.name = current().text;
@@ -735,7 +679,16 @@ namespace Novella::Syntax::NovellaScript{
         
         expect(Token::Type::RParen);
         
-        definition.body = parseBlock();
+        expect(Token::Type::Colon);
+
+        while(current().type != Token::Type::EndFunction && current().type != Token::Type::EndOfFile){
+
+            //std::cout << "statement starts with: " << current().text << "\n";
+            
+            definition.body.push_back(parseStatement());
+        }
+
+        expect(Token::Type::EndFunction);
 
         return definition;
 
@@ -744,14 +697,7 @@ namespace Novella::Syntax::NovellaScript{
     ModuleDefinition Parser::parseModuleDefinition(){
 
         ModuleDefinition definition{};
-
-        if(current().type == Token::Type::Export){
-
-            definition.exported = true;
-
-            consume();
-        }    
-
+    
         expect(Token::Type::Module);
         
         if(current().type == Token::Type::Identifier){
@@ -765,25 +711,29 @@ namespace Novella::Syntax::NovellaScript{
             throw std::runtime_error("Expected module name identifier at " + std::to_string(position) + " Token: " + current().text);
         }
 
-        expect(Token::Type::LBrace);
+        expect(Token::Type::Colon);
 
-        if(current().type == Token::Type::OnFirstLoad){
+        while(current().type != Token::Type::EndModule && current().type != Token::Type::EndOfFile){
 
-            consume();
+            switch(current().type){
 
-            expect(Token::Type::LParen);
+                case Token::Type::Var:
 
-            expect(Token::Type::RParen);
+                    definition.variables.push_back(parseVariable());
 
-            definition.firstLoad = parseBlock();
+                    break;
+
+                case Token::Type::Define:
+
+                    definition.functions.push_back(parseFunctionDefinition());
+
+                    break;
+
+                default: throw std::runtime_error("Expected 'var' or 'fn' inside module at " +std::to_string(position) + " Token: " + current().text);
+            }
         }
 
-        while(current().type != Token::Type::RBrace && current().type != Token::Type::EndOfFile){
-
-            definition.functions.push_back(parseFunctionDefinition());
-        }
-
-        expect(Token::Type::RBrace);
+        expect(Token::Type::EndModule);
 
         return definition;
 

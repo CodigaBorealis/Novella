@@ -4,7 +4,7 @@
 #include <nlohmann/json.hpp>
 #include "../Novella/Syntax/NovellaScript/Interpreter/ScriptLoader.hpp"
 #include <variant>
-
+#include <iostream>
 namespace Novella::Syntax::NovellaScript{
 
     void Interpreter::loadScript(const Scene::ScriptDefinition& definition){
@@ -27,23 +27,10 @@ namespace Novella::Syntax::NovellaScript{
         }
     }
 
-    void Interpreter::execOnce(const Script& script){
-
-        for(const auto& definition : script.definitions){
-
-            if(std::holds_alternative<ModuleDefinition>(definition)){
-
-                auto& execOnce = std::get<ModuleDefinition>(definition).firstLoad;
-
-                statementEvaluator.execute(execOnce);
-
-                break;
-            }
-        }
-    }
-
     void Interpreter::interpret(const Script& script){
         
+        std::cout << "REACHED INTERPRETER\n";
+
         statementEvaluator.execute(script);
     }
 

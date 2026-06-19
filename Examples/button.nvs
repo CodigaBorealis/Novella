@@ -3,101 +3,100 @@
 #Has a method or not, basically make it like a lego set
 #I should document all of this so you can just look it up
 
-import WINDOW as window; #import libraries from the engine itself
+import INPUT as input; #import libraries from the engine itself
 #import "/MyModule.nvs" as myModule;#import other scripts, must always start with / to refer to current directory
-#export is optional, not exporting a module forbids it from being included in other files
 
-export module ButtonTriggers{
+#Importing a file imports all of its modules by default like including a c header
+#So no privacy semantics because its not a class
 
-    #Do this once when the module is loaded and never execute it again(optional)
-    #Each module has their own
-    #Uncallable
-    #these variables go out of scope as soon as the function ends
-    exec_once(){
+module ButtonTriggers:
 
-        showMessage("PLEASE IM BEGGING YOU PRINT HELLO WORLD");
-    }
+    #No exec_once semantics because again this is not a class
 
-    define main(){
+    var count = 0;#No persistent or const modifiers for simplicity, Anything declared inside a module and outside a function becomes a module global
+
+    fn main():
 
         var button = getButton("button");
             
         var closeButton = getButton("close");
 
-        onClick(closeButton, "LEFT", closeGame());
+#Use internal handles instead of raw strings for engine constants, resolved by the interpreter on runtime
 
-        #"LEFT" is a constant used by the interpreter that can be resolved to either the button left or the key left depending on who calls it
+        onClick(closeButton, input.MOUSE.LEFT, closeGame());
 
-        #target, input, a single call to an internal function or a user-made function
-        onClick(button, "LEFT", modifyButton(1, button));
+        #In order to avoid ambiguity the API should be divided in modules, so INPUT contains both MOUSE and KEYBOARD, that way you can't confuse KEYBOARD.LEFT and MOUSE.LEFT 
 
-        onClick(button, "RIGHT", stopMusic());
+        #Event driven functions must always receive the caller, the input that executes it and the function to run when it happens
+        onClick(button, input.MOUSE.LEFT, modifyButton(1, button));
 
-        var singleCharacter = 'b';#even if c++ treats chars as 8 bit integers is better to keep them separated from actual numbers on the script for semantics
+        onClick(button, input.MOUSE.LEFT, stopMusic());
 
-        var values = [24, 24, 24 , 22, singleCharacter, "hello"];#handled internally as a std::tuple so no typing needed
-    }
+        var singleCharacter = "b";#Chars are just strings, it's simpler that way
 
-    define modifyButton(option, button){
+        var values = [24, 24, 24 , 22, singleCharacter, "hello"];#Internally the interpreter already uses std::variant to handle dynamic typing, so this is trivial
+    endFunction
+
+    fn modifyButton(option, button):
         
-        persistent var count = 0;
-
-        if(!isInteger(option)){#equivalent to doing !isInteger in c
+        #no defensive programming, the runtime handles errors by itself
+        if not option is 0 then #use not instead of ! for readability, use is instead of == for the same reason
 
             showError("Invalid parameter");
-        }
+        endIf
 
-        if(option == 0){#equivalent to doing option == 0 in c
+        if option is 0 then
 
             setColor(button, [255,255,255,255]);#validated in runtime
-        }
+
+        endIf
                 
-        if(option == 1){
+        if option is 1 then
 
             setPosition(button, [10, 24]);
-        }
+        endIf
 
-        if(option == 2){
+        if option is 2 then
 
             showMessage("Clicked" + toString(count));
-        }
+        endIf
 
-        if(count < 1){
+        if count < 1 then
 
             showMessage("First click!");
-        }
+        endIf
             
-        if(count > 10){
+        if count > 10 then
 
             showMessage("Has been clicked over 10 times!");
 
-        }else{
+        else
 
             showMessage("Has not been clicked over 10 times");
-        }
+        endIf
 
-        if(option >= 10){
+        if option >= 10 then
 
             showError("Invalid option " + toString(option));
-        }
+        endIf
 
-        count ++;
-    }
+        count ++;#support these operators because they are useful
+    endFunction
 
-}
+endModule
 
-export module Math{
+module Math:
 
-    define sum(a, b){
+    fn sum(a, b):
 
-        const additionalConstant = 10;
+        var additionalConstant = 10;
 
         return a + b + additionalConstant;
-    }
 
-}
+    endFunction
 
-#Could later be something like from "scripts/button.nvs" import 'ButtonTriggers' as triggers;
+endModule
+
 #As to how to run this, the interpreter can just run whatever functions it finds being called outside the modules on a while loop
 
 #ButtonTriggers.main(); 
@@ -107,16 +106,17 @@ export module Math{
 #reserved words:
 #var
 #module
-#func
+#fn
 #return
-#export
 #import
 #as
-#from
 #if
 #else
-#persistent
-#const
-#onFirstLoad
 #true
 #false
+#not
+#and
+#or
+#endFunction
+#endModule
+#endIf

@@ -3,12 +3,14 @@
 #include "../Novella/Syntax/NovellaScript/Definition.hpp"
 #include <variant>
 #include <vector>
-
+#include <iostream>
 namespace Novella::Syntax::NovellaScript{
 
     void StatementEvaluator::execute(const std::vector<Statement>& statements) const{
         
         for(const auto& statement : statements){
+
+            std::cout << "EXECUTING STATEMENTS\n";
 
             execute(statement);
         }
@@ -16,7 +18,11 @@ namespace Novella::Syntax::NovellaScript{
 
     void StatementEvaluator::execute(const Statement& statement) const{
         
+        std::cout << "REACHED EXECUTE BUT IS NOT A EXPRESSION STATEMENT\n";
+
         if(auto expressionStatement = std::get_if<ExpressionStatement>(&statement)){
+
+            std::cout << "EVALUATING\n";
 
             expressionEvaluator.evaluate(expressionStatement->expression);
         }
@@ -25,10 +31,22 @@ namespace Novella::Syntax::NovellaScript{
     void StatementEvaluator::execute(const Script& script) const{
         
         for(const auto& definition : script.definitions){
+            static int count = 0;
 
-            if(std::holds_alternative<FunctionDefinition>(definition)){
+            std::cout << "TOTAL DEFINITIONS: " << ++count << "\n";
+            if(std::holds_alternative<ModuleDefinition>(definition)){
+                
+                auto& module = std::get<ModuleDefinition>(definition);
 
-                execute(std::get<FunctionDefinition>(definition).body);
+                std::cout << "IS A MODULE\n";
+
+                static int thingsInside = 0;
+
+                for(const auto& function : module.functions){
+
+                    std::cout << "FUNCTIONS : " << ++thingsInside << "n";
+                  //  execute(function.body);
+                }
             }
         }
     }

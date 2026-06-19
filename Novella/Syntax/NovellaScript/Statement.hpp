@@ -29,9 +29,6 @@ namespace Novella::Syntax::NovellaScript{
 
     struct VariableStatement{
 
-        bool persistent;
-        bool constant;
-
         std::string name;
         Expression value;
     };  
