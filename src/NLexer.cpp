@@ -2,6 +2,7 @@
 #include "../Novella/Syntax/NovellaScript/Token.hpp"
 #include <stdexcept>
 #include <string>
+#include <string_view>
 
 namespace Novella::Syntax::NovellaScript{
 

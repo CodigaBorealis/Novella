@@ -1,7 +1,7 @@
 #pragma once
 #include "Audio/AudioSystem.hpp"
 #include "Layout/LayoutSystem.hpp"
-#include "Syntax/NovellaScript/Interpreter.hpp"
+#include "Syntax/NovellaScript/Interpreter/Interpreter.hpp"
 #include "Window/Window.hpp"
 #include "Rendering/Renderer.hpp"
 #include "Rendering/ResourceManager.hpp"

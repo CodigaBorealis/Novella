@@ -28,7 +28,7 @@ namespace Novella::Syntax::NovellaScript{
     class Lexer{
 
         public:
-
+        
         explicit Lexer(std::string_view source)
             :
             source(source)

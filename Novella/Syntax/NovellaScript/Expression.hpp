@@ -2,9 +2,14 @@
 #include "ScriptFwd.hpp"
 #include "Token.hpp"
 #include <memory>
+#include <variant>
 #include <vector>
 
 namespace Novella::Syntax::NovellaScript{
+
+    using PrimitiveValue = std::variant<std::monostate, std::string, double, bool, char>;
+
+    using UnderlyingValue = std::variant<PrimitiveValue, std::vector<PrimitiveValue>>;
 
     struct Value{
 
@@ -16,15 +21,10 @@ namespace Novella::Syntax::NovellaScript{
             Identifier,
             Array,
             Character
-        };
+        };  
 
         Type type;
-        std::string StringValue;
-        double numberValue;
-        bool boolValue;
-        char characterValue;
-
-        std::vector<Value> arrayValues;
+        UnderlyingValue underlyingValue;
     };
     
     struct LiteralExpression{

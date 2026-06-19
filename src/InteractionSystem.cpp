@@ -7,7 +7,7 @@
 #include <queue>
 #include <variant>
 #include "../Novella/Attribute/Object.hpp"
-#include "../Novella/Syntax/NovellaScript/Interpreter.hpp"
+#include "../Novella/Syntax/NovellaScript/Interpreter/Interpreter.hpp"
 
 namespace Novella::Input{
 

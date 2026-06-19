@@ -1,12 +1,15 @@
 #pragma once
-#include "Script.hpp"
+#include "../Script.hpp"
 #include <unordered_map>
 #include <variant>
 #include <vector>
-#include "Definition.hpp"//Don't remove this
-#include "../Scene/SceneDefinition.hpp"
-#include "../../Commands/CommandTable.hpp"
-#include "ScriptFwd.hpp"
+#include "../../Scene/SceneDefinition.hpp"
+#include "../../../Commands/CommandTable.hpp"
+#include "../ScriptFwd.hpp"
+#include "EventHandler.hpp"
+#include "ExpressionEvaluator.hpp"
+#include "ModuleResolver.hpp"
+#include "StatementExecutor.hpp"
 
 namespace Novella::Input::Keyboard{
 
@@ -38,15 +41,13 @@ namespace Novella::Syntax::NovellaScript{
 
         public:
         
-        using Event = std::variant<Input::KeyEvent, Input::ClickEvent>;
-
         using RunTimeValue = std::variant<std::monostate, double, bool, std::string, char, std::vector<Expression>>;
 
         Interpreter() = default;
 
         void loadScript(const Scene::ScriptDefinition& definition);
 
-        void interpretEvent(const Event& event);
+        void interpretEvent(const EventHandler::Event& event);
 
         void clear();
 
@@ -54,39 +55,27 @@ namespace Novella::Syntax::NovellaScript{
 
         private:
         
-        void callInternalCommand(const std::string& name, const std::string& target, const nlohmann::json& args);
+        ModuleResolver moduleResolver;
+        EventHandler eventHandler;
+        ExpressionEvaluator expressionEvaluator;
+        StatementExecutor statementEvaluator;
 
         RunTimeValue callFunction(const std::string& moduleName, const std::string& functionName, const std::vector<RunTimeValue>& args = {});
-
-        std::string convertButtonToString(Input::Mouse::Button button);
-        std::string convertKeyToString(Input::Keyboard::Key key);
 
         std::string getFunctionName(const Expression* answer);
         void executeStatements(const std::vector<Statement>& statements);
         void executeStatement(const Statement& statement);
 
-        RunTimeValue evaluateExpression(const Expression& expression);
+        void run();
+        void interpret(const Script& script);
+        void execOnce(const Script& script);
 
-        void resolveImports(Script& script);
-        void executeFirstLoad(Script& script);
-
-        void resolveModuleImport(const ModuleImportDefinition& module);
-        void resolveEngineImport(const EngineImportDefinition& engineModule);
-
-        void includeWindowModule();
-        void includeAudioModule();
-        void includeInputModule();
-        void includeSceneModule();
-        void includeAllModules();
-
-        ModuleDefinition getModule(const ModuleImportDefinition& import);
         std::vector<Script> scripts;
 
         std::unordered_map<std::string, ModuleDefinition> loadedModules;
         
         std::unordered_map<std::string, std::unordered_map<std::string, RunTimeValue>> persistentStorage;
         std::unordered_map<std::string, RunTimeValue> localScope;
-        std::unordered_map<std::string, std::vector<RuntimeBinding>> activeBindings;   
         
         Commands::CommandTable internalCommands;
     };

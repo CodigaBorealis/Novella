@@ -55,7 +55,10 @@ add_executable(Novella
     src/Parser.cpp
     src/NLexer.cpp
     src/NParser.cpp
+
     src/Interpreter.cpp
+    src/ScriptLoader.cpp
+    src/ModuleResolver.cpp
 
     src/Engine.cpp
     
