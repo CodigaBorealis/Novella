@@ -1,15 +1,13 @@
 #pragma once
 #include "../Script.hpp"
-#include <unordered_map>
 #include <variant>
 #include <vector>
 #include "../../Scene/SceneDefinition.hpp"
-#include "../../../Commands/CommandTable.hpp"
 #include "../ScriptFwd.hpp"
 #include "EventHandler.hpp"
-#include "ExpressionEvaluator.hpp"
 #include "ModuleResolver.hpp"
-#include "StatementExecutor.hpp"
+#include "RuntimeEnvironment.hpp"
+#include "StatementEvaluator.hpp"
 
 namespace Novella::Input::Keyboard{
 
@@ -43,7 +41,11 @@ namespace Novella::Syntax::NovellaScript{
         
         using RunTimeValue = std::variant<std::monostate, double, bool, std::string, char, std::vector<Expression>>;
 
-        Interpreter() = default;
+        Interpreter()
+            :
+            statementEvaluator(runtime),
+            runtime(statementEvaluator)
+            {}
 
         void loadScript(const Scene::ScriptDefinition& definition);
 
@@ -51,14 +53,12 @@ namespace Novella::Syntax::NovellaScript{
 
         void clear();
 
-        void runScripts();
-
         private:
         
+        RuntimeEnvironment runtime;
         ModuleResolver moduleResolver;
+        StatementEvaluator statementEvaluator;
         EventHandler eventHandler;
-        ExpressionEvaluator expressionEvaluator;
-        StatementExecutor statementEvaluator;
 
         RunTimeValue callFunction(const std::string& moduleName, const std::string& functionName, const std::vector<RunTimeValue>& args = {});
 
@@ -66,18 +66,8 @@ namespace Novella::Syntax::NovellaScript{
         void executeStatements(const std::vector<Statement>& statements);
         void executeStatement(const Statement& statement);
 
-        void run();
         void interpret(const Script& script);
         void execOnce(const Script& script);
-
-        std::vector<Script> scripts;
-
-        std::unordered_map<std::string, ModuleDefinition> loadedModules;
-        
-        std::unordered_map<std::string, std::unordered_map<std::string, RunTimeValue>> persistentStorage;
-        std::unordered_map<std::string, RunTimeValue> localScope;
-        
-        Commands::CommandTable internalCommands;
     };
 
 }

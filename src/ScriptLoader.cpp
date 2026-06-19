@@ -7,7 +7,9 @@ namespace Novella::Syntax::NovellaScript{
 
     Script ScriptLoader::load(const std::filesystem::path& source){
 
-        if(source.extension().string() != "nvs") throw std::runtime_error("'" + source.string() + "' is not a novellaScript file");
+        const std::string extension = source.extension().string();
+
+        if(extension != ".nvs") throw std::runtime_error("'" + source.string() + "' is not a novellaScript file");
 
         std::string scriptContents = IO::FileReader::getContentsFromFile(source);
 

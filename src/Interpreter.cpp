@@ -1,14 +1,9 @@
 #include "../Novella/Syntax/NovellaScript/Interpreter/Interpreter.hpp"
-#include "../Novella/Syntax/NovellaScript/Definition.hpp"
 #include "../Novella/Input/InteractionSystem.hpp"
 #include <optional>
-#include <stdexcept>
-#include <type_traits>
-#include <variant>
 #include <nlohmann/json.hpp>
 #include "../Novella/Syntax/NovellaScript/Interpreter/ScriptLoader.hpp"
-#include <iostream>
-#include <vector>
+#include <variant>
 
 namespace Novella::Syntax::NovellaScript{
 
@@ -16,50 +11,45 @@ namespace Novella::Syntax::NovellaScript{
 
         Script script = ScriptLoader::load(definition.path);
 
-        this->scripts.push_back(script);
+        moduleResolver.resolveImports(script);
+        
+        runtime.registerData(script);
 
         interpret(script);
 
-    }
-
-    void Interpreter::run(){
-
-        for(auto& script : scripts){
-
-            interpret(script);
-        }
     }
 
     void Interpreter::interpretEvent(const EventHandler::Event& event){
 
         if(auto expression = eventHandler.getExpressionFromEvent(event)){
 
-            expressionEvaluator.evaluate(expression.value());
+            //statementEvaluator.execute((expression.value()));
         }
     }
 
     void Interpreter::execOnce(const Script& script){
 
-        auto execOnce = statementEvaluator.evaluateExecOnce(script);
+        for(const auto& definition : script.definitions){
 
-        for(const auto& statement :  execOnce){
+            if(std::holds_alternative<ModuleDefinition>(definition)){
 
-            expressionEvaluator.evaluate(statement);
+                auto& execOnce = std::get<ModuleDefinition>(definition).firstLoad;
 
+                statementEvaluator.execute(execOnce);
+
+                break;
+            }
         }
     }
 
     void Interpreter::interpret(const Script& script){
-
-        auto body = statementEvaluator.evaluateDefinitions(script);
         
+        statementEvaluator.execute(script);
     }
 
     void Interpreter::clear(){
         
-        this->scripts.clear();        
-        this->persistentStorage.clear();
-        this->localScope.clear();
+        this->runtime.clear();
         this->eventHandler.clear();
     }
 

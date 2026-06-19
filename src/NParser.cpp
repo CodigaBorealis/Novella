@@ -265,7 +265,7 @@ namespace Novella::Syntax::NovellaScript{
             LiteralExpression expression{};
 
             expression.value.type = Value::Type::Number;
-            expression.value.value = value;
+            expression.value.underlyingValue = value;
 
             return expression;
         }
@@ -283,7 +283,7 @@ namespace Novella::Syntax::NovellaScript{
             LiteralExpression expression{};
 
             expression.value.type = Value::Type::Boolean;
-            expression.value.value = value;
+            expression.value.underlyingValue = value;
 
             return expression;
 
@@ -298,7 +298,7 @@ namespace Novella::Syntax::NovellaScript{
             LiteralExpression expresion{};
 
             expresion.value.type = Value::Type::String;
-            expresion.value.value = value;
+            expresion.value.underlyingValue = value;
 
             return expresion;
         }
@@ -337,7 +337,7 @@ namespace Novella::Syntax::NovellaScript{
             LiteralExpression expression{};
 
             expression.value.type = Value::Type::Character;
-            expression.value.value = c;
+            expression.value.underlyingValue = c;
 
             return expression;
         }

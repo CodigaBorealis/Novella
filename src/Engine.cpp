@@ -159,6 +159,5 @@ namespace Novella{
 
         if(!scene) return;
 
-        interpreter.runScripts();
     }
 }

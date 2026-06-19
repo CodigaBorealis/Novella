@@ -1,64 +1,49 @@
 #include "../Novella/Syntax/NovellaScript/Interpreter/ExpressionEvaluator.hpp"
+#include "../Novella/Syntax/NovellaScript/Interpreter/RuntimeEnvironment.hpp"
 #include <variant>
 #include <vector>
 
 namespace Novella::Syntax::NovellaScript{
 
-    std::vector<UnderlyingValue> ExpressionEvaluator::evaluateFunctionArguments(const std::vector<Expression>& arguments){
+    std::vector<UnderlyingValue> ExpressionEvaluator::evaluateFunctionArguments(const std::vector<Expression>& arguments) const{
 
-        std::vector<UnderlyingValue> runtimeValues{};
+        std::vector<UnderlyingValue> values{};
 
-        for(const auto& parameter : arguments){
+        values.reserve(arguments.size());
 
-            EvaluationResult evaluated = evaluate(parameter);
+        for(const auto& argument : arguments){
 
-            if(std::holds_alternative<UnderlyingValue>(evaluated)){
-
-                runtimeValues.push_back(std::get<UnderlyingValue>(evaluated));
-
-            }else if(std::holds_alternative<FunctionInvocation>(evaluated)){
-
-                auto& invocation = std::get<FunctionInvocation>(evaluated);
-
-                runtimeValues.push_back(evaluateReturnValue(invocation));
-            }
+            values.push_back(evaluate(argument));
         }
 
-        return runtimeValues;
+        return values;
     }
 
-    UnderlyingValue ExpressionEvaluator::evaluateReturnValue(const FunctionInvocation& invocation){
-
-
+    UnderlyingValue ExpressionEvaluator::evaluateVariable(const VariableExpression& variable) const{
+        
+        return runtime.getVariable(variable.name);
     }
 
-    UnderlyingValue ExpressionEvaluator::evaluateVariable(const VariableExpression& variable){
-        
-        
-    }
+    UnderlyingValue ExpressionEvaluator::evaluateFunctionCall(const FunctionCallExpression& call) const{
 
-    FunctionInvocation ExpressionEvaluator::evaluateFunctionCall(const Expression& expression){
-
-        auto& call = std::get<FunctionCallExpression>(expression);
-        
         auto args = evaluateFunctionArguments(call.arguments);
-        
-        return FunctionInvocation{call.functionName, std::move(args)};        
+
+        return runtime.invokeFunction(call.functionName, args);
     }
 
-    EvaluationResult ExpressionEvaluator::evaluate(const Expression& expression){
+    UnderlyingValue ExpressionEvaluator::evaluate(const Expression& expression) const{
 
-        if(std::holds_alternative<FunctionCallExpression>(expression)){
+        if(auto functionCall = std::get_if<FunctionCallExpression>(&expression)){
 
-            return evaluateFunctionCall(expression);
+            return evaluateFunctionCall(*functionCall);
 
-        }else if(std::holds_alternative<LiteralExpression>(expression)){
+        }else if(auto literal = std::get_if<LiteralExpression>(&expression)){
 
-            return std::get<LiteralExpression>(expression).value.underlyingValue;
+            return literal->value.underlyingValue;
 
-        }else if(std::holds_alternative<VariableExpression>(expression)){
+        }else if(auto variable = std::get_if<VariableExpression>(&expression)){
 
-            return evaluateVariable(std::get<VariableExpression>(expression));
+            return evaluateVariable(*variable);
         }
 
         return UnderlyingValue{PrimitiveValue{std::monostate{}}};

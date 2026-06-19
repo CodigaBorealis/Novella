@@ -2,32 +2,35 @@
 #include <vector>
 #include <string>
 #include "../Expression.hpp"
+#include "../Definition.hpp"
 
 namespace Novella::Syntax::NovellaScript{
 
-    struct FunctionInvocation{
-
-        std::string name;
-        std::vector<UnderlyingValue> arguments;
-    };
-
-    using EvaluationResult = std::variant<UnderlyingValue, FunctionInvocation>;
+    class RuntimeEnvironment;
 
     class ExpressionEvaluator{
 
         public:
 
-        EvaluationResult evaluate(const Expression& expression);
+        ExpressionEvaluator() = delete;
+
+        ExpressionEvaluator(RuntimeEnvironment& runtime)
+            :
+            runtime(runtime)
+            {}
+
+        UnderlyingValue evaluate(const Expression& expression) const;
 
         private:
 
-        std::vector<UnderlyingValue> evaluateFunctionArguments(const std::vector<Expression>& arguments);
+        RuntimeEnvironment& runtime;
 
-        FunctionInvocation evaluateFunctionCall(const Expression& expression);
-        UnderlyingValue evaluateReturnValue(const FunctionInvocation& invocation);
+        std::vector<UnderlyingValue> evaluateFunctionArguments(const std::vector<Expression>& arguments) const;
+
+        UnderlyingValue evaluateFunctionCall(const FunctionCallExpression& call) const;
         
-        UnderlyingValue evaluateVariable(const VariableExpression& variable);
-        UnderlyingValue evaluateLiteral(const LiteralExpression& literal);
+        UnderlyingValue evaluateVariable(const VariableExpression& variable) const;
+        UnderlyingValue evaluateLiteral(const LiteralExpression& literal) const;
     };
 
 }
