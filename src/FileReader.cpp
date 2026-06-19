@@ -21,4 +21,9 @@ namespace Novella::IO{
 
     }
 
+    bool FileReader::exists(const std::filesystem::path &file){
+
+        return std::filesystem::exists(file);
+    }
+
 }

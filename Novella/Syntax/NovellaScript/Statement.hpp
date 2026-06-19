@@ -34,12 +34,7 @@ namespace Novella::Syntax::NovellaScript{
 
         std::string name;
         Expression value;
-    };
-
-    struct FunctionCallStatement{
-
-        FunctionCallExpression call;
-    };    
+    };  
 
     struct ExpressionStatement{
 

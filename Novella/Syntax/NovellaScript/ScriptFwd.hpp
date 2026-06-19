@@ -24,12 +24,11 @@ namespace Novella::Syntax::NovellaScript{
     struct ReturnStatement;
     struct IfStatement;
     struct VariableStatement;
-    struct FunctionCallStatement;
     struct ExpressionStatement;
     struct AssignmentExpression;
 
     using Expression = std::variant<LiteralExpression, VariableExpression, FunctionCallExpression, UnaryExpression, BinaryExpression,
     AssignmentExpression, ArrayExpression, MemberExpression, IndexExpression, PostFixExpression>;
-    using Statement = std::variant<ReturnStatement, IfStatement, VariableStatement, FunctionCallStatement, ExpressionStatement>;
+    using Statement = std::variant<ReturnStatement, IfStatement, VariableStatement, ExpressionStatement>;
     using Definition = std::variant<ModuleImportDefinition, EngineImportDefinition, ModuleDefinition, FunctionDefinition>;
 }

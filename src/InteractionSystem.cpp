@@ -52,13 +52,13 @@ namespace Novella::Input{
         }
     }
 
-    void InteractionSystem::handleInteractions(CommandContext& context){
+    void InteractionSystem::handleInteractions(){
 
         while(!eventQueue.empty()){
 
             auto event = std::move(eventQueue.front());
 
-            this->interpreter.interpretEvent(event, context);
+            this->interpreter.interpretEvent(event);
 
             eventQueue.pop();
         }

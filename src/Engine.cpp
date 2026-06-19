@@ -1,6 +1,5 @@
 #include "../Novella/Engine.hpp"
 #include "../Novella/Input/InputSystem.hpp"
-#include "../Novella/Commands/CommandContext.hpp"
 
 #include <exception>
 namespace Novella{
@@ -51,7 +50,8 @@ namespace Novella{
             handleAudio(sceneManager.getCurrentScene());
             computeLayout(sceneManager.getCurrentScene());
             handleInput(sceneManager.getCurrentScene());
-            handleRendering(sceneManager.getCurrentScene());         
+            handleRendering(sceneManager.getCurrentScene());     
+            handleScripting(sceneManager.getCurrentScene());    
                  
         }
     }
@@ -121,9 +121,7 @@ namespace Novella{
 
             interactionSystem.handleMouseInput(*currentScene, virtualMouse);
 
-            CommandContext context{currentScene, &audioSystem, &windowRenderer, &displayWindow};
-
-            interactionSystem.handleInteractions(context);
+            interactionSystem.handleInteractions();
         }
 
         void Engine::handleRendering(Scene* currentScene){
@@ -161,5 +159,6 @@ namespace Novella{
 
         if(!scene) return;
 
+        interpreter.runScripts();
     }
 }

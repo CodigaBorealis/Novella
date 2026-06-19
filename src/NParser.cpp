@@ -37,16 +37,17 @@ namespace Novella::Syntax::NovellaScript{
 
     void Parser::consume(){
 
-
-        std::system("clear");
-
         static std::string parsed;
 
-        parsed += current().text;
-
-        std::cout << "PARSED UP TO THIS POINT:\n" << parsed << "\n";
+        parsed += current().text + "\n";
         
         if(position < tokens.size() - 1) ++ position;
+
+        if(position == tokens.size() - 1){
+
+            std::cout << "PARSED TOKENS:\n" << parsed << "\n";
+
+        }
     }
 
     void Parser::expect(Token::Type type){

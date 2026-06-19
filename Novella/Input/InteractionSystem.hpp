@@ -50,7 +50,7 @@ namespace Novella::Input{
 
         void handleKeyboardInput(Scene& scene);
         void handleMouseInput(Scene& scene, const Math::Vector2f& mousePosition);
-        void handleInteractions(CommandContext& context);
+        void handleInteractions();
 
         void popEvents();
 

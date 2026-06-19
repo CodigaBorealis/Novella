@@ -17,7 +17,7 @@ namespace Novella::Commands{
 
         public:
 
-        void execute(const std::string& name, const std::string& target, CommandContext& context, const nlohmann::json& args);
+        void execute(const std::string& name, const std::string& target, const nlohmann::json& args);
 
         private:
 

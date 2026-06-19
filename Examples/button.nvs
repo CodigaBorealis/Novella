@@ -15,7 +15,7 @@ export module ButtonTriggers{
     #these variables go out of scope as soon as the function ends
     exec_once(){
 
-        showMessage("HELLO WORLD");
+        showMessage("PLEASE IM BEGGING YOU PRINT HELLO WORLD");
     }
 
     define main(){

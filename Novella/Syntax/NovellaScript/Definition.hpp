@@ -1,5 +1,6 @@
 #pragma once
 #include "ScriptFwd.hpp"
+#include <vector>
 
 namespace Novella::Syntax::NovellaScript {
     
@@ -18,8 +19,11 @@ namespace Novella::Syntax::NovellaScript {
             Window,
             Audio,
             Input,
-            Scene
+            Scene,
+            Novella
         };
+
+        Handle include;
     };
 
     struct FunctionDefinition{

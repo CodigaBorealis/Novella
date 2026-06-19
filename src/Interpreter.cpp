@@ -1,6 +1,7 @@
 #include "../Novella/Syntax/NovellaScript/Interpreter.hpp"
 #include "../Novella/Syntax/NovellaScript/Definition.hpp"
 #include "../Novella/Input/InteractionSystem.hpp"
+#include <stdexcept>
 #include <type_traits>
 #include <variant>
 #include <nlohmann/json.hpp>
@@ -8,6 +9,7 @@
 #include "../Novella/Syntax/NovellaScript/Lexer.hpp"
 #include "../Novella/Syntax/NovellaScript/Parser.hpp"
 #include <iostream>
+#include <vector>
 namespace Novella::Syntax::NovellaScript{
 
     void Interpreter::loadScript(const Scene::ScriptDefinition& definition){
@@ -19,7 +21,18 @@ namespace Novella::Syntax::NovellaScript{
 
         Parser parser(lexer);
         
-        this->scripts.push_back(parser.parse());
+        Script script = parser.parse();
+
+        resolveImports(script);
+
+        this->scripts.push_back(script);
+
+        executeFirstLoad(script);
+
+    }
+
+    void Interpreter::runScripts(){
+
     }
 
     std::string Interpreter::convertButtonToString(Input::Mouse::Button button){
@@ -100,7 +113,7 @@ namespace Novella::Syntax::NovellaScript{
         }
     }
 
-    void Interpreter::interpretEvent(const Event& event, CommandContext& context){
+    void Interpreter::interpretEvent(const Event& event){
 
         std::visit([&](auto&& e){
 
@@ -121,7 +134,7 @@ namespace Novella::Syntax::NovellaScript{
 
                 if(binding.triggerName == inputString){
 
-                    evaluateExpression(*binding.callbackAction, context);
+                    evaluateExpression(*binding.callbackAction);
                 }
             }
         }, event);
@@ -134,7 +147,22 @@ namespace Novella::Syntax::NovellaScript{
     
     void Interpreter::executeStatement(const Statement& statement){
 
+        if(std::holds_alternative<ExpressionStatement>(statement)){
 
+             auto& stmt = std::get<ExpressionStatement>(statement);
+
+             std::cout << "HOLDS AN EXPRESSION STATEMENT\n";
+
+                evaluateExpression(stmt.expression);
+        }
+    }
+
+    void Interpreter::executeStatements(const std::vector<Statement>& statements){
+
+        for(const auto& statement : statements){
+
+            executeStatement(statement);
+        }
     }
 
     std::string Interpreter::getFunctionName(const Expression* answer){
@@ -144,32 +172,39 @@ namespace Novella::Syntax::NovellaScript{
         return std::string{};
     }
     
-    Interpreter::RunTimeValue Interpreter::evaluateExpression(const Expression& expression, CommandContext& context){
+    Interpreter::RunTimeValue Interpreter::evaluateExpression(const Expression& expression){
 
         if(std::holds_alternative<FunctionCallExpression>(expression)){
+            
+            auto& call = std::get<FunctionCallExpression>(expression);
+            
+            if(std::holds_alternative<VariableExpression>(*call.answer)){
 
-            auto call = std::get<FunctionCallExpression>(expression);
+                auto& function = std::get<VariableExpression>(*call.answer);
 
-            if(call.functionName == "onClick"){
+                std::cout << "CALL FOR FUNCTION: " << function.name << "\n";
 
-                std::string targetID = std::get<VariableExpression>(call.arguments[0]).name;
-                std::string triggerInput = std::get<LiteralExpression>(call.arguments[1]).value.StringValue;
+                if(function.name == "onClick"){
 
-                auto callbackNode = std::make_shared<FunctionCallExpression>(std::get<FunctionCallExpression>(call.arguments[2]));
+                    std::string targetID = std::get<VariableExpression>(call.arguments[0]).name;
+                    std::string triggerInput = std::get<LiteralExpression>(call.arguments[1]).value.StringValue;
 
-                activeBindings[targetID].push_back(RuntimeBinding{triggerInput, callbackNode});
+                    auto callbackNode = std::make_shared<FunctionCallExpression>(std::get<FunctionCallExpression>(call.arguments[2]));
 
-                return RunTimeValue{};
+                    activeBindings[targetID].push_back(RuntimeBinding{triggerInput, callbackNode});
 
-            }
+                    return RunTimeValue{};
 
-            if(call.functionName == "showMessage"){
+                }
 
-                if(!call.arguments.empty() && std::holds_alternative<LiteralExpression>(call.arguments[0])){
+                if(function.name == "showMessage"){
 
-                    auto& message = std::get<LiteralExpression>(call.arguments[0]).value.StringValue;
+                    if(!call.arguments.empty() && std::holds_alternative<LiteralExpression>(call.arguments[0])){
 
-                    internalCommands.execute(Alias::ShowMessage, "self", context, {{"message", message}});
+                        auto& message = std::get<LiteralExpression>(call.arguments[0]).value.StringValue;
+
+                        internalCommands.execute(Alias::ShowMessage, "self", {{"message", message}});
+                    }
                 }
             }
         }
@@ -177,14 +212,100 @@ namespace Novella::Syntax::NovellaScript{
         return RunTimeValue{};
     }
 
-    void Interpreter::resolveImports(){
+    ModuleDefinition Interpreter::getModule(const ModuleImportDefinition& moduleImport){
 
+        ModuleDefinition moduleDefinition{};
+
+        return moduleDefinition;
+    }
+
+    void Interpreter::resolveModuleImport(const ModuleImportDefinition& module){
+
+        std::filesystem::path src = module.source;
+
+        //if(!IO::FileReader::exists(src)) throw std::runtime_error("Could not find module '" + module.alias + "' at the provided path '" + module.source + "'");
+
+        //loadedModules[module.importedName] = getModule(module);
+    }
+
+    void Interpreter::resolveEngineImport(const EngineImportDefinition& engineModule){
+
+        switch(engineModule.include){
+
+            case EngineImportDefinition::Handle::Window:
+
+                includeWindowModule();
+
+                break;
+
+            case EngineImportDefinition::Handle::Audio: 
+            
+                includeAudioModule();
+
+                break;
+
+            case EngineImportDefinition::Handle::Input: 
+            
+                includeInputModule();
+
+                break;
+
+            case EngineImportDefinition::Handle::Scene: 
+            
+                includeSceneModule();
+
+                break;
+
+            case EngineImportDefinition::Handle::Novella: 
+            
+                includeAllModules();
+
+                break;
+
+
+            //Include the individual free functions of each .hpp module
+        }
+    }
+
+    
+    void Interpreter::resolveImports(Script& script){
+
+        for(const auto& definition : script.definitions){
+
+            if(std::holds_alternative<ModuleImportDefinition>(definition)){
+
+                auto& moduleImport = std::get<ModuleImportDefinition>(definition);
+
+                resolveModuleImport(moduleImport);
+
+            }else if(std::holds_alternative<EngineImportDefinition>(definition)){
+
+                auto& engineImport = std::get<EngineImportDefinition>(definition);
+
+                resolveEngineImport(engineImport);
+            }
+        }
 
     }
 
-    void Interpreter::callInternalCommand(const std::string& name, const std::string& target, CommandContext& context, const nlohmann::json& args){
+    void Interpreter::executeFirstLoad(Script& script){
 
-        internalCommands.execute(name, target, context, args);
+        for(const auto& definition : script.definitions){
+
+            if(std::holds_alternative<ModuleDefinition>(definition)){
+
+                auto& module = std::get<ModuleDefinition>(definition);
+
+                    executeStatements(module.firstLoad);
+
+                    std::cout << "EXECUTED FIRST LOAD FOR MODULE: " << module.name << "\n";
+                }
+            }
+    }
+
+    void Interpreter::callInternalCommand(const std::string& name, const std::string& target, const nlohmann::json& args){
+
+        //internalCommands.execute(name, target, context, args);
     }
 
     void Interpreter::clear(){
@@ -194,4 +315,30 @@ namespace Novella::Syntax::NovellaScript{
         this->localScope.clear();
         this->activeBindings.clear();
     }
+
+    void Interpreter::includeWindowModule(){
+    
+        
+    }
+
+    void Interpreter::includeAudioModule(){
+    
+        
+    }
+
+    void Interpreter::includeInputModule(){
+    
+        
+    }
+
+    void Interpreter::includeSceneModule(){
+    
+        
+    }
+
+    void Interpreter::includeAllModules(){
+    
+        
+    }
+
 }
