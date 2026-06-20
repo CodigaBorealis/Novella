@@ -1,5 +1,6 @@
 #pragma once
 #include "Audio/AudioSystem.hpp"
+#include "Debug/Logger.hpp"
 #include "Layout/LayoutSystem.hpp"
 #include "Syntax/NovellaScript/Interpreter/Interpreter.hpp"
 #include "Window/Window.hpp"
@@ -49,6 +50,7 @@ namespace Novella{
         LayoutSystem& layout();
         Input::InteractionSystem& input();
         Syntax::NovellaScript::Interpreter& script();
+        Debug::Logger& logger();
 
         private:
 
@@ -69,6 +71,7 @@ namespace Novella{
         LayoutSystem layoutSystem;
         Syntax::NovellaScript::Interpreter interpreter;
         Input::InteractionSystem interactionSystem;
+        Debug::Logger lg;
     };
 
 }

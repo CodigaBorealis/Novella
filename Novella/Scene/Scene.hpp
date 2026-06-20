@@ -43,6 +43,7 @@ namespace Novella{
         }
 
         //For recovering the specific implementation of the object
+        /*Was useful when things were made procedurally
         template<typename T>
 
         T* getObjectAs(const std::string& id){
@@ -53,12 +54,14 @@ namespace Novella{
 
             return dynamic_cast<T*>(base);
         }
-
+*/
         void addObject(std::unique_ptr<Attribute::Object> obj);
         void removeObject(uint64_t id);
 
-        Attribute::Object* findObjectByID(const std::string& id);
-        Attribute::Object* findObjectByID(const std::string& id) const;
+        uint64_t getObjectHandle(const std::string& name) const;
+
+        Attribute::Object* getObject(uint64_t handle);
+        Attribute::Object* getObject(uint64_t handle) const;
 
         const std::vector<std::unique_ptr<Attribute::Object>>& objects() const;
 

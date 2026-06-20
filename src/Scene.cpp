@@ -50,24 +50,33 @@ namespace Novella{
         return objs;
     }
 
-    Attribute::Object* Scene::findObjectByID(const std::string& id){
+    Attribute::Object* Scene::getObject(uint64_t handle){
 
-            auto it = names.find(id);
+            auto it = objectRegistry.find(handle);
 
-            if(it == names.end()) throw std::runtime_error("There is no object with this id '" + id + "'");
+            if(it == objectRegistry.end()) return nullptr;
             
-            return objectRegistry.at(it->second);
-        }
-
-    Attribute::Object* Scene::findObjectByID(const std::string& id) const{
-
-           auto it = names.find(id);
-
-            if(it == names.end()) throw std::runtime_error("There is no object with this id '" + id + "'");
-            
-            return objectRegistry.at(it->second);
+            return it->second;
     }
-    
+
+    Attribute::Object* Scene::getObject(uint64_t handle) const{
+
+            auto it = objectRegistry.find(handle);
+
+            if(it == objectRegistry.end()) return nullptr;
+            
+            return it->second;
+    }
+
+    uint64_t Scene::getObjectHandle(const std::string& name) const{
+
+        auto it = names.find(name);
+        
+        if(it == names.end()) return 0;
+        
+        return it->second;
+    }
+
     void Scene::clearDirtyFlag(){
 
         this->dirty = false;

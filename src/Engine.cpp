@@ -160,4 +160,9 @@ namespace Novella{
         if(!scene) return;
 
     }
+
+    Debug::Logger& Engine::logger(){
+
+        return lg;
+    }
 }

@@ -17,7 +17,6 @@ namespace Novella{
     void SceneManager::swapScene(std::unique_ptr<Scene> scene){
 
         currentScene = std::move(scene);
-
     }
 
     Scene* SceneManager::getCurrentScene(){
