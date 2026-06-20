@@ -26,7 +26,6 @@ namespace Novella::Syntax::NovellaScript{
             Define,
             Return,
             From,
-            As,
 
             Assign,
             Equals,

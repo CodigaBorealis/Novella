@@ -14,12 +14,9 @@ namespace Novella::Components{
 
         Button() = delete;
 
-        Button(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
+        Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
 
-        Button(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
-
-        const std::string& getID() const override;
-        void setID(const std::string& id) override;
+        Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
 
         const std::string& getType() const override;
             

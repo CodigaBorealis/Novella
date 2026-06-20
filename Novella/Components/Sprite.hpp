@@ -15,11 +15,8 @@ namespace Novella::Components{
 
             Sprite() = delete;
 
-            Sprite(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
-            Sprite(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
-            
-            const std::string& getID() const override;
-            void setID(const std::string& id) override;
+            Sprite(std::shared_ptr<Graphics::Texture> texture, const Layout& layout);
+            Sprite(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer);
 
             void draw(Rendering::Renderer& renderer) override;
 

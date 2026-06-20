@@ -16,8 +16,8 @@ namespace Novella::Components{
 
         Label() = delete;
 
-        Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout);
-        Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer);
+        Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout);
+        Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer);
         
         void draw(Rendering::Renderer& renderer) override;
 
@@ -34,9 +34,6 @@ namespace Novella::Components{
         float getSpacing() const;
 
         bool contains(const Math::Vector2f& mousePos) const override;
-
-        const std::string& getID() const override;
-        void setID(const std::string& id) override;
 
         const std::string& getType() const override;
 

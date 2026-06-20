@@ -1,31 +1,39 @@
 #include "../Novella/Scene/Scene.hpp"
 #include "../Novella/Attribute/Object.hpp"
-#include <algorithm>
+#include <cstdint>
+#include <memory>
+#include <stdexcept>
 #include <string>
 
 namespace Novella{
 
     void Scene::addObject(std::unique_ptr<Attribute::Object> obj){
 
-            std::string id = obj->getID();
+        uint64_t id = ++currentID;
 
-            if(objectRegistry.contains(id)) throw std::runtime_error("Scene::addObject: An object with this id already exists in the scene: " + id);
+        obj->setHandle(id);
 
-            objectRegistry[id] = obj.get();
+        objectRegistry[id] = obj.get();
 
-            objs.push_back(std::move(obj));
+        objs.push_back(std::move(obj));
 
-            this->dirty = true;
+        this->dirty = true;
     
         }
     
-    void Scene::removeObject(const std::string& id){
+    void Scene::removeObject(uint64_t id){
 
+        auto it = objectRegistry.find(id);
+
+        if(it == objectRegistry.end()) throw std::runtime_error("There is no object with this id: '" + std::to_string(id) + "'");
+
+        auto target = it->second;
+        
         objectRegistry.erase(id);
 
-        std::erase_if(objs, [&](const auto& obj){
+        std::erase_if(objs,[target](const auto& pointer){
 
-            return obj->getID() == id;
+            return pointer.get() == target;
         });
 
         this->dirty = true;
@@ -44,38 +52,20 @@ namespace Novella{
 
     Attribute::Object* Scene::findObjectByID(const std::string& id){
 
-            auto it = objectRegistry.find(id);
+            auto it = names.find(id);
 
-            if(it == objectRegistry.end()) return nullptr;
+            if(it == names.end()) throw std::runtime_error("There is no object with this id '" + id + "'");
             
-            return it->second;
+            return objectRegistry.at(it->second);
         }
 
     Attribute::Object* Scene::findObjectByID(const std::string& id) const{
 
-        auto it = std::find_if(objs.begin(), objs.end(), [&](const auto& obj){
+           auto it = names.find(id);
 
-            return obj->getID() == id;
-        });
-
-        if(it == objs.end()) return nullptr;
+            if(it == names.end()) throw std::runtime_error("There is no object with this id '" + id + "'");
             
-        return it->get();
-    }
-
-    bool Scene::hasBgm() const{
-
-        return this->bgm != std::nullopt;
-    }
-        
-    const std::optional<std::string>& Scene::getBgm() const{
-
-        return bgm;
-    }
-
-    void Scene::setBgm(const std::string& id){
-
-        this->bgm = id;
+            return objectRegistry.at(it->second);
     }
     
     void Scene::clearDirtyFlag(){

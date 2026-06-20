@@ -30,8 +30,6 @@ namespace Novella::SceneLoader{
 
             engine.scene().addObject<Components::Sprite>(
 
-            definition.objectName,
-
             engine.resources().getTexture(texture),
 
             constructedLayout,
@@ -61,8 +59,6 @@ namespace Novella::SceneLoader{
         int renderLayer = getInt(*rlayer);
 
         engine.scene().addObject<Components::Button>(
-
-            definition.objectName,
 
             engine.resources().getTexture(texture),
 
@@ -104,8 +100,6 @@ namespace Novella::SceneLoader{
         int renderLayer = getInt(*rlayer);
 
         engine.scene().addObject<Components::Label>(
-
-            definition.objectName,
 
             engine.resources().getFont(font),
             

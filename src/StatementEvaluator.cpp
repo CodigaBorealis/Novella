@@ -24,7 +24,7 @@ namespace Novella::Syntax::NovellaScript{
 
             std::cout << "EVALUATING\n";
 
-            expressionEvaluator.evaluate(expressionStatement->expression);
+            //expressionEvaluator.evaluate(expressionStatement->expression);
         }
     }
 
@@ -45,7 +45,7 @@ namespace Novella::Syntax::NovellaScript{
                 for(const auto& function : module.functions){
 
                     std::cout << "FUNCTIONS : " << ++thingsInside << "n";
-                  //  execute(function.body);
+                    execute(function.body);
                 }
             }
         }

@@ -1,5 +1,6 @@
 #pragma once
 #include <concepts>
+#include <cstdint>
 #include <stdexcept>
 #include <type_traits>
 #include <memory>
@@ -30,13 +31,9 @@ namespace Novella{
 
             auto obj = std::make_unique<T>(std::forward<Args>(args)...);
 
-            const std::string& id = obj->getID();
-
-            if(objectRegistry.contains(id)) throw std::runtime_error("Scene::createObject: id already exists: " + id);
-
             T& ref = *obj;
             
-            objectRegistry.emplace(id, obj.get());
+            objectRegistry.emplace(++ currentID, obj.get());
 
             objs.push_back(std::move(obj));
 
@@ -58,7 +55,7 @@ namespace Novella{
         }
 
         void addObject(std::unique_ptr<Attribute::Object> obj);
-        void removeObject(const std::string& id);
+        void removeObject(uint64_t id);
 
         Attribute::Object* findObjectByID(const std::string& id);
         Attribute::Object* findObjectByID(const std::string& id) const;
@@ -66,9 +63,7 @@ namespace Novella{
         const std::vector<std::unique_ptr<Attribute::Object>>& objects() const;
 
         std::vector<std::unique_ptr<Attribute::Object>>& objects();
-
         
-        bool hasBgm() const;
         const std::optional<std::string>& getBgm() const;
         void setBgm(const std::string&);
 
@@ -81,9 +76,11 @@ namespace Novella{
 
         bool dirty = false;
 
+        uint64_t currentID = 0;
+
         std::vector<std::unique_ptr<Attribute::Object>> objs;//For drawing
-        std::unordered_map<std::string, Attribute::Object*> objectRegistry;//This could be a vector but i dont want to deal with invalid indexes right now
-        std::optional<std::string> bgm;//What audio should start playing after creating the scene
+        std::unordered_map<uint64_t, Attribute::Object*> objectRegistry;//This could be a vector but i dont want to deal with invalid indexes right now
+        std::unordered_map<std::string, uint64_t> names;//What the scripting language touches
 
 };
 }

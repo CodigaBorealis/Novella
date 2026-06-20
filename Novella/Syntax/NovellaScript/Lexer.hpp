@@ -11,7 +11,6 @@ namespace Novella::Syntax::NovellaScript{
         {"if", Token::Type::If},
         {"else", Token::Type::Else},
         {"var", Token::Type::Var},
-        {"as", Token::Type::As},
         {"fn", Token::Type::Define},
         {"return", Token::Type::Return},
         {"module", Token::Type::Module},

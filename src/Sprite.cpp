@@ -5,30 +5,20 @@
 
 namespace Novella::Components{
 
-        Sprite::Sprite(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
+        Sprite::Sprite(std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
             :
-            Attribute::Object(id, Type::Sprite),
+            Attribute::Object(Type::Sprite),
             texture(texture),
             Attribute::Layoutable(layout)
             {}
 
-        Sprite::Sprite(const std::string& id, std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
+        Sprite::Sprite(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
             :
-            Attribute::Object(id, Type::Sprite),
+            Attribute::Object(Type::Sprite),
             texture(texture),
             Attribute::Layoutable(layout),
             rLayer(renderLayer)
             {}
-            
-        const std::string& Sprite::getID() const{
-
-            return this->id;
-        }
-
-        void Sprite::setID(const std::string& id){
-
-        this->id = id;
-        }
 
         void Sprite::draw(Rendering::Renderer& renderer){
 

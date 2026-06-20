@@ -18,11 +18,6 @@ namespace Novella{
 
         currentScene = std::move(scene);
 
-        if(currentScene->hasBgm()){
-
-            audioSystem.play(currentScene->getBgm().value());
-        }
-
     }
 
     Scene* SceneManager::getCurrentScene(){

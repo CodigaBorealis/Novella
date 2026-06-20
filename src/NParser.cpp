@@ -623,20 +623,9 @@ namespace Novella::Syntax::NovellaScript{
 
         consume();
 
-        expect(Token::Type::As);
-
-        if(current().type != Token::Type::Identifier){
-
-            throw std::runtime_error("Expected identifier alias at " + std::to_string(position) + " Token: " + current().text);
-        }
-
-        std::string alias = current().text;
-
-        consume();
-
         expect(Token::Type::SemiColon);
 
-        return ModuleImportDefinition{pathOrModule, alias};
+        return ModuleImportDefinition{pathOrModule};
     }
 
     FunctionDefinition Parser::parseFunctionDefinition(){

@@ -26,7 +26,7 @@ namespace Novella::Input{
 
             if(const auto* Interactable = dynamic_cast<Attribute::Interactable*>(obj.get())){
 
-                eventQueue.push(Novella::Input::KeyEvent{obj->getID(), *pressed});
+                eventQueue.push(Novella::Input::KeyEvent{"", *pressed});
 
             }
         }
@@ -46,7 +46,7 @@ namespace Novella::Input{
 
                 if(!clickable->contains(mousePosition)) continue;
 
-                eventQueue.push(Novella::Input::ClickEvent{obj->getID(), *pressed, mousePosition});
+                eventQueue.push(Novella::Input::ClickEvent{"",*pressed, mousePosition});
 
             }
         }

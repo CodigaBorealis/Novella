@@ -6,18 +6,18 @@
 
 namespace Novella::Components{
 
-    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout)
+    Label::Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout)
         :
-        Attribute::Object(id, Type::Label),
+        Attribute::Object(Type::Label),
         font(font),
         Attribute::Layoutable(layout),
         size(size),
         text(text)
         {}
 //I'm stupid
-    Label::Label(const std::string& id, std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer)
+    Label::Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer)
         :
-        Attribute::Object(id, Type::Label),
+        Attribute::Object(Type::Label),
         font(font),
         Attribute::Layoutable(layout),
         size(size),
@@ -81,16 +81,6 @@ namespace Novella::Components{
                mousePos.y >= computedRectangle.y && mousePos.y <= computedRectangle.y + size.y;
 
     };
-
-    const std::string& Label::getID() const{
-
-        return this->id;
-    };
-
-    void Label::setID(const std::string& id){
-
-        this->id = id;
-    }
 
     const std::string& Label::getType() const{
 

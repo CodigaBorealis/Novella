@@ -8,8 +8,6 @@ namespace Novella::Syntax::NovellaScript {
 
         std::string source;
         std::string importedName;
-        std::string alias;
-
     };
 
     struct EngineImportDefinition{

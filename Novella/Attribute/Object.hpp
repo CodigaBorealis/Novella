@@ -1,28 +1,34 @@
 #pragma once
 #include <string>
-
+#include <cstdint>
 namespace Novella::Attribute{
 
     struct Object{
         
         Object() = delete;
 
-        explicit Object(const std::string& id, const std::string& type)
+        explicit Object(const std::string& type)
             :
-            id(id),
             type(type)
             {}
 
         virtual ~Object() = default;
-        
-        virtual const std::string&  getID() const = 0;
-        
-        virtual void setID(const std::string& id) = 0;
 
         virtual const std::string& getType() const = 0;
         
+        const uint64_t getHandle(){
+
+            return handle;
+        }
+
+        void setHandle(uint64_t id){
+
+            this->handle = id;
+        }
+
+        uint64_t handle = 0;
+
         std::string type;
-        std::string id;
     };
 
 }

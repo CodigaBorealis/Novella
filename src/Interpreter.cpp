@@ -28,7 +28,7 @@ namespace Novella::Syntax::NovellaScript{
     }
 
     void Interpreter::interpret(const Script& script){
-        
+         
         std::cout << "REACHED INTERPRETER\n";
 
         statementEvaluator.execute(script);
