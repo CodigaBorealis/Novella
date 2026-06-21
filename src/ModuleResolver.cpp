@@ -1,28 +1,28 @@
-#include "../Novella/Syntax/NovellaScript/Interpreter/ModuleResolver.hpp"
-#include "../Novella/Syntax/NovellaScript/Script.hpp"
+#include "../Novella/Scripting/Interpreter/ModuleResolver.hpp"
+#include "../Novella/Scripting/Parser/Script.hpp"
 
-namespace Novella::Syntax::NovellaScript{
+namespace Novella::NScript::Runtime{
 
-    void ModuleResolver::resolveImports(Script& script){
+    void ModuleResolver::resolveImports(Parser::Script& script){
 
         for(const auto& definition : script.definitions){
 
-            if(std::holds_alternative<ModuleImportDefinition>(definition)){
+            if(std::holds_alternative<Parser::ModuleImportDefinition>(definition)){
 
-                auto& moduleImport = std::get<ModuleImportDefinition>(definition);
+                auto& moduleImport = std::get<Parser::ModuleImportDefinition>(definition);
 
                 resolveModuleImport(moduleImport);
 
-            }else if(std::holds_alternative<EngineImportDefinition>(definition)){
+            }else if(std::holds_alternative<Parser::EngineImportDefinition>(definition)){
 
-                auto& engineImport = std::get<EngineImportDefinition>(definition);
+                auto& engineImport = std::get<Parser::EngineImportDefinition>(definition);
 
                 resolveEngineImport(engineImport);
             }
         }
     }
 
-    void ModuleResolver::resolveModuleImport(const ModuleImportDefinition& module){
+    void ModuleResolver::resolveModuleImport(const Parser::ModuleImportDefinition& module){
 
         std::string src = module.source;
 
@@ -32,35 +32,35 @@ namespace Novella::Syntax::NovellaScript{
 
     }
 
-    void ModuleResolver::resolveEngineImport(const EngineImportDefinition& engineModule){
+    void ModuleResolver::resolveEngineImport(const Parser::EngineImportDefinition& engineModule){
 
         switch(engineModule.include){
 
-            case EngineImportDefinition::Handle::Window:
+            case Parser::EngineImportDefinition::Handle::Window:
 
                 includeWindowModule();
 
                 break;
 
-            case EngineImportDefinition::Handle::Audio: 
+            case Parser::EngineImportDefinition::Handle::Audio: 
             
                 includeAudioModule();
 
                 break;
 
-            case EngineImportDefinition::Handle::Input: 
+            case Parser::EngineImportDefinition::Handle::Input: 
             
                 includeInputModule();
 
                 break;
 
-            case EngineImportDefinition::Handle::Scene: 
+            case Parser::EngineImportDefinition::Handle::Scene: 
             
                 includeSceneModule();
 
                 break;
 
-            case EngineImportDefinition::Handle::Novella: 
+            case Parser::EngineImportDefinition::Handle::Novella: 
             
                 includeAllModules();
 

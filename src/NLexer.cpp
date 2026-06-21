@@ -1,10 +1,10 @@
-#include "../Novella/Syntax/NovellaScript/Lexer.hpp"
-#include "../Novella/Syntax/NovellaScript/Token.hpp"
+#include "../Novella/Scripting/Parser/Lexer.hpp"
+#include "../Novella/Scripting/Parser/Token.hpp"
 #include <stdexcept>
 #include <string>
 #include <string_view>
 
-namespace Novella::Syntax::NovellaScript{
+namespace Novella::NScript::Parser{
 
     Token Lexer::next(){
 

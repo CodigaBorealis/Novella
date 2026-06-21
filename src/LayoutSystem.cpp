@@ -1,52 +1,52 @@
-#include "../Novella/Layout/LayoutSystem.hpp"
+#include "../Novella/Systems/Layout/LayoutSystem.hpp"
 #include <algorithm>
-#include "../Novella/Attribute/Layoutable.hpp"
+#include "../Novella/Components/Traits/Layoutable.hpp"
 #include "../Novella/Scene/Scene.hpp"
-#include "../Novella/Attribute/Object.hpp"
+#include "../Novella/Components/Traits/Object.hpp"
 
 namespace Novella{
 
-    Math::Rectangle LayoutSystem::compute(const Layout& layout, const Math::Vector2i& parentSize){
+    Rectangle LayoutSystem::compute(const Style& style, const Vector2i& parentSize){
 
-        Math::Vector2f size = computeSize(layout, parentSize);
+        Vector2f size = computeSize(style, parentSize);
         
-        Math::Vector2f position = computePosition(layout, size, parentSize);
+        Vector2f position = computePosition(style, size, parentSize);
         //Should probably cast to int
 
-        Math::Rectangle computedRectangle{position.x, position.y, size.x, size.y};
+        Rectangle computedRectangle{position.x, position.y, size.x, size.y};
 
         return computedRectangle;
     }
 
-    void LayoutSystem::compute(const Scene& scene, const Math::Vector2i& windowSize){
+    void LayoutSystem::compute(const Scene& scene, const Vector2i& windowSize){
         //this does run
         for(const auto& obj : scene.objects()){
 
-            if(auto* layoutable = dynamic_cast<Attribute::Layoutable*>(obj.get())){
+            if(auto* layoutable = dynamic_cast<Traits::Layoutable*>(obj.get())){
 
-                layoutable->setComputedRectangle(compute(layoutable->getLayout(), windowSize));
+                layoutable->setComputedRectangle(compute(layoutable->getStyle(), windowSize));
             }
         }
     }
 
-    Math::Rectangle LayoutSystem::computeLabel(const Layout& layout, const Math::Vector2f& textSize, const Math::Vector2i& parentSize){
+    Rectangle LayoutSystem::computeLabel(const Style& style, const Vector2f& textSize, const Vector2i& parentSize){
 
-        Math::Vector2f position = computePosition(layout, textSize, parentSize);
+        Vector2f position = computePosition(style, textSize, parentSize);
 
-        position.x += layout.offset.x;
+        position.x += style.offset.x;
 
-        position.y += layout.offset.y;
+        position.y += style.offset.y;
 
         return{position.x, position.y, textSize.x, textSize.y};
     }
 
-    Math::Vector2f LayoutSystem::computeSize(const Layout& layout, const Math::Vector2i& parentSize){
+    Vector2f LayoutSystem::computeSize(const Style& style, const Vector2i& parentSize){
 
-        float computedWidth = static_cast<float>(layout.width);
+        float computedWidth = static_cast<float>(style.width);
         float parentWidth = static_cast<float>(parentSize.x);
         //Receives fixed somehow
 
-        switch(layout.widthMode){
+        switch(style.widthMode){
 
             case SizeMode::Fixed:
 
@@ -54,7 +54,7 @@ namespace Novella{
             
             case SizeMode::Percent:{
 
-                float percent = std::clamp(layout.widthPercent, 0.0f, 100.f);
+                float percent = std::clamp(style.widthPercent, 0.0f, 100.f);
 
                 computedWidth = parentWidth * (percent / 100.0f);
 
@@ -72,10 +72,10 @@ namespace Novella{
                 break;
         }
 
-        float computedHeight = static_cast<float>(layout.height);
+        float computedHeight = static_cast<float>(style.height);
         float parentHeight = static_cast<float>(parentSize.y);
 
-        switch(layout.heightMode){
+        switch(style.heightMode){
 
             case SizeMode::Fixed:
 
@@ -83,7 +83,7 @@ namespace Novella{
             
             case SizeMode::Percent:{
 
-                float percent = std::clamp(layout.heightPercent, 0.0f, 100.f);
+                float percent = std::clamp(style.heightPercent, 0.0f, 100.f);
 
                 computedHeight = parentHeight * (percent / 100.0f);
                 
@@ -104,12 +104,12 @@ namespace Novella{
         return {computedWidth, computedHeight};
     }
 
-    Math::Vector2f LayoutSystem::computePosition(const Layout& layout, const Math::Vector2f& computedSize, const Math::Vector2i& parentSize){
+    Vector2f LayoutSystem::computePosition(const Style& style, const Vector2f& computedSize, const Vector2i& parentSize){
 
         float x = 0;
         float y = 0;
 
-        switch(layout.anchor){
+        switch(style.anchor){
 
             case Anchor::TopLeft:
 
@@ -118,56 +118,56 @@ namespace Novella{
 
                 break;
             
-            case Novella::Anchor::TopCenter:
+            case Anchor::TopCenter:
 
                 x = (parentSize.x - computedSize.x) * 0.5f;
                 y = 0;
                 
                 break;
 
-            case Novella::Anchor::TopRight:
+            case Anchor::TopRight:
 
                 x = parentSize.x - computedSize.x;
                 y = 0;
                 
                 break;
             
-            case Novella::Anchor::CenterLeft:
+            case Anchor::CenterLeft:
 
                 x = 0;
                 y = (parentSize.y - computedSize.y) * 0.5f;
                 
                 break;
             
-            case Novella::Anchor::Center:
+            case Anchor::Center:
 
                 x = (parentSize.x - computedSize.x) * 0.5f;
                 y = (parentSize.y - computedSize.y) * 0.5f;
                 
                 break;
             
-            case Novella::Anchor::CenterRight:
+            case Anchor::CenterRight:
 
                 x = parentSize.x - computedSize.x;
                 y = (parentSize.y - computedSize.y) * 0.5f;
 
                 break;
 
-            case Novella::Anchor::BottomLeft:
+            case Anchor::BottomLeft:
 
                 x = 0;
                 y = parentSize.y - computedSize.y;
 
                 break;
             
-            case Novella::Anchor::BottomCenter:
+            case Anchor::BottomCenter:
 
                 x = (parentSize.x - computedSize.x) * 0.5f;
                 y = parentSize.y - computedSize.y;
 
                 break;
 
-            case Novella::Anchor::BottomRight:
+            case Anchor::BottomRight:
 
                 x = parentSize.x - computedSize.x;
                 y = parentSize.y - computedSize.y;
@@ -176,8 +176,8 @@ namespace Novella{
             
         }
         
-        x += layout.offset.x;
-        y += layout.offset.y;
+        x += style.offset.x;
+        y += style.offset.y;
 
         return {x, y};
     }

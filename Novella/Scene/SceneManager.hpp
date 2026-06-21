@@ -2,34 +2,25 @@
 #include "Scene.hpp"
 #include "SceneWatcher.hpp"
 #include <memory>
-#include <nlohmann/json_fwd.hpp>
 #include <stdexcept>
 #include <utility>
-#include "../Attribute/Object.hpp"
+#include "../Components/Traits/Object.hpp"
 
 namespace Novella{
     
     class Engine;
+        
+    class ResourceManager;
+        
+    class AudioSystem;
     
-    namespace Resources {
-        
-        class ResourceManager;
-
-    }
-
-    namespace Audio {
-        
-        class AudioSystem;
-
-    }
-
     class SceneManager{
 
         public:
 
         SceneManager() = delete;
 
-        SceneManager(Resources::ResourceManager& resourceManager, Audio::AudioSystem& audio);
+        SceneManager(ResourceManager& resourceManager, AudioSystem& audio);
         
         void swapScene(std::unique_ptr<Scene> scene);
 
@@ -58,8 +49,8 @@ namespace Novella{
 
         std::unique_ptr<Scene> currentScene = nullptr;
         SceneWatcher sceneWatcher;
-        Resources::ResourceManager& resourceManager;
-        Audio::AudioSystem& audioSystem;
+        ResourceManager& resourceManager;
+        AudioSystem& audioSystem;
     };
 
 }

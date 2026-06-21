@@ -1,15 +1,14 @@
-#include "../Novella/Syntax/NovellaScript/Interpreter/Interpreter.hpp"
-#include "../Novella/Input/InteractionSystem.hpp"
-#include <optional>
+#include "../Novella/Scripting/Interpreter/Interpreter.hpp"
+#include "../Novella/Systems/Input/InteractionSystem.hpp"
 #include <nlohmann/json.hpp>
-#include "../Novella/Syntax/NovellaScript/Interpreter/ScriptLoader.hpp"
-#include <variant>
-#include <iostream>
-namespace Novella::Syntax::NovellaScript{
+#include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
+#include "../Novella/Scene/Parser/SceneDefinition.hpp"
 
-    void Interpreter::loadScript(const Scene::ScriptDefinition& definition){
+namespace Novella::NScript::Runtime{
 
-        Script script = ScriptLoader::load(definition.path);
+    void Interpreter::loadScript(const NScene::Parser::ScriptDefinition& definition){
+
+        Parser::Script script = ScriptLoader::load(definition.path);
 
         moduleResolver.resolveImports(script);
         
@@ -19,7 +18,7 @@ namespace Novella::Syntax::NovellaScript{
 
     }
 
-    void Interpreter::interpretEvent(const EventHandler::Event& event){
+    void Interpreter::interpretEvent(const Event& event){
 
         if(auto expression = eventHandler.getExpressionFromEvent(event)){
 
@@ -27,10 +26,8 @@ namespace Novella::Syntax::NovellaScript{
         }
     }
 
-    void Interpreter::interpret(const Script& script){
+    void Interpreter::interpret(const Parser::Script& script){
          
-        std::cout << "REACHED INTERPRETER\n";
-
         statementEvaluator.execute(script);
     }
 

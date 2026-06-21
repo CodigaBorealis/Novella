@@ -1,7 +1,7 @@
-#include "../Novella/Graphics/Texture.hpp"
+#include "../Novella/Components/Primitives/Texture.hpp"
 #include <raylib.h>
 
-namespace Novella::Graphics{
+namespace Novella{
 
     Texture::Texture(const std::filesystem::path& path)
     :

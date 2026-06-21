@@ -1,15 +1,15 @@
-#include "../Novella/Input/InteractionSystem.hpp"
+#include "../Novella/Systems/Input/InteractionSystem.hpp"
 #include "../Novella/Scene/Scene.hpp"
-#include "../Novella/Attribute/Clickable.hpp"
-#include "../Novella/Attribute/Interactable.hpp"
-#include "../Novella/Input/InputSystem.hpp"
-#include "../Novella/Input/ClickEvent.hpp"
+#include "../Novella/Components/Traits/Clickable.hpp"
+#include "../Novella/Components/Traits/Interactable.hpp"
+#include "../Novella/Systems/Input/InputSystem.hpp"
+#include <cstdint>
 #include <queue>
 #include <variant>
-#include "../Novella/Attribute/Object.hpp"
-#include "../Novella/Syntax/NovellaScript/Interpreter/Interpreter.hpp"
+#include "../Novella/Components/Traits/Object.hpp"
+#include "../Novella/Scripting/Interpreter/Interpreter.hpp"
 
-namespace Novella::Input{
+namespace Novella{
 
 
 //Dynamic casting each frame might cost some performance but its easier to reason about and maintain
@@ -24,15 +24,17 @@ namespace Novella::Input{
         //It shouldnt work likke this but i will leave it for now
         for(const auto& obj : scene.objects()){
 
-            if(const auto* Interactable = dynamic_cast<Attribute::Interactable*>(obj.get())){
+            uint64_t handle = obj->getHandle();
 
-                eventQueue.push(Novella::Input::KeyEvent{"", *pressed});
+            if(const auto* interactable = dynamic_cast<Traits::Interactable*>(obj.get())){
+
+                eventQueue.push(KeyboardEvent{handle, *pressed});
 
             }
         }
     }
 
-    void InteractionSystem::handleMouseInput(Scene& scene, const Math::Vector2f& mousePosition){
+    void InteractionSystem::handleMouseInput(Scene& scene, const Vector2f& mousePosition){
 
         static int times = 0;
 
@@ -42,11 +44,13 @@ namespace Novella::Input{
 
         for(const auto& obj : scene.objects()){
 
-            if(const auto* clickable = dynamic_cast<Attribute::Clickable*>(obj.get())){
+            uint64_t handle = obj->getHandle();
+
+            if(const auto* clickable = dynamic_cast<Traits::Clickable*>(obj.get())){
 
                 if(!clickable->contains(mousePosition)) continue;
 
-                eventQueue.push(Novella::Input::ClickEvent{"",*pressed, mousePosition});
+                eventQueue.push(MouseEvent{handle,*pressed, mousePosition});
 
             }
         }

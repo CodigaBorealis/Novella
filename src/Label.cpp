@@ -1,32 +1,22 @@
-#include "../Novella/Components/Label.hpp"
-#include "../Novella/Layout/LayoutSystem.hpp"
+#include "../Novella/Components/UI/Label.hpp"
+#include "../Novella/Systems/Layout/LayoutSystem.hpp"
 #include <raylib.h>
 #include <stdexcept>
-#include "../Novella/Components/Type.hpp"
 
-namespace Novella::Components{
+namespace Novella::UI{
 
-    Label::Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout)
-        :
-        Attribute::Object(Type::Label),
-        font(font),
-        Attribute::Layoutable(layout),
-        size(size),
-        text(text)
-        {}
 //I'm stupid
-    Label::Label(std::shared_ptr<Graphics::Font> font, int size, const std::string& text, const Layout& layout, int renderLayer)
+    Label::Label(std::shared_ptr<Font> font, int size, const std::string& text, const Style& style, int renderLayer)
         :
-        Attribute::Object(Type::Label),
         font(font),
-        Attribute::Layoutable(layout),
+        Traits::Layoutable(style),
         size(size),
         text(text),
         rLayer(renderLayer)
         {}
         
         
-    void Label::draw(Rendering::Renderer& renderer){
+    void Label::draw(Renderer& renderer){
 
         renderer.drawFont(*font, text, computedRectangle, size, spacing, tint);
     }
@@ -36,11 +26,11 @@ namespace Novella::Components{
         return this->rLayer;
     };
 
-    void Label::setColor(const Graphics::Color& color){
+    void Label::setColor(const Color& color){
 
         this->tint = color;
     };
-    const Graphics::Color& Label::getColor() const{
+    const Color& Label::getColor() const{
 
         return this->tint;
     };
@@ -65,10 +55,10 @@ namespace Novella::Components{
         return this->spacing;
     }
 
-    bool Label::contains(const Math::Vector2f& mousePos) const{
+    bool Label::contains(const Vector2f& mousePos) const{
 
 
-        Math::Vector2f size{
+        Vector2f size{
 
             ::MeasureTextEx(
             this->font->getHandle(),
@@ -82,11 +72,6 @@ namespace Novella::Components{
 
     };
 
-    const std::string& Label::getType() const{
-
-        return this->type;
-    }
-
     void Label::setText(const std::string& text){
 
         this->text = text;
@@ -97,22 +82,22 @@ namespace Novella::Components{
         return this->text;
     }
         
-    void Label::setFont(std::shared_ptr<Graphics::Font> font){
+    void Label::setFont(std::shared_ptr<Font> font){
 
         if(!font) throw std::runtime_error("Cannot set the font to nullptr");
 
         this->font = font;
     }
 
-        std::shared_ptr<Graphics::Font> Label::getFont() const{
+        std::shared_ptr<Font> Label::getFont() const{
 
             return this->font;
         }
     //Must hook it into the loop somehow
-    void Label::computeSize(const Math::Vector2i& parentSize){
+    void Label::computeSize(const Vector2i& parentSize){
 
-        Math::Vector2f textSize {::MeasureTextEx(font->getHandle(), text.c_str(), float(size), spacing)};
+        Vector2f textSize {::MeasureTextEx(font->getHandle(), text.c_str(), float(size), spacing)};
 
-        computedRectangle = LayoutSystem::computeLabel(layout, textSize, parentSize);
+        computedRectangle = LayoutSystem::computeLabel(style, textSize, parentSize);
     }
 }

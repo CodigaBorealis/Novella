@@ -1,10 +1,11 @@
-#include "../Novella/Syntax/NovellaScript/Interpreter/StatementEvaluator.hpp"
-#include "../Novella/Syntax/NovellaScript/Script.hpp"
-#include "../Novella/Syntax/NovellaScript/Definition.hpp"
+#include "../Novella/Scripting/Parser/StatementEvaluator.hpp"
+#include "../Novella/Scripting/Parser/Script.hpp"
+#include "../Novella/Scripting/Parser/Definition.hpp"
 #include <variant>
 #include <vector>
 #include <iostream>
-namespace Novella::Syntax::NovellaScript{
+
+namespace Novella::NScript::Parser{
 
     void StatementEvaluator::execute(const std::vector<Statement>& statements) const{
         

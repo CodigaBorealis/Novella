@@ -1,11 +1,11 @@
-#include "../Novella/IO/FileReader.hpp"
+#include "../Novella/Utils/FileReader.hpp"
 #include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
 
 
-namespace Novella::IO{
+namespace Novella{
 
     std::string FileReader::getContentsFromFile(const std::filesystem::path& src){
 

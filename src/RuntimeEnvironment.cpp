@@ -1,19 +1,18 @@
-#include "../Novella/Syntax/NovellaScript/Interpreter/RuntimeEnvironment.hpp"
-#include "../Novella/Syntax/NovellaScript/Definition.hpp"
-#include "../Novella/Syntax/NovellaScript/Statement.hpp"
-#include "../Novella/Syntax/NovellaScript/Script.hpp"
+#include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
+#include "../Novella/Scripting/Parser/Definition.hpp"
+#include "../Novella/Scripting/Parser/Script.hpp"
 #include <stdexcept>
 #include <variant>
 
-namespace Novella::Syntax::NovellaScript{
+namespace Novella::NScript::Runtime{
 
-    void RuntimeEnvironment::registerData(const Script& script){
+    void RuntimeEnvironment::registerData(const Parser::Script& script){
 
         for(const auto& definition : script.definitions){
 
-            if(std::holds_alternative<ModuleDefinition>(definition)){
+            if(std::holds_alternative<Parser::ModuleDefinition>(definition)){
 
-                auto& module = std::get<ModuleDefinition>(definition);
+                auto& module = std::get<Parser::ModuleDefinition>(definition);
 
                 for(const auto& function : module.functions){
 
@@ -23,7 +22,7 @@ namespace Novella::Syntax::NovellaScript{
         }
     }
 
-    void RuntimeEnvironment::registerFunction(const FunctionDefinition& definition){
+    void RuntimeEnvironment::registerFunction(const Parser::FunctionDefinition& definition){
 
         auto it = functions.find(definition.name);
 
@@ -32,7 +31,7 @@ namespace Novella::Syntax::NovellaScript{
         functions.emplace(definition.name, definition);
     }
 
-    void RuntimeEnvironment::createVariable(const std::string& name, const UnderlyingValue& value){
+    void RuntimeEnvironment::createVariable(const std::string& name, const Parser::Value& value){
 
         auto it = variables.find(name);
 
@@ -41,7 +40,7 @@ namespace Novella::Syntax::NovellaScript{
         variables.emplace(name, value);
     }
 
-    UnderlyingValue RuntimeEnvironment::getVariable(const std::string& name) const{
+    Parser::Value RuntimeEnvironment::getVariable(const std::string& name) const{
 
         auto it = variables.find(name);
 
@@ -50,7 +49,7 @@ namespace Novella::Syntax::NovellaScript{
         return it->second;
     }
 
-    void RuntimeEnvironment::setVariable(const std::string& name, const UnderlyingValue& value){
+    void RuntimeEnvironment::setVariable(const std::string& name, const Parser::Value& value){
 
         auto it = variables.find(name);
 
@@ -59,7 +58,7 @@ namespace Novella::Syntax::NovellaScript{
         it->second = value;
     }
 
-    UnderlyingValue RuntimeEnvironment::invokeFunction(const std::string& name,const std::vector<UnderlyingValue>& arguments){
+    Parser::Value RuntimeEnvironment::invokeFunction(const std::string& name,const std::vector<Parser::Value>& arguments){
 
         auto it = functions.find(name);
 
@@ -71,7 +70,7 @@ namespace Novella::Syntax::NovellaScript{
         
         callStack.pop();
 
-        return PrimitiveValue{std::monostate{}};
+        return Parser::Value{std::monostate{}};
     }
 
     void RuntimeEnvironment::clear(){

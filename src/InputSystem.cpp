@@ -1,32 +1,32 @@
-#include "../Novella/Input/InputSystem.hpp"
+#include "../Novella/Systems/Input/InputSystem.hpp"
 #include <optional>
 #include <raylib.h>
-namespace Novella::Input{
+namespace Novella{
 
-    bool InputSystem::isKeyPressed(Keyboard::Key key){
+    bool InputSystem::isKeyPressed(Key key){
 
         return ::IsKeyPressed(static_cast<int>(key));
     }
 
-    bool InputSystem::isKeyDown(Keyboard::Key key){
+    bool InputSystem::isKeyDown(Key key){
 
         return ::IsKeyDown(static_cast<int>(key));
     }
 
-    bool InputSystem::isKeyReleased(Keyboard::Key key){
+    bool InputSystem::isKeyReleased(Key key){
 
         return ::IsKeyReleased(static_cast<int>(key));
     }
 
-    bool InputSystem::isKeyUp(Keyboard::Key key){
+    bool InputSystem::isKeyUp(Key key){
 
         return ::IsKeyUp(static_cast<int>(key));
 
     }
 
-    Keyboard::Key getKeyPressed(){
+    Key getKeyPressed(){
 
-        return Keyboard::Key(::GetKeyPressed());
+        return Key(::GetKeyPressed());
     }
 
     char getCharPressed(){
@@ -34,22 +34,22 @@ namespace Novella::Input{
         return ::GetCharPressed();
     }
 
-    bool InputSystem::isMouseButtonPressed(Mouse::Button button){
+    bool InputSystem::isMouseButtonPressed(Button button){
 
         return ::IsMouseButtonPressed(static_cast<int>(button));
     }
 
-    bool InputSystem::isMouseButtonDown(Mouse::Button button){
+    bool InputSystem::isMouseButtonDown(Button button){
 
         return ::IsMouseButtonDown(static_cast<int>(button));
     }
 
-    bool InputSystem::isMouseButtonReleased(Mouse::Button button){
+    bool InputSystem::isMouseButtonReleased(Button button){
 
         return ::IsMouseButtonReleased(static_cast<int>(button));
     }
 
-    bool InputSystem::isMouseButtonUp(Mouse::Button button){
+    bool InputSystem::isMouseButtonUp(Button button){
 
         return ::IsMouseButtonUp(static_cast<int>(button));
     }
@@ -64,17 +64,17 @@ namespace Novella::Input{
         return ::GetMouseY();
     }
 
-    void InputSystem::setMousePosition(const Math::Vector2f& position){
+    void InputSystem::setMousePosition(const Vector2f& position){
 
         ::SetMousePosition(position.x, position.y);
     }
 
-    Math::Vector2f InputSystem::mousePosition(){
+    Vector2f InputSystem::mousePosition(){
 
         return ::GetMousePosition();
     }
 
-    Math::Vector2f InputSystem::mouseDelta(){
+    Vector2f InputSystem::mouseDelta(){
 
         return ::GetMouseDelta();
     }
@@ -84,7 +84,7 @@ namespace Novella::Input{
         return ::GetMouseWheelMove();
     }
 
-    Math::Vector2f InputSystem::getMouseWheelMoveV(){
+    Vector2f InputSystem::getMouseWheelMoveV(){
 
         return ::GetMouseWheelMoveV();
     }
@@ -119,26 +119,26 @@ namespace Novella::Input{
         return ::IsCursorOnScreen();
     }
 
-    std::optional<Mouse::Button> InputSystem::getMouseButtonPressed(){
+    std::optional<Button> InputSystem::getMouseButtonPressed(){
 
         for(int x = 0; x < ::MOUSE_BUTTON_BACK; x++){
 
             if(::IsMouseButtonPressed(x)){
 
-                return Mouse::Button(x);
+                return Button(x);
             }
         }
 
         return std::nullopt;
     }
 
-    std::optional<Keyboard::Key> InputSystem::getKeyboardKeyPressed(){
+    std::optional<Key> InputSystem::getKeyboardKeyPressed(){
 
         for(int x = 0; x < ::KEY_KB_MENU; x++){
 
             if(::IsKeyPressed(x)){
 
-                return Keyboard::Key(x);
+                return Key(x);
             }
         }
 

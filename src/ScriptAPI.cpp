@@ -1,14 +1,14 @@
-#include "../Novella/Syntax/NovellaScript/API/ScriptAPI.hpp"
-#include "../Novella/Engine.hpp"
+#include "../Novella/Scripting/API/ScriptAPI.hpp"
+#include "../Novella/Core/Engine.hpp"
 
-namespace Novella::Syntax::NovellaScript::API{
+namespace Novella::NScript{
 
-    ScriptAPI::ScriptAPI(Engine& engine)
+    Api::Api(Engine& engine)
         :
         scene(engine.scene()),
         audio(engine.audio()),
         debug(engine.logger()),
-        input(engine.input()),
+        //input(engine.input()),
         layout(engine.layout()),
         renderer(engine.renderer()),
         window(engine.window())

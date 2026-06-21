@@ -1,14 +1,14 @@
 #include "../Novella/Scene/SceneManager.hpp"
-#include "../Novella/Audio/AudioSystem.hpp"
+#include "../Novella/Systems/Audio/AudioSystem.hpp"
 #include "../Novella/Scene/SceneManager.hpp"
-#include "../Novella/IO/SceneLoader.hpp"
-#include "../Novella/Attribute/Object.hpp"//clangd swears this file is unused, it IS used
-#include "../Novella/Engine.hpp"
+#include "../Novella/Scene/Serialization/SceneLoader.hpp"
+#include "../Novella/Components/Traits/Object.hpp"//clangd swears this file is unused, it IS used
+#include "../Novella/Core/Engine.hpp"
 #include <memory>
 
 namespace Novella{
 
-    SceneManager::SceneManager(Resources::ResourceManager& resourceManager, Audio::AudioSystem& audio)
+    SceneManager::SceneManager(ResourceManager& resourceManager, AudioSystem& audio)
         :
         resourceManager(resourceManager),
         audioSystem(audio)
@@ -54,7 +54,7 @@ namespace Novella{
 
         sceneWatcher.setSceneFile(src);
 
-        SceneLoader::Loader::load(engine, src);
+        NScene::Serialization::Loader::load(engine, src);
 
     }
 }

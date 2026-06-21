@@ -1,21 +1,23 @@
-#include "../Novella/Syntax/NovellaScript/Interpreter/ScriptLoader.hpp"
-#include "../Novella/Syntax/NovellaScript/Script.hpp"
-#include "../Novella/IO/FileReader.hpp"
+#include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
+#include "../Novella/Scripting/Parser/Script.hpp"
+#include "../Novella/Scripting/Parser/Parser.hpp"
+#include "../Novella/Scripting/Parser/Lexer.hpp"
+#include "../Novella/Utils/FileReader.hpp"
 #include <stdexcept>
 
-namespace Novella::Syntax::NovellaScript{
+namespace Novella::NScript::Runtime{
 
-    Script ScriptLoader::load(const std::filesystem::path& source){
+    Parser::Script ScriptLoader::load(const std::filesystem::path& source){
 
         const std::string extension = source.extension().string();
 
         if(extension != ".nvs") throw std::runtime_error("'" + source.string() + "' is not a novellaScript file");
 
-        std::string scriptContents = IO::FileReader::getContentsFromFile(source);
+        std::string scriptContents = FileReader::getContentsFromFile(source);
 
-        Lexer lexer(scriptContents);
+        Parser::Lexer lexer(scriptContents);
 
-        Parser parser(lexer);
+        Parser::Parser parser(lexer);
         
         return parser.parse();
     }

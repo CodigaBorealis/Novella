@@ -1,9 +1,9 @@
-#include "../Novella/Rendering/ResourceManager.hpp"
+#include "../Novella/Systems/Resources/ResourceManager.hpp"
 #include <cstddef>
 #include <filesystem>
 #include <memory>
-#include <nlohmann/json.hpp>
-namespace Novella::Resources{
+
+namespace Novella{
 
     ResourceManager::~ResourceManager(){
 
@@ -11,11 +11,11 @@ namespace Novella::Resources{
     };
         void ResourceManager::loadImage(const std::string& name, const std::filesystem::path& src){
 
-        auto image = std::make_shared<Graphics::Image>(src);
+        auto image = std::make_shared<Image>(src);
 
         if(!image) throw std::runtime_error("Failed  to load an image: " + name);
 
-        if(imageResources.contains(name)) throw std::runtime_error("There is already a font with this name: " + name);
+        if(imageResources.contains(name)) throw std::runtime_error("There is already an image with this name: " + name);
 
         ImageResource resource(src, image);
 
@@ -27,7 +27,7 @@ namespace Novella::Resources{
 
         if(!std::filesystem::exists(src)) throw std::runtime_error("File not found: " + src.string());
 
-        auto texture = std::make_shared<Graphics::Texture>(src);
+        auto texture = std::make_shared<Texture>(src);
 
         if(!texture) throw std::runtime_error("Failed  to load a texture: " + name);
 
@@ -43,7 +43,7 @@ namespace Novella::Resources{
 
         if(!std::filesystem::exists(src)) throw std::runtime_error("File not found: " + src.string());
 
-        auto font = std::make_shared<Graphics::Font>(src);
+        auto font = std::make_shared<Font>(src);
 
         if(!font) throw std::runtime_error("Failed  to load a font: " + name);
 
@@ -69,14 +69,14 @@ namespace Novella::Resources{
 
     }
     
-    std::shared_ptr<Graphics::Texture> ResourceManager::getTexture(const std::string& name) const{
+    std::shared_ptr<Texture> ResourceManager::getTexture(const std::string& name) const{
 
         if(!textureResources.contains(name)) throw std::runtime_error(name + " is not a registered texture");
 
         return textureResources.at(name).texture;
     }
 
-    std::shared_ptr<Graphics::Font> ResourceManager::getFont(const std::string& name) const{
+    std::shared_ptr<Font> ResourceManager::getFont(const std::string& name) const{
 
         if(!fontResources.contains(name)) throw std::runtime_error(name + " is not a registered font");
 

@@ -1,11 +1,12 @@
-#include "../Novella/Syntax/Scene/Parser.hpp"
-#include "../Novella/Syntax/Scene/Lexer.hpp"
-#include "../Novella/Syntax/Scene/SceneDefinition.hpp"
+#include "../Novella/Scene/Parser/Parser.hpp"
+#include "../Novella/Scene/Parser/Lexer.hpp"
+#include "../Novella/Scene/Parser/SceneDefinition.hpp"
 #include <cstddef>
 #include <stdexcept>
 #include <string>
+#include <vector>
 //I hate this so much
-namespace Novella::Syntax::Scene{
+namespace Novella::NScene::Parser{
 
     Parser::Parser(Lexer& lexer){
 
@@ -19,6 +20,15 @@ namespace Novella::Syntax::Scene{
         }
     }
     
+    uint32_t Parser::getTypeID(const std::string& componentName) const{
+
+        auto it = typeIDs.find(componentName);
+
+        if(it == typeIDs.end()) throw std::runtime_error("Invalid component type: " + componentName);
+
+        return it->second;
+    }
+
     Token& Parser::current(){
 
         return tokens[position];
@@ -150,7 +160,7 @@ namespace Novella::Syntax::Scene{
 
         ObjectDefinition object{};
 
-        object.objectType = current().text;
+        object.objectType = getTypeID(current().text);
 
         expect(Token::Type::Identifier);
         
@@ -211,12 +221,10 @@ namespace Novella::Syntax::Scene{
         Value value{};
 
         if(current().type == Token::Type::Boolean){
-
-            value.type = Value::Type::Boolean;
             
             if(current().text != "true" && current().text != "false") throw std::runtime_error("Boolean value can only be 'true' or 'false' at index: " + std::to_string(position));
 
-            current().text == "true" ? value.boolValue = true : value.boolValue = false;
+            current().text == "true" ? value.data = true : value.data = false;
 
             consume();
 
@@ -225,8 +233,7 @@ namespace Novella::Syntax::Scene{
 
         if(current().type == Token::Type::String){
 
-            value.type = Value::Type::String;
-            value.StringValue = current().text;
+            value.data = current().text;
 
             consume();
 
@@ -234,9 +241,7 @@ namespace Novella::Syntax::Scene{
         }
 
         if(current().type == Token::Type::LParen){
-            
-            value.type = Value::Type::Array;
-            
+                        
             consume();
             
             if(current().type == Token::Type::RParen){
@@ -246,11 +251,13 @@ namespace Novella::Syntax::Scene{
                 return value;
             }
 
+            std::vector<Value> elements;
+
             while(true){
 
                 if(current().type == Token::Type::LParen) throw std::runtime_error("Unsuported nested array at position " + std::to_string(position));
 
-                value.arrayValues.push_back(parseValue());
+                elements.push_back(parseValue());
 
                 if(current().type == Token::Type::RParen) break;
 
@@ -259,13 +266,14 @@ namespace Novella::Syntax::Scene{
 
             expect(Token::Type::RParen);
 
+            value.data = std::move(elements);
+
             return value;
         }
 
         if(current().type == Token::Type::Number){
 
-            value.type = Value::Type::Number;
-            value.numberValue = std::stod(current().text);
+            value.data = std::stod(current().text);
 
             consume();
 
@@ -274,8 +282,9 @@ namespace Novella::Syntax::Scene{
 
         if(current().type == Token::Type::Identifier){
 
-            value.type = Value::Type::Identifier;
-            value.StringValue = current().text;
+            value.isIdentifier = true;
+
+            value.data = current().text;
 
             consume();
 

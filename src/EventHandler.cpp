@@ -1,19 +1,17 @@
-#include "../Novella/Syntax/NovellaScript/Interpreter/EventHandler.hpp"
-#include "../Novella/Syntax/NovellaScript/Interpreter/Converter.hpp"
-#include "../Novella/Input/KeyEvent.hpp"
-#include "../Novella/Input/ClickEvent.hpp"
+#include "../Novella/Scripting/Interpreter/EventHandler.hpp"
+#include "../Novella/Scripting/Interpreter/Converter.hpp"
 
-namespace Novella::Syntax::NovellaScript{
+namespace Novella::NScript::Runtime{
 
-    std::optional<Expression> EventHandler::getExpressionFromEvent(const Event& event){
+    std::optional<Parser::Expression> EventHandler::getExpressionFromEvent(const Event& event){
 
-        return std::visit([&](auto&& e) -> std::optional<Expression>{
+        return std::visit([&](auto&& e) -> std::optional<Parser::Expression>{
 
-            if(activeBindings.find(e.objectID) == activeBindings.end()) return std::nullopt;
+            if(activeBindings.find(e.objectHandle) == activeBindings.end()) return std::nullopt;
 
             std::string inputString = Converter::getInputFromEvent(e);
 
-            for(const auto& binding : activeBindings.at(e.objectID)){
+            for(const auto& binding : activeBindings.at(e.objectHandle)){
 
                 if(binding.triggerName == inputString){
 

@@ -1,9 +1,9 @@
-#include "../Novella/Window/Window.hpp"
-#include "../Novella/Graphics/Color.hpp"
+#include "../Novella/Windowing/Window.hpp"
+#include "../Novella/Components/Primitives/Color.hpp"
 #include <filesystem>
 #include <raylib.h>
 #include <stdexcept>
-#include "../Novella/Graphics/Image.hpp"
+#include "../Novella/Components/Primitives/Image.hpp"
 namespace Novella{
 
     Window::~Window(){
@@ -71,7 +71,7 @@ namespace Novella{
         return ::IsWindowReady() && !::WindowShouldClose();
     }
 
-    void Window::clear(const Graphics::Color& color){
+    void Window::clear(const Color& color){
 
         ::ClearBackground(color);
     }
@@ -116,12 +116,12 @@ namespace Novella{
         return ::IsWindowFocused();
     }
 
-    void Window::setSize(const Math::Vector2i& dimensions){
+    void Window::setSize(const Vector2i& dimensions){
 
         ::SetWindowSize(dimensions.x, dimensions.y);
     }
 
-    Math::Vector2i Window::getSize() const{
+    Vector2i Window::getSize() const{
 
         return{::GetScreenWidth(), ::GetScreenHeight()};
     }
@@ -174,13 +174,18 @@ namespace Novella{
 
         if(!std::filesystem::exists(file)) throw std::runtime_error("File not found: " + file.string());
 
-        Graphics::Image icon{file};
+        Image icon{file};
 
         ::SetWindowIcon(icon.getHandle());
     }
 
-    void Window::setPosition(const Math::Vector2i& position){
+    void Window::setPosition(const Vector2i& position){
 
         ::SetWindowPosition(position.x, position.y);
+    }
+
+    Vector2i Window::getPosition() const{
+
+        return ::GetWindowPosition();
     }
 }

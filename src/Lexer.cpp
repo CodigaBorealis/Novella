@@ -1,11 +1,11 @@
-#include "../Novella/Syntax/Scene/Lexer.hpp"
-#include "../Novella/Syntax/Scene/Token.hpp"
+#include "../Novella/Scene/Parser/Lexer.hpp"
+#include "../Novella/Scene/Parser/Token.hpp"
 #include <cctype>
 #include <stdexcept>
 #include <string>
 #include <string_view>
 
-namespace Novella::Syntax::Scene{
+namespace Novella::NScene::Parser{
 
     Token Lexer::next(){
 

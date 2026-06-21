@@ -1,15 +1,15 @@
-#include "../Novella/Rendering/Renderer.hpp"
-#include "../Novella/Attribute/Renderable.hpp"
-#include "../Novella/Math/Rectangle.hpp"
-#include "../Novella/Graphics/Color.hpp"
-#include "../Novella/Graphics/Texture.hpp"
-#include "../Novella/Graphics/Font.hpp"
+#include "../Novella/Systems/Renderer/Renderer.hpp"
+#include "../Novella/Components/Traits/Renderable.hpp"
+#include "../Novella/Core/Math/Rectangle.hpp"
+#include "../Novella/Components/Primitives/Color.hpp"
+#include "../Novella/Components/Primitives/Texture.hpp"
+#include "../Novella/Components/Primitives/Font.hpp"
 #include "../Novella/Scene/Scene.hpp"
-#include "../Novella/Attribute/Object.hpp"
+#include "../Novella/Components/Traits/Object.hpp"
 #include <algorithm>
 #include <raylib.h>
 
-namespace Novella::Rendering{
+namespace Novella{
 
     Renderer::~Renderer(){
 
@@ -28,11 +28,11 @@ namespace Novella::Rendering{
         canvas = ::LoadRenderTexture(width, height);
     }
 
-    void Renderer::drawTexture(const Graphics::Texture& texture, const Math::Rectangle& rect, float rotation, const Graphics::Color& tint){
+    void Renderer::drawTexture(const Texture& texture, const Rectangle& rect, float rotation, const Color& tint){
         
-        Math::Vector2f origin{0.f, 0.f};
+        Vector2f origin{0.f, 0.f};
 
-        Math::Rectangle source{
+        Rectangle source{
 
             0.0f,
             0.0f,
@@ -43,7 +43,7 @@ namespace Novella::Rendering{
         ::DrawTexturePro(texture.getHandle(), source, rect, origin, rotation, tint);
     }
 
-    void Renderer::drawFont(const Graphics::Font& font, const std::string& text, const Math::Rectangle& rect, int fontSize, float spacing, const Graphics::Color& tint){
+    void Renderer::drawFont(const Font& font, const std::string& text, const Rectangle& rect, int fontSize, float spacing, const Color& tint){
 
         ::DrawTextEx(font.getHandle(), text.c_str(), {rect.x, rect.y}, fontSize, spacing, tint);
     }
@@ -52,7 +52,7 @@ namespace Novella::Rendering{
     void Renderer::beginFrame(){
 
         ::BeginTextureMode(canvas);
-        ::ClearBackground(Graphics::Colors::Black);
+        ::ClearBackground(Colors::Black);
     }
     
     void Renderer::endFrame(){
@@ -60,11 +60,11 @@ namespace Novella::Rendering{
         ::EndTextureMode();
 
         ::BeginDrawing();
-        ::ClearBackground(Graphics::Colors::Black);
+        ::ClearBackground(Colors::Black);
 
-        Math::Rectangle source{0.0f, 0.0f, baseResolution.x, -baseResolution.y};//The texture is flipped otherwise
+        Rectangle source{0.0f, 0.0f, baseResolution.x, -baseResolution.y};//The texture is flipped otherwise
 
-        Math::Rectangle dest{
+        Rectangle dest{
 
             renderTargetOffset.x,
             renderTargetOffset.y,
@@ -83,8 +83,8 @@ namespace Novella::Rendering{
         
         std::stable_sort(objects.begin(), objects.end(), [](const auto& a, const auto& b){
 
-            auto* renderableA = dynamic_cast<Attribute::Renderable*>(a.get());
-            auto* renderableB = dynamic_cast<Attribute::Renderable*>(b.get());
+            auto* renderableA = dynamic_cast<Traits::Renderable*>(a.get());
+            auto* renderableB = dynamic_cast<Traits::Renderable*>(b.get());
 
             int layerA = renderableA ? renderableA->renderLayer() : 0;
             int layerB = renderableB ? renderableB->renderLayer() : 0;
@@ -108,14 +108,14 @@ namespace Novella::Rendering{
             //Causes a small overhead but makes the rendering loop far simpler than splitting renderables
             //Onto their own containers and trying to keep everything synced
 
-            if(auto* renderable = dynamic_cast<Attribute::Renderable*>(obj.get())){
+            if(auto* renderable = dynamic_cast<Traits::Renderable*>(obj.get())){
 
                 renderable->draw(*this);
             }
         }
     }
 
-    void Renderer::resize(const Math::Vector2i& windowSize){
+    void Renderer::resize(const Vector2i& windowSize){
 
         if(baseResolution.x == 0 || baseResolution.y == 0) return;
 
@@ -131,12 +131,12 @@ namespace Novella::Rendering{
 
     }
 
-    Math::Vector2f Renderer::virtualResolution() const{
+    Vector2f Renderer::virtualResolution() const{
 
         return baseResolution;
     }
 
-    Math::Vector2f Renderer::toVirtualCoordinates(const Math::Vector2f& mousePosition) const{
+    Vector2f Renderer::toVirtualCoordinates(const Vector2f& mousePosition) const{
 
         return{
             
@@ -147,7 +147,7 @@ namespace Novella::Rendering{
 
     void Renderer::drawErrorMessage(const std::string& error){
 
-        ::DrawText(error.c_str(), 10, 10, 40, Graphics::Colors::Red);
+        ::DrawText(error.c_str(), 10, 10, 40, Colors::Red);
     }
 
 }

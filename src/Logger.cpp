@@ -1,7 +1,7 @@
-#include "../Novella/Debug/Logger.hpp"
+#include "../Novella/Core/Debug/Logger.hpp"
 #include <iostream>
 
-namespace Novella::Debug{
+namespace Novella{
 
     void Logger::print(const std::string& message) const{
 

@@ -1,5 +1,5 @@
 #include "../Novella/Scene/Scene.hpp"
-#include "../Novella/Attribute/Object.hpp"
+#include "../Novella/Components/Traits/Object.hpp"
 #include <cstdint>
 #include <memory>
 #include <stdexcept>
@@ -7,7 +7,7 @@
 
 namespace Novella{
 
-    void Scene::addObject(std::unique_ptr<Attribute::Object> obj){
+    void Scene::addObject(std::unique_ptr<Traits::Object> obj){
 
         uint64_t id = ++currentID;
 
@@ -15,7 +15,7 @@ namespace Novella{
 
         objectRegistry[id] = obj.get();
 
-        objs.push_back(std::move(obj));
+        this->drawingOrder.push_back(std::move(obj));
 
         this->dirty = true;
     
@@ -31,7 +31,7 @@ namespace Novella{
         
         objectRegistry.erase(id);
 
-        std::erase_if(objs,[target](const auto& pointer){
+        std::erase_if(drawingOrder,[target](const auto& pointer){
 
             return pointer.get() == target;
         });
@@ -40,17 +40,17 @@ namespace Novella{
 
     }
 
-    const std::vector<std::unique_ptr<Attribute::Object>>& Scene::objects() const{
+    const std::vector<std::unique_ptr<Traits::Object>>& Scene::objects() const{
 
-        return objs;
+        return drawingOrder;
     }
 
-    std::vector<std::unique_ptr<Attribute::Object>>& Scene::objects(){
+    std::vector<std::unique_ptr<Traits::Object>>& Scene::objects(){
 
-        return objs;
+        return drawingOrder;
     }
 
-    Attribute::Object* Scene::getObject(uint64_t handle){
+    Traits::Object* Scene::getObject(uint64_t handle){
 
             auto it = objectRegistry.find(handle);
 
@@ -59,7 +59,7 @@ namespace Novella{
             return it->second;
     }
 
-    Attribute::Object* Scene::getObject(uint64_t handle) const{
+    Traits::Object* Scene::getObject(uint64_t handle) const{
 
             auto it = objectRegistry.find(handle);
 

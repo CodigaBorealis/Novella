@@ -1,16 +1,16 @@
-#include "../Novella/IO/ComponentBuilder.hpp"
-#include "../Novella/Engine.hpp"
-#include "../Novella/Syntax/Scene/Parser.hpp"
-#include "../Novella/Layout/Layout.hpp"
-#include "../Novella/Layout/SizeMode.hpp"
-#include "../Novella/Components/Button.hpp"
-#include "../Novella/Components/Label.hpp"
-#include "../Novella/Components/Sprite.hpp"
+#include "../Novella/Scene/Serialization/ComponentBuilder.hpp"
+#include "../Novella/Core/Engine.hpp"
+#include "../Novella/Scene/Parser/SceneDefinition.hpp"
+#include "../Novella/Systems/Layout/Style.hpp"
+#include "../Novella/Systems/Layout/SizeMode.hpp"
+#include "../Novella/Components/UI/Button.hpp"
+#include "../Novella/Components/UI/Label.hpp"
+#include "../Novella/Components/UI/Sprite.hpp"
 #include <stdexcept>
 
-namespace Novella::SceneLoader{
+namespace Novella::NScene::Serialization{
 
-    void ComponentBuilder::buildSprite(Engine& engine, const Syntax::Scene::ObjectDefinition& definition){
+    void ComponentBuilder::buildSprite(Engine& engine, const NScene::Parser::ObjectDefinition& definition){
 
             if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
             
@@ -20,7 +20,7 @@ namespace Novella::SceneLoader{
 
             std::string texture = getString(*tex);
 
-            Layout constructedLayout = getLayout(definition);
+            Style style = getStyle(definition);
 
             auto* rlayer = findProperty(definition, "renderLayer");
 
@@ -28,11 +28,11 @@ namespace Novella::SceneLoader{
 
             int renderLayer = getInt(*rlayer);
 
-            engine.scene().addObject<Components::Sprite>(
+            engine.scene().addObject<UI::Sprite>(
 
             engine.resources().getTexture(texture),
 
-            constructedLayout,
+            style,
 
             renderLayer
 
@@ -40,7 +40,7 @@ namespace Novella::SceneLoader{
         
     }
 
-    void ComponentBuilder::buildButton(Engine &engine, const Syntax::Scene::ObjectDefinition &definition){
+    void ComponentBuilder::buildButton(Engine &engine, const NScene::Parser::ObjectDefinition& definition){
             
         if(definition.objectName.empty()) throw std::runtime_error("Can't create button object without an id");
             
@@ -50,7 +50,7 @@ namespace Novella::SceneLoader{
 
         std::string texture = getString(*tex);
 
-        Layout constructedLayout = getLayout(definition);
+        Style constructedLayout = getStyle(definition);
 
         auto* rlayer = findProperty(definition, "renderLayer");
 
@@ -58,7 +58,7 @@ namespace Novella::SceneLoader{
 
         int renderLayer = getInt(*rlayer);
 
-        engine.scene().addObject<Components::Button>(
+        engine.scene().addObject<UI::Button>(
 
             engine.resources().getTexture(texture),
 
@@ -69,7 +69,7 @@ namespace Novella::SceneLoader{
         );
     }
 
-    void ComponentBuilder::buildLabel(Engine &engine, const Syntax::Scene::ObjectDefinition &definition){
+    void ComponentBuilder::buildLabel(Engine &engine, const NScene::Parser::ObjectDefinition &definition){
         
         if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
             
@@ -91,7 +91,7 @@ namespace Novella::SceneLoader{
         
         std::string text = getString(*txt);
         
-        Layout constructedLayout = getLayout(definition);
+        Style constructedLayout = getStyle(definition);
 
         auto* rlayer = findProperty(definition, "renderLayer");
 
@@ -99,7 +99,7 @@ namespace Novella::SceneLoader{
 
         int renderLayer = getInt(*rlayer);
 
-        engine.scene().addObject<Components::Label>(
+        engine.scene().addObject<UI::Label>(
 
             engine.resources().getFont(font),
             
@@ -112,33 +112,34 @@ namespace Novella::SceneLoader{
 
         );
     }
-    SizeMode ComponentBuilder::getSizeMode(const Syntax::Scene::Property& property){
 
-        if(property.value.StringValue == "Fixed"){
+    SizeMode ComponentBuilder::getSizeMode(const NScene::Parser::Property& property){
+
+        if(getString(property) == "Fixed"){
 
             return SizeMode::Fixed;
 
-        }else if(property.value.StringValue == "Percent"){
+        }else if(getString(property)  == "Percent"){
 
             return SizeMode::Percent;
 
-        }else if(property.value.StringValue == "FitWidth"){
+        }else if(getString(property)  == "FitWidth"){
 
             return SizeMode::FitWidth;
 
-        }else if(property.value.StringValue == "FitHeight"){
+        }else if(getString(property)  == "FitHeight"){
 
             return SizeMode::FitHeight;
         }
 
-        throw std::runtime_error("Invalid value for property sizeMode '" + property.value.StringValue +"'");
+        throw std::runtime_error("Invalid value for property sizeMode '" + property.value.as<std::string>() +"'");
     }    
 
-    Layout ComponentBuilder::getLayout(const Syntax::Scene::ObjectDefinition& object){
+    Style ComponentBuilder::getStyle(const NScene::Parser::ObjectDefinition& object){
 
-        Layout layout{};
+        Style layout{};
 
-        auto* layoutNode = findChild(object, "layout");
+        auto* layoutNode = findChild(object, 4294967295);//The style type inside the parser
 
         if(!layoutNode) throw std::runtime_error("Missing layout block for '" + object.objectName + "'");
 
@@ -175,7 +176,7 @@ namespace Novella::SceneLoader{
         return layout;
     }
 
-    const Syntax::Scene::ObjectDefinition* ComponentBuilder::findChild(const Syntax::Scene::ObjectDefinition& object, const std::string& type){
+    const NScene::Parser::ObjectDefinition* ComponentBuilder::findChild(const NScene::Parser::ObjectDefinition& object, uint32_t type){
 
         for(const auto& child : object.children){
 
@@ -186,42 +187,48 @@ namespace Novella::SceneLoader{
         return nullptr;
     }  
 
-    Anchor ComponentBuilder::getAnchor(const Syntax::Scene::Property& property){
+    Anchor ComponentBuilder::getAnchor(const NScene::Parser::Property& property){
 
-        if(property.value.StringValue == "TopLeft") return Anchor::TopLeft;
+        if(getString(property) == "TopLeft") return Anchor::TopLeft;
 
-        if(property.value.StringValue == "TopCenter") return Anchor::TopCenter;
+        if(getString(property) == "TopCenter") return Anchor::TopCenter;
 
-        if(property.value.StringValue == "TopRight") return Anchor::TopRight;
+        if(getString(property) == "TopRight") return Anchor::TopRight;
 
-        if(property.value.StringValue == "CenterLeft") return Anchor::CenterLeft;
+        if(getString(property) == "CenterLeft") return Anchor::CenterLeft;
 
-        if(property.value.StringValue == "Center") return Anchor::Center;
+        if(getString(property) == "Center") return Anchor::Center;
 
-        if(property.value.StringValue == "CenterRight") return Anchor::CenterRight;
+        if(getString(property) == "CenterRight") return Anchor::CenterRight;
 
-        if(property.value.StringValue == "BottomLeft") return Anchor::BottomLeft;
+        if(getString(property) == "BottomLeft") return Anchor::BottomLeft;
 
-        if(property.value.StringValue == "BottomCenter") return Anchor::BottomCenter;
+        if(getString(property) == "BottomCenter") return Anchor::BottomCenter;
 
-        if(property.value.StringValue == "BottomRight") return Anchor::BottomRight;
+        if(getString(property) == "BottomRight") return Anchor::BottomRight;
 
-        throw std::runtime_error("Invalid value for property anchor '" + property.value.StringValue +"'");
+        throw std::runtime_error("Invalid anchor: " + property.name);
     }
 
-    std::string ComponentBuilder::getString(const Syntax::Scene::Property& string){
+    std::string ComponentBuilder::getString(const NScene::Parser::Property& property){
 
-        return string.value.StringValue;
+        if(!property.value.isString()) throw std::runtime_error("Invalid value for property' " + property.name + "' Expected a string");
+
+        return property.value.as<std::string>();
     }
 
-    int ComponentBuilder::getInt(const Syntax::Scene::Property& property){
+    int ComponentBuilder::getInt(const NScene::Parser::Property& property){
 
-        if(std::trunc(property.value.numberValue) != property.value.numberValue) throw std::runtime_error("Expected int for property '" + property.name + "'");
+        if(!property.value.isNumber()) throw std::runtime_error("Expected int for property '" + property.name + "'");
 
-        return  property.value.numberValue;
+        double rawValue = property.value.as<double>();
+
+        if(std::trunc(rawValue) != rawValue) throw std::runtime_error("Expected int for property '" + property.name + "'");
+
+        return static_cast<int>(rawValue);
     }
 
-    const Syntax::Scene::Property* ComponentBuilder::findProperty(const Syntax::Scene::ObjectDefinition& object, const std::string& name){
+    const NScene::Parser::Property* ComponentBuilder::findProperty(const NScene::Parser::ObjectDefinition& object, const std::string& name){
 
         for(const auto& property : object.properties){
 

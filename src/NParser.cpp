@@ -1,15 +1,14 @@
-#include "../Novella/Syntax/NovellaScript/Parser.hpp"
-#include "../Novella/Syntax/NovellaScript/Lexer.hpp"
-#include "../Novella/Syntax/NovellaScript/Script.hpp"
-#include "../Novella/Syntax/NovellaScript/Definition.hpp"
+#include "../Novella/Scripting/Parser/Parser.hpp"
+#include "../Novella/Scripting/Parser/Lexer.hpp"
+#include "../Novella/Scripting/Parser/Script.hpp"
+#include "../Novella/Scripting/Parser/Definition.hpp"
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <variant>
 #include <vector>
-#include <iostream>
 
-namespace Novella::Syntax::NovellaScript{
+namespace Novella::NScript::Parser{
 
     Parser::Parser(Lexer& lexer){
 
@@ -263,7 +262,6 @@ namespace Novella::Syntax::NovellaScript{
 
             LiteralExpression expression{};
 
-            expression.value.type = Value::Type::Number;
             expression.value.underlyingValue = value;
 
             return expression;
@@ -281,7 +279,6 @@ namespace Novella::Syntax::NovellaScript{
 
             LiteralExpression expression{};
 
-            expression.value.type = Value::Type::Boolean;
             expression.value.underlyingValue = value;
 
             return expression;
@@ -296,7 +293,6 @@ namespace Novella::Syntax::NovellaScript{
 
             LiteralExpression expresion{};
 
-            expresion.value.type = Value::Type::String;
             expresion.value.underlyingValue = value;
 
             return expresion;

@@ -1,7 +1,7 @@
-#include "../Novella/Graphics/Image.hpp"
+#include "../Novella/Components/Primitives/Image.hpp"
 #include <raylib.h>
 
-namespace Novella::Graphics{
+namespace Novella{
 
     Image::Image(const std::filesystem::path& path)
     :

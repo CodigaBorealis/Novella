@@ -1,16 +1,18 @@
-#include "../Novella/Engine.hpp"
-#include "../Novella/Input/InputSystem.hpp"
-
+#include "../Novella/Core/Engine.hpp"
+#include "../Novella/Systems/Input/InteractionSystem.hpp"
+#include "../Novella/Systems/Input/InputSystem.hpp"
 #include <exception>
-namespace Novella{
 
+namespace Novella{
+//Later
     Engine::Engine()
         :
         displayWindow(1280, 720, "Novella Engine", 60),
         sceneManager(resourceManager, audioSystem),
         windowRenderer(1280, 720),
-        audioSystem(resourceManager),
-        interactionSystem(interpreter)
+        audioSystem(resourceManager)
+        //interpreter(runtime)
+        //interactionSystem(interpreter)
         {}
         
     Engine::Engine(const EngineConfig& config)
@@ -18,8 +20,9 @@ namespace Novella{
         displayWindow(config.width, config.height , config.title, config.targetFPS),
         sceneManager(resourceManager,audioSystem),
         windowRenderer(config.width, config.height),
-        audioSystem(resourceManager),
-        interactionSystem(interpreter)
+        audioSystem(resourceManager)
+        //interpreter(RuntimeEnvironment &runtime)
+        //interactionSystem(interpreter)
             {}
 
     void Engine::run(){
@@ -56,17 +59,17 @@ namespace Novella{
         }
     }
 
-    Resources::ResourceManager& Engine::resources(){
+    ResourceManager& Engine::resources(){
 
         return this->resourceManager;
     }
 
-    Rendering::Renderer& Engine::renderer(){
+    Renderer& Engine::renderer(){
 
         return this->windowRenderer;
     }
 
-    Audio::AudioSystem& Engine::audio(){
+    AudioSystem& Engine::audio(){
 
         return this->audioSystem;
     }
@@ -85,22 +88,22 @@ namespace Novella{
 
         return this->layoutSystem;
     }
+/*
+    InteractionSystem& Engine::input(){
 
-    Input::InteractionSystem& Engine::input(){
-
-        return this->interactionSystem;
+        //return this->interactionSystem;
     }
 
-    Syntax::NovellaScript::Interpreter& Engine::script(){
+    NScript::Runtime::Interpreter& Engine::script(){
 
-        return this->interpreter;
+        //return this->interpreter;
     }
-
+*/
     void Engine::computeLayout(Scene* currentScene){
 
         if(!currentScene) return;
 
-        Math::Vector2i virtualResolution = {
+        Vector2i virtualResolution = {
 
                 static_cast<int>(windowRenderer.virtualResolution().x),
                 
@@ -115,13 +118,13 @@ namespace Novella{
 
             if(!currentScene) return;
             
-            Math::Vector2f virtualMouse = windowRenderer.toVirtualCoordinates(Input::InputSystem::mousePosition());
+            Vector2f virtualMouse = windowRenderer.toVirtualCoordinates(InputSystem::mousePosition());
 
-            interactionSystem.handleKeyboardInput(*currentScene);
+            //interactionSystem.handleKeyboardInput(*currentScene);
 
-            interactionSystem.handleMouseInput(*currentScene, virtualMouse);
+            //interactionSystem.handleMouseInput(*currentScene, virtualMouse);
 
-            interactionSystem.handleInteractions();
+            //interactionSystem.handleInteractions();
         }
 
         void Engine::handleRendering(Scene* currentScene){
@@ -161,7 +164,7 @@ namespace Novella{
 
     }
 
-    Debug::Logger& Engine::logger(){
+    Logger& Engine::logger(){
 
         return lg;
     }

@@ -1,33 +1,36 @@
-#include "../Novella/IO/SceneLoader.hpp"
+#include "../Novella/Scene/Serialization/SceneLoader.hpp"
 #include "../Novella/Scene/Scene.hpp"//clangd swears this file is unused, it IS used
-#include "../Novella/IO/FileReader.hpp"
-#include "../Novella/Syntax/Scene/Lexer.hpp"
-#include "../Novella/Syntax/Scene/Parser.hpp"
-#include "../Novella/Engine.hpp"
+#include "../Novella/Utils/FileReader.hpp"
+#include "../Novella/Scene/Parser/Lexer.hpp"
+#include "../Novella/Scene/Parser/Parser.hpp"
+#include "../Novella/Core/Engine.hpp"
 #include <stdexcept>
-#include "../Novella/Components/Type.hpp"
-#include "../Novella/IO/ComponentBuilder.hpp"
-#include "../Novella/IO/InputBuilder.hpp"
-namespace Novella::SceneLoader{
+#include "../Novella/Scene/Serialization/ComponentBuilder.hpp"
+#include "../Novella/Components/UI/Button.hpp"
+#include "../Novella/Components/UI/Sprite.hpp"
+#include "../Novella/Components/UI/DialogueBox.hpp"
+#include "../Novella/Components/UI/Label.hpp"
+
+namespace Novella::NScene::Serialization{
 
     void Loader::load(Engine &engine, const std::filesystem::path& file){
 
-        std::string fileContents = IO::FileReader::getContentsFromFile(file);
+        std::string fileContents = FileReader::getContentsFromFile(file);
 
-        Syntax::Scene::Lexer lexer(fileContents);
+        Parser::Lexer lexer(fileContents);
 
-        Syntax::Scene::Parser parser(lexer);
+        Parser::Parser parser(lexer);
 
-        Syntax::Scene::SceneDefinition definition = parser.parse();
+        Parser::SceneDefinition definition = parser.parse();
 
         build(engine, definition);
 
     }
 
-    void Loader::build(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
+    void Loader::build(Engine& engine, const Parser::SceneDefinition& scene){
                 
         engine.audio().clear();
-        engine.input().clear();
+        //engine.input().clear();
         engine.resources().clear();
 
         engine.scene().clear();
@@ -40,13 +43,13 @@ namespace Novella::SceneLoader{
 
         loadObjects(engine, scene);
 
-        engine.script().clear();
+        //engine.script().clear();
 
         loadScripts(engine, scene);
 
     }
 
-    void Loader::loadResources(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
+    void Loader::loadResources(Engine& engine, const Parser::SceneDefinition& scene){
 
         for(const auto& resource : scene.resources){
 
@@ -73,35 +76,31 @@ namespace Novella::SceneLoader{
         }
     }
 
-    void Loader::loadObjects(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
+    void Loader::loadObjects(Engine& engine, const Parser::SceneDefinition& scene){
 
         for(const auto& object : scene.objects){
 
-            if(object.objectType == Components::Type::Sprite){
+            if(object.objectType == UI::Sprite::getStaticTypeID()){
 
                 ComponentBuilder::buildSprite(engine, object);
 
-            }else if(object.objectType == Components::Type::Button){
+            }else if(object.objectType == UI::Button::getStaticTypeID()){
 
                 ComponentBuilder::buildButton(engine, object);
 
-            }else if(object.objectType == Components::Type::Label){
+            }else if(object.objectType == UI::Label::getStaticTypeID()){
 
                 ComponentBuilder::buildLabel(engine, object);
-
-            }else{
-                
-                throw std::runtime_error("Invalid component type '" + object.objectType + "'");
 
             }
         }
     }
 
-    void Loader::loadScripts(Engine& engine, const Syntax::Scene::SceneDefinition& scene){
+    void Loader::loadScripts(Engine& engine, const Parser::SceneDefinition& scene){
 
         for(const auto& script : scene.scripts){
 
-            engine.script().loadScript(script);
+            //engine.script().loadScript(script);
         }
     }
 }

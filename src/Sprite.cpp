@@ -1,26 +1,16 @@
-#include "../Novella/Components/Sprite.hpp"
-#include <nlohmann/json.hpp>
+#include "../Novella/Components/UI/Sprite.hpp"
 #include <raylib.h>
-#include "../Novella/Components/Type.hpp"
 
-namespace Novella::Components{
+namespace Novella::UI{
 
-        Sprite::Sprite(std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
+        Sprite::Sprite(std::shared_ptr<Texture> texture, const Style& style, int renderLayer)
             :
-            Attribute::Object(Type::Sprite),
             texture(texture),
-            Attribute::Layoutable(layout)
-            {}
-
-        Sprite::Sprite(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
-            :
-            Attribute::Object(Type::Sprite),
-            texture(texture),
-            Attribute::Layoutable(layout),
+            Traits::Layoutable(style),
             rLayer(renderLayer)
             {}
 
-        void Sprite::draw(Rendering::Renderer& renderer){
+        void Sprite::draw(Renderer& renderer){
 
             renderer.drawTexture(*texture, computedRectangle, rotation, tint);
         }
@@ -35,17 +25,12 @@ namespace Novella::Components{
             return this->rLayer;
         }
 
-        const std::string& Sprite::getType() const{
-
-            return this->type;
-        }
-
-        void Sprite::setColor(const Graphics::Color& color){
+        void Sprite::setColor(const Color& color){
 
             this->tint = color;
         }
 
-        const Graphics::Color& Sprite::getColor() const{
+        const Color& Sprite::getColor() const{
 
             return this->tint;
         }

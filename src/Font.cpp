@@ -1,7 +1,7 @@
-#include "../Novella/Graphics/Font.hpp"
+#include "../Novella/Components/Primitives/Font.hpp"
 #include <raylib.h>
 
-namespace Novella::Graphics{
+namespace Novella{
 
     Font::Font(const std::filesystem::path& path)
     :

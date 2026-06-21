@@ -1,10 +1,10 @@
-#include "../Novella/Audio/AudioBackend.hpp"
+#include "../Novella/Systems/Audio/AudioBackend.hpp"
 #include <optional>
 #include <raylib.h>
 #include <stdexcept>
 namespace Novella::Audio{
 
-    AudioBackend::AudioBackend(Resources::ResourceManager& resources)
+    AudioBackend::AudioBackend(ResourceManager& resources)
         :
         resources(resources.audio())
         {
@@ -19,7 +19,7 @@ namespace Novella::Audio{
 
     }
 
-    const Resources::ResourceManager::AudioResource& AudioBackend::getResource(const std::string& name){
+    const ResourceManager::AudioResource& AudioBackend::getResource(const std::string& name){
 
         auto it = resources.find(name);
 

@@ -1,8 +1,8 @@
-#include "../Novella/Audio/AudioSystem.hpp"
+#include "../Novella/Systems/Audio/AudioSystem.hpp"
 #include <optional>
-namespace Novella::Audio{
+namespace Novella{
     
-    AudioSystem::AudioSystem(Resources::ResourceManager& resources)
+    AudioSystem::AudioSystem(ResourceManager& resources)
         :
         backend(resources)
         {}

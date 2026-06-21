@@ -1,19 +1,32 @@
 #pragma once
 #include <concepts>
 #include <cstdint>
-#include <stdexcept>
 #include <type_traits>
 #include <memory>
 #include <unordered_map>
 #include <vector>
-#include <optional>
-#include <nlohmann/json.hpp>
 
-namespace Novella::Attribute{
+namespace Novella::Traits{
 
     class Object;
 
 }
+
+struct Handle{
+
+    uint32_t index;
+    uint32_t generation;
+
+    uint64_t to64Bits() const{
+
+        return static_cast<uint64_t>(generation) << 32 | index;
+    }
+
+    static Handle from64Bits(uint64_t value){
+
+        return {static_cast<uint32_t>(value & 0xFFFFFFFF), static_cast<uint32_t>(value >> 32)};
+    };
+};
 
 namespace Novella{
 
@@ -23,7 +36,7 @@ namespace Novella{
 
         Scene() = default;
         
-        template <std::derived_from<Attribute::Object> T, typename... Args>
+        template <std::derived_from<Traits::Object> T, typename... Args>
 
         T& createObject(Args&&... args){
 
@@ -35,40 +48,24 @@ namespace Novella{
             
             objectRegistry.emplace(++ currentID, obj.get());
 
-            objs.push_back(std::move(obj));
+            drawingOrder.push_back(std::move(obj));
 
             this->dirty = true;
             
             return ref;
         }
 
-        //For recovering the specific implementation of the object
-        /*Was useful when things were made procedurally
-        template<typename T>
-
-        T* getObjectAs(const std::string& id){
-
-            auto* base = findObjectByID(id);
-
-            if(!base) throw std::runtime_error("Scene::getObjectAs: id not found: "  + id);
-
-            return dynamic_cast<T*>(base);
-        }
-*/
-        void addObject(std::unique_ptr<Attribute::Object> obj);
+        void addObject(std::unique_ptr<Traits::Object> obj);
         void removeObject(uint64_t id);
 
         uint64_t getObjectHandle(const std::string& name) const;
 
-        Attribute::Object* getObject(uint64_t handle);
-        Attribute::Object* getObject(uint64_t handle) const;
+        Traits::Object* getObject(uint64_t handle);
+        Traits::Object* getObject(uint64_t handle) const;
 
-        const std::vector<std::unique_ptr<Attribute::Object>>& objects() const;
+        const std::vector<std::unique_ptr<Traits::Object>>& objects() const;
 
-        std::vector<std::unique_ptr<Attribute::Object>>& objects();
-        
-        const std::optional<std::string>& getBgm() const;
-        void setBgm(const std::string&);
+        std::vector<std::unique_ptr<Traits::Object>>& objects();
 
         void clearDirtyFlag();
         bool needsSorting() const;
@@ -81,8 +78,10 @@ namespace Novella{
 
         uint64_t currentID = 0;
 
-        std::vector<std::unique_ptr<Attribute::Object>> objs;//For drawing
-        std::unordered_map<uint64_t, Attribute::Object*> objectRegistry;//This could be a vector but i dont want to deal with invalid indexes right now
+        //I must check on this later
+        
+        std::vector<std::unique_ptr<Traits::Object>> drawingOrder;
+        std::unordered_map<uint64_t, Traits::Object*> objectRegistry;//I could make the registry sequential and just turn a given value into nullptr if the object is deleted
         std::unordered_map<std::string, uint64_t> names;//What the scripting language touches
 
 };

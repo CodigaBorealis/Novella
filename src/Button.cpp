@@ -1,56 +1,22 @@
-#include "../Novella/Components/Button.hpp"
-#include <nlohmann/json.hpp>
-#include "../Novella/Components/Type.hpp"
-
-namespace Novella::Components{
-
-    Button::Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout)
-        :
-        Attribute::Object(Type::Button),
-        texture(texture),
-        Attribute::Layoutable(layout)
-        {}
+#include "../Novella/Components/UI/Button.hpp"
+#include "../Novella/Components/Primitives/Texture.hpp"
+namespace Novella::UI{
     
-    Button::Button(std::shared_ptr<Graphics::Texture> texture, const Layout& layout, int renderLayer)
+    Button::Button(std::shared_ptr<Texture> texture, const Style& style, int renderLayer)
         :
-        Attribute::Object(Type::Button),
         texture(texture),
-        Attribute::Layoutable(layout),
+        Traits::Layoutable(style),
         rLayer(renderLayer)
         {}
-
-    const std::string& Button::getType() const{
-
-        return this->type;
-    }
             
-    bool Button::contains(const Math::Vector2f& mousePos) const{
+    bool Button::contains(const Vector2f& mousePos) const{
 
         return mousePos.x >= computedRectangle.x && mousePos.x <= computedRectangle.x + computedRectangle.width &&
                mousePos.y >= computedRectangle.y && mousePos.y <= computedRectangle.y + computedRectangle.height;
 
     }
-/*
-    void Button::setLabel(Label* label){
 
-        this->label = label;
-    }
-
-    Label* Button::getLabel() const{
-
-        if(this->label == nullptr) throw std::runtime_error("Label for this button is null: " + id);
-
-        return label;
-    }
-
-    Label* Button::getLabel(){
-
-        if(this->label == nullptr) throw std::runtime_error("Label for this button is null: " + id);
-
-        return label;
-    }
-*/
-    void Button::draw(Rendering::Renderer& renderer){
+    void Button::draw(Renderer& renderer){
 
         renderer.drawTexture(*texture, computedRectangle, rotation, tint);
     }
@@ -64,12 +30,12 @@ namespace Novella::Components{
         return this->rLayer;
     }
 
-    void Button::setColor(const Graphics::Color& color){
+    void Button::setColor(const Color& color){
 
         this->tint = color;
     }
 
-    const Graphics::Color& Button::getColor() const{
+    const Color& Button::getColor() const{
 
         return this->tint;
     }
