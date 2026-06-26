@@ -7,7 +7,7 @@
 #include <vector>
 //I hate this so much
 namespace Novella::NScene::Parser{
-
+    
     Parser::Parser(Lexer& lexer){
 
         while(true){
@@ -73,13 +73,7 @@ namespace Novella::NScene::Parser{
 
         while(current().type != Token::Type::EndOfFile){
 
-        if(current().text == "Window"){
-            
-            registerSeenSection(current().text);
-
-            parseWindow(scene);
-
-        }else if(current().text == "Resources"){
+        if(current().text == "Resources"){
 
             registerSeenSection(current().text);
 
@@ -107,21 +101,6 @@ namespace Novella::NScene::Parser{
         checkIntegrity(parseRegistry);
 
         return scene;
-
-    }
-    
-    void Parser::parseWindow(SceneDefinition& scene){
-        
-        expect(Token::Type::Identifier);
-
-        expect(Token::Type::LBrace);
-        
-        while(current().type != Token::Type::RBrace){
-            
-            scene.windowProperties.push_back(parseProperty());
-        }
-
-        expect(Token::Type::RBrace);
 
     }
 

@@ -9,34 +9,27 @@
 #include "../Scene/SceneManager.hpp"
 #include "../Windowing/WindowFlags.hpp"
 #include "../Systems/Input/InteractionSystem.hpp"
+#include <memory>
 
 namespace Novella{
 
-    struct EngineConfig{
-
-        unsigned int width = 1280;
-        unsigned int height = 720;
-
-        std::string title = "Novella Engine";
-        unsigned int targetFPS = 60;
-        std::filesystem::path icon{};
-        WindowFlags flags = Novella::WindowFlags::None;
-
-    };
+    struct EngineConfig;
 
     class Engine{
 
         public:
         
-        Engine();
+        static void create(const std::filesystem::path& projectFile);
+
+        static Engine& instance();
+
+        Engine() = delete;
         
         Engine(const Engine&) = delete;
         Engine& operator=(const Engine&) = delete;
 
         Engine(Engine&&) noexcept = delete;
         Engine& operator=(Engine&&) noexcept = delete;
-
-        explicit Engine(const EngineConfig& config);
 
         void loadSceneFromFile(const std::filesystem::path& src);
         
@@ -53,6 +46,10 @@ namespace Novella{
         Logger& logger();
 
         private:
+
+        static std::unique_ptr<Engine> singleInstance;
+        
+        explicit Engine(const EngineConfig& config);
 
         void computeLayout(Scene* currentScene);
         void handleInput(Scene* currentScene);

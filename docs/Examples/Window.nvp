@@ -1,0 +1,15 @@
+Window{
+
+    width = 1920
+    height = 1080
+    title = "My visual novel"    
+    targetFPS = 300
+    icon = "/home/line/Projects/Novella/Test/2026-05-27_17-52.png"
+
+    Flags{
+
+        resizable
+        undecorated
+        
+    }
+}

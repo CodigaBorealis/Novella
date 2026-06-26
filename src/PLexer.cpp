@@ -1,13 +1,12 @@
-#include "../Novella/Scene/Parser/Lexer.hpp"
-#include "../Novella/Scene/Parser/Token.hpp"
-#include <cctype>
+#include "../Novella/Project/Lexer.hpp"
+#include "../Novella/Project/Token.hpp"
 #include <stdexcept>
 #include <string>
-#include <string_view>
+#include <iostream>
 
-namespace Novella::NScene::Parser{
+namespace Novella::Project{
 
-    Token Lexer::next(){
+Token Lexer::next(){
 
         skipWhitespace();
 
@@ -37,24 +36,6 @@ namespace Novella::NScene::Parser{
                 
                 return {Token::Type::RBrace, "}"};
 
-            case '(':
-
-                advance();
-
-                return {Token::Type::LParen, "("};
-
-            case ')':
-
-                advance();
-
-                return {Token::Type::RParen, ")"};
-
-            case ',':
-
-                advance();
-
-                return {Token::Type::Comma, ","};
-
             case '"':
 
                 return string();
@@ -63,9 +44,28 @@ namespace Novella::NScene::Parser{
         if(std::isdigit(static_cast<unsigned char>(c))) return number();
 
         if(std::isalpha(static_cast<unsigned char>(c)) || c == '_') return identifier();
-                
-        throw std::runtime_error(std::string("SCENELEXER: Unexpected character '" ) + c + "' at : " + std::to_string(line) + ":" + std::to_string(column));
+
+        std::cout << "SOURCE: " << source << "\n";
+
+        char received = source.at(currentCharacter);
+
+        unsigned char casted = static_cast<unsigned char>(received);
+
+        std::cout << "RECEIVED: \n";
+
+        std::cout << received;
+
+        std::cout << "\n";
+
+        std::cout << "CASTED\n";
+        
+        std::cout << casted;
+
+        std::cout << "\n";
+        throw std::runtime_error(std::string("PLEXER: Unexpected character '" ) + c + "' at : " + std::to_string(line) + ":" + std::to_string(column));
+
     }
+
     Token Lexer::identifier(){
 
         std::string value;
@@ -74,7 +74,7 @@ namespace Novella::NScene::Parser{
 
             char c = peek();
 
-            if(std::isalnum(c) || c == '_'){
+            if(std::isalnum(static_cast<unsigned char>(c)) || c == '_'){
 
                 value += advance();
 
@@ -89,30 +89,17 @@ namespace Novella::NScene::Parser{
 
     Token Lexer::number(){
 
-        short dotCount = 0;
         std::string value;
 
-        if(peek() == '-') value += advance();
+        if(peek() == '-') throw std::runtime_error("Invalid '-' token at " + std::to_string(line) + ":" + std::to_string(column));
 
         while(!eof()){
 
             char c = peek();
 
-            if(std::isdigit(static_cast<unsigned char>(c)) || c == '.'){
+            if(std::isdigit(static_cast<unsigned char>(c))){
                 
                 value += advance();
-
-                if(c == '.'){
-                    
-                    dotCount ++;
-
-                    if(dotCount > 1) throw std::runtime_error(std::string("Repeated '.' character +  at : " + std::to_string(line) + ":" + std::to_string(column)));
-                    
-                    char nextChar = peek();
-
-                    if(nextChar == '-' || nextChar == '.') throw std::runtime_error("Malformed number literal at " + std::to_string(line) + ":" + std::to_string(column));
-
-                }
 
             }else{
 
@@ -120,14 +107,16 @@ namespace Novella::NScene::Parser{
             }
         }
         
-        if(!value.empty() && value.back() == '.') throw std::runtime_error("Malformed number literal at " + std::to_string(line) + ":" + std::to_string(column));
+        if(!value.empty() && value.back() == '.') throw std::runtime_error("Malformed integer literal at " + std::to_string(line) + ":" + std::to_string(column));
         
         if(!eof()){
 
             char trailing = peek();
             
-            if(trailing == '-' || trailing == '.') throw std::runtime_error("Malformed number literal at " + std::to_string(line) + ":" + std::to_string(column));
+            if(trailing == '-' || trailing == '.') throw std::runtime_error("Malformed integer literal at " + std::to_string(line) + ":" + std::to_string(column));
         }
+
+        if(value.empty()) throw std::runtime_error("Expected a value at " + std::to_string(line) + std::to_string(column));
 
         return{Token::Type::Number, value};
     }

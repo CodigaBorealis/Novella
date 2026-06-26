@@ -158,11 +158,11 @@ namespace Novella::NScript::Parser{
                 return {Token::Type::Colon, ":"};
         }
 
-        if(std::isdigit(c)) return number();
+        if(std::isdigit(static_cast<unsigned char>(c))) return number();
 
         if(std::isalnum(static_cast<unsigned char>(c)) || c == '_') return identifier();
                 
-        throw std::runtime_error(std::string("Unexpected character '" ) + c + "' at : " + std::to_string(line) + ":" + std::to_string(column));
+        throw std::runtime_error(std::string("NLEXER: Unexpected character '" ) + c + "' at : " + std::to_string(line) + ":" + std::to_string(column));
     }
     
     Token Lexer::identifier(){

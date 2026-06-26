@@ -2,22 +2,33 @@
 #include "../Novella/Systems/Input/InteractionSystem.hpp"
 #include "../Novella/Systems/Input/InputSystem.hpp"
 #include <exception>
+#include <memory>
+#include <stdexcept>
+#include "../Novella/Project/Project.hpp"
 
 namespace Novella{
-//Later
-    Engine::Engine()
-        :
-        displayWindow(1280, 720, "Novella Engine", 60),
-        sceneManager(resourceManager, audioSystem),
-        windowRenderer(1280, 720),
-        audioSystem(resourceManager)
-        //interpreter(runtime)
-        //interactionSystem(interpreter)
-        {}
-        
+
+    std::unique_ptr<Engine> Engine::singleInstance = nullptr;
+    
+    Engine& Engine::instance(){
+
+        if(!singleInstance) throw std::runtime_error("Engine not created, call create() first");
+
+        return *singleInstance;
+    }
+
+    void Engine::create(const std::filesystem::path& projectFile){
+
+        if(singleInstance) throw std::runtime_error("Can't create more than one instance of the engine");
+
+        EngineConfig config = Project::load(projectFile);
+
+        singleInstance = std::unique_ptr<Engine>(new Engine(config));
+    }
+
     Engine::Engine(const EngineConfig& config)
         :
-        displayWindow(config.width, config.height , config.title, config.targetFPS),
+        displayWindow(config.width, config.height , config.title, config.targetFPS, config.icon, config.flags),
         sceneManager(resourceManager,audioSystem),
         windowRenderer(config.width, config.height),
         audioSystem(resourceManager)

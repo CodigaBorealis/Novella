@@ -34,12 +34,6 @@ namespace Novella{
         Window(Window&&) = delete;
         Window& operator=(Window&&) = delete;
 
-        Window(int width, int height, const std::string& title, int targetFPS);
-
-        Window(int width, int height, const std::string& title, int targetFPS, WindowFlags flags);
-
-        Window(int width, int height, const std::string& title, int targetFPS,const std::filesystem::path& icon);
-
         Window(int width, int height, const std::string& title, int targetFPS,const std::filesystem::path& icon, WindowFlags flags);
         
         bool isOpen() const;

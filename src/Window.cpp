@@ -14,43 +14,6 @@ namespace Novella{
         }
     }
     
-    Window::Window(int width, int height, const std::string& title, int targetFPS){
-        
-        if(::IsWindowReady()) return;
-
-        ::InitWindow(width, height, title.c_str());
-
-        ::SetTargetFPS(targetFPS);
-
-        this->title = title;
-    }
-
-    Window::Window(int width, int height, const std::string& title, int targetFPS, WindowFlags flags){
-
-     if(::IsWindowReady()) return;
-
-        setFlags(flags);
-
-        ::InitWindow(width, height, title.c_str());
-        
-        ::SetTargetFPS(targetFPS);
-
-        this->title = title;
-    }
-
-    Window::Window(int width, int height, const std::string& title, int targetFPS, const std::filesystem::path& icon){
-
-        if(::IsWindowReady()) return;
-
-        ::InitWindow(width, height, title.c_str());
-
-        ::SetTargetFPS(targetFPS);
-
-        this->title = title;
-
-        setIcon(icon);
-    }
-
     Window::Window(int width, int height, const std::string& title, int targetFPS, const std::filesystem::path& icon, WindowFlags flags){
         
         if(::IsWindowReady()) return;

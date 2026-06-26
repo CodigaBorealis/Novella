@@ -34,7 +34,6 @@ namespace Novella::NScene::Parser{
 
         enum class Section : unsigned short{
                 
-                Window,
                 Resources,
                 Components,
                 Scripts,
@@ -60,7 +59,6 @@ namespace Novella::NScene::Parser{
 
                 switch(section){
 
-                    case Section::Window: return "Window";
                     case Section::Resources: return "Resources";
                     case Section::Components: return "Components";
                     case Section::Scripts: return "Scripts";
@@ -72,7 +70,6 @@ namespace Novella::NScene::Parser{
 
             static constexpr Section stringToSection(const std::string& section){
 
-                if(section == "Window") return Section::Window;
                 if(section == "Resources") return Section::Resources;
                 if(section == "Components") return Section::Components;
                 if(section == "Scripts") return Section::Scripts;
@@ -87,7 +84,6 @@ namespace Novella::NScene::Parser{
         //Could be a vector but this is better for readability
         std::unordered_map<Section, ParseRegistry> parseRegistry{
 
-            {Section::Window, ParseRegistry{false}},
             {Section::Resources, ParseRegistry{false}},
             {Section::Components, ParseRegistry{false}},
             {Section::Scripts, ParseRegistry{true}}

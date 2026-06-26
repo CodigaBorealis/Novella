@@ -4,7 +4,9 @@
 
 int main(){
 
-    Novella::Engine engine;
+    Novella::Engine::create("/home/line/Projects/Novella/Test/Window.nvp");
+
+    auto& engine = Novella::Engine::instance();
 
     const std::filesystem::path source = "/home/line/Projects/Novella/Test/Hallway.nsc";
 

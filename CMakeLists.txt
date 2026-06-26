@@ -47,6 +47,10 @@ add_executable(Novella
     src/NLexer.cpp
     src/NParser.cpp
 
+    src/PLexer.cpp
+    src/PParser.cpp
+    src/Project.cpp
+    
     src/Interpreter.cpp
     src/ScriptLoader.cpp
     src/ModuleResolver.cpp

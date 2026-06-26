@@ -42,7 +42,7 @@ namespace Novella{
 
     inline WindowFlags& operator|=(WindowFlags& lhs, WindowFlags rhs){
 
-        lhs = rhs | rhs;
+        lhs = lhs | rhs;
 
         return lhs;
     }
