@@ -1,5 +1,4 @@
 #pragma once
-#include <nlohmann/json_fwd.hpp>
 #include <optional>
 #include <string>
 #include "AudioBackend.hpp"

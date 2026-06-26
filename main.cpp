@@ -6,7 +6,7 @@ int main(){
 
     Novella::Engine engine;
 
-    const std::filesystem::path source = "/home/line/projects/Novella/Test/Hallway.nsc";
+    const std::filesystem::path source = "/home/line/Projects/Novella/Test/Hallway.nsc";
 
     try{
 

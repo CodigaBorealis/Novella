@@ -1,6 +1,5 @@
 #include "../Novella/Scripting/Interpreter/Interpreter.hpp"
 #include "../Novella/Systems/Input/InteractionSystem.hpp"
-#include <nlohmann/json.hpp>
 #include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
 #include "../Novella/Scene/Parser/SceneDefinition.hpp"
 

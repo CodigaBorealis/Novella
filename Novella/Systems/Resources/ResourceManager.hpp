@@ -1,7 +1,6 @@
 #pragma once
 #include <cstddef>
 #include <memory>
-#include <nlohmann/json_fwd.hpp>
 #include <unordered_map>
 #include <filesystem>
 #include "../../Components/Primitives/Texture.hpp"
