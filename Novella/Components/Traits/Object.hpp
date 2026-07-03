@@ -20,19 +20,10 @@ namespace Novella::Traits{
 
         virtual uint32_t getTypeID() const = 0;
         
-        uint64_t getHandle() const{
-
-            return handle;
-        }
-
-        void setHandle(uint64_t id){
-
-            this->handle = id;
-        }
-
+        uint64_t objectHandle(){return objHandle;}
         private:
 
-        uint64_t handle = 0;
+        uint64_t objHandle = 0;
     };
 
     template <typename Derived>

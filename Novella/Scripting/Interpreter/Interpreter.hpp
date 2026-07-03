@@ -46,10 +46,9 @@ namespace Novella::NScript::Runtime{
         
         using RunTimeValue = std::variant<std::monostate, double, bool, std::string, char, std::vector<Parser::Expression>>;
 
-        Interpreter(RuntimeEnvironment& runtime)
+        Interpreter()
             :
-            statementEvaluator(runtime),
-            runtime(statementEvaluator)
+            statementEvaluator(runtime)
             {}
 
         void loadScript(const NScene::Parser::ScriptDefinition& definition);

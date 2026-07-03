@@ -5,30 +5,30 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include "../Components/Traits/Object.hpp"
 
 namespace Novella::Traits{
 
     class Object;
 
 }
-
-struct Handle{
-
-    uint32_t index;
-    uint32_t generation;
-
-    uint64_t to64Bits() const{
-
-        return static_cast<uint64_t>(generation) << 32 | index;
-    }
-
-    static Handle from64Bits(uint64_t value){
-
-        return {static_cast<uint32_t>(value & 0xFFFFFFFF), static_cast<uint32_t>(value >> 32)};
-    };
-};
+//TODO
+//The slot datastructure for recycling ids
 
 namespace Novella{
+
+    struct Handle{
+
+        uint32_t index = 0;
+        uint32_t generation = 0;
+    };
+
+    struct Slot{
+
+        std::unique_ptr<Novella::Traits::Object> object;
+        uint32_t generation = 1;
+        std::string name;
+    };
 
     class Scene{
 
@@ -38,34 +38,63 @@ namespace Novella{
         
         template <std::derived_from<Traits::Object> T, typename... Args>
 
-        T& createObject(Args&&... args){
+        Handle createObject(const std::string& name, Args&&... args){
 
             static_assert(!std::is_abstract_v<T>, "Scene::createObject: Cannot instantiate abstract class");
 
             auto obj = std::make_unique<T>(std::forward<Args>(args)...);
 
-            T& ref = *obj;
+            return addObject(std::move(obj), name);
             
-            objectRegistry.emplace(++ currentID, obj.get());
-
-            drawingOrder.push_back(std::move(obj));
-
-            this->dirty = true;
-            
-            return ref;
         }
 
-        void addObject(std::unique_ptr<Traits::Object> obj);
-        void removeObject(uint64_t id);
+        template <std::derived_from<Traits::Object> T>
 
-        uint64_t getObjectHandle(const std::string& name) const;
+        T* getObject(const Handle& handle){
 
-        Traits::Object* getObject(uint64_t handle);
-        Traits::Object* getObject(uint64_t handle) const;
+            Traits::Object* obj = getObjectBase(handle);
 
-        const std::vector<std::unique_ptr<Traits::Object>>& objects() const;
+            if(!obj) return nullptr;
 
-        std::vector<std::unique_ptr<Traits::Object>>& objects();
+            if(obj->getTypeID() != T::getStaticTypeID()) return nullptr;
+
+            return static_cast<T*>(obj);
+        }
+
+        template <std::derived_from<Traits::Object> T>
+
+        const T* getObject(const Handle& handle) const{
+
+            const Traits::Object* obj = getObjectBase(handle);
+
+            if(!obj) return nullptr;
+
+            if(obj->getTypeID() != T::getStaticTypeID()) return nullptr;
+
+            return static_cast<T*>(obj);
+        }
+
+        Handle addObject(std::unique_ptr<Traits::Object> obj, const std::string& name);
+        void removeObject(const Handle& id);
+
+        Handle getObjectHandle(const std::string& name) const;
+
+        Traits::Object* getObjectBase(const Handle& handle);
+
+        const Traits::Object* getObjectBase(const Handle& handle) const;
+
+        template<typename Func>
+
+        void forEachObject(Func&& callback){
+
+            for(auto& slot : slots){
+
+                if(slot.object){
+
+                    callback(*slot.object);
+                }
+            }
+        }
 
         void clearDirtyFlag();
         bool needsSorting() const;
@@ -76,13 +105,9 @@ namespace Novella{
 
         bool dirty = false;
 
-        uint64_t currentID = 0;
-
-        //I must check on this later
-        
-        std::vector<std::unique_ptr<Traits::Object>> drawingOrder;
-        std::unordered_map<uint64_t, Traits::Object*> objectRegistry;//I could make the registry sequential and just turn a given value into nullptr if the object is deleted
-        std::unordered_map<std::string, uint64_t> names;//What the scripting language touches
+        std::vector<Slot> slots;
+        std::vector<uint32_t> freeSlots;
+        std::unordered_map<std::string, Handle> names;//What the scripting language touches
 
 };
 }

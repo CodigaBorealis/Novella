@@ -29,7 +29,9 @@ namespace Novella::NScript::Parser{
 
         auto args = evaluateFunctionArguments(call.arguments);
 
-        return runtime.invokeFunction(call.functionName, args);
+        FunctionDefinition function = runtime.getFunction(call.functionName);
+        
+        return Value{};
     }
 
     Value ExpressionEvaluator::evaluate(const Expression& expression) const{

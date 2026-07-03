@@ -2,6 +2,7 @@
 #include "SceneDefinition.hpp"
 #include "Token.hpp"
 #include <cstddef>
+#include <cstdint>
 #include <unordered_map>
 #include <vector>
 #include "../../Components/UI/Button.hpp"
@@ -111,12 +112,14 @@ namespace Novella::NScene::Parser{
 
         void checkIntegrity(const std::unordered_map<Section, ParseRegistry>& parseRegistry);
 
+        static constexpr uint32_t STYLE_TYPE_ID = UINT32_MAX;
+
         std::unordered_map<std::string, uint32_t> typeIDs = {
 
             {"Sprite" , UI::Sprite::getStaticTypeID()},
             {"Label" , UI::Label::getStaticTypeID()},
             {"Button" , UI::Button::getStaticTypeID()},
-            {"Style", 4294967295}      //This shouldnt be done like this but it works
+            {"Style", STYLE_TYPE_ID}      //This shouldnt be done like this but it works
         };
     };
 

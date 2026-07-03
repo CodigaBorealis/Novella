@@ -3,6 +3,7 @@
 #include "SceneWatcher.hpp"
 #include <memory>
 #include <stdexcept>
+#include <type_traits>
 #include <utility>
 #include "../Components/Traits/Object.hpp"
 
@@ -36,11 +37,11 @@ namespace Novella{
 
         template<typename T, typename ... Args>
         
-        T& addObject(Args&&...args){
+        Handle addObject(const std::string& name, Args&&...args){
 
             if(!currentScene) throw std::runtime_error("SceneManager::addObject: No active scene");
 
-            return currentScene->createObject<T>(std::forward<Args>(args)...);
+            return currentScene->createObject<T>(name, std::forward<Args>(args)...);
         }
 
         void clear();

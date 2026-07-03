@@ -31,9 +31,8 @@ namespace Novella{
         displayWindow(config.width, config.height , config.title, config.targetFPS, config.icon, config.flags),
         sceneManager(resourceManager,audioSystem),
         windowRenderer(config.width, config.height),
-        audioSystem(resourceManager)
-        //interpreter(RuntimeEnvironment &runtime)
-        //interactionSystem(interpreter)
+        audioSystem(resourceManager),
+        interactionSystem(interpreter)
             {}
 
     void Engine::run(){

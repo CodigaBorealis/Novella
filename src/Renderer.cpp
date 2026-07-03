@@ -77,19 +77,19 @@ namespace Novella{
         ::EndDrawing();
     }
 
-    void Renderer::sortObjects(Scene& scene){
-
-        auto& objects = scene.objects();
+    void Renderer::rebuildCache(Scene& scene){
         
-        std::stable_sort(objects.begin(), objects.end(), [](const auto& a, const auto& b){
+        scene.forEachObject([this](Traits::Object& object){
 
-            auto* renderableA = dynamic_cast<Traits::Renderable*>(a.get());
-            auto* renderableB = dynamic_cast<Traits::Renderable*>(b.get());
+            if(auto* renderable = dynamic_cast<Traits::Renderable*>(&object)){
 
-            int layerA = renderableA ? renderableA->renderLayer() : 0;
-            int layerB = renderableB ? renderableB->renderLayer() : 0;
+                renderCache.push_back(renderable);
+            }
+        });
 
-            return layerA < layerB;
+        std::stable_sort(renderCache.begin(), renderCache.end(), [](const auto* a, const auto* b){
+
+            return a->renderLayer() < b->renderLayer();
         });
 
         scene.clearDirtyFlag();
@@ -99,19 +99,14 @@ namespace Novella{
 
         if(scene.needsSorting()){
 
-            sortObjects(scene);
+            renderCache.clear();
+            
+            rebuildCache(scene);
         }
 
-        for(const auto& obj : scene.objects()){
+        for(const auto& renderable : renderCache){
 
-            //Same as with the InteractionSystem
-            //Causes a small overhead but makes the rendering loop far simpler than splitting renderables
-            //Onto their own containers and trying to keep everything synced
-
-            if(auto* renderable = dynamic_cast<Traits::Renderable*>(obj.get())){
-
-                renderable->draw(*this);
-            }
+            renderable->draw(*this);
         }
     }
 

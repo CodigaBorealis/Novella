@@ -1,6 +1,13 @@
 #pragma once
 #include "../../Core/Math/Vector2x.hpp"
 #include <string>
+#include <vector>
+
+namespace Novella::Traits{
+
+    struct Renderable;
+
+}
 
 namespace Novella{
 
@@ -8,15 +15,7 @@ namespace Novella{
     class Font;
     class Color;
     class Scene;
-}
-
-namespace Novella{
-
     struct Rectangle;
-
-}
-
-namespace Novella{
 
     class Renderer{
 
@@ -52,7 +51,9 @@ namespace Novella{
         Vector2f renderTargetOffset{0.0f, 0.0f};
         float scale = 1.0f;
 
-        static void sortObjects(Scene& scene);
+        std::vector<Traits::Renderable*> renderCache;
+
+        void rebuildCache(Scene& scene);
 
     };
 }

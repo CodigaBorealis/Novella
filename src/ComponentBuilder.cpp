@@ -12,7 +12,7 @@ namespace Novella::NScene::Serialization{
 
     void ComponentBuilder::buildSprite(Engine& engine, const NScene::Parser::ObjectDefinition& definition){
 
-            if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
+            if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without a name");
             
             auto* tex = findProperty(definition, "texture");
 
@@ -29,20 +29,20 @@ namespace Novella::NScene::Serialization{
             int renderLayer = getInt(*rlayer);
 
             engine.scene().addObject<UI::Sprite>(
+                
+                definition.objectName,
+                engine.resources().getTexture(texture),
 
-            engine.resources().getTexture(texture),
+                style,
 
-            style,
-
-            renderLayer
-
+                renderLayer
         );
         
     }
 
     void ComponentBuilder::buildButton(Engine &engine, const NScene::Parser::ObjectDefinition& definition){
             
-        if(definition.objectName.empty()) throw std::runtime_error("Can't create button object without an id");
+        if(definition.objectName.empty()) throw std::runtime_error("Can't create button object without a name");
             
         auto* tex = findProperty(definition, "texture");
 
@@ -60,6 +60,8 @@ namespace Novella::NScene::Serialization{
 
         engine.scene().addObject<UI::Button>(
 
+            definition.objectName,
+
             engine.resources().getTexture(texture),
 
             constructedLayout,
@@ -71,7 +73,7 @@ namespace Novella::NScene::Serialization{
 
     void ComponentBuilder::buildLabel(Engine &engine, const NScene::Parser::ObjectDefinition &definition){
         
-        if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without an id");
+        if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without a name");
             
         auto* fnt = findProperty(definition, "font");
 
@@ -101,6 +103,8 @@ namespace Novella::NScene::Serialization{
 
         engine.scene().addObject<UI::Label>(
 
+            definition.objectName,
+            
             engine.resources().getFont(font),
             
             size,

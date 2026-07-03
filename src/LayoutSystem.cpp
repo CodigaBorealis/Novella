@@ -18,15 +18,17 @@ namespace Novella{
         return computedRectangle;
     }
 
-    void LayoutSystem::compute(const Scene& scene, const Vector2i& windowSize){
+    void LayoutSystem::compute(Scene& scene, const Vector2i& windowSize){
         //this does run
-        for(const auto& obj : scene.objects()){
+        if(!scene.needsSorting()) return;        
 
-            if(auto* layoutable = dynamic_cast<Traits::Layoutable*>(obj.get())){
+        scene.forEachObject([this, &windowSize](Traits::Object& object){
+
+            if(auto* layoutable = dynamic_cast<Traits::Layoutable*>(&object)){
 
                 layoutable->setComputedRectangle(compute(layoutable->getStyle(), windowSize));
             }
-        }
+        });
     }
 
     Rectangle LayoutSystem::computeLabel(const Style& style, const Vector2f& textSize, const Vector2i& parentSize){

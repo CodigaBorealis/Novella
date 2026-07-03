@@ -7,7 +7,6 @@
 #include "../Systems/Renderer/Renderer.hpp"
 #include "../Systems/Resources/ResourceManager.hpp"
 #include "../Scene/SceneManager.hpp"
-#include "../Windowing/WindowFlags.hpp"
 #include "../Systems/Input/InteractionSystem.hpp"
 #include <memory>
 
@@ -41,8 +40,8 @@ namespace Novella{
         SceneManager& scene();
         Window& window();
         LayoutSystem& layout();
-        //InteractionSystem& input();
-        //NScript::Runtime::Interpreter& script();
+        InteractionSystem& input();
+        NScript::Runtime::Interpreter& script();
         Logger& logger();
 
         private:
@@ -66,8 +65,8 @@ namespace Novella{
         AudioSystem audioSystem;
         SceneManager sceneManager;
         LayoutSystem layoutSystem;
-        //NScript::Runtime::Interpreter interpreter;
-        //InteractionSystem interactionSystem;
+        NScript::Runtime::Interpreter interpreter;
+        InteractionSystem interactionSystem;
         Logger lg;
     };
 

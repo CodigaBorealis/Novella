@@ -1,6 +1,12 @@
 #pragma once
 #include "../../Core/Math/Rectangle.hpp"
 #include "../../Core/Math/Vector2x.hpp"
+#include <vector>
+
+namespace Novella::Traits{
+
+    struct Layoutable;
+}
 
 namespace Novella{
 
@@ -20,10 +26,12 @@ namespace Novella{
 
         static Rectangle computeLabel(const Style& style, const Vector2f& textSize,  const Vector2i& parentSize);
 
-        void compute(const Scene& scene, const Vector2i& windowSize);
+        void compute(Scene& scene, const Vector2i& windowSize);
 
 
-        private:
+        private:    
+
+        std::vector<Traits::Layoutable*> layoutCache;
 
         static Vector2f computeSize(const Style& style, const Vector2i& parentSize);
 

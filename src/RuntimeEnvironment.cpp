@@ -58,19 +58,13 @@ namespace Novella::NScript::Runtime{
         it->second = value;
     }
 
-    Parser::Value RuntimeEnvironment::invokeFunction(const std::string& name,const std::vector<Parser::Value>& arguments){
+    const Parser::FunctionDefinition& RuntimeEnvironment::getFunction(const std::string& name){
 
         auto it = functions.find(name);
 
         if(it == functions.end()) throw std::runtime_error("Cannot call undefined function '" + name + "'");
 
-        callStack.push({it->second.name});
-        
-        statementEvaluator.execute(it->second.body);
-        
-        callStack.pop();
-
-        return Parser::Value{std::monostate{}};
+        return it->second;
     }
 
     void RuntimeEnvironment::clear(){
@@ -79,9 +73,7 @@ namespace Novella::NScript::Runtime{
         this->functions.clear();
         this->loadedModules.clear();
         this->persistentStorage.clear();
+        this->callStack.clear();
 
-        std::stack<CallFrame> emptyQueue{};
-
-        this->callStack.swap(emptyQueue);
     }
 }

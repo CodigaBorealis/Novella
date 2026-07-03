@@ -1,5 +1,4 @@
 #pragma once
-#include <stack>
 #include <unordered_map>
 #include <vector>
 #include "../Parser/Expression.hpp"
@@ -25,12 +24,7 @@ namespace Novella::NScript::Runtime{
 
         public:
 
-        RuntimeEnvironment() = delete;
-
-        RuntimeEnvironment(Parser::StatementEvaluator& evaluator)
-            :
-            statementEvaluator(evaluator)
-            {}
+        RuntimeEnvironment() = default;
 
         void registerData(const Parser::Script& script);
 
@@ -40,11 +34,9 @@ namespace Novella::NScript::Runtime{
 
         void clear();
 
-        Parser::Value invokeFunction(const std::string& name, const std::vector<Parser::Value>& arguments);
+        const Parser::FunctionDefinition& getFunction(const std::string& name);
 
         private:
-
-        Parser::StatementEvaluator& statementEvaluator;
 
         void registerFunction(const Parser::FunctionDefinition& definition);
         
@@ -55,7 +47,7 @@ namespace Novella::NScript::Runtime{
         std::unordered_map<std::string, Parser::ModuleDefinition> loadedModules;
         std::unordered_map<std::string, std::unordered_map<std::string, Parser::Value>> persistentStorage;
 
-        std::stack<CallFrame> callStack;
+        std::vector<CallFrame> callStack;
     };
 
 }

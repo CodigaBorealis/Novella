@@ -1,79 +1,97 @@
 #include "../Novella/Scene/Scene.hpp"
 #include "../Novella/Components/Traits/Object.hpp"
-#include <cstdint>
 #include <memory>
 #include <stdexcept>
 #include <string>
 
 namespace Novella{
 
-    void Scene::addObject(std::unique_ptr<Traits::Object> obj){
-
-        uint64_t id = ++currentID;
-
-        obj->setHandle(id);
-
-        objectRegistry[id] = obj.get();
-
-        this->drawingOrder.push_back(std::move(obj));
-
-        this->dirty = true;
-    
-        }
-    
-    void Scene::removeObject(uint64_t id){
-
-        auto it = objectRegistry.find(id);
-
-        if(it == objectRegistry.end()) throw std::runtime_error("There is no object with this id: '" + std::to_string(id) + "'");
-
-        auto target = it->second;
+    Handle Scene::addObject(std::unique_ptr<Traits::Object> obj, const std::string& name){
         
-        objectRegistry.erase(id);
+        if(name.empty()) throw std::runtime_error("Name cannot be empty");
 
-        std::erase_if(drawingOrder,[target](const auto& pointer){
+        if(names.contains(name)) throw std::runtime_error("An object with this name already exists: " + name);
 
-            return pointer.get() == target;
-        });
+        uint32_t index;
+
+        if(freeSlots.empty()){
+
+            index = slots.size();
+            slots.push_back({std::move(obj), 0, name});
+
+        }else{
+
+            index = freeSlots.back();
+            freeSlots.pop_back();
+
+            slots[index].object = std::move(obj);
+            slots[index].name = name;
+        }
+
+        this->dirty = true;
+
+        Handle handle{index, slots[index].generation};
+
+        names.emplace(name, handle);
+
+        return handle;
+
+    }
+    
+    void Scene::removeObject(const Handle& handle){
+
+        if(handle.index >= slots.size()) return;
+
+        Slot& slot = slots[handle.index];
+
+        if(slot.generation != handle.generation) return;
+
+        slot.object.reset();
+        slot.generation ++;
+
+        names.erase(slot.name);
+
+        slot.name.clear();
+
+        freeSlots.push_back(handle.index);
 
         this->dirty = true;
 
     }
 
-    const std::vector<std::unique_ptr<Traits::Object>>& Scene::objects() const{
+    Traits::Object* Scene::getObjectBase(const Handle& handle){
 
-        return drawingOrder;
+        if(handle.index >= slots.size()) return nullptr;
+
+        Slot& slot = slots[handle.index];
+
+        if(slot.generation != handle.generation) return nullptr;
+
+        return slot.object.get();
+        
     }
 
-    std::vector<std::unique_ptr<Traits::Object>>& Scene::objects(){
+    const Traits::Object* Scene::getObjectBase(const Handle& handle) const{
 
-        return drawingOrder;
+        if(handle.index >= slots.size()) return nullptr;
+
+        const Slot& slot = slots[handle.index];
+
+        if(slot.generation != handle.generation) return nullptr;
+
+        return slot.object.get();
+        
     }
 
-    Traits::Object* Scene::getObject(uint64_t handle){
-
-            auto it = objectRegistry.find(handle);
-
-            if(it == objectRegistry.end()) return nullptr;
-            
-            return it->second;
-    }
-
-    Traits::Object* Scene::getObject(uint64_t handle) const{
-
-            auto it = objectRegistry.find(handle);
-
-            if(it == objectRegistry.end()) return nullptr;
-            
-            return it->second;
-    }
-
-    uint64_t Scene::getObjectHandle(const std::string& name) const{
+    Handle Scene::getObjectHandle(const std::string& name) const{
 
         auto it = names.find(name);
         
-        if(it == names.end()) return 0;
+        if(it == names.end()) throw std::runtime_error("Object not found: " + name);
         
+        const Handle& handle = it->second;
+
+        if(handle.index >= slots.size() || slots[handle.index].generation != handle.generation) throw std::runtime_error("Stale handle in name map: " + name);
         return it->second;
     }
 
