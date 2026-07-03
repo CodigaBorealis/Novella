@@ -5,35 +5,39 @@
 #include <memory>
 #include <stdexcept>
 #include "../Novella/Project/Project.hpp"
-
+#include "../Novella/Utils/FileSystem.hpp"
+#include <iostream>
 namespace Novella{
 
     std::unique_ptr<Engine> Engine::singleInstance = nullptr;
-    
-    Engine& Engine::instance(){
 
-        if(!singleInstance) throw std::runtime_error("Engine not created, call create() first");
+    Engine& Engine::create(const std::filesystem::path& configFile){
+
+        if(singleInstance) throw std::runtime_error("Can't create more than one instance of the engine");
+        
+        auto configPath = Utils::Filesystem::findProjectFile(configFile);
+
+        EngineConfig config = Project::load(configPath);
+
+        singleInstance = std::unique_ptr<Engine>(new Engine(config, configPath.parent_path()));
 
         return *singleInstance;
     }
 
-    void Engine::create(const std::filesystem::path& projectFile){
-
-        if(singleInstance) throw std::runtime_error("Can't create more than one instance of the engine");
-
-        EngineConfig config = Project::load(projectFile);
-
-        singleInstance = std::unique_ptr<Engine>(new Engine(config));
-    }
-
-    Engine::Engine(const EngineConfig& config)
+    Engine::Engine(const EngineConfig& config, const std::filesystem::path& projectRoot)
         :
-        displayWindow(config.width, config.height , config.title, config.targetFPS, config.icon, config.flags),
+        root(projectRoot),
+        displayWindow(config.width, config.height , config.title, config.targetFPS, root / config.icon, config.flags),
         sceneManager(resourceManager,audioSystem),
         windowRenderer(config.width, config.height),
         audioSystem(resourceManager),
         interactionSystem(interpreter)
             {}
+
+    const std::filesystem::path& Engine::projectRoot() const{
+
+        return root;
+    }
 
     void Engine::run(){
         
@@ -157,7 +161,7 @@ namespace Novella{
 
     void Engine::loadSceneFromFile(const std::filesystem::path& src){
         
-        sceneManager.loadSceneFromFile(*this, src);
+        sceneManager.loadSceneFromFile(*this, this->root / src);
         
     }
 

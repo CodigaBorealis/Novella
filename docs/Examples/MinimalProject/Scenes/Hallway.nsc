@@ -1,33 +1,9 @@
 #This is an example of how to write a scene file for Novella
 #You can write comments just like this <----
 
-Window{
-#required data
-    width = 1920
-    height = 1080
-    title = "My visual novel"    
-
-#optional data
-
-    targetFPS = 60
-    icon = "/home/line/projects/Novella/Test/2026-05-27_17-52.png"
-
-    fullscreen = false
-    resizable = true
-    undecorated = false
-    hidden = false
-    minimized = false
-    maximized = false
-    unfocused = false
-    topmost = false
-    alwaysrun = false
-    transparent = false
-    highDPI = false
-    vsync = false
-    MSAA4X = false
-    interlaced = false
-
-    }
+#NOTE: all paths are resolved relative to the project root directory
+#which is defined as the folder containing the main project file(project.nvp)
+#i.e 'Resources/a.png' is resolved as 'MyGame/Resources/a.png' not Scenes/Resources/a.png even if this file is inside a folder called 'Scenes'
 
 Resources {
 
@@ -54,14 +30,15 @@ Resources {
 
     #After the name use a '=' symbol followed by the location of the resource
 
-    texture character = "/home/line/projects/Novella/Test/2026-05-27_17-52.png"
-    texture button = "/home/line/projects/Novella/Test/2026-05-27_18-59.png"
-    texture background = "/home/line/projects/Novella/Test/2026-05-27_18-59.png"
-    texture button2 = "/home/line/projects/Novella/Test/135284394.png"
+    texture background = "Resources/YourBackground.png"
 
-    font font = "/home/line/projects/Novella/Test/test.ttf"
+    texture character = "Resources/YourSprite.png"
 
-    music bgm = "/home/line/projects/Novella/Test/bgm.ogg"
+    texture button = "Resources/YourButton.png"
+
+    font font = "Resources/YourFont.ttf"
+
+    music bgm = "Resources/YourMusic.ogg"
 }
 
 Components{
@@ -72,7 +49,7 @@ Components{
         texture = background
         renderLayer = -1200
 
-        layout {
+        Style {
             anchor = TopLeft
             widthMode = FitWidth
             heightMode = FitHeight
@@ -84,12 +61,11 @@ Components{
         renderLayer = -1000
         #ignore this
 
-
-        layout {
-            anchor = Center
+        Style {
+            anchor = TopLeft
             widthMode = Fixed
             heightMode = Fixed
-            width = 600
+            width = 400
             height = 300
         }
     }
@@ -101,9 +77,9 @@ Components{
 
         renderLayer = -10
 
-        layout {
-            anchor = Center
-            offset = (1,2)
+        Style {
+            anchor = BottomLeft
+            offset = (0,0)
         }
     }
 
@@ -111,7 +87,7 @@ Components{
         texture = button
         renderLayer = 220
 
-        layout {
+        Style {
             anchor = TopRight
             widthMode = Fixed
             heightMode = Fixed
@@ -126,6 +102,6 @@ Components{
 
 Scripts{
 
-    buttonLogic = "/home/line/projects/Novella/Examples/button.nvs"
+    buttonLogic = "Scripts/button.nvs"
     
 }

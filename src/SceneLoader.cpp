@@ -1,6 +1,6 @@
 #include "../Novella/Scene/Serialization/SceneLoader.hpp"
 #include "../Novella/Scene/Scene.hpp"//clangd swears this file is unused, it IS used
-#include "../Novella/Utils/FileReader.hpp"
+#include "../Novella/Utils/FileSystem.hpp"
 #include "../Novella/Scene/Parser/Lexer.hpp"
 #include "../Novella/Scene/Parser/Parser.hpp"
 #include "../Novella/Core/Engine.hpp"
@@ -15,7 +15,7 @@ namespace Novella::NScene::Serialization{
 
     void Loader::load(Engine &engine, const std::filesystem::path& file){
 
-        std::string fileContents = FileReader::getContentsFromFile(file);
+        std::string fileContents = Utils::Filesystem::getContentsFromFile(engine.projectRoot() / file);
 
         Parser::Lexer lexer(fileContents);
 
@@ -53,21 +53,23 @@ namespace Novella::NScene::Serialization{
 
         for(const auto& resource : scene.resources){
 
+            const std::filesystem::path relativePath = engine.projectRoot() / resource.path;
+
             if(resource.type == "texture"){
 
-                engine.resources().loadTexture(resource.name, resource.path);
+                engine.resources().loadTexture(resource.name, relativePath);
 
             }else if (resource.type == "font"){
 
-                engine.resources().loadFont(resource.name, resource.path);
+                engine.resources().loadFont(resource.name, relativePath);
             
             }else if(resource.type == "music"){
 
-                engine.resources().loadAudio(resource.name, resource.path, "music");
+                engine.resources().loadAudio(resource.name, relativePath, "music");
 
             }else if(resource.type == "sfx"){
 
-                engine.resources().loadAudio(resource.name, resource.path, "sfx");
+                engine.resources().loadAudio(resource.name, relativePath, "sfx");
 
             }else{
 

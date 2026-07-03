@@ -2,7 +2,7 @@
 #include "../Novella/Scripting/Parser/Script.hpp"
 #include "../Novella/Scripting/Parser/Parser.hpp"
 #include "../Novella/Scripting/Parser/Lexer.hpp"
-#include "../Novella/Utils/FileReader.hpp"
+#include "../Novella/Utils/FileSystem.hpp"
 #include <stdexcept>
 
 namespace Novella::NScript::Runtime{
@@ -13,7 +13,7 @@ namespace Novella::NScript::Runtime{
 
         if(extension != ".nvs") throw std::runtime_error("'" + source.string() + "' is not a novellaScript file");
 
-        std::string scriptContents = FileReader::getContentsFromFile(source);
+        std::string scriptContents = Utils::Filesystem::getContentsFromFile(source);
 
         Parser::Lexer lexer(scriptContents);
 

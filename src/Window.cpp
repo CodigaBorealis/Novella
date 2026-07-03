@@ -135,7 +135,7 @@ namespace Novella{
 
     void Window::setIcon(const std::filesystem::path& file){
 
-        if(!std::filesystem::exists(file)) throw std::runtime_error("File not found: " + file.string());
+        if(!std::filesystem::exists(file)) throw std::runtime_error("Icon not found: " + file.string());
 
         Image icon{file};
 

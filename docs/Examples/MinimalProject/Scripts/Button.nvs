@@ -4,7 +4,6 @@
 #I should document all of this so you can just look it up
 
 import INPUT as input; #import libraries from the engine itself
-#import "/MyModule.nvs" as myModule;#import other scripts, must always start with / to refer to current directory
 
 #Importing a file imports all of its modules by default like including a c header
 #So no privacy semantics because its not a class

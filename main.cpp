@@ -1,22 +1,22 @@
 #include "Novella/Core/Engine.hpp"
 #include <exception>
+#include <filesystem>
 #include <iostream>
 
 int main(){
 
-    Novella::Engine::create("/home/line/Projects/Novella/Test/Window.nvp");
+    const std::filesystem::path projectConfigFile = "docs/Examples/MinimalProject/Window.nvp";
+    const std::filesystem::path sceneFile = "Scenes/Hallway.nsc";
 
-    auto& engine = Novella::Engine::instance();
-
-    const std::filesystem::path source = "/home/line/Projects/Novella/Test/Hallway.nsc";
+    auto& engine = Novella::Engine::create(projectConfigFile);
 
     try{
 
-    engine.loadSceneFromFile(source);
+        engine.loadSceneFromFile(sceneFile);
 
-    engine.audio().play("bgm");
-    
-    engine.run();
+        engine.audio().play("bgm");
+        
+        engine.run();
 
     }catch(std::exception& e){
 
@@ -29,5 +29,5 @@ int main(){
 //TODO:
 
 // DO THIS FIRST->Finish the handle refactoring
-
+//Should fix relative paths tomorow
 //Make the interpreter work

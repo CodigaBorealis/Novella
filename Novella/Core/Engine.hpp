@@ -18,9 +18,7 @@ namespace Novella{
 
         public:
         
-        static void create(const std::filesystem::path& projectFile);
-
-        static Engine& instance();
+        static Engine& create(const std::filesystem::path& configFile);
 
         Engine() = delete;
         
@@ -43,12 +41,13 @@ namespace Novella{
         InteractionSystem& input();
         NScript::Runtime::Interpreter& script();
         Logger& logger();
+        const std::filesystem::path& projectRoot() const;
 
         private:
 
         static std::unique_ptr<Engine> singleInstance;
         
-        explicit Engine(const EngineConfig& config);
+        explicit Engine(const EngineConfig& config, const std::filesystem::path& projectRoot);
 
         void computeLayout(Scene* currentScene);
         void handleInput(Scene* currentScene);
@@ -56,6 +55,7 @@ namespace Novella{
         void handleAudio(Scene* currentScene);
         void handleScripting(Scene* currentScene);
         
+        std::filesystem::path root;
         std::string lastError = "";
 
         Window displayWindow;

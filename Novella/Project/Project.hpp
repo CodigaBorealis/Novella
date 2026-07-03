@@ -3,6 +3,6 @@
 
 namespace Novella::Project{
 
-    EngineConfig load(const std::filesystem::path& src);
+    EngineConfig load(const std::filesystem::path& configFile);
 
 }

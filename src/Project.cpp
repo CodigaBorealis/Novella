@@ -1,17 +1,18 @@
 #include "../Novella/Project/Project.hpp"
 #include "../Novella/Project/Lexer.hpp"
 #include "../Novella/Project/Parser.hpp"
-#include "../Novella/Utils/FileReader.hpp"
+#include "../Novella/Utils/FileSystem.hpp"
 #include <stdexcept>
-#include <iostream>
 
 namespace Novella::Project{
 
-    EngineConfig load(const std::filesystem::path& src){
+    EngineConfig load(const std::filesystem::path& configFile){
 
-        if(!FileReader::exists(src)) throw std::runtime_error("Engine configuration file not found: " + src.string()); 
+        const std::filesystem::path relativePath = Utils::Filesystem::getRelativePath(configFile);
 
-        std::string contents = FileReader::getContentsFromFile(src);
+        if(!Utils::Filesystem::exists(relativePath)) throw std::runtime_error("Project root folder not found: " + relativePath.string()); 
+        
+        std::string contents = Utils::Filesystem::getContentsFromFile(relativePath);
 
         Lexer lexer{contents};
 

@@ -7,6 +7,8 @@ namespace Novella{
 
     struct EngineConfig{
 
+        std::filesystem::path root;
+        
         unsigned int width;
         unsigned int height;
 
