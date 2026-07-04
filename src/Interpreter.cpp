@@ -6,6 +6,7 @@
 #include "../Novella/Scene/Parser/SceneDefinition.hpp"
 #include "../Novella/Core/Engine.hpp"
 #include "../Novella/Scripting/API/API.hpp"
+#include <iostream>
 namespace Novella::NScript::Runtime{
 
     void Interpreter::loadScript(const NScene::Parser::ScriptDefinition& definition){
@@ -32,7 +33,12 @@ namespace Novella::NScript::Runtime{
 
     void Interpreter::initialize(Engine& engine){
 
-
+        std::cout << "CALLED INITIALIZE\n";
+        runtime.initializeContext(engine);
+        std::cout << "FINISHED INITIALIZING THE CONTEXT\n";
+        runtime.registerCoreFunctions();
+        std::cout << "LOADED ENGINE API\n";
+        runtime.printNativeFunctionAddresses();
 
     }
 

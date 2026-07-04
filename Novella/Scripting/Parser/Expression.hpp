@@ -2,16 +2,43 @@
 #include "ScriptFwd.hpp"
 #include "Token.hpp"
 #include <memory>
+#include <stdexcept>
+#include <type_traits>
 #include <variant>
 #include <vector>
+
+template<class... Ts> struct overloaded : Ts...{using Ts::operator()...;};
+template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
 namespace Novella::NScript::Parser{
 
     using PrimitiveValue = std::variant<std::monostate, std::string, double, bool, char>;
 
-    struct Value{
-
+    struct Value {
+        
         std::variant<PrimitiveValue, std::vector<PrimitiveValue>> underlyingValue;
+        //So i can extract the actual underlying type of the variant when registering on the runtime
+        template <typename T>
+
+        decltype(auto) get() const{
+
+        using DecayedT = std::decay_t<T>;
+
+        return std::visit(overloaded{[](const PrimitiveValue& primitive) -> T{
+
+                return std::get<DecayedT>(primitive);
+
+            },[](const std::vector<PrimitiveValue>& vec) -> T{
+
+                if(vec.empty()) throw std::runtime_error("Empty array value extraction");
+
+                return std::get<DecayedT>(vec[0]);
+            }
+
+            }, underlyingValue);
+        
+        }
+    
     };
     
     struct LiteralExpression{

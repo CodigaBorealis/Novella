@@ -7,24 +7,29 @@ namespace Novella{
 
     class Window;
 }
+//The Value variant used by the scripting language treats all numbers as double
 
-namespace Novella::NScript::Modules{
+namespace Novella::NScript::Modules::Window{
         
     void setTitle(Runtime::Context& context, const std::string& title);
 
-    void setPosition(Runtime::Context& context, const Vector2i& position);
+    void setPositionX(Runtime::Context& context, double value);
 
-    void move(Runtime::Context& context, const Vector2i& delta);
+    void setPositionY(Runtime::Context& context, double value);
 
-    void setSize(Runtime::Context& context, const Vector2i& dimensions);
+    void setWidth(Runtime::Context& context, double width);
 
-    void resize(Runtime::Context& context, const Vector2i& delta);
+    void setHeight(Runtime::Context& context, double height);
 
     void setIcon(Runtime::Context& context, const std::string& resource);
         
-    Vector2i getSize(Runtime::Context&);
+    double getWidth(Runtime::Context&);
 
-    Vector2i getPosition(Runtime::Context&);
+    double getHeight(Runtime::Context&);
+
+    double getPositionX(Runtime::Context&);
+
+    double getPositionY(Runtime::Context&);
 
     std::string getTitle(Runtime::Context&);
 

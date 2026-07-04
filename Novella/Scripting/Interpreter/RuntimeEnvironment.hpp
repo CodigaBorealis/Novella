@@ -1,15 +1,24 @@
 #pragma once
+#include <stdexcept>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 #include "../Parser/Expression.hpp"
 #include "StatementEvaluator.hpp"
 #include "../Parser/Definition.hpp"
 #include "NativeFunction.hpp"
+#include "RuntimeContext.hpp"
+#include <utility>
 
 namespace Novella::NScript::Parser{
 
     struct Script;
 
+}
+
+namespace Novella{
+
+    class Engine;
 }
 
 namespace Novella::NScript::Runtime{
@@ -28,6 +37,10 @@ namespace Novella::NScript::Runtime{
 
         RuntimeEnvironment() = default;
 
+        void initializeContext(Engine& engine);
+
+        void registerCoreFunctions();
+
         void registerData(const Parser::Script& script);
 
         Parser::Value& getVariable(const std::string& name);
@@ -40,23 +53,38 @@ namespace Novella::NScript::Runtime{
 
         void registerFunction(const Parser::FunctionDefinition& definition);
 
-        template <typename Class, typename Return, typename... Args>
+        //Maybe i should just work at a convenience store instead because what even is this anymore
+        template <typename Return, typename... Args>
 
-        void registerNativeFunction(const std::string& name, Class* object, Return(Class::*method)(Args...) const){
-            
+        void registerNativeFunction(const std::string& name, Return(*function)(Context&, Args...)){
+
+            nativeFunctions.emplace(name, [this, function, name](Context& context, const std::vector<Parser::Value>& values) -> Parser::Value{
+
+                if(values.size() != sizeof...(Args)) throw std::runtime_error("Argument mismatch for native function: " + name);
+
+                auto unpacker = [this, function, &context, &values]<std::size_t...Is>(std::index_sequence<Is...>){
+
+                    if constexpr(std::is_void_v<Return>){
+
+                        function(context, values[Is].template get<Args>()...);
+
+                        return Parser::Value{};
+
+                    }else{
+
+                        return Parser::Value{function(context, values[Is].template get<Args>()...)};
+                    }
+                };
+
+                return unpacker(std::make_index_sequence<sizeof...(Args)>{});
+            });
         }
 
-        template <typename Class, typename Return, typename... Args>
-
-        void registerNativeFunction(const std::string& name, Class* object, Return(Class::*method)(Args...)){
-
-        }
+        void printNativeFunctionAddresses() const;
 
         void createVariable(const std::string& name, const Parser::Value& value);
     
         private:
-
-        void registerNativeFunction(const std::string& name, const NativeFunction& function);
         
         std::unordered_map<std::string, Parser::Value> variables;
         std::unordered_map<std::string, Parser::FunctionDefinition> scriptFunctions;
@@ -65,6 +93,8 @@ namespace Novella::NScript::Runtime{
         std::unordered_map<std::string, std::unordered_map<std::string, Parser::Value>> persistentStorage;
 
         std::vector<CallFrame> callStack;
+
+        Context runtimeContext;
     };
 
 }

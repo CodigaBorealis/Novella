@@ -59,6 +59,7 @@ add_executable(Novella
     src/FunctionExecutor.cpp
     src/EventHandler.cpp
     src/Converter.cpp
+    src/CoreInitializer.cpp
     
     src/AudioModule.cpp
     src/DebugModule.cpp

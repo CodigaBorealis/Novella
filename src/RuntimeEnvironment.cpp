@@ -3,12 +3,57 @@
 #include "../Novella/Scripting/Parser/Script.hpp"
 #include <stdexcept>
 #include <variant>
+#include "../Novella/Scripting/Interpreter/CoreInitializer.hpp"
+#include "../Novella/Core/Engine.hpp"
+#include <iostream>
+#include <vector>
 
 namespace Novella::NScript::Runtime{
-    
-    void RuntimeEnvironment::registerNativeFunction(const std::string& name, const NativeFunction& function){
 
-        
+    void RuntimeEnvironment::printNativeFunctionAddresses() const{
+
+        std::cout << "NATIVE FUNCTIONS:" << "\n";
+
+        using ExpectedTargetType = Parser::Value(*)(Context&, const std::vector<Parser::Value>&);
+
+        for(const auto& [name,func] : nativeFunctions){
+
+            if(auto* const* targetPtr = func.target<ExpectedTargetType>()){
+
+                void* address = reinterpret_cast<void*>(*targetPtr);
+
+                std::cout << "FUNCTION: " << name << " ADDRESS: " << address << "\n";
+
+            }else{
+
+                std::cout << "FUNCTION: " << name << " WRAPPER ADDRESS: " << static_cast<const void*>(&func) << "\n";
+            }
+        }
+    }
+
+    void RuntimeEnvironment::initializeContext(Engine& engine){
+
+        this->runtimeContext.audio = &engine.audio();
+        this->runtimeContext.input = &engine.input();
+        this->runtimeContext.layout = &engine.layout();
+        this->runtimeContext.logger = &engine.logger();
+        this->runtimeContext.renderer = &engine.renderer();
+        this->runtimeContext.scene = &engine.scene();
+        this->runtimeContext.window = &engine.window();
+
+        std::cout << "GOT THE POINTERS TO THE SYSTEMS\n";
+    }
+
+    void RuntimeEnvironment::registerCoreFunctions(){
+
+        CoreInitializer::registerAudio(*this);
+        CoreInitializer::registerInteraction(*this);
+        CoreInitializer::registerLayout(*this);
+        CoreInitializer::registerLogger(*this);
+        CoreInitializer::registerRenderer(*this);
+        CoreInitializer::registerScene(*this);
+        CoreInitializer::registerWindow(*this);
+
     }
 
     void RuntimeEnvironment::registerData(const Parser::Script& script){

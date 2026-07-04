@@ -8,9 +8,9 @@ namespace Novella{
 
 namespace Novella::NScript::Modules::Audio{
 
-        void playSound(Runtime::Context& context, const std::string& id);
+        void play(Runtime::Context& context, const std::string& id);
 
         void stop(Runtime::Context& context, const std::string& id);
 
-        void volume(Runtime::Context& context, const std::string& id);
+        void volume(Runtime::Context& context, const std::string& id, double value);
 }; 

@@ -1,7 +1,8 @@
 #include "../Novella/Scripting/API/WindowModule.hpp"
 #include "../Novella/Windowing/Window.hpp"
-#include <filesystem>
+#include <stdexcept>
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
+#include "../Novella/Utils/FileSystem.hpp"
 
 namespace Novella::NScript::Modules::Window{
 
@@ -10,51 +11,67 @@ namespace Novella::NScript::Modules::Window{
         context.window->setTitle(title);
     }
 
-    void setPosition(Runtime::Context& context, const Vector2i& position){
+    void setPositionX(Runtime::Context& context, double value){
 
-        context.window->setPosition(position);
+        int x = static_cast<int>(value);
+
+        if(x < 0) throw std::runtime_error("setPositionX: Can't move window X axis to a negative coordinate");
+
+        context.window->setPosition({x, context.window->getPosition().y});
     }
 
-    void move(Runtime::Context& context, const Vector2i& delta){
-    
-        Vector2i position = context.window->getPosition();
+    void setPositionY(Runtime::Context& context, double value){
 
-        position.x += delta.x;
-        position.y += delta.y;
+        int y = static_cast<int>(value);
 
-        context.window->setPosition(position);
+        if(y < 0) throw std::runtime_error("setPositionX: Can't move window Y axis to a negative coordinate");
+
+        context.window->setPosition({context.window->getPosition().x, y});
     }
 
-    void setSize(Runtime::Context& context, const Vector2i& dimensions){
+    void setWidth(Runtime::Context& context, double width){
 
-        context.window->setSize(dimensions);
+        int castedWidth = static_cast<int>(width);
+
+        if(castedWidth < 0) throw std::runtime_error("setWidth: Can't set window width to a negative value");
+
+        context.window->setSize({castedWidth,context.window->getSize().y});
     }
 
-    void resize(Runtime::Context& context, const Vector2i& delta){
+    void setHeight(Runtime::Context& context, double height){
 
-        Vector2i size = context.window->getSize();
+        int castedHeight = static_cast<int>(height);
 
-        size.x += delta.x;
-        size.y += delta.y;
+        if(castedHeight < 0) throw std::runtime_error("setWidth: Can't set window width to a negative value");
 
-        context.window->setSize(size);
+        context.window->setSize({context.window->getSize().x, castedHeight});
     }
 
-    void setIcon(Runtime::Context& context, const std::string& source){
+    void setIcon(Runtime::Context& context, const std::string& resource){
 
-        std::filesystem::path src{source};
+        if(!Utils::Filesystem::exists({resource})) throw std::runtime_error("setIcon: file not found: " + resource);
 
-        context.window->setIcon(src);
+        context.window->setIcon(resource);
+    }
+        
+    double getWidth(Runtime::Context& context){
+
+        return context.window->getSize().x;
     }
 
-    Vector2i getSize(Runtime::Context& context){
+    double getHeight(Runtime::Context& context){
 
-        return context.window->getSize();
+        return context.window->getSize().y;
     }
 
-    Vector2i getPosition(Runtime::Context& context){
+    double getPositionX(Runtime::Context& context){
 
-        return context.window->getPosition();
+        return context.window->getPosition().x;
+    }
+
+    double getPositionY(Runtime::Context& context){
+
+        return context.window->getPosition().y;
     }
 
     std::string getTitle(Runtime::Context& context){
