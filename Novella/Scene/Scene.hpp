@@ -6,29 +6,15 @@
 #include <unordered_map>
 #include <vector>
 #include "../Components/Traits/Object.hpp"
-
+#include "Handle.hpp"
+#include "Slot.hpp"
 namespace Novella::Traits{
 
     class Object;
 
 }
-//TODO
-//The slot datastructure for recycling ids
 
 namespace Novella{
-
-    struct Handle{
-
-        uint32_t index = 0;
-        uint32_t generation = 0;
-    };
-
-    struct Slot{
-
-        std::unique_ptr<Novella::Traits::Object> object;
-        uint32_t generation = 1;
-        std::string name;
-    };
 
     class Scene{
 
@@ -77,7 +63,7 @@ namespace Novella{
         Handle addObject(std::unique_ptr<Traits::Object> obj, const std::string& name);
         void removeObject(const Handle& id);
 
-        Handle getObjectHandle(const std::string& name) const;
+        const Handle& getObjectHandle(const std::string& name) const;
 
         Traits::Object* getObjectBase(const Handle& handle);
 

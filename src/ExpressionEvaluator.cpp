@@ -1,14 +1,20 @@
-#include "../Novella/Scripting/Parser/ExpressionEvaluator.hpp"
+#include "../Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
 #include "../Novella/Scripting/Parser/Definition.hpp"
+#include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
 #include <variant>
 #include <vector>
 
-namespace Novella::NScript::Parser{
+namespace Novella::NScript::Runtime{
 
-    std::vector<Value> ExpressionEvaluator::evaluateFunctionArguments(const std::vector<Expression>& arguments) const{
+    void ExpressionEvaluator::setFunctionExecutor(FunctionExecutor& executor){
 
-        std::vector<Value> values{};
+        this->functionExecutor = &executor;
+    }
+
+    std::vector<Parser::Value> ExpressionEvaluator::evaluateFunctionArguments(const std::vector<Parser::Expression>& arguments) const{
+
+        std::vector<Parser::Value> values{};
 
         values.reserve(arguments.size());
 
@@ -20,36 +26,56 @@ namespace Novella::NScript::Parser{
         return values;
     }
 
-    Value ExpressionEvaluator::evaluateVariable(const VariableExpression& variable) const{
+    Parser::Value ExpressionEvaluator::evaluateVariable(const Parser::VariableExpression& variable) const{
         
         return runtime.getVariable(variable.name);
     }
 
-    Value ExpressionEvaluator::evaluateFunctionCall(const FunctionCallExpression& call) const{
+    Parser::Value ExpressionEvaluator::evaluateFunctionCall(const Parser::FunctionCallExpression& call) const{
 
         auto args = evaluateFunctionArguments(call.arguments);
 
-        FunctionDefinition function = runtime.getFunction(call.functionName);
-        
-        return Value{};
+        return functionExecutor->call(call.functionName, args);
     }
 
-    Value ExpressionEvaluator::evaluate(const Expression& expression) const{
+    Parser::Value ExpressionEvaluator::evaluate(const Parser::Expression& expression) const{
 
-        if(auto functionCall = std::get_if<FunctionCallExpression>(&expression)){
+        if(auto functionCall = std::get_if<Parser::FunctionCallExpression>(&expression)){
 
             return evaluateFunctionCall(*functionCall);
 
-        }else if(auto literal = std::get_if<LiteralExpression>(&expression)){
+        }else if(auto literal = std::get_if<Parser::LiteralExpression>(&expression)){
 
             return literal->value;
 
-        }else if(auto variable = std::get_if<VariableExpression>(&expression)){
+        }else if(auto variable = std::get_if<Parser::VariableExpression>(&expression)){
 
             return evaluateVariable(*variable);
+
+        }else if(auto unary = std::get_if<Parser::UnaryExpression>(&expression)){
+
+
+        }else if(auto binary = std::get_if<Parser::BinaryExpression>(&expression)){
+
+
+        }else if(auto assignment = std::get_if<Parser::AssignmentExpression>(&expression)){
+
+
+        }else if(auto array = std::get_if<Parser::ArrayExpression>(&expression)){
+
+
+        }else if(auto member = std::get_if<Parser::MemberExpression>(&expression)){
+
+
+        }else if(auto index = std::get_if<Parser::IndexExpression>(&expression)){
+
+
+        }else if(auto postFix = std::get_if<Parser::PostFixExpression>(&expression)){
+
+
         }
 
-        return Value{PrimitiveValue{std::monostate{}}};
+        return Parser::Value{Parser::PrimitiveValue{std::monostate{}}};
     }
 
 }

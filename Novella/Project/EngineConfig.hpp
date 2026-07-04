@@ -8,7 +8,13 @@ namespace Novella{
     struct EngineConfig{
 
         std::filesystem::path root;
+
+        //Window
+
+        unsigned int windowHeight;
+        unsigned int windowWidth;
         
+        //Internal resolution
         unsigned int width;
         unsigned int height;
 

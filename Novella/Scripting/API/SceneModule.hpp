@@ -2,34 +2,22 @@
 #include <cstdint>
 #include <string>
 #include "../../Core/Math/Vector2x.hpp"
+#include "../../Scene/Handle.hpp"
+#include "../Interpreter/RuntimeContext.hpp"
 
 namespace Novella{
 
     class SceneManager;
 }
 
-namespace Novella::NScript{
+namespace Novella::NScript::Modules::Scene{
 
-    class SceneModule{
 
-        public:
-        
-            SceneModule() = delete;
+    const Handle& getHandle(Runtime::Context& context, const std::string& name);
 
-            SceneModule(SceneManager& sceneManager)
-                :
-                sceneManager(sceneManager)
-                {}
+    void destroy(Runtime::Context& context, const Handle& handle);
 
-            uint64_t getHandle(const std::string& name);
+    void setPosition(Runtime::Context& context, const Handle& handle, Vector2d& position);
 
-            void destroy(uint64_t handle);
 
-            void setPosition(uint64_t handle, Vector2d& position);
-
-        private:
-
-        SceneManager& sceneManager;
-
-    };   
-}
+};   

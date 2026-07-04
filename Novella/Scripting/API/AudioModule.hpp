@@ -1,32 +1,16 @@
 #pragma once
 #include <string>
-
+#include "../Interpreter/RuntimeContext.hpp"
 namespace Novella{
 
     class AudioSystem;
 }
 
-namespace Novella::NScript{
+namespace Novella::NScript::Modules::Audio{
 
-    class AudioModule{
+        void playSound(Runtime::Context& context, const std::string& id);
 
-        public:
+        void stop(Runtime::Context& context, const std::string& id);
 
-        AudioModule() = delete;
-
-        AudioModule(AudioSystem& audio)
-            :
-            audio(audio)
-            {}
-
-        void playSound(const std::string& id);
-
-        void stop(const std::string& id);
-
-        void volume(const std::string& id);
-
-        private:
-
-        AudioSystem& audio;
-    }; 
-}
+        void volume(Runtime::Context& context, const std::string& id);
+}; 

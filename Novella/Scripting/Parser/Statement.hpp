@@ -2,7 +2,6 @@
 #include <variant>
 #include <vector>
 #include "Expression.hpp"
-
 namespace Novella::NScript::Parser{
     
     using Expression = std::variant<LiteralExpression, VariableExpression, FunctionCallExpression,

@@ -1,30 +1,27 @@
 #include "../Novella/Scripting/API/SceneModule.hpp"
 #include "../Novella/Scene/SceneManager.hpp"
-#include <cstdint>
 #include <stdexcept>
 #include <string>
 
-namespace Novella::NScript{
+namespace Novella::NScript::Modules::Scene{
 
-    uint64_t SceneModule::getHandle(const std::string& name){
+    const Handle& getHandle(Runtime::Context& context, const std::string& name){
 
-        uint64_t handle = sceneManager.getCurrentScene()->getObjectHandle(name);
-
-        if(handle == 0) throw std::runtime_error("This object does not exist: " + name);
+        auto& handle = context.scene->getCurrentScene()->getObjectHandle(name);
 
         return handle;
     }
 
-    void SceneModule::destroy(uint64_t handle){
+    void destroy(Runtime::Context& context, const Handle& handle){
 
-        auto* object = sceneManager.getCurrentScene()->getObject(handle);
+        auto* object = context.scene->getCurrentScene()->getObjectBase(handle);
 
-        if(!object) throw std::runtime_error("This object has already been deleted, handle : " + std::to_string(handle));
+        if(!object) throw std::runtime_error("This object has already been deleted, handle : " + std::to_string(handle.index));
 
-        sceneManager.getCurrentScene()->removeObject(handle);
+        context.scene->getCurrentScene()->removeObject(handle);
     }
 
-    void SceneModule::setPosition(uint64_t handle, Vector2d& position){
+    void setPosition(Runtime::Context& context, const Handle& handle, Vector2d& positione){
 
 
     }

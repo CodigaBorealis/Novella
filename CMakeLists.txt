@@ -53,12 +53,22 @@ add_executable(Novella
     
     src/Interpreter.cpp
     src/ScriptLoader.cpp
-    src/ModuleResolver.cpp
     src/ExpressionEvaluator.cpp
     src/RuntimeEnvironment.cpp
     src/StatementEvaluator.cpp
+    src/FunctionExecutor.cpp
     src/EventHandler.cpp
     src/Converter.cpp
+    
+    src/AudioModule.cpp
+    src/DebugModule.cpp
+    src/InputModule.cpp
+    src/LayoutModule.cpp
+    src/RendererModule.cpp
+    src/SceneModule.cpp
+    src/WindowModule.cpp
+
+    src/Logger.cpp
     
     src/Engine.cpp
     

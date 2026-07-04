@@ -5,21 +5,7 @@ namespace Novella{
     class LayoutSystem;
 }
 
-namespace Novella::NScript{
+namespace Novella::NScript::Modules::Layout{
 
-    class LayoutModule{
-            
-        public:
 
-        LayoutModule() = delete;
-
-        LayoutModule(LayoutSystem& layout)
-            :
-            layout(layout)
-            {}
-            
-        private:
-
-        LayoutSystem& layout;
-    };
 }

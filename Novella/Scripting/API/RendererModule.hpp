@@ -5,22 +5,6 @@ namespace Novella{
     class Renderer;
 }
 
-namespace Novella::NScript{
+namespace Novella::NScript::Modules::Renderer{
 
-    class RendererModule{
-
-        public:
-
-        RendererModule() = delete;
-
-        RendererModule(Renderer& renderer)
-        :
-        renderer(renderer)
-        {}
-
-        private:
-
-        Renderer& renderer;
-
-    };   
 }

@@ -5,6 +5,11 @@
 #include <variant>
 
 namespace Novella::NScript::Runtime{
+    
+    void RuntimeEnvironment::registerNativeFunction(const std::string& name, const NativeFunction& function){
+
+        
+    }
 
     void RuntimeEnvironment::registerData(const Parser::Script& script){
 
@@ -24,11 +29,11 @@ namespace Novella::NScript::Runtime{
 
     void RuntimeEnvironment::registerFunction(const Parser::FunctionDefinition& definition){
 
-        auto it = functions.find(definition.name);
+        auto it = scriptFunctions.find(definition.name);
 
-        if(it != functions.end()) throw std::runtime_error("A function with this name already exists '" + definition.name + "'");
+        if(it != scriptFunctions.end()) throw std::runtime_error("A function with this name already exists '" + definition.name + "'");
 
-        functions.emplace(definition.name, definition);
+        scriptFunctions.emplace(definition.name, definition);
     }
 
     void RuntimeEnvironment::createVariable(const std::string& name, const Parser::Value& value){
@@ -40,7 +45,7 @@ namespace Novella::NScript::Runtime{
         variables.emplace(name, value);
     }
 
-    Parser::Value RuntimeEnvironment::getVariable(const std::string& name) const{
+    Parser::Value& RuntimeEnvironment::getVariable(const std::string& name){
 
         auto it = variables.find(name);
 
@@ -60,18 +65,17 @@ namespace Novella::NScript::Runtime{
 
     const Parser::FunctionDefinition& RuntimeEnvironment::getFunction(const std::string& name){
 
-        auto it = functions.find(name);
+        auto it = scriptFunctions.find(name);
 
-        if(it == functions.end()) throw std::runtime_error("Cannot call undefined function '" + name + "'");
+        if(it == scriptFunctions.end()) throw std::runtime_error("Cannot call undefined function '" + name + "'");
 
         return it->second;
-    }
+    } 
 
     void RuntimeEnvironment::clear(){
 
         this->variables.clear();
-        this->functions.clear();
-        this->loadedModules.clear();
+        this->scriptFunctions.clear();
         this->persistentStorage.clear();
         this->callStack.clear();
 

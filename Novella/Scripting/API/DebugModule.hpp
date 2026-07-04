@@ -1,29 +1,20 @@
 #pragma once
 #include <string>
-
+#include "../Interpreter/RuntimeContext.hpp"
 namespace Novella{
 
     class Logger;
 }
 
-namespace Novella::NScript{
+namespace Novella::NScript::Runtime{
 
-    class DebugModule{
-
-        public:
-
-        DebugModule() = delete;
-
-        DebugModule(Logger& logger)
-            :
-            logger(logger)
-            {}
-            
-        void print(const std::string& message);
-
-        private:
-
-        Logger& logger;
-
-    };
+    class RuntimeEnvironment;
 }
+
+namespace Novella::NScript::Modules::Debug{
+
+    void print(Runtime::Context& context, const std::string& message);
+        
+    void registerModule(Runtime::RuntimeEnvironment& runtime);
+
+};

@@ -83,7 +83,7 @@ namespace Novella{
         
     }
 
-    Handle Scene::getObjectHandle(const std::string& name) const{
+    const Handle& Scene::getObjectHandle(const std::string& name) const{
 
         auto it = names.find(name);
         

@@ -5,22 +5,7 @@ namespace Novella{
     class InteractionSystem;
 }
 
-namespace Novella::NScript{
+namespace Novella::NScript::Modules::Input{
 
-    class InputModule{
 
-        public:
-
-        InputModule() = delete;
-
-        InputModule(InteractionSystem& input)
-            :
-            input(input)
-            {}
-
-        private:
-
-        InteractionSystem& input;    
-
-    };
-}
+};

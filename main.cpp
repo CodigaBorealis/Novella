@@ -5,7 +5,7 @@
 
 int main(){
 
-    const std::filesystem::path projectConfigFile = "docs/Examples/MinimalProject/Window.nvp";
+    const std::filesystem::path projectConfigFile = "Test/Window.nvp";
     const std::filesystem::path sceneFile = "Scenes/Hallway.nsc";
 
     auto& engine = Novella::Engine::create(projectConfigFile);
@@ -29,5 +29,4 @@ int main(){
 //TODO:
 
 // DO THIS FIRST->Finish the handle refactoring
-//Should fix relative paths tomorow
 //Make the interpreter work

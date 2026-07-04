@@ -1,8 +1,8 @@
 #pragma once
-#include "ScriptFwd.hpp"
+#include <string>
 #include <variant>
 #include <vector>
-
+#include "Statement.hpp"
 namespace Novella::NScript::Parser{
 
     struct ModuleImportDefinition{

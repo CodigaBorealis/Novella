@@ -2,7 +2,7 @@
 #include "../Parser/Expression.hpp"
 #include <unordered_map>
 #include <optional>
-#include "../..//Systems/Input/InputEvent.hpp"
+#include "../../Systems/Input/InputEvent.hpp"
 
 namespace Novella::NScript::Runtime{
 

@@ -1,13 +1,12 @@
 #pragma once
-#include "../Parser/Script.hpp"
 #include <variant>
 #include <vector>
-#include "../Parser/ScriptFwd.hpp"
 #include "EventHandler.hpp"
-#include "ModuleResolver.hpp"
+#include "FunctionExecutor.hpp"
 #include "RuntimeEnvironment.hpp"
-#include "../Parser/StatementEvaluator.hpp"
+#include "ExpressionEvaluator.hpp"
 #include "../../Systems/Input/InputEvent.hpp"
+#include "../Parser/Expression.hpp"
 
 namespace Novella::Input{
 
@@ -30,6 +29,12 @@ namespace Novella{
 namespace Novella::NScene::Parser{
 
     struct ScriptDefinition;
+    struct Script;
+}
+
+namespace Novella{
+
+    class Engine;
 }
 
 namespace Novella::NScript::Runtime{
@@ -43,25 +48,33 @@ namespace Novella::NScript::Runtime{
         };
 
         public:
-        
-        using RunTimeValue = std::variant<std::monostate, double, bool, std::string, char, std::vector<Parser::Expression>>;
 
-        Interpreter()
-            :
-            statementEvaluator(runtime)
-            {}
+        Interpreter():
+        expressionEvaluator(runtime),
+        statementEvaluator(runtime){
+
+            expressionEvaluator.setFunctionExecutor(functionExecutor);
+            statementEvaluator.setExpressionEvaluator(expressionEvaluator);
+            functionExecutor.setStatementEvaluator(statementEvaluator);
+        }
+
+        using RunTimeValue = std::variant<std::monostate, double, bool, std::string, char, std::vector<Parser::Expression>>;
 
         void loadScript(const NScene::Parser::ScriptDefinition& definition);
 
         void interpretEvent(const Event& event);
 
         void clear();
+        
+        void initialize(Engine& engine);
 
         private:
-        
+    
         RuntimeEnvironment runtime;
-        ModuleResolver moduleResolver;
-        Parser::StatementEvaluator statementEvaluator;
+        ExpressionEvaluator expressionEvaluator;
+        StatementEvaluator statementEvaluator;
+        FunctionExecutor functionExecutor;
+
         EventHandler eventHandler;
 
         RunTimeValue callFunction(const std::string& moduleName, const std::string& functionName, const std::vector<RunTimeValue>& args = {});
@@ -69,8 +82,6 @@ namespace Novella::NScript::Runtime{
         std::string getFunctionName(const Parser::Expression* answer);
         void executeStatements(const std::vector<Parser::Statement>& statements);
         void executeStatement(const Parser::Statement& statement);
-
-        void interpret(const Parser::Script& script);
     };
 
 }

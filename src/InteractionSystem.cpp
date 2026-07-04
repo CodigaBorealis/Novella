@@ -7,6 +7,7 @@
 #include <variant>
 #include "../Novella/Components/Traits/Object.hpp"
 #include "../Novella/Scripting/Interpreter/Interpreter.hpp"
+#include <iostream>
 
 namespace Novella{  
 
@@ -36,6 +37,8 @@ namespace Novella{
 
         if(!pressed) return;
 
+        std::cout << "key pressed: " << static_cast<int>(pressed.value()) << "\n";
+
         if(scene.needsSorting()){
 
             rebuildCaches(scene);
@@ -49,6 +52,17 @@ namespace Novella{
         };
     
     void InteractionSystem::handleMouseInput(Scene& scene, const Vector2f& mousePosition){
+
+        static int delay = 0;
+
+        delay ++;
+        
+        if(delay == 50){
+
+            std::cout << "MOUSE X: " << mousePosition.x << " MOUSE Y: " << mousePosition.y << "\n";
+
+            delay = 0;
+        }   
 
         auto pressed = InputSystem::getMouseButtonPressed();
 

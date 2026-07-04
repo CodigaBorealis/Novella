@@ -1,44 +1,31 @@
 #pragma once
 #include <string>
 #include "../../Core/Math/Vector2x.hpp"
+#include "../Interpreter/RuntimeContext.hpp"
+
 namespace Novella{
 
     class Window;
 }
 
-namespace Novella::NScript{
-
-    class WindowModule{
-
-        public:
-            
-        WindowModule() = delete;
-
-        WindowModule(Window& window)
-            :
-            window(window)
-            {}
+namespace Novella::NScript::Modules{
         
-        void setTitle(const std::string& title);
+    void setTitle(Runtime::Context& context, const std::string& title);
 
-        void setPosition(const Vector2i& position);
+    void setPosition(Runtime::Context& context, const Vector2i& position);
 
-        void move(const Vector2i& delta);
+    void move(Runtime::Context& context, const Vector2i& delta);
 
-        void setSize(const Vector2i& dimensions);
+    void setSize(Runtime::Context& context, const Vector2i& dimensions);
 
-        void resize(const Vector2i& delta);
+    void resize(Runtime::Context& context, const Vector2i& delta);
 
-        void setIcon(const std::string& resource);
+    void setIcon(Runtime::Context& context, const std::string& resource);
+        
+    Vector2i getSize(Runtime::Context&);
 
-        Vector2i getSize() const;
+    Vector2i getPosition(Runtime::Context&);
 
-        Vector2i getPosition() const;
+    std::string getTitle(Runtime::Context&);
 
-        std::string getTitle() const;
-
-        private:
-
-        Window& window;
-    };
-}
+};

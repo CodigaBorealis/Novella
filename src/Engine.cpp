@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include "../Novella/Project/Project.hpp"
 #include "../Novella/Utils/FileSystem.hpp"
-#include <iostream>
+
 namespace Novella{
 
     std::unique_ptr<Engine> Engine::singleInstance = nullptr;
@@ -32,7 +32,9 @@ namespace Novella{
         windowRenderer(config.width, config.height),
         audioSystem(resourceManager),
         interactionSystem(interpreter)
-            {}
+            {
+                interpreter.initialize(*this);
+            }
 
     const std::filesystem::path& Engine::projectRoot() const{
 
@@ -102,17 +104,17 @@ namespace Novella{
 
         return this->layoutSystem;
     }
-/*
+
     InteractionSystem& Engine::input(){
 
-        //return this->interactionSystem;
+        return this->interactionSystem;
     }
 
     NScript::Runtime::Interpreter& Engine::script(){
 
-        //return this->interpreter;
+        return this->interpreter;
     }
-*/
+
     void Engine::computeLayout(Scene* currentScene){
 
         if(!currentScene) return;
@@ -134,11 +136,11 @@ namespace Novella{
             
             Vector2f virtualMouse = windowRenderer.toVirtualCoordinates(InputSystem::mousePosition());
 
-            //interactionSystem.handleKeyboardInput(*currentScene);
+            interactionSystem.handleKeyboardInput(*currentScene);
 
-            //interactionSystem.handleMouseInput(*currentScene, virtualMouse);
+            interactionSystem.handleMouseInput(*currentScene, virtualMouse);
 
-            //interactionSystem.handleInteractions();
+            interactionSystem.handleInteractions();
         }
 
         void Engine::handleRendering(Scene* currentScene){
