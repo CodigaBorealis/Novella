@@ -30,5 +30,5 @@ namespace Novella::NScript::Parser{
     using Expression = std::variant<LiteralExpression, VariableExpression, FunctionCallExpression, UnaryExpression, BinaryExpression,
     AssignmentExpression, ArrayExpression, MemberExpression, IndexExpression, PostFixExpression>;
     using Statement = std::variant<ReturnStatement, IfStatement, VariableStatement, ExpressionStatement>;
-    using Definition = std::variant<ModuleImportDefinition, EngineImportDefinition, ModuleDefinition, FunctionDefinition>;
+    using Definition = std::variant<FunctionDefinition, VariableStatement>;
 }

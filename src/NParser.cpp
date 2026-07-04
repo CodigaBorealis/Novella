@@ -7,7 +7,7 @@
 #include <string>
 #include <variant>
 #include <vector>
-
+#include <iostream>
 namespace Novella::NScript::Parser{
 
     Parser::Parser(Lexer& lexer){
@@ -427,14 +427,17 @@ namespace Novella::NScript::Parser{
 
         while(current().type != Token::Type::EndOfFile){
 
-            if(current().type == Token::Type::Import){
-                //To paste the contents from the other module into this struct
-                script.definitions.push_back(parseImport());
+            if(current().type == Token::Type::Define){
+
+                script.definitions.push_back(parseFunctionDefinition());
+
+            }else if(current().type == Token::Type::Var){
+
+                script.definitions.push_back(parseVariable());
 
             }else{
 
-                script.definitions.push_back(parseDefinition());
-
+                throw std::runtime_error("Syntax Error: Only global variables ('var') and functions ('fn') are allowed at the root scope. Found token: " + current().text);            
             }
         }
 
@@ -503,6 +506,22 @@ namespace Novella::NScript::Parser{
 
                 FunctionCallExpression call{};
 
+                if(auto variableExpression = std::get_if<VariableExpression>(&expression)){
+
+                    call.functionName = variableExpression->name;
+
+                }else if(auto memberExpression = std::get_if<MemberExpression>(&expression)){
+
+                    if(auto objectVariable = std::get_if<VariableExpression>(memberExpression->object.get())){
+
+                        call.functionName = objectVariable->name + "." + memberExpression->member;
+
+                    }else{
+
+                        call.functionName = memberExpression->member;
+                    }
+                }
+
                 call.answer = std::make_unique<Expression>(std::move(expression));
 
                 consume();
@@ -518,9 +537,9 @@ namespace Novella::NScript::Parser{
                         expect(Token::Type::Comma);
                     }
                 }
-
+                
                 expect(Token::Type::RParen);
-
+                
                 expression = std::move(call);
 
             }else if(current().type == Token::Type::LBracket){
@@ -601,29 +620,6 @@ namespace Novella::NScript::Parser{
         return parseAssignment();
     }
 
-    Definition Parser::parseDefinition(){
-
-        return parseModuleDefinition();
-    }
-
-    ModuleImportDefinition Parser::parseImport(){
-
-        expect(Token::Type::Import);
-
-        if(current().type != Token::Type::String && current().type != Token::Type::Identifier){
-
-            throw std::runtime_error("Invalid literal for import path at " + std::to_string(position) + " Token: " + current().text);
-        }
-
-        std::string pathOrModule = current().text;
-
-        consume();
-
-        expect(Token::Type::SemiColon);
-
-        return ModuleImportDefinition{pathOrModule};
-    }
-
     FunctionDefinition Parser::parseFunctionDefinition(){
 
         FunctionDefinition definition{};
@@ -667,58 +663,13 @@ namespace Novella::NScript::Parser{
         expect(Token::Type::Colon);
 
         while(current().type != Token::Type::EndFunction && current().type != Token::Type::EndOfFile){
-
-            //std::cout << "statement starts with: " << current().text << "\n";
             
             definition.body.push_back(parseStatement());
         }
 
         expect(Token::Type::EndFunction);
 
-        return definition;
-
-    }
-
-    ModuleDefinition Parser::parseModuleDefinition(){
-
-        ModuleDefinition definition{};
-    
-        expect(Token::Type::Module);
-        
-        if(current().type == Token::Type::Identifier){
-
-            definition.name = current().text;
-
-            consume();
-
-        }else{
-
-            throw std::runtime_error("Expected module name identifier at " + std::to_string(position) + " Token: " + current().text);
-        }
-
-        expect(Token::Type::Colon);
-
-        while(current().type != Token::Type::EndModule && current().type != Token::Type::EndOfFile){
-
-            switch(current().type){
-
-                case Token::Type::Var:
-
-                    definition.variables.push_back(parseVariable());
-
-                    break;
-
-                case Token::Type::Define:
-
-                    definition.functions.push_back(parseFunctionDefinition());
-
-                    break;
-
-                default: throw std::runtime_error("Expected 'var' or 'fn' inside module at " +std::to_string(position) + " Token: " + current().text);
-            }
-        }
-
-        expect(Token::Type::EndModule);
+        std::cout << "NPARSER FUNCTION NAME: " << definition.name << " ARGUMENT COUNT: " << definition.parameters.size() << " BODY SIZE: " << definition.body.size() << "\n";
 
         return definition;
 

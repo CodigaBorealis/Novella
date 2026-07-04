@@ -57,11 +57,12 @@ namespace Novella::NScript::Runtime{
             expressionEvaluator.setFunctionExecutor(functionExecutor);
             statementEvaluator.setExpressionEvaluator(expressionEvaluator);
             functionExecutor.setStatementEvaluator(statementEvaluator);
+            functionExecutor.setRuntime(runtime);
         }
 
         using RunTimeValue = std::variant<std::monostate, double, bool, std::string, char, std::vector<Parser::Expression>>;
 
-        void loadScript(const NScene::Parser::ScriptDefinition& definition);
+        void loadScript(const Parser::Script& definition);
 
         void interpretEvent(const Event& event);
 
@@ -69,6 +70,8 @@ namespace Novella::NScript::Runtime{
         
         void initialize(Engine& engine);
 
+        void run();
+        
         private:
     
         RuntimeEnvironment runtime;

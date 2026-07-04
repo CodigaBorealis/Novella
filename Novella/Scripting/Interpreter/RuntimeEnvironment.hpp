@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 #include <stdexcept>
 #include <type_traits>
 #include <unordered_map>
@@ -83,7 +84,15 @@ namespace Novella::NScript::Runtime{
         void printNativeFunctionAddresses() const;
 
         void createVariable(const std::string& name, const Parser::Value& value);
-    
+        
+        Parser::Value callNativeFunction(const std::string& name, const std::vector<Parser::Value>& args);
+
+        bool isNativeFunction(const std::string& name) const;
+
+        bool isScriptFunction(const std::string& name) const;
+
+        size_t loadedFunctions() const;
+
         private:
         
         std::unordered_map<std::string, Parser::Value> variables;

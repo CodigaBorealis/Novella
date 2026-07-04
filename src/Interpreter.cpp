@@ -7,13 +7,33 @@
 #include "../Novella/Core/Engine.hpp"
 #include "../Novella/Scripting/API/API.hpp"
 #include <iostream>
+#include <stdexcept>
 namespace Novella::NScript::Runtime{
 
-    void Interpreter::loadScript(const NScene::Parser::ScriptDefinition& definition){
+    void Interpreter::run(){
 
-        Parser::Script script = ScriptLoader::load(definition.path);
-        
+        static bool firstRun = true;
+
+        if(runtime.isScriptFunction("main")){
+
+            if(firstRun) std::cout << "Found main entrypoint\n";
+
+            const auto& mainFunction = runtime.getFunction("main");
+
+            statementEvaluator.execute(mainFunction.body);
+
+            firstRun = false;
+        }else{
+
+            throw std::runtime_error("No entry point 'main()' found in loaded scripts\n");
+        }
+    }
+
+    void Interpreter::loadScript(const Parser::Script& script){
+
         runtime.registerData(script);
+
+        std::cout << "TOTAL FUNCTIONS LOADED FROM SCRIPTS: " << runtime.loadedFunctions() << "\n";
 
     }
 

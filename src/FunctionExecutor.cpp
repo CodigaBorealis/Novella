@@ -1,7 +1,12 @@
 #include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
+#include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
 #include <vector>
-
 namespace Novella::NScript::Runtime{
+
+    void FunctionExecutor::setRuntime(RuntimeEnvironment& runtime){
+
+        this->runtime = &runtime;
+    }
 
     void FunctionExecutor::setStatementEvaluator(StatementEvaluator& evaluator){
 
@@ -9,6 +14,18 @@ namespace Novella::NScript::Runtime{
     }
 
     Parser::Value FunctionExecutor::call(const std::string& name, const std::vector<Parser::Value>& args){
+
+        if(runtime->isNativeFunction(name)){
+            
+            return runtime->callNativeFunction(name, args);
+        }
+
+        if(runtime->isScriptFunction(name)){
+
+            const auto& function = runtime->getFunction(name);
+
+            statementEvaluator->execute(function.body);
+        }
 
         return {};
     }

@@ -4,6 +4,7 @@
 #include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
 #include <variant>
 #include <vector>
+#include <iostream>
 
 namespace Novella::NScript::Runtime{
 
@@ -34,6 +35,27 @@ namespace Novella::NScript::Runtime{
     Parser::Value ExpressionEvaluator::evaluateFunctionCall(const Parser::FunctionCallExpression& call) const{
 
         auto args = evaluateFunctionArguments(call.arguments);
+        
+        std::string targetName = "";
+
+        if(call.answer){
+
+            if(auto variableExpression = std::get_if<Parser::VariableExpression>(call.answer.get())){
+
+                targetName = variableExpression->name;
+
+            }else if(auto memberExpression = std::get_if<Parser::MemberExpression>(call.answer.get())){
+
+                if(auto objectVar = std::get_if<Parser::VariableExpression>(memberExpression->object.get())){
+
+                    targetName = objectVar->name;
+
+                }else{
+
+                    targetName = memberExpression->member;
+                }
+            }
+        }
 
         return functionExecutor->call(call.functionName, args);
     }
@@ -41,7 +63,7 @@ namespace Novella::NScript::Runtime{
     Parser::Value ExpressionEvaluator::evaluate(const Parser::Expression& expression) const{
 
         if(auto functionCall = std::get_if<Parser::FunctionCallExpression>(&expression)){
-
+        
             return evaluateFunctionCall(*functionCall);
 
         }else if(auto literal = std::get_if<Parser::LiteralExpression>(&expression)){
@@ -54,24 +76,18 @@ namespace Novella::NScript::Runtime{
 
         }else if(auto unary = std::get_if<Parser::UnaryExpression>(&expression)){
 
-
         }else if(auto binary = std::get_if<Parser::BinaryExpression>(&expression)){
 
-
         }else if(auto assignment = std::get_if<Parser::AssignmentExpression>(&expression)){
-
 
         }else if(auto array = std::get_if<Parser::ArrayExpression>(&expression)){
 
 
         }else if(auto member = std::get_if<Parser::MemberExpression>(&expression)){
 
-
         }else if(auto index = std::get_if<Parser::IndexExpression>(&expression)){
 
-
         }else if(auto postFix = std::get_if<Parser::PostFixExpression>(&expression)){
-
 
         }
 

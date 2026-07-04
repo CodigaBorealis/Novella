@@ -17,12 +17,9 @@ namespace Novella::NScript::Parser{
             Then,
             EndIf,
             EndFunction,
-            EndModule,
 
             Else,
             Var,
-            Module,
-            Import,
             Define,
             Return,
             From,

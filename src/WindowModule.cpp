@@ -51,7 +51,11 @@ namespace Novella::NScript::Modules::Window{
 
         if(!Utils::Filesystem::exists({resource})) throw std::runtime_error("setIcon: file not found: " + resource);
 
-        context.window->setIcon(resource);
+        Utils::Filesystem::getRelativePath(resource);
+
+        std::filesystem::path resolvedResource = context.projectRoot / resource;
+
+        context.window->setIcon(resolvedResource);
     }
         
     double getWidth(Runtime::Context& context){

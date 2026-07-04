@@ -4,12 +4,15 @@
 #include "../Novella/Scene/Parser/Lexer.hpp"
 #include "../Novella/Scene/Parser/Parser.hpp"
 #include "../Novella/Core/Engine.hpp"
+#include <filesystem>
 #include <stdexcept>
 #include "../Novella/Scene/Serialization/ComponentBuilder.hpp"
 #include "../Novella/Components/UI/Button.hpp"
 #include "../Novella/Components/UI/Sprite.hpp"
 #include "../Novella/Components/UI/DialogueBox.hpp"
 #include "../Novella/Components/UI/Label.hpp"
+#include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
+#include "../Novella/Scripting/Parser/Script.hpp"
 
 namespace Novella::NScene::Serialization{
 
@@ -100,9 +103,15 @@ namespace Novella::NScene::Serialization{
 
     void Loader::loadScripts(Engine& engine, const Parser::SceneDefinition& scene){
 
-        for(const auto& script : scene.scripts){
+        const std::filesystem::path root = engine.projectRoot();
 
-            //engine.script().loadScript(script);
+        for(const auto& definition : scene.scripts){
+
+            std::filesystem::path relativePath = root / definition.path;
+            
+            auto script = NScript::Runtime::ScriptLoader::load(relativePath);
+
+            engine.script().loadScript(script);
         }
     }
 }

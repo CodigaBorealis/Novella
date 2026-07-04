@@ -4,7 +4,6 @@
 #include "../Novella/Scripting/Parser/Definition.hpp"
 #include <variant>
 #include <vector>
-#include <iostream>
 
 namespace Novella::NScript::Runtime{
 
@@ -29,11 +28,7 @@ namespace Novella::NScript::Runtime{
 
     void StatementEvaluator::execute(const Parser::Statement& statement) const{
         
-        std::cout << "REACHED EXECUTE BUT IS NOT A EXPRESSION STATEMENT\n";
-
         if(auto expressionStatement = std::get_if<Parser::ExpressionStatement>(&statement)){
-
-            std::cout << "EVALUATING\n";
 
             expressionEvaluator->evaluate(expressionStatement->expression);
         }

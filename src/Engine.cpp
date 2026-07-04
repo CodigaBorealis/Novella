@@ -178,7 +178,8 @@ namespace Novella{
 
         if(!scene) return;
 
-    }
+        interpreter.run();
+    }   
 
     Logger& Engine::logger(){
 

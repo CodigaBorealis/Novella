@@ -13,6 +13,8 @@ namespace Novella::NScript::Runtime{
 
         if(extension != ".nvs") throw std::runtime_error("'" + source.string() + "' is not a novellaScript file");
 
+        if(!Utils::Filesystem::exists(source)) throw std::runtime_error("Script not found: '" + source.string() + "'");
+
         std::string scriptContents = Utils::Filesystem::getContentsFromFile(source);
 
         Parser::Lexer lexer(scriptContents);

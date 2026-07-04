@@ -1,6 +1,7 @@
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
 #include "../Novella/Scripting/Parser/Definition.hpp"
 #include "../Novella/Scripting/Parser/Script.hpp"
+#include <cstddef>
 #include <stdexcept>
 #include <variant>
 #include "../Novella/Scripting/Interpreter/CoreInitializer.hpp"
@@ -9,6 +10,30 @@
 #include <vector>
 
 namespace Novella::NScript::Runtime{
+
+    size_t RuntimeEnvironment::loadedFunctions() const{
+
+        return scriptFunctions.size();
+    }
+    
+    Parser::Value RuntimeEnvironment::callNativeFunction(const std::string& name, const std::vector<Parser::Value>& args){
+
+        auto it = nativeFunctions.find(name);
+
+        if(it == nativeFunctions.end()) throw std::runtime_error("No such function in the API: " + name);
+
+        return it->second(runtimeContext, args);
+    }
+
+    bool RuntimeEnvironment::isNativeFunction(const std::string& name) const{
+
+        return nativeFunctions.contains(name);
+    }
+
+    bool RuntimeEnvironment::isScriptFunction(const std::string& name) const{
+
+        return scriptFunctions.contains(name);
+    } 
 
     void RuntimeEnvironment::printNativeFunctionAddresses() const{
 
@@ -40,8 +65,9 @@ namespace Novella::NScript::Runtime{
         this->runtimeContext.renderer = &engine.renderer();
         this->runtimeContext.scene = &engine.scene();
         this->runtimeContext.window = &engine.window();
+        this->runtimeContext.projectRoot = engine.projectRoot();
 
-        std::cout << "GOT THE POINTERS TO THE SYSTEMS\n";
+        std::cout << "GOT THE POINTERS TO THE SYSTEMS\n"    ;
     }
 
     void RuntimeEnvironment::registerCoreFunctions(){
@@ -60,17 +86,12 @@ namespace Novella::NScript::Runtime{
 
         for(const auto& definition : script.definitions){
 
-            if(std::holds_alternative<Parser::ModuleDefinition>(definition)){
+            if(auto function = std::get_if<Parser::FunctionDefinition>(&definition)){
 
-                auto& module = std::get<Parser::ModuleDefinition>(definition);
-
-                for(const auto& function : module.functions){
-
-                    registerFunction(function);
+                    registerFunction(*function);
                 }
             }
         }
-    }
 
     void RuntimeEnvironment::registerFunction(const Parser::FunctionDefinition& definition){
 

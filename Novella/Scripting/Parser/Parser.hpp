@@ -42,11 +42,7 @@ namespace Novella::NScript::Parser{
         IfStatement parseIf();
         VariableStatement parseVariable();
 
-        Definition parseDefinition();
-        ModuleImportDefinition parseImport();
-
         FunctionDefinition parseFunctionDefinition();
-        ModuleDefinition parseModuleDefinition();
 
         Expression parseAssignment();
         Expression parsePrimary();

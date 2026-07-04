@@ -5,6 +5,7 @@
 namespace Novella::NScript::Runtime{
 
     class StatementEvaluator;
+    class RuntimeEnvironment;
 
     class FunctionExecutor{
 
@@ -13,10 +14,13 @@ namespace Novella::NScript::Runtime{
         FunctionExecutor() = default;
 
         void setStatementEvaluator(StatementEvaluator& evaluator);
+        void setRuntime(RuntimeEnvironment& runtime);
+        
         Parser::Value call(const std::string& name, const std::vector<Parser::Value>& args);
 
         private:
 
         StatementEvaluator* statementEvaluator;
+        RuntimeEnvironment* runtime;
     };
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <filesystem>
 
 namespace Novella{
     
@@ -24,6 +25,8 @@ namespace Novella::NScript::Runtime{
         LayoutSystem* layout;
         InteractionSystem* input;
         Logger* logger;
+
+        std::filesystem::path projectRoot;
     };
 
 }
