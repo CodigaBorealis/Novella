@@ -37,8 +37,6 @@ namespace Novella::NScript::Runtime{
 
     void RuntimeEnvironment::printNativeFunctionAddresses() const{
 
-        std::cout << "NATIVE FUNCTIONS:" << "\n";
-
         using ExpectedTargetType = Parser::Value(*)(Context&, const std::vector<Parser::Value>&);
 
         for(const auto& [name,func] : nativeFunctions){
@@ -47,11 +45,7 @@ namespace Novella::NScript::Runtime{
 
                 void* address = reinterpret_cast<void*>(*targetPtr);
 
-                std::cout << "FUNCTION: " << name << " ADDRESS: " << address << "\n";
-
             }else{
-
-                std::cout << "FUNCTION: " << name << " WRAPPER ADDRESS: " << static_cast<const void*>(&func) << "\n";
             }
         }
     }
@@ -66,8 +60,6 @@ namespace Novella::NScript::Runtime{
         this->runtimeContext.scene = &engine.scene();
         this->runtimeContext.window = &engine.window();
         this->runtimeContext.projectRoot = engine.projectRoot();
-
-        std::cout << "GOT THE POINTERS TO THE SYSTEMS\n"    ;
     }
 
     void RuntimeEnvironment::registerCoreFunctions(){

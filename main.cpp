@@ -25,8 +25,3 @@ int main(){
     
     return 0;
 } 
-
-//TODO:
-
-// DO THIS FIRST->Finish the handle refactoring
-//Make the interpreter work

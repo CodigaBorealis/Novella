@@ -102,6 +102,6 @@ Components{
 
 Scripts{
 
-    buttonLogic = "Scripts/button.nvs"
+    buttonLogic = "Scripts/helloWorld.nvs"
     
 }

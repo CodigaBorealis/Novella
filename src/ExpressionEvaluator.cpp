@@ -57,6 +57,8 @@ namespace Novella::NScript::Runtime{
             }
         }
 
+        std::cout << "ARGUMENT SIZE: " << args.size() << " FOR FUNCTION: " << call.functionName<< "\n";
+
         return functionExecutor->call(call.functionName, args);
     }
 

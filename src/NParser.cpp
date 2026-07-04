@@ -669,7 +669,7 @@ namespace Novella::NScript::Parser{
 
         expect(Token::Type::EndFunction);
 
-        std::cout << "NPARSER FUNCTION NAME: " << definition.name << " ARGUMENT COUNT: " << definition.parameters.size() << " BODY SIZE: " << definition.body.size() << "\n";
+        //std::cout << "NPARSER FUNCTION NAME: " << definition.name << " ARGUMENT COUNT: " << definition.parameters.size() << " BODY SIZE: " << definition.body.size() << "\n";
 
         return definition;
 

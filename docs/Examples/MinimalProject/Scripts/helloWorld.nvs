@@ -1,0 +1,41 @@
+#The core idea is that scripts work should by just calling functions in the same way you would do it in raylib or other c 
+#All validation will be done somewhere else so the user does not have to worry about whenever a particular component
+#Has a method or not, basically make it like a lego set
+#I should document all of this so you can just look it up
+
+var count = 0;
+
+fn handleInput():
+
+    Console.print("Handling the input");
+
+endFunction
+
+fn showMessage():
+
+    Console.print("HELLO WORLD");
+
+endFunction
+
+fn main():
+
+    showMessage();
+    handleInput();
+
+endFunction
+
+#As to how to run this, the interpreter can just run whatever functions it finds being called outside the modules on a while loop
+
+#reserved words:
+#var
+#fn
+#return
+#if
+#else
+#true
+#false
+#not
+#and
+#or
+#endFunction
+#endIf
