@@ -5,3 +5,5 @@
 #include "RendererModule.hpp"
 #include "SceneModule.hpp"
 #include "WindowModule.hpp"
+#include "MathModule.hpp"
+#include "StringModule.hpp"

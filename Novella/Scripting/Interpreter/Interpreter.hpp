@@ -3,7 +3,6 @@
 #include <vector>
 #include "EventHandler.hpp"
 #include "FunctionExecutor.hpp"
-#include "RuntimeContext.hpp"
 #include "RuntimeEnvironment.hpp"
 #include "ExpressionEvaluator.hpp"
 #include "../../Systems/Input/InputEvent.hpp"

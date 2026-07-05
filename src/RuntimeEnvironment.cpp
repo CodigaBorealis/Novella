@@ -71,6 +71,8 @@ namespace Novella::NScript::Runtime{
         CoreInitializer::registerRenderer(*this);
         CoreInitializer::registerScene(*this);
         CoreInitializer::registerWindow(*this);
+        CoreInitializer::registerMath(*this);
+        CoreInitializer::registerString(*this);
 
     }
 

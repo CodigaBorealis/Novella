@@ -1,5 +1,4 @@
 #pragma once
-#include <cstdint>
 #include <string>
 #include "../../Core/Math/Vector2x.hpp"
 #include "../../Scene/Handle.hpp"

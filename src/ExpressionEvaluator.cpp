@@ -2,6 +2,7 @@
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
 #include "../Novella/Scripting/Parser/Definition.hpp"
 #include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
+#include <stdexcept>
 #include <variant>
 #include <vector>
 #include <iostream>
@@ -13,7 +14,7 @@ namespace Novella::NScript::Runtime{
         this->functionExecutor = &executor;
     }
 
-    std::vector<Parser::Value> ExpressionEvaluator::evaluateFunctionArguments(const std::vector<Parser::Expression>& arguments) const{
+    std::vector<Parser::Value> ExpressionEvaluator::evaluateFunctionArguments(const std::vector<Parser::Expression>& arguments){
 
         std::vector<Parser::Value> values{};
 
@@ -27,13 +28,17 @@ namespace Novella::NScript::Runtime{
         return values;
     }
 
-    Parser::Value ExpressionEvaluator::evaluateVariable(const Parser::VariableExpression& variable) const{
+    Parser::Value ExpressionEvaluator::evaluateVariable(const Parser::VariableExpression& variable){
         
         return runtime.getVariable(variable.name);
     }
 
-    Parser::Value ExpressionEvaluator::evaluateFunctionCall(const Parser::FunctionCallExpression& call) const{
+    Parser::Value ExpressionEvaluator::evaluateFunctionCall(const Parser::FunctionCallExpression& call){
 
+        if(callStackDepth >= MAX_CALL_STACK) throw std::runtime_error("NovellaScript Runtime Error: Stack overflow detected, infinite recursion suspected in function: " + call.functionName);
+        
+        CallStackGuard guard(callStackDepth);
+        
         auto args = evaluateFunctionArguments(call.arguments);
         
         std::string targetName = "";
@@ -57,15 +62,13 @@ namespace Novella::NScript::Runtime{
             }
         }
 
-        std::cout << "ARGUMENT SIZE: " << args.size() << " FOR FUNCTION: " << call.functionName<< "\n";
-
         return functionExecutor->call(call.functionName, args);
     }
 
-    Parser::Value ExpressionEvaluator::evaluate(const Parser::Expression& expression) const{
+    Parser::Value ExpressionEvaluator::evaluate(const Parser::Expression& expression){
 
         if(auto functionCall = std::get_if<Parser::FunctionCallExpression>(&expression)){
-        
+            
             return evaluateFunctionCall(*functionCall);
 
         }else if(auto literal = std::get_if<Parser::LiteralExpression>(&expression)){

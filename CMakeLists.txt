@@ -68,7 +68,9 @@ add_executable(Novella
     src/RendererModule.cpp
     src/SceneModule.cpp
     src/WindowModule.cpp
-
+    src/MathModule.cpp
+    src/StringModule.cpp
+    
     src/Logger.cpp
     
     src/Engine.cpp

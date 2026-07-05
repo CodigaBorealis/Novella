@@ -16,4 +16,9 @@ namespace Novella::NScript::CoreInitializer{
     void registerInteraction(Runtime::RuntimeEnvironment& runtime);
 
     void registerLogger(Runtime::RuntimeEnvironment& runtime);
+
+    void registerMath(Runtime::RuntimeEnvironment& runtime);
+
+    void registerString(Runtime::RuntimeEnvironment& runtime);
+
 }

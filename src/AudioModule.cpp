@@ -12,8 +12,26 @@ namespace Novella::NScript::Modules::Audio{
         context.audio->stop(id);
     }
 
+    void stopMusic(Runtime::Context& context){
+
+        std::string trackName = getCurrentMusic(context);
+
+        if(trackName.empty()) return;
+
+        context.audio->stop(trackName);
+    }
+
     void volume(Runtime::Context &context, const std::string &id, double value){
 
         context.audio->volume(id, static_cast<float>(value));
+    }
+
+    std::string getCurrentMusic(Runtime::Context &context){
+
+        auto currentBGM = context.audio->getCurrentBGM();
+
+        if(!currentBGM) return "";
+
+        return currentBGM.value();
     }
 }
