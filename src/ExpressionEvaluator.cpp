@@ -2,12 +2,11 @@
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
 #include "../Novella/Scripting/Parser/Definition.hpp"
 #include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
+#include <cmath>
 #include <stdexcept>
 #include <string>
-#include <type_traits>
 #include <variant>
 #include <vector>
-#include <iostream>
 
 namespace Novella::NScript::Runtime{
 
@@ -130,6 +129,231 @@ namespace Novella::NScript::Runtime{
         throw std::runtime_error("Invalid unary operand type" + std::to_string(static_cast<int>(unaryExpression.operation)));
     }
 
+    Parser::Value ExpressionEvaluator::evaluateAssignmentExpression(const Parser::AssignmentExpression& AssignmentExpression){
+
+        Parser::Value newValue = evaluate(*AssignmentExpression.value);
+
+        if(auto variableExpression = std::get_if<Parser::VariableExpression>(AssignmentExpression.variable.get())){
+
+            std::string variableName = variableExpression->name;
+
+            runtime.setVariable(variableName, newValue);
+
+            return newValue;
+        }
+
+        throw std::runtime_error("Invalid assignment target expression");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateAddition(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a + b;
+            
+        }, "Type Mismatch: addition requires two numeric operands");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateSubstraction(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a - b;
+            
+        }, "Type Mismatch: substraction requires two numeric operands");
+
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateMultiplication(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a * b;
+            
+        }, "Type Mismatch: multiplication requires two numeric operands");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateDivision(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a / b;
+            
+        }, "Type Mismatch: division requires two numeric operands");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateModulo(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+            
+            if(a != std::floor(a) || b != std::floor(b)) throw std::runtime_error("modulo requires two integer operands");
+
+            return static_cast<double>(static_cast<int>(a) % static_cast<int>(b));
+            
+        }, "Type Mismatch: modulo requires two integer operands");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateLess(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a < b;
+            
+        }, "Type Mismatch: lessThan requires two numeric operands");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateLessEquals(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a <= b;
+            
+        }, "Type Mismatch: lessEquals requires two numeric operands");
+
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateGreater(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a > b;
+            
+        }, "Type Mismatch: greaterThan requires two numeric operands");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateGreaterEquals(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a >= b;
+            
+        }, "Type Mismatch: greaterEquals requires two numeric operands");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateEquals(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        const auto& primitiveFirst = std::get<Parser::PrimitiveValue>(firstValue.underlyingValue);
+        const auto& primitiveSecond = std::get<Parser::PrimitiveValue>(secondValue.underlyingValue);
+
+        if(std::holds_alternative<bool>(primitiveFirst) && std::holds_alternative<bool>(primitiveSecond)){
+
+            return applyPrimitiveOperation<bool>(firstValue, secondValue,[](bool  a, bool b){
+
+                return a == b;
+                
+            }, "Type Mismatch: equals requires two numeric operands or two boolean operands");
+
+        }
+
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a == b;
+            
+        }, "Type Mismatch: equals requires two numeric operands or two boolean operands");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateNotEquals(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        const auto& primitiveFirst = std::get<Parser::PrimitiveValue>(firstValue.underlyingValue);
+        const auto& primitiveSecond = std::get<Parser::PrimitiveValue>(secondValue.underlyingValue);
+
+        if(std::holds_alternative<bool>(primitiveFirst) && std::holds_alternative<bool>(primitiveSecond)){
+
+            return applyPrimitiveOperation<bool>(firstValue, secondValue,[](bool  a, bool b){
+
+                return a != b;
+                
+            }, "Type Mismatch: or requires two numeric operands or two boolean operands");
+
+        }
+        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+
+            return a != b;
+            
+        }, "Type Mismatch: notEquals requires two numeric operands or two boolean operands");
+
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateAnd(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<bool>(firstValue, secondValue,[](bool a, bool b){
+
+            return a && b;
+            
+        }, "Type Mismatch: and requires two boolean operands");
+
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateOr(const Parser::Value& firstValue, const Parser::Value& secondValue){
+
+        return applyPrimitiveOperation<bool>(firstValue, secondValue,[](bool a, bool b){
+
+            return a || b;
+            
+        }, "Type Mismatch: or requires two boolean operands");
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateBinaryExpression(const Parser::BinaryExpression& binaryExpression){
+
+        Parser::Value firstValue = evaluate(*binaryExpression.left);
+        Parser::Value secondValue = evaluate(*binaryExpression.right);
+
+        if(binaryExpression.operation == Parser::Token::Type::Plus){
+
+            return evaluateAddition(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::Minus){
+
+            return evaluateSubstraction(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::Multiply){
+
+            return evaluateMultiplication(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::Divide){
+
+            return evaluateDivision(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::Modulo){
+
+            return evaluateModulo(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::Less){
+
+            return evaluateLess(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::LessEquals){
+
+            return evaluateLessEquals(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::Greater){
+
+            return evaluateGreater(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::GreaterEquals){
+
+            return evaluateGreaterEquals(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::Equals){
+
+            return evaluateEquals(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::NotEquals){
+
+            return evaluateNotEquals(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::And){
+
+            return evaluateAnd(firstValue, secondValue);
+
+        }else if(binaryExpression.operation == Parser::Token::Type::Or){
+
+            return evaluateOr(firstValue, secondValue);
+        }
+
+        throw std::runtime_error("Invalid binary operation");
+    }
+
     Parser::Value ExpressionEvaluator::evaluate(const Parser::Expression& expression){
 
         if(auto functionCall = std::get_if<Parser::FunctionCallExpression>(&expression)){
@@ -182,7 +406,11 @@ namespace Novella::NScript::Runtime{
 
         }else if(auto binary = std::get_if<Parser::BinaryExpression>(&expression)){
 
+            return evaluateBinaryExpression(*binary);
+
         }else if(auto assignment = std::get_if<Parser::AssignmentExpression>(&expression)){
+            
+            return evaluateAssignmentExpression(*assignment);
 
         }else if(auto array = std::get_if<Parser::ArrayExpression>(&expression)){
 

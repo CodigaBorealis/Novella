@@ -38,7 +38,6 @@ namespace Novella::NScript::Parser{
             }, underlyingValue);
         
         }
-    
     };
     
     struct LiteralExpression{

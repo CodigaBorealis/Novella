@@ -48,8 +48,26 @@ namespace Novella::NScript::Runtime{
             size_t& depth;            
         };
 
-        template<typename T, typename Function>
+        Parser::Value evaluateAddition(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateSubstraction(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateMultiplication(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateDivision(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateModulo(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateLess(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateLessEquals(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateGreater(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateGreaterEquals(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateEquals(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateNotEquals(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateAnd(const Parser::Value& firstValue, const Parser::Value& secondValue);
+        Parser::Value evaluateOr(const Parser::Value& firstValue, const Parser::Value& secondValue);
 
+        Parser::Value evaluateBinaryExpression(const Parser::BinaryExpression& binaryExpression);
+
+        Parser::Value evaluateAssignmentExpression(const Parser::AssignmentExpression& AssignmentExpression);
+
+        template<typename T, typename Function>
+        
         Parser::Value applyPrimitiveOperation(const Parser::Value& value, Function&& operation, const std::string& errorMessage){
 
             if(!std::holds_alternative<Parser::PrimitiveValue>(value.underlyingValue)) throw std::runtime_error("Cannot apply operation to array structures");
@@ -61,6 +79,25 @@ namespace Novella::NScript::Runtime{
             Parser::Value result{};
 
             result.underlyingValue = Parser::PrimitiveValue{operation(std::get<T>(primitive))};;
+
+            return result;
+        }
+
+        template<typename T, typename Function>
+        
+        Parser::Value applyPrimitiveOperation(const Parser::Value& first, const Parser::Value& second, Function&& operation, const std::string& errorMessage){
+
+            if(!std::holds_alternative<Parser::PrimitiveValue>(first.underlyingValue) || !std::holds_alternative<Parser::PrimitiveValue>(second.underlyingValue)) throw std::runtime_error("Cannot apply binary operation to array structures");
+
+            const auto& primitiveFirst = std::get<Parser::PrimitiveValue>(first.underlyingValue);
+            
+            const auto& primitiveSecond = std::get<Parser::PrimitiveValue>(second.underlyingValue);
+
+            if(!std::holds_alternative<T>(primitiveFirst) || !std::holds_alternative<T>(primitiveSecond)) throw std::runtime_error(errorMessage);
+
+            Parser::Value result{};
+
+            result.underlyingValue = Parser::PrimitiveValue{operation(std::get<T>(primitiveFirst), std::get<T>(primitiveSecond))};;
 
             return result;
         }
