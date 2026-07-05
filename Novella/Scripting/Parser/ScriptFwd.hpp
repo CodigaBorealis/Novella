@@ -1,14 +1,8 @@
 #pragma once
 #include <variant>
-#include <vector>
-#include <memory>
-#include <string>
 
 namespace Novella::NScript::Parser{
-
-    struct ModuleImportDefinition;
-    struct EngineImportDefinition;
-    struct ModuleDefinition;
+    
     struct FunctionDefinition;
 
     struct ArrayExpression;

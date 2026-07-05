@@ -102,4 +102,22 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "reverse", Modules::String::reverse);
     }
 
+    #ifdef _WIN32
+    void registerOS(Runtime::RuntimeEnvironment& runtime){
+        
+        const std::string prefix = "OS.";
+        runtime.registerNativeFunction(prefix + "getUsername", Modules::Win32::getUserEnv);
+    }
+    #endif
+
+    #ifdef __linux__
+    void registerOS(Runtime::RuntimeEnvironment& runtime){
+
+        const std::string prefix = "OS.";
+
+        runtime.registerNativeFunction(prefix + "getCurrentUsername", Modules::Linux::getUserEnv);
+
+    }
+    
+    #endif
 }

@@ -70,6 +70,7 @@ add_executable(Novella
     src/WindowModule.cpp
     src/MathModule.cpp
     src/StringModule.cpp
+    src/LinuxModule.cpp
     
     src/Logger.cpp
     

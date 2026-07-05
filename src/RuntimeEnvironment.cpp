@@ -8,6 +8,7 @@
 #include "../Novella/Core/Engine.hpp"
 #include <iostream>
 #include <vector>
+#include "../Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
 
 namespace Novella::NScript::Runtime{
 
@@ -73,19 +74,25 @@ namespace Novella::NScript::Runtime{
         CoreInitializer::registerWindow(*this);
         CoreInitializer::registerMath(*this);
         CoreInitializer::registerString(*this);
+        CoreInitializer::registerOS(*this);
 
     }
 
-    void RuntimeEnvironment::registerData(const Parser::Script& script){
+    void RuntimeEnvironment::registerData(const Parser::Script& script, ExpressionEvaluator& expressionEvaluator){
 
         for(const auto& definition : script.definitions){
 
             if(auto function = std::get_if<Parser::FunctionDefinition>(&definition)){
 
-                    registerFunction(*function);
-                }
+                registerFunction(*function);
+
+            }else if(auto variable = std::get_if<Parser::VariableStatement>(&definition)){
+
+                std::cout << "REGISTERING VARIABLE: " << variable->name << "\n";
+                createVariable(variable->name, expressionEvaluator.evaluate(variable->value));
             }
         }
+    }
 
     void RuntimeEnvironment::registerFunction(const Parser::FunctionDefinition& definition){
 
@@ -139,5 +146,13 @@ namespace Novella::NScript::Runtime{
         this->persistentStorage.clear();
         this->callStack.clear();
 
+    }
+
+    void RuntimeEnvironment::printVariables() const{
+
+        for(const auto& [variable, value] : variables){
+
+            std::cout << "Variable name: " << variable;
+        }
     }
 }

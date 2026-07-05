@@ -7,3 +7,5 @@
 #include "WindowModule.hpp"
 #include "MathModule.hpp"
 #include "StringModule.hpp"
+#include "Win32Module.hpp"
+#include "LinuxModule.hpp"

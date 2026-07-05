@@ -14,7 +14,7 @@ namespace Novella::NScript::Parser{
 
     using PrimitiveValue = std::variant<std::monostate, std::string, double, bool, char>;
 
-    struct Value {
+    struct Value{
         
         std::variant<PrimitiveValue, std::vector<PrimitiveValue>> underlyingValue;
         //So i can extract the actual underlying type of the variant when registering on the runtime

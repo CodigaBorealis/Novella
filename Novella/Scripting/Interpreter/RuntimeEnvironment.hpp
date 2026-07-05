@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include "../Parser/Expression.hpp"
+#include "ExpressionEvaluator.hpp"
 #include "StatementEvaluator.hpp"
 #include "../Parser/Definition.hpp"
 #include "NativeFunction.hpp"
@@ -42,7 +43,7 @@ namespace Novella::NScript::Runtime{
 
         void registerCoreFunctions();
 
-        void registerData(const Parser::Script& script);
+        void registerData(const Parser::Script& script, ExpressionEvaluator& expressionEvaluator);
 
         Parser::Value& getVariable(const std::string& name);
 
@@ -83,6 +84,7 @@ namespace Novella::NScript::Runtime{
 
         void printNativeFunctionAddresses() const;
 
+        void printVariables() const;
         void createVariable(const std::string& name, const Parser::Value& value);
         
         Parser::Value callNativeFunction(const std::string& name, const std::vector<Parser::Value>& args);
