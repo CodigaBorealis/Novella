@@ -71,7 +71,7 @@ add_executable(Novella
     src/MathModule.cpp
     src/StringModule.cpp
     src/LinuxModule.cpp
-    
+    src/FileSystemModule.cpp
     src/Logger.cpp
     
     src/Engine.cpp

@@ -9,3 +9,4 @@
 #include "StringModule.hpp"
 #include "Win32Module.hpp"
 #include "LinuxModule.hpp"
+#include "FileSystemModule.hpp"

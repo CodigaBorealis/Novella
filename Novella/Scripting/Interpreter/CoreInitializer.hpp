@@ -21,5 +21,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerString(Runtime::RuntimeEnvironment& runtime);
 
+    void registerFilesystem(Runtime::RuntimeEnvironment& runtime);
+    
     void registerOS(Runtime::RuntimeEnvironment& runtime);
 }

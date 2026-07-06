@@ -102,11 +102,22 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "reverse", Modules::String::reverse);
     }
 
+    void registerFilesystem(Runtime::RuntimeEnvironment &runtime){
+
+        const std::string prefix = "FileSystem.";
+
+        runtime.registerNativeFunction(prefix + "createFile", Modules::FileSystem::createFile);
+        runtime.registerNativeFunction(prefix + "removeFile", Modules::FileSystem::removeFile);
+        runtime.registerNativeFunction(prefix + "createFolder", Modules::FileSystem::createFolder);
+        runtime.registerNativeFunction(prefix + "removeFolder", Modules::FileSystem::removeFolder);
+        runtime.registerNativeFunction(prefix + "moveFileToFolder", Modules::FileSystem::moveFileToFolder);
+    }
+    
     #ifdef _WIN32
     void registerOS(Runtime::RuntimeEnvironment& runtime){
         
         const std::string prefix = "OS.";
-        runtime.registerNativeFunction(prefix + "getUsername", Modules::Win32::getUserEnv);
+        runtime.registerNativeFunction(prefix + "getCurrentUsername", Modules::Win32::getUserEnv);
     }
     #endif
 

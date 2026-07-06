@@ -74,6 +74,7 @@ namespace Novella::NScript::Runtime{
         CoreInitializer::registerMath(*this);
         CoreInitializer::registerString(*this);
         CoreInitializer::registerOS(*this);
+        CoreInitializer::registerFilesystem(*this);
 
     }
 
