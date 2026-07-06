@@ -82,9 +82,9 @@ namespace Novella::NScript::Runtime{
             });
         }
 
-        void printNativeFunctionAddresses() const;
+        //void printNativeFunctionAddresses() const;
 
-        void printVariables() const;
+        //void printVariables() const;
         void createVariable(const std::string& name, const Parser::Value& value);
         
         Parser::Value callNativeFunction(const std::string& name, const std::vector<Parser::Value>& args);

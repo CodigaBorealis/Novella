@@ -479,6 +479,9 @@ namespace Novella::NScript::Parser{
         
     }
 //This is hell
+//Never remove memberExpression
+//It was originally intended for user modules, but the engine API relies on using the dot operator
+
     Expression Parser::parsePostFix(){
 
         Expression expression = parsePrimary();

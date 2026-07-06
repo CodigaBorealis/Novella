@@ -117,7 +117,12 @@ namespace Novella::NScript::Runtime{
         
         Parser::Value evaluateVariable(const Parser::VariableExpression& variable);
         Parser::Value evaluateLiteral(const Parser::LiteralExpression& literal);
+        
+        Parser::Value evaluateIndexExpression(const Parser::IndexExpression& indexExpression);
+        Parser::Value evaluateArrayExpression(const Parser::ArrayExpression& ArrayExpression);
 
+        Parser::Value evaluatePostFixExpression(const Parser::PostFixExpression& postFixExpression);
+        
         size_t callStackDepth = 0;
 
         const size_t MAX_CALL_STACK = 500;

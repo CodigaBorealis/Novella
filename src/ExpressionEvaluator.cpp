@@ -3,6 +3,7 @@
 #include "../Novella/Scripting/Parser/Definition.hpp"
 #include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
 #include <cmath>
+#include <cstddef>
 #include <stdexcept>
 #include <string>
 #include <variant>
@@ -107,25 +108,88 @@ namespace Novella::NScript::Runtime{
 
     Parser::Value ExpressionEvaluator::evaluateUnaryExpression(const Parser::UnaryExpression& unaryExpression){
 
-        auto value = evaluate(*unaryExpression.operand);
+        if(auto variable = std::get_if<Parser::VariableExpression>(unaryExpression.operand.get())){
 
-        if(unaryExpression.operation == Parser::Token::Type::Increment){
-            
-            return applyIncrement(value);
+            std::string name = variable->name;
+            Parser::Value currentValue = runtime.getVariable(name);
 
-        }else if(unaryExpression.operation == Parser::Token::Type::Decrement){
+            if(unaryExpression.operation == Parser::Token::Type::Increment){
 
-            return applyDecrement(value);
+                Parser::Value newValue = applyIncrement(currentValue);
 
-        }else if(unaryExpression.operation == Parser::Token::Type::Minus){
+                runtime.setVariable(name, newValue);
 
-            return applyMinus(value);
+                return newValue;
 
-        }else if(unaryExpression.operation == Parser::Token::Type::Not){
+            }else if(unaryExpression.operation == Parser::Token::Type::Decrement){
 
-            return applyNot(value);
+                Parser::Value newValue = applyDecrement(currentValue);
+
+                runtime.setVariable(name, newValue);
+
+                return newValue;
+
+            }else if(unaryExpression.operation == Parser::Token::Type::Minus){
+
+                return applyMinus(currentValue);
+
+            }else if(unaryExpression.operation == Parser::Token::Type::Not){
+
+                return applyNot(currentValue);
+            }
+
+        }else if(auto indexExpression = std::get_if<Parser::IndexExpression>(unaryExpression.operand.get())){
+
+            if(auto variable = std::get_if<Parser::VariableExpression>(indexExpression->object.get())){
+
+                std::string variableName = variable->name;
+
+                Parser::Value entireArray = runtime.getVariable(variableName);
+
+                Parser::Value indexResponse = evaluate(*indexExpression->index);
+                
+                size_t targetIndex = static_cast<size_t>(indexResponse.get<double>());
+
+                auto& elements = std::get<std::vector<Parser::PrimitiveValue>>(entireArray.underlyingValue);
+
+                if(targetIndex >= elements.size()) throw std::runtime_error("NovellaScript Runtime Error: Index out of bounds");
+
+                Parser::Value elementValue{};
+
+                elementValue.underlyingValue = elements[targetIndex];
+
+                if(unaryExpression.operation == Parser::Token::Type::Increment){
+
+                    Parser::Value newValue = applyIncrement(elementValue);
+
+                    elements[targetIndex] = std::get<Parser::PrimitiveValue>(newValue.underlyingValue);
+
+                    runtime.setVariable(variableName, entireArray);
+
+                    return newValue;
+
+                }else if(unaryExpression.operation == Parser::Token::Type::Decrement){
+
+                    Parser::Value newValue = applyDecrement(elementValue);
+
+                    elements[targetIndex] = std::get<Parser::PrimitiveValue>(newValue.underlyingValue);
+
+                    runtime.setVariable(variableName, entireArray);
+
+                    return newValue;
+
+                }else if(unaryExpression.operation == Parser::Token::Type::Minus){
+
+                    return applyMinus(elementValue);
+
+                }else if(unaryExpression.operation == Parser::Token::Type::Not){
+
+                    return applyNot(elementValue);
+                }
+        
+            }
         }
-
+        
         throw std::runtime_error("Invalid unary operand type" + std::to_string(static_cast<int>(unaryExpression.operation)));
     }
 
@@ -354,6 +418,114 @@ namespace Novella::NScript::Runtime{
         throw std::runtime_error("Invalid binary operation");
     }
 
+    Parser::Value ExpressionEvaluator::evaluateIndexExpression(const Parser::IndexExpression& indexExpression){
+
+        Parser::Value sourceValue = evaluate(*indexExpression.object);
+        Parser::Value indexValue = evaluate(*indexExpression.index);
+
+        double rawIndex = indexValue.get<double>();
+
+        size_t index = static_cast<size_t>(rawIndex);
+
+        if(!std::holds_alternative<std::vector<Parser::PrimitiveValue>>(sourceValue.underlyingValue)) throw std::runtime_error("Type Mismatch: index operations can only be applied to arrays");
+
+        const auto& arrayElements = std::get<std::vector<Parser::PrimitiveValue>>(sourceValue.underlyingValue);
+
+        if(index >= arrayElements.size()) throw std::runtime_error("NovellaScript Runtime Error: Array out of bounds exception, can't access index " + std::to_string(index) + " for array of size " + std::to_string(arrayElements.size()));
+
+        Parser::Value result{};
+
+        result.underlyingValue = arrayElements[index];
+        
+        return result;
+    }
+
+    Parser::Value ExpressionEvaluator::evaluateArrayExpression(const Parser::ArrayExpression& ArrayExpression){
+
+        std::vector<Parser::PrimitiveValue> primitiveElements;
+
+        primitiveElements.reserve(ArrayExpression.elements.size());
+
+        for(const auto& element : ArrayExpression.elements){
+
+            Parser::Value evaluatedElement = evaluate(element);
+
+            if(!std::holds_alternative<Parser::PrimitiveValue>(evaluatedElement.underlyingValue)) throw std::runtime_error("NovellaScript does not support nested arrays");
+
+            primitiveElements.push_back(std::get<Parser::PrimitiveValue>(evaluatedElement.underlyingValue));
+        }
+
+        Parser::Value result{};
+
+        result.underlyingValue = primitiveElements;
+        
+        return result;
+    }
+
+    Parser::Value ExpressionEvaluator::evaluatePostFixExpression(const Parser::PostFixExpression& postFixExpression){
+
+        if(auto variable = std::get_if<Parser::VariableExpression>(postFixExpression.operand.get())){
+
+            std::string name = variable->name;
+
+            Parser::Value oldOriginalValue = runtime.getVariable(name);
+
+            Parser::Value modifiedValue{};
+
+            if(postFixExpression.operation == Parser::Token::Type::Increment){
+
+                modifiedValue = applyIncrement(oldOriginalValue);
+
+            }else{
+
+                modifiedValue = applyDecrement(oldOriginalValue);
+            }
+
+            runtime.setVariable(name, modifiedValue);
+
+            return oldOriginalValue;
+
+        }else if(auto indexExpression = std::get_if<Parser::IndexExpression>(postFixExpression.operand.get())){
+        
+            if(auto variable = std::get_if<Parser::VariableExpression>(indexExpression->object.get())){
+
+                std::string arrayName = variable->name;
+
+                Parser::Value entireArray = runtime.getVariable(arrayName);
+
+                Parser::Value indexResponse = evaluate(*indexExpression->index);
+
+                size_t targetIndex = static_cast<size_t>(indexResponse.get<double>());
+
+                auto& elements = std::get<std::vector<Parser::PrimitiveValue>>(entireArray.underlyingValue);
+
+                if(targetIndex >= elements.size()) throw std::runtime_error("NovellaScript Runtime Error: Index out of bounds");
+
+                Parser::Value oldElementValue{};
+                oldElementValue.underlyingValue = elements[targetIndex];
+
+                Parser::Value newElementValue{};
+
+                if(postFixExpression.operation == Parser::Token::Type::Increment){
+
+                    newElementValue = applyIncrement(oldElementValue);
+
+                }else if(postFixExpression.operation == Parser::Token::Type::Decrement){
+
+                    newElementValue = applyDecrement(oldElementValue);
+                }
+
+                elements[targetIndex] = std::get<Parser::PrimitiveValue>(newElementValue.underlyingValue);
+
+                runtime.setVariable(arrayName, entireArray);
+
+                return oldElementValue;
+            }        
+        }
+
+        throw std::runtime_error("Invalid postfix mutation expression target");
+    }
+
     Parser::Value ExpressionEvaluator::evaluate(const Parser::Expression& expression){
 
         if(auto functionCall = std::get_if<Parser::FunctionCallExpression>(&expression)){
@@ -370,39 +542,7 @@ namespace Novella::NScript::Runtime{
 
         }else if(auto unary = std::get_if<Parser::UnaryExpression>(&expression)){   
 
-            if(auto literal = std::get_if<Parser::LiteralExpression>(unary->operand.get())){
-
-                return evaluateUnaryExpression(*unary);
-
-            }else if(auto variable = std::get_if<Parser::VariableExpression>(unary->operand.get())){
-
-                std::string name = variable->name;
-
-                Parser::Value currentValue = runtime.getVariable(name);
-
-                Parser::Value newValue{};
-
-                if(unary->operation == Parser::Token::Type::Increment){
-
-                    newValue = applyIncrement(currentValue);
-
-                }else if(unary->operation == Parser::Token::Type::Decrement){
-
-                    newValue = applyDecrement(currentValue);
-
-                }else if(unary->operation == Parser::Token::Type::Minus){
-
-                    newValue = applyMinus(currentValue);
-
-                }else if(unary->operation == Parser::Token::Type::Not){
-
-                    newValue = applyNot(currentValue);
-                }
-
-                runtime.setVariable(name, newValue);
-
-                return newValue;
-            }
+            return evaluateUnaryExpression(*unary);
 
         }else if(auto binary = std::get_if<Parser::BinaryExpression>(&expression)){
 
@@ -414,12 +554,15 @@ namespace Novella::NScript::Runtime{
 
         }else if(auto array = std::get_if<Parser::ArrayExpression>(&expression)){
 
-        }else if(auto member = std::get_if<Parser::MemberExpression>(&expression)){
+            return evaluateArrayExpression(*array);
 
         }else if(auto index = std::get_if<Parser::IndexExpression>(&expression)){
 
+            return evaluateIndexExpression(*index);
+
         }else if(auto postFix = std::get_if<Parser::PostFixExpression>(&expression)){
 
+            return evaluatePostFixExpression(*postFix);
         }
 
         return Parser::Value{Parser::PrimitiveValue{std::monostate{}}};

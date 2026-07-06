@@ -6,7 +6,6 @@
 #include <variant>
 #include "../Novella/Scripting/Interpreter/CoreInitializer.hpp"
 #include "../Novella/Core/Engine.hpp"
-#include <iostream>
 #include <vector>
 #include "../Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
 
@@ -35,7 +34,7 @@ namespace Novella::NScript::Runtime{
 
         return scriptFunctions.contains(name);
     } 
-
+/*
     void RuntimeEnvironment::printNativeFunctionAddresses() const{
 
         using ExpectedTargetType = Parser::Value(*)(Context&, const std::vector<Parser::Value>&);
@@ -50,7 +49,7 @@ namespace Novella::NScript::Runtime{
             }
         }
     }
-
+*/
     void RuntimeEnvironment::initializeContext(Engine& engine){
 
         this->runtimeContext.audio = &engine.audio();
@@ -88,7 +87,6 @@ namespace Novella::NScript::Runtime{
 
             }else if(auto variable = std::get_if<Parser::VariableStatement>(&definition)){
 
-                std::cout << "REGISTERING VARIABLE: " << variable->name << "\n";
                 createVariable(variable->name, expressionEvaluator.evaluate(variable->value));
             }
         }
@@ -147,12 +145,12 @@ namespace Novella::NScript::Runtime{
         this->callStack.clear();
 
     }
-
+/*
     void RuntimeEnvironment::printVariables() const{
 
         for(const auto& [variable, value] : variables){
 
             std::cout << "Variable name: " << variable;
         }
-    }
+    }*/
 }
