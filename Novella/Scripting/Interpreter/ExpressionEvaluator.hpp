@@ -83,7 +83,7 @@ namespace Novella::NScript::Runtime{
             return result;
         }
 
-        template<typename T, typename Function>
+        template<typename First, typename Second, typename Function>
         
         Parser::Value applyPrimitiveOperation(const Parser::Value& first, const Parser::Value& second, Function&& operation, const std::string& errorMessage){
 
@@ -93,14 +93,16 @@ namespace Novella::NScript::Runtime{
             
             const auto& primitiveSecond = std::get<Parser::PrimitiveValue>(second.underlyingValue);
 
-            if(!std::holds_alternative<T>(primitiveFirst) || !std::holds_alternative<T>(primitiveSecond)) throw std::runtime_error(errorMessage);
+            if(!std::holds_alternative<First>(primitiveFirst) || !std::holds_alternative<Second>(primitiveSecond)) throw std::runtime_error(errorMessage);
 
             Parser::Value result{};
 
-            result.underlyingValue = Parser::PrimitiveValue{operation(std::get<T>(primitiveFirst), std::get<T>(primitiveSecond))};;
+            result.underlyingValue = Parser::PrimitiveValue{operation(std::get<First>(primitiveFirst), std::get<Second>(primitiveSecond))};;
 
             return result;
         }
+
+        std::string substractStrings(const std::string& a, const std::string& b);
 
         Parser::Value evaluateUnaryExpression(const Parser::UnaryExpression& unaryExpression);
 

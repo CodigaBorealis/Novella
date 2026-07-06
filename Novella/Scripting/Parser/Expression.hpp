@@ -24,20 +24,23 @@ namespace Novella::NScript::Parser{
 
         using DecayedT = std::decay_t<T>;
 
+        if constexpr(std::is_same_v<DecayedT, std::vector<PrimitiveValue>>){
+
+            return std::get<std::vector<PrimitiveValue>>(underlyingValue);
+        }
+
         return std::visit(overloaded{[](const PrimitiveValue& primitive) -> T{
 
                 return std::get<DecayedT>(primitive);
 
             },[](const std::vector<PrimitiveValue>& vec) -> T{
 
-                if(vec.empty()) throw std::runtime_error("Empty array value extraction");
-
-                return std::get<DecayedT>(vec[0]);
+                throw std::runtime_error("Attempted to extract a primitive from an array wrapper");
             }
 
             }, underlyingValue);
         
-        }
+        }        
     };
     
     struct LiteralExpression{

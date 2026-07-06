@@ -4,8 +4,10 @@
 #include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
 #include <cmath>
 #include <cstddef>
+#include <limits>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
 #include <variant>
 #include <vector>
 
@@ -14,6 +16,33 @@ namespace Novella::NScript::Runtime{
     void ExpressionEvaluator::setFunctionExecutor(FunctionExecutor& executor){
 
         this->functionExecutor = &executor;
+    }
+
+    std::string ExpressionEvaluator::substractStrings(const std::string& a, const std::string& b){
+
+        std::unordered_map<char, int> counts;
+
+        for(char c : b){
+
+            counts[c] ++;
+        }
+
+        std::string result;
+
+        for(char c : a){
+
+            if(counts[c] > 0){
+
+                counts[c]--;
+
+            }else{
+
+                result+=c;
+            }
+        }
+                
+        return result;
+
     }
 
     std::vector<Parser::Value> ExpressionEvaluator::evaluateFunctionArguments(const std::vector<Parser::Expression>& arguments){
@@ -210,27 +239,105 @@ namespace Novella::NScript::Runtime{
     }
 
     Parser::Value ExpressionEvaluator::evaluateAddition(const Parser::Value& firstValue, const Parser::Value& secondValue){
+        
+        const auto& primitiveFirst = std::get<Parser::PrimitiveValue>(firstValue.underlyingValue);
+        const auto& primitiveSecond = std::get<Parser::PrimitiveValue>(secondValue.underlyingValue);
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        if(std::holds_alternative<std::string>(primitiveFirst) && std::holds_alternative<bool>(primitiveSecond)){
+
+            return applyPrimitiveOperation<std::string, bool>(firstValue, secondValue,[](std::string  a, bool b){
+
+                if(b) return a + "true";
+
+                return a + "false";
+                
+            }, "Type Mismatch: Unsuported addition or concatenation operation");
+
+        }
+
+        if(std::holds_alternative<std::string>(primitiveFirst) && std::holds_alternative<double>(primitiveSecond)){
+
+            return applyPrimitiveOperation<std::string, double>(firstValue, secondValue,[](std::string  a, double b){
+
+                return a + std::to_string(b);
+                
+            }, "Type Mismatch: Unsuported addition or concatenation operation");
+
+        }
+
+        if(std::holds_alternative<std::string>(primitiveFirst) && std::holds_alternative<std::string>(primitiveSecond)){
+
+            return applyPrimitiveOperation<std::string, std::string>(firstValue, secondValue,[](std::string  a, std::string b){
+
+                return a + b;
+                
+            }, "Type Mismatch: Unsuported addition or concatenation operation");
+
+        }
+
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a + b;
             
-        }, "Type Mismatch: addition requires two numeric operands");
+        }, "Type Mismatch: Unsuported addition or concatenation operation");
     }
 
     Parser::Value ExpressionEvaluator::evaluateSubstraction(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        const auto& primitiveFirst = std::get<Parser::PrimitiveValue>(firstValue.underlyingValue);
+        const auto& primitiveSecond = std::get<Parser::PrimitiveValue>(secondValue.underlyingValue);
+        
+        if(std::holds_alternative<std::string>(primitiveFirst) && std::holds_alternative<std::string>(primitiveSecond)){
+
+            return applyPrimitiveOperation<std::string, std::string>(firstValue, secondValue,[this](std::string  a, std::string b){
+
+                return substractStrings(a, b);
+                
+            }, "Type Mismatch: substraction requires two numeric operands or two string operands");
+
+        }
+
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a - b;
             
-        }, "Type Mismatch: substraction requires two numeric operands");
+        }, "Type Mismatch: substraction requires two numeric operands or two string operands");
 
     }
 
     Parser::Value ExpressionEvaluator::evaluateMultiplication(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        const auto& primitiveFirst = std::get<Parser::PrimitiveValue>(firstValue.underlyingValue);
+        const auto& primitiveSecond = std::get<Parser::PrimitiveValue>(secondValue.underlyingValue);
+        
+        if(std::holds_alternative<std::string>(primitiveFirst) && std::holds_alternative<double>(primitiveSecond)){
+
+            return applyPrimitiveOperation<std::string, double>(firstValue, secondValue,[](std::string  a, double b){
+
+                if(b < 0) throw std::runtime_error("Cannot multiply a string by a negative integer");
+
+                if(b != std::floor(b)) throw std::runtime_error("Multiplying a string requires an integer as the second operand");
+
+                if(!std::isfinite(b)) throw std::runtime_error("Multiplier must be a finite integer");
+
+                size_t count = static_cast<size_t>(b);
+
+                std::string result;
+                
+                result.reserve(a.size() * count);
+
+                for(size_t x = 0; x < count ; x ++){
+
+                    result += a;
+                }
+                
+                return result;
+
+            }, "Type Mismatch: substraction requires two numeric operands or two string operands");
+
+        }
+
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a * b;
             
@@ -239,7 +346,7 @@ namespace Novella::NScript::Runtime{
 
     Parser::Value ExpressionEvaluator::evaluateDivision(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a / b;
             
@@ -248,7 +355,7 @@ namespace Novella::NScript::Runtime{
 
     Parser::Value ExpressionEvaluator::evaluateModulo(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
             
             if(a != std::floor(a) || b != std::floor(b)) throw std::runtime_error("modulo requires two integer operands");
 
@@ -259,7 +366,7 @@ namespace Novella::NScript::Runtime{
 
     Parser::Value ExpressionEvaluator::evaluateLess(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a < b;
             
@@ -268,7 +375,7 @@ namespace Novella::NScript::Runtime{
 
     Parser::Value ExpressionEvaluator::evaluateLessEquals(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a <= b;
             
@@ -278,7 +385,7 @@ namespace Novella::NScript::Runtime{
 
     Parser::Value ExpressionEvaluator::evaluateGreater(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a > b;
             
@@ -287,7 +394,7 @@ namespace Novella::NScript::Runtime{
 
     Parser::Value ExpressionEvaluator::evaluateGreaterEquals(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a >= b;
             
@@ -301,7 +408,7 @@ namespace Novella::NScript::Runtime{
 
         if(std::holds_alternative<bool>(primitiveFirst) && std::holds_alternative<bool>(primitiveSecond)){
 
-            return applyPrimitiveOperation<bool>(firstValue, secondValue,[](bool  a, bool b){
+            return applyPrimitiveOperation<bool, bool>(firstValue, secondValue,[](bool  a, bool b){
 
                 return a == b;
                 
@@ -309,7 +416,7 @@ namespace Novella::NScript::Runtime{
 
         }
 
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a == b;
             
@@ -323,14 +430,14 @@ namespace Novella::NScript::Runtime{
 
         if(std::holds_alternative<bool>(primitiveFirst) && std::holds_alternative<bool>(primitiveSecond)){
 
-            return applyPrimitiveOperation<bool>(firstValue, secondValue,[](bool  a, bool b){
+            return applyPrimitiveOperation<bool, bool>(firstValue, secondValue,[](bool  a, bool b){
 
                 return a != b;
                 
             }, "Type Mismatch: or requires two numeric operands or two boolean operands");
 
         }
-        return applyPrimitiveOperation<double>(firstValue, secondValue,[](double a, double b){
+        return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a != b;
             
@@ -340,7 +447,7 @@ namespace Novella::NScript::Runtime{
 
     Parser::Value ExpressionEvaluator::evaluateAnd(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<bool>(firstValue, secondValue,[](bool a, bool b){
+        return applyPrimitiveOperation<bool, bool>(firstValue, secondValue,[](bool a, bool b){
 
             return a && b;
             
@@ -350,7 +457,7 @@ namespace Novella::NScript::Runtime{
 
     Parser::Value ExpressionEvaluator::evaluateOr(const Parser::Value& firstValue, const Parser::Value& secondValue){
 
-        return applyPrimitiveOperation<bool>(firstValue, secondValue,[](bool a, bool b){
+        return applyPrimitiveOperation<bool, bool>(firstValue, secondValue,[](bool a, bool b){
 
             return a || b;
             
