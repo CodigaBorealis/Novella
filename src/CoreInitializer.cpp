@@ -78,10 +78,23 @@ namespace Novella::NScript::CoreInitializer{
 
         const std::string prefix = "Math.";
 
-        runtime.registerNativeFunction(prefix + "randomRange", Modules::Math::randomRange);
         runtime.registerNativeFunction(prefix + "clamp", Modules::Math::clamp);
         runtime.registerNativeFunction(prefix + "sqrt", Modules::Math::squareRoot);
         runtime.registerNativeFunction(prefix + "pow", Modules::Math::power);
+        runtime.registerNativeFunction(prefix + "abs", Modules::Math::abs);
+        runtime.registerNativeFunction(prefix + "min", Modules::Math::min);
+        runtime.registerNativeFunction(prefix + "floor", Modules::Math::floor);
+        runtime.registerNativeFunction(prefix + "ceil", Modules::Math::ceil);
+        runtime.registerNativeFunction(prefix + "round", Modules::Math::round);
+        runtime.registerNativeFunction(prefix + "sin", Modules::Math::sin);
+        runtime.registerNativeFunction(prefix + "cos", Modules::Math::cos);
+        runtime.registerNativeFunction(prefix + "tan", Modules::Math::tan);
+        runtime.registerNativeFunction(prefix + "atan2", Modules::Math::atan2);
+        runtime.registerNativeFunction(prefix + "degToRad", Modules::Math::degToRad);
+        runtime.registerNativeFunction(prefix + "radToDeg", Modules::Math::radToDeg);
+        runtime.registerNativeFunction(prefix + "lerp", Modules::Math::lerp);
+        runtime.registerNativeFunction(prefix + "sign", Modules::Math::sign);
+
     }
 
     void registerString(Runtime::RuntimeEnvironment& runtime){
