@@ -217,6 +217,15 @@ namespace Novella::NScript::Runtime{
                 }
         
             }
+        }else if(auto literal = std::get_if<Parser::LiteralExpression>(unaryExpression.operand.get())){
+
+            Parser::Value value = evaluateLiteral(*literal);
+
+            if(unaryExpression.operation == Parser::Token::Type::Minus) return applyMinus(value);
+
+            if(unaryExpression.operation == Parser::Token::Type::Not) return applyNot(value);
+
+            return value;
         }
         
         throw std::runtime_error("Invalid unary operand type" + std::to_string(static_cast<int>(unaryExpression.operation)));
@@ -568,6 +577,11 @@ namespace Novella::NScript::Runtime{
         
         return result;
     }
+
+    Parser::Value ExpressionEvaluator::evaluateLiteral(const Parser::LiteralExpression& literal){
+
+        return literal.value;
+    }   
 
     Parser::Value ExpressionEvaluator::evaluatePostFixExpression(const Parser::PostFixExpression& postFixExpression){
 
