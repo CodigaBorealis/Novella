@@ -157,7 +157,7 @@ namespace Novella::Project{
             return;
         }
 
-        throw std::runtime_error("Unkown window property '" + key + "'");
+        throw std::runtime_error("Unknown window property '" + key + "'");
     }
 
     void Parser::parseFlags(EngineConfig& config){

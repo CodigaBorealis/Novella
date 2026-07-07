@@ -1,4 +1,5 @@
 #pragma once
+#include <stdexcept>
 #include <string>
 
 namespace Novella{
@@ -25,77 +26,77 @@ namespace Novella{
             return static_cast<Key>(static_cast<int>(Key::A) + stringRepresentation[0] - 'A');
         }
 
-        if(stringRepresentation == "Num0") return Key::Num0;
+        if(stringRepresentation == "0") return Key::Num0;
 
-        if(stringRepresentation == "Num1") return Key::Num1;
+        if(stringRepresentation == "1") return Key::Num1;
 
-        if(stringRepresentation == "Num2") return Key::Num2;
+        if(stringRepresentation == "2") return Key::Num2;
 
-        if(stringRepresentation == "Num3") return Key::Num3;
+        if(stringRepresentation == "3") return Key::Num3;
 
-        if(stringRepresentation == "Num4") return Key::Num4;
+        if(stringRepresentation == "4") return Key::Num4;
 
-        if(stringRepresentation == "Num5") return Key::Num5;
+        if(stringRepresentation == "5") return Key::Num5;
 
-        if(stringRepresentation == "Num6") return Key::Num6;
+        if(stringRepresentation == "6") return Key::Num6;
 
-        if(stringRepresentation == "Num7") return Key::Num7;
+        if(stringRepresentation == "7") return Key::Num7;
 
-        if(stringRepresentation == "Num8") return Key::Num8;
+        if(stringRepresentation == "8") return Key::Num8;
 
-        if(stringRepresentation == "Num9") return Key::Num9;
+        if(stringRepresentation == "9") return Key::Num9;
 
-        if(stringRepresentation == "Escape") return Key::Escape;
+        if(stringRepresentation == "ESCAPE") return Key::Escape;
 
-        if(stringRepresentation == "Space") return Key::Space;
+        if(stringRepresentation == "SPACE") return Key::Space;
 
-        if(stringRepresentation == "Enter") return Key::Enter;
+        if(stringRepresentation == "ENTER") return Key::Enter;
 
-        if(stringRepresentation == "Backspace") return Key::Backspace;
+        if(stringRepresentation == "BACKSPACE") return Key::Backspace;
 
-        if(stringRepresentation == "Tab") return Key::Tab;
+        if(stringRepresentation == "TAB") return Key::Tab;
 
-        if(stringRepresentation == "Left") return Key::Left;
+        if(stringRepresentation == "LEFT") return Key::Left;
 
-        if(stringRepresentation == "Right") return Key::Right;
+        if(stringRepresentation == "RIGHT") return Key::Right;
 
-        if(stringRepresentation == "Up") return Key::Up;
+        if(stringRepresentation == "UP") return Key::Up;
 
-        if(stringRepresentation == "Down") return Key::Down;
+        if(stringRepresentation == "DOWN") return Key::Down;
 
-        if(stringRepresentation == "LShift") return Key::LShift;
+        if(stringRepresentation == "LSHIFT") return Key::LShift;
 
-        if(stringRepresentation == "RShift") return Key::RShift;
+        if(stringRepresentation == "RSHIFT") return Key::RShift;
         
-        if(stringRepresentation == "LControl") return Key::LControl;
+        if(stringRepresentation == "LCONTROL") return Key::LControl;
 
-        if(stringRepresentation == "RControl") return Key::RControl;
+        if(stringRepresentation == "RCONTROL") return Key::RControl;
 
-        if(stringRepresentation == "LAlt") return Key::LAlt;
+        if(stringRepresentation == "LALT") return Key::LAlt;
 
-        if(stringRepresentation == "RAlt") return Key::RAlt;
+        if(stringRepresentation == "RALT") return Key::RAlt;
 
-        return Key::A;
+        throw std::runtime_error("Unknown key: " + stringRepresentation);
 
     }
 
     static constexpr Button getButton(const std::string& stringRepresentation){
 
-        if(stringRepresentation == "Left") return Button::Left;
+        if(stringRepresentation == "LEFT") return Button::Left;
         
-        if(stringRepresentation == "Right") return Button::Right;
+        if(stringRepresentation == "RIGHT") return Button::Right;
 
-        if(stringRepresentation == "Middle") return Button::Middle;
+        if(stringRepresentation == "MIDDLE") return Button::Middle;
 
-        if(stringRepresentation == "Side") return Button::Side;
+        if(stringRepresentation == "SIDE") return Button::Side;
 
-        if(stringRepresentation == "Extra") return Button::Extra;
+        if(stringRepresentation == "EXTRA") return Button::Extra;
 
-        if(stringRepresentation == "Forward") return Button::Forward;
+        if(stringRepresentation == "FORWARD") return Button::Forward;
 
-        if(stringRepresentation == "Back") return Button::Back;
+        if(stringRepresentation == "BACK") return Button::Back;
 
-        return Button::Left;
+        throw std::runtime_error("Unknown button: " + stringRepresentation);
     }
 
 }

@@ -75,7 +75,7 @@ namespace Novella::NScript::Runtime{
         CoreInitializer::registerString(*this);
         CoreInitializer::registerOS(*this);
         CoreInitializer::registerFilesystem(*this);
-
+        CoreInitializer::registerInput(*this);
     }
 
     void RuntimeEnvironment::registerData(const Parser::Script& script, ExpressionEvaluator& expressionEvaluator){

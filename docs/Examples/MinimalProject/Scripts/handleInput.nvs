@@ -1,0 +1,10 @@
+#A simple script that pools input and prints if a particular button or key has been pressed
+
+fn handleInput():
+
+    Input.lockCursor(true);
+    
+    Console.print(String.boolToString(Input.isKeyPressed("m")));
+    Console.print(String.boolToString(Input.isMousePressed("Left")));
+
+endFn

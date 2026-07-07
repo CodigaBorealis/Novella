@@ -7,6 +7,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+
 namespace Novella::NScript::Parser{
 
     Parser::Parser(Lexer& lexer){

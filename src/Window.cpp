@@ -28,7 +28,12 @@ namespace Novella{
 
         setIcon(icon);
     }
+    
+    bool Window::hasWindowFlag(WindowFlags flags){
 
+        return ::IsWindowState(toRaylib(flags));
+    }
+    
     bool Window::isOpen() const{
 
         return ::IsWindowReady() && !::WindowShouldClose();

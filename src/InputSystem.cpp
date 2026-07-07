@@ -2,57 +2,6 @@
 #include <optional>
 #include <raylib.h>
 namespace Novella{
-
-    bool InputSystem::isKeyPressed(Key key){
-
-        return ::IsKeyPressed(static_cast<int>(key));
-    }
-
-    bool InputSystem::isKeyDown(Key key){
-
-        return ::IsKeyDown(static_cast<int>(key));
-    }
-
-    bool InputSystem::isKeyReleased(Key key){
-
-        return ::IsKeyReleased(static_cast<int>(key));
-    }
-
-    bool InputSystem::isKeyUp(Key key){
-
-        return ::IsKeyUp(static_cast<int>(key));
-
-    }
-
-    Key getKeyPressed(){
-
-        return Key(::GetKeyPressed());
-    }
-
-    char getCharPressed(){
-
-        return ::GetCharPressed();
-    }
-
-    bool InputSystem::isMouseButtonPressed(Button button){
-
-        return ::IsMouseButtonPressed(static_cast<int>(button));
-    }
-
-    bool InputSystem::isMouseButtonDown(Button button){
-
-        return ::IsMouseButtonDown(static_cast<int>(button));
-    }
-
-    bool InputSystem::isMouseButtonReleased(Button button){
-
-        return ::IsMouseButtonReleased(static_cast<int>(button));
-    }
-
-    bool InputSystem::isMouseButtonUp(Button button){
-
-        return ::IsMouseButtonUp(static_cast<int>(button));
-    }
     
     float InputSystem::getMouseX(){
 

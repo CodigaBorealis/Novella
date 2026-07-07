@@ -5,12 +5,6 @@
 
 var count = 0;
 
-fn handleInput():
-
-    Console.print("Handling the input");
-
-endFunction
-
 fn showMessage():
 
     Console.print("HELLO WORLD");
@@ -20,7 +14,7 @@ endFunction
 fn main():
 
     showMessage();
-    handleInput();
+    handleInput();#included from handleInput.nvs
 
 endFunction
 

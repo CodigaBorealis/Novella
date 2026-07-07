@@ -38,7 +38,8 @@ add_executable(Novella
     src/InteractionSystem.cpp
 
     src/FileSystem.cpp
-
+    src/String.cpp
+    
     src/SceneLoader.cpp
     src/ComponentBuilder.cpp
 

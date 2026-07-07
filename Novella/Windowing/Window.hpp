@@ -36,6 +36,8 @@ namespace Novella{
 
         Window(int width, int height, const std::string& title, int targetFPS,const std::filesystem::path& icon, WindowFlags flags);
         
+        bool hasWindowFlag(WindowFlags flags);
+
         bool isOpen() const;
 
         void clear(const Color& color);

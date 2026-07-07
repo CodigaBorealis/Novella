@@ -47,4 +47,8 @@ namespace Novella{
         return lhs;
     }
 
+    inline constexpr int toRaylib(WindowFlags flags){
+
+        return static_cast<unsigned int>(flags);
+    }
 }

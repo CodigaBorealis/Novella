@@ -102,6 +102,7 @@ Components{
 
 Scripts{
 
-    buttonLogic = "Scripts/helloWorld.nvs"
-    
+    helloWorld = "Scripts/helloWorld.nvs"
+    input = "Scripts/handleInput.nvs"
+
 }

@@ -8,11 +8,26 @@ namespace Novella::NScript::CoreInitializer{
         const std::string prefix = "Window.";
 
         runtime.registerNativeFunction(prefix + "setTitle", Modules::Window::setTitle);
+
         runtime.registerNativeFunction(prefix + "setPositionX", Modules::Window::setPositionX);
         runtime.registerNativeFunction(prefix + "setPositionY", Modules::Window::setPositionY);
+        runtime.registerNativeFunction(prefix + "setPosition", Modules::Window::setPosition);
+
+        runtime.registerNativeFunction(prefix + "center", Modules::Window::center);
+        runtime.registerNativeFunction(prefix + "close", Modules::Window::close);
+        runtime.registerNativeFunction(prefix + "minimize", Modules::Window::minimize);
+        runtime.registerNativeFunction(prefix + "maximize", Modules::Window::maximize);
+        
+        runtime.registerNativeFunction(prefix + "isFullScreen", Modules::Window::isFullScreen);
+        runtime.registerNativeFunction(prefix + "isResizable", Modules::Window::isResizable);
+        runtime.registerNativeFunction(prefix + "isFocused", Modules::Window::isFocused);
+
         runtime.registerNativeFunction(prefix + "setWidth", Modules::Window::setWidth);
         runtime.registerNativeFunction(prefix + "setHeight", Modules::Window::setHeight);
+        runtime.registerNativeFunction(prefix + "setSize", Modules::Window::setSize);
+
         runtime.registerNativeFunction(prefix + "setIcon", Modules::Window::setIcon);
+
         runtime.registerNativeFunction(prefix + "getWidth", Modules::Window::getWidth);
         runtime.registerNativeFunction(prefix + "getHeight", Modules::Window::getHeight);
         runtime.registerNativeFunction(prefix + "getPositionX", Modules::Window::getPositionX);
@@ -65,8 +80,8 @@ namespace Novella::NScript::CoreInitializer{
 
         runtime.registerNativeFunction(prefix + "randomRange", Modules::Math::randomRange);
         runtime.registerNativeFunction(prefix + "clamp", Modules::Math::clamp);
-        runtime.registerNativeFunction(prefix + "squareRoot", Modules::Math::squareRoot);
-        runtime.registerNativeFunction(prefix + "power", Modules::Math::power);
+        runtime.registerNativeFunction(prefix + "sqrt", Modules::Math::squareRoot);
+        runtime.registerNativeFunction(prefix + "pow", Modules::Math::power);
     }
 
     void registerString(Runtime::RuntimeEnvironment& runtime){
@@ -107,12 +122,32 @@ namespace Novella::NScript::CoreInitializer{
         const std::string prefix = "FileSystem.";
 
         runtime.registerNativeFunction(prefix + "createFile", Modules::FileSystem::createFile);
-        runtime.registerNativeFunction(prefix + "removeFile", Modules::FileSystem::removeFile);
+        runtime.registerNativeFunction(prefix + "deleteFile", Modules::FileSystem::removeFile);
         runtime.registerNativeFunction(prefix + "createFolder", Modules::FileSystem::createFolder);
         runtime.registerNativeFunction(prefix + "removeFolder", Modules::FileSystem::removeFolder);
         runtime.registerNativeFunction(prefix + "moveFileToFolder", Modules::FileSystem::moveFileToFolder);
     }
-    
+
+    void registerInput(Runtime::RuntimeEnvironment& runtime){
+
+        const std::string prefix = "Input.";
+
+        runtime.registerNativeFunction(prefix + "setCursotVisible", Modules::Input::setCursotVisible);
+        runtime.registerNativeFunction(prefix + "lockCursor", Modules::Input::lockCursor);
+        runtime.registerNativeFunction(prefix + "setCursorPosition", Modules::Input::setCursorPosition);
+        runtime.registerNativeFunction(prefix + "moveCursor", Modules::Input::moveCursor);
+        runtime.registerNativeFunction(prefix + "isKeyDown", Modules::Input::isKeyDown);
+        runtime.registerNativeFunction(prefix + "isKeyPressed", Modules::Input::isKeyPressed);
+        runtime.registerNativeFunction(prefix + "isKeyReleased", Modules::Input::isKeyReleased);
+        runtime.registerNativeFunction(prefix + "isKeyUp", Modules::Input::isKeyUp);
+        runtime.registerNativeFunction(prefix + "isMouseDown", Modules::Input::isMouseDown);
+        runtime.registerNativeFunction(prefix + "isMousePressed", Modules::Input::isMousePressed);
+        runtime.registerNativeFunction(prefix + "isMouseUp", Modules::Input::isMouseUp);
+        runtime.registerNativeFunction(prefix + "isMouseReleased", Modules::Input::isMouseReleased);
+        runtime.registerNativeFunction(prefix + "getMouseX", Modules::Input::getMouseX);
+        runtime.registerNativeFunction(prefix + "getMouseY", Modules::Input::getMouseY);
+    }
+
     #ifdef _WIN32
     void registerOS(Runtime::RuntimeEnvironment& runtime){
         

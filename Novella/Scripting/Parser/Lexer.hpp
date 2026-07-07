@@ -17,7 +17,7 @@ namespace Novella::NScript::Parser{
         {"false", Token::Type::Boolean},
         {"then", Token::Type::Then},
         {"endIf", Token::Type::EndIf},
-        {"endFunction", Token::Type::EndFunction},
+        {"endFn", Token::Type::EndFunction},
         {"and", Token::Type::And},
         {"or", Token::Type::Or},
         {"not", Token::Type::Not},

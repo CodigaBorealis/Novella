@@ -2,6 +2,7 @@
 #include "InputTypes.hpp"
 #include "../../Core/Math/Vector2x.hpp"
 #include <optional>
+#include <raylib.h>
 
 namespace Novella{
 
@@ -19,18 +20,8 @@ namespace Novella{
     
     InputSystem& operator=(InputSystem&&) = delete;
 
-    static bool isKeyPressed(Key key);
-    static bool isKeyDown(Key key);
-    static bool isKeyReleased(Key key);
-    static bool isKeyUp(Key key);
-
     static Key getKeyPressed();
     static char getCharPressed();
-
-    static bool isMouseButtonPressed(Button button);
-    static bool isMouseButtonDown(Button button);
-    static bool isMouseButtonReleased(Button button);
-    static bool isMouseButtonUp(Button button);
     
     static float getMouseX();
     static float getMouseY();
@@ -52,7 +43,7 @@ namespace Novella{
     static std::optional<Button> getMouseButtonPressed();
     static std::optional<Key> getKeyboardKeyPressed();
 
-    inline Key fromRaylib(int key){
+    static inline Key keyFromRaylib(int key){
 
         switch(key){
 
@@ -66,7 +57,7 @@ namespace Novella{
         }
     }
 
-    inline int toRaylib(Key key){
+    static inline int toRaylib(Key key){
 
         switch(key){
 
@@ -80,13 +71,27 @@ namespace Novella{
         }
     }
 
-    inline bool isPressed(Key key){
+    static inline bool isUp(Key key){
+
+        return ::IsKeyUp(toRaylib(key));
+    }
+    
+    static inline bool isDown(Key key){
 
         return ::IsKeyDown(toRaylib(key));
     }
-};
+    
+    static inline bool isPressed(Key key){
 
-    inline Button fromRaylib(int button){
+        return ::IsKeyPressed(toRaylib(key));
+    }    
+    
+    static inline bool isReleased(Key key){
+
+        return ::IsKeyReleased(toRaylib(key));
+    }
+
+    static inline Button buttonFromRaylib(int button){
 
         switch(button){
             
@@ -100,7 +105,7 @@ namespace Novella{
         }
     }
 
-    inline int toRaylib(Button button){
+    static inline int toRaylib(Button button){
 
         switch (button) {
             
@@ -114,6 +119,24 @@ namespace Novella{
         }
     }
 
-    inline bool isPressed(Button button){return ::IsMouseButtonDown(toRaylib(button));}
+    static inline bool isUp(Button button){
 
+        return ::IsMouseButtonUp(toRaylib(button));
+    }
+    
+    static inline bool isDown(Button button){
+
+        return ::IsMouseButtonDown(toRaylib(button));
+    }
+    
+    static inline bool isPressed(Button button){
+
+        return ::IsMouseButtonPressed(toRaylib(button));
+    }    
+
+    static inline bool isReleased(Button button){
+
+        return ::IsMouseButtonReleased(toRaylib(button));
+    }    
+};
 }
