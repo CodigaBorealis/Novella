@@ -1,7 +1,5 @@
 #pragma once
 #include <string>
-#include "../../Core/Math/Vector2x.hpp"
-#include "../../Scene/Handle.hpp"
 #include "../Interpreter/RuntimeContext.hpp"
 
 namespace Novella{
@@ -11,12 +9,11 @@ namespace Novella{
 
 namespace Novella::NScript::Modules::Scene{
 
+    void load(Runtime::Context& context,const std::string& name);
 
-    const Handle& getHandle(Runtime::Context& context, const std::string& name);
+    void reload(Runtime::Context& context);
 
-    void destroy(Runtime::Context& context, const Handle& handle);
+    double objectCount(Runtime::Context& context);
 
-    void setPosition(Runtime::Context& context, const Handle& handle, Vector2d& position);
-
-
+    void reset(Runtime::Context& context);
 };   

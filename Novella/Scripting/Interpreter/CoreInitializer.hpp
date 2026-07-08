@@ -11,7 +11,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerScene(Runtime::RuntimeEnvironment& runtime);
 
-    void registerLayout(Runtime::RuntimeEnvironment& runtime);
+    void registerTransform(Runtime::RuntimeEnvironment& runtime);
 
     void registerLogger(Runtime::RuntimeEnvironment& runtime);
 
@@ -25,5 +25,13 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerRandomModule(Runtime::RuntimeEnvironment& runtime);
 
+    void registerSpriteModule(Runtime::RuntimeEnvironment& runtime);
+
+    void registerTextModule(Runtime::RuntimeEnvironment& runtime);
+    
+    void registerUIModule(Runtime::RuntimeEnvironment& runtime);
+
+    void registerObjectModule(Runtime::RuntimeEnvironment& runtime);
+    
     void registerOS(Runtime::RuntimeEnvironment& runtime);
 }

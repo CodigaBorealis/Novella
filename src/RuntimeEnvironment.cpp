@@ -65,17 +65,22 @@ namespace Novella::NScript::Runtime{
     void RuntimeEnvironment::registerCoreFunctions(){
 
         CoreInitializer::registerAudio(*this);
-        CoreInitializer::registerLayout(*this);
         CoreInitializer::registerLogger(*this);
         CoreInitializer::registerRenderer(*this);
         CoreInitializer::registerScene(*this);
         CoreInitializer::registerWindow(*this);
         CoreInitializer::registerMath(*this);
         CoreInitializer::registerString(*this);
-        CoreInitializer::registerOS(*this);
         CoreInitializer::registerFilesystem(*this);
         CoreInitializer::registerInput(*this);
         CoreInitializer::registerRandomModule(*this);
+        CoreInitializer::registerTransform(*this);
+        CoreInitializer::registerSpriteModule(*this);
+        CoreInitializer::registerTextModule(*this);
+        CoreInitializer::registerUIModule(*this);
+        CoreInitializer::registerObjectModule(*this);
+        CoreInitializer::registerOS(*this);
+
     }
 
     void RuntimeEnvironment::registerData(const Parser::Script& script, ExpressionEvaluator& expressionEvaluator){

@@ -6,13 +6,14 @@
 #include <type_traits>
 #include <variant>
 #include <vector>
+#include "../../Scene/Handle.hpp"
 
 template<class... Ts> struct overloaded : Ts...{using Ts::operator()...;};
 template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
 namespace Novella::NScript::Parser{
 
-    using PrimitiveValue = std::variant<std::monostate, std::string, double, bool, char>;
+    using PrimitiveValue = std::variant<std::monostate, std::string, double, bool, char, Handle>;
 
     struct Value{
         

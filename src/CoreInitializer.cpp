@@ -62,11 +62,6 @@ namespace Novella::NScript::CoreInitializer{
         
     }
 
-    void registerLayout(Runtime::RuntimeEnvironment& runtime){
-
-        
-    }
-
     void registerLogger(Runtime::RuntimeEnvironment& runtime){
 
         const std::string prefix = "Console.";
@@ -170,6 +165,76 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "bool", Modules::Random::randomBool);
         runtime.registerNativeFunction(prefix + "string", Modules::Random::randomString);
 
+
+    }
+    
+    void registerTransform(Runtime::RuntimeEnvironment& runtime){
+        
+        const std::string prefix = "Transform.";
+
+        runtime.registerNativeFunction(prefix + "setRotation", Modules::Transform::setRotation);
+        runtime.registerNativeFunction(prefix + "rotate", Modules::Transform::rotate);
+        runtime.registerNativeFunction(prefix + "flipX", Modules::Transform::flipX);
+        runtime.registerNativeFunction(prefix + "flipY", Modules::Transform::flipY);
+        runtime.registerNativeFunction(prefix + "setX", Modules::Transform::setPositionX);
+        runtime.registerNativeFunction(prefix + "setY", Modules::Transform::setPositionY);
+        runtime.registerNativeFunction(prefix + "setPosition", Modules::Transform::setPosition);
+        runtime.registerNativeFunction(prefix + "move", Modules::Transform::move);
+        runtime.registerNativeFunction(prefix + "x", Modules::Transform::getX);
+        runtime.registerNativeFunction(prefix + "y", Modules::Transform::getY);
+        runtime.registerNativeFunction(prefix + "rotation", Modules::Transform::getRotation);
+
+    }
+
+    void registerSpriteModule(Runtime::RuntimeEnvironment& runtime){
+
+        const std::string prefix = "Sprite.";
+    
+        runtime.registerNativeFunction(prefix + "setTexture", Modules::Sprite::setTexture);
+        runtime.registerNativeFunction(prefix + "setTint", Modules::Sprite::setTint);
+        runtime.registerNativeFunction(prefix + "texture", Modules::Sprite::getTexture);
+  
+    }
+
+
+    void registerTextModule(Runtime::RuntimeEnvironment& runtime){
+
+        const std::string prefix = "Label.";
+
+        runtime.registerNativeFunction(prefix + "setText", Modules::Text::setText);
+        runtime.registerNativeFunction(prefix + "text", Modules::Text::getText);
+        runtime.registerNativeFunction(prefix + "setFont", Modules::Text::setFont);
+        runtime.registerNativeFunction(prefix + "setSize", Modules::Text::setFontSize);
+        runtime.registerNativeFunction(prefix + "setColor", Modules::Text::setFontColor);
+        runtime.registerNativeFunction(prefix + "font", Modules::Text::getFont);
+        runtime.registerNativeFunction(prefix + "size", Modules::Text::getFontSize);
+
+    }
+
+    
+    void registerUIModule(Runtime::RuntimeEnvironment& runtime){
+
+        const std::string prefix = "UI.";
+
+        runtime.registerNativeFunction(prefix + "createLabel", Modules::UI::createLabel);
+        runtime.registerNativeFunction(prefix + "createButton", Modules::UI::createButton);
+        runtime.registerNativeFunction(prefix + "createSprite", Modules::UI::createSprite);
+
+
+    }
+
+    void registerObjectModule(Runtime::RuntimeEnvironment& runtime){
+
+        const std::string prefix = "Object.";
+
+        runtime.registerNativeFunction(prefix + "get", Modules::Object::get);
+        runtime.registerNativeFunction(prefix + "destroy", Modules::Object::destroy);
+        runtime.registerNativeFunction(prefix + "setVisible", Modules::Object::setVisible);
+        runtime.registerNativeFunction(prefix + "isVisible", Modules::Object::isVisible);
+        runtime.registerNativeFunction(prefix + "exists", Modules::Object::exists);
+        runtime.registerNativeFunction(prefix + "name", Modules::Object::getName);
+        runtime.registerNativeFunction(prefix + "setName", Modules::Object::setName);
+        runtime.registerNativeFunction(prefix + "supports", Modules::Object::supports);
 
     }
 

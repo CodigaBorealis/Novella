@@ -65,7 +65,7 @@ add_executable(Novella
     src/AudioModule.cpp
     src/DebugModule.cpp
     src/InputModule.cpp
-    src/LayoutModule.cpp
+    src/TransformModule.cpp
     src/RendererModule.cpp
     src/SceneModule.cpp
     src/WindowModule.cpp
@@ -74,7 +74,12 @@ add_executable(Novella
     src/LinuxModule.cpp
     src/FileSystemModule.cpp
     src/RandomModule.cpp
-    
+    src/ObjectModule.cpp
+    src/SpriteModule.cpp
+    src/TextModule.cpp
+    src/TransformModule.cpp
+    src/UIModule.cpp
+
     src/Logger.cpp
     
     src/Engine.cpp
