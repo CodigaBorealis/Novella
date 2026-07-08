@@ -1,5 +1,6 @@
 #include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
+#include "../Novella/Scripting/Interpreter/ReturnException.hpp"
 #include <stdexcept>
 #include <vector>
 namespace Novella::NScript::Runtime{
@@ -44,7 +45,14 @@ namespace Novella::NScript::Runtime{
 
             const auto& function = runtime->getFunction(name);
 
-            statementEvaluator->execute(function.body);
+            try{
+
+                statementEvaluator->execute(function.body);
+
+            }catch(const ReturnException& returnSignal){
+
+                return returnSignal.value;
+            }
 
             return {};
         }

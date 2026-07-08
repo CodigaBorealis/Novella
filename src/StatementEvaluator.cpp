@@ -2,6 +2,7 @@
 #include "../Novella/Scripting/Interpreter/StatementEvaluator.hpp"
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
 #include "../Novella/Scripting/Parser/Definition.hpp"
+#include "../Novella/Scripting/Interpreter/ReturnException.hpp"
 #include <variant>
 #include <vector>
 
@@ -47,7 +48,7 @@ namespace Novella::NScript::Runtime{
                 runtime.pushScope();
                 execute(ifStatement->body);
                 runtime.popScope();
-                
+
             }else{
                     
                 if(ifStatement->elseBody.empty()) return;
@@ -58,8 +59,10 @@ namespace Novella::NScript::Runtime{
             }    
 
         }else if(auto returnStatement = std::get_if<Parser::ReturnStatement>(&statement)){
+            
+            Parser::Value returnValue = expressionEvaluator->evaluate(returnStatement->value);
 
-            execute(*returnStatement);
+            throw ReturnException(returnValue);
         }
     }
 }
