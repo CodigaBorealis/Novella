@@ -25,15 +25,12 @@ namespace Novella::NScript::Parser{
 
         using DecayedT = std::decay_t<T>;
 
-        if constexpr(std::is_same_v<DecayedT, std::vector<PrimitiveValue>>){
-
-            return std::get<std::vector<PrimitiveValue>>(underlyingValue);
-        }
-
         return std::visit(overloaded{[](const PrimitiveValue& primitive) -> T{
 
-                return std::get<DecayedT>(primitive);
-
+                if(const auto* value = std::get_if<DecayedT>(&primitive)) return *value;
+                
+                throw std::runtime_error("Attempted to extract value of incorrect type");
+                
             },[](const std::vector<PrimitiveValue>& vec) -> T{
 
                 throw std::runtime_error("Attempted to extract a primitive from an array wrapper");

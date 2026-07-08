@@ -102,7 +102,7 @@ namespace Novella::NScript::Runtime{
 
         auto it = scriptFunctions.find(definition.name);
 
-        if(it != scriptFunctions.end()) throw std::runtime_error("A function with this name already exists '" + definition.name + "'");
+        if(it != scriptFunctions.end()) throw std::runtime_error("NovellaScript Runtime Error: A function with this name already exists '" + definition.name + "'");
 
         scriptFunctions.emplace(definition.name, definition);
     }
@@ -111,7 +111,7 @@ namespace Novella::NScript::Runtime{
 
         auto it = variables.find(name);
 
-        if(it != variables.end()) throw std::runtime_error("A variable with this name already exists '" + name + "'");
+        if(it != variables.end()) throw std::runtime_error("NovellaScript Runtime Error: A variable with this name already exists '" + name + "'");
 
         variables.emplace(name, value);
     }
@@ -120,7 +120,7 @@ namespace Novella::NScript::Runtime{
 
         auto it = variables.find(name);
 
-        if(it == variables.end()) throw std::runtime_error("Cannot get undefined variable '" + name + "'");
+        if(it == variables.end()) throw std::runtime_error("NovellaScript Runtime Error: Cannot get undefined variable '" + name + "'");
 
         return it->second;
     }
@@ -129,7 +129,7 @@ namespace Novella::NScript::Runtime{
 
         auto it = variables.find(name);
 
-        if(it == variables.end()) throw std::runtime_error("Cannot set undefined variable '" + name + "'");
+        if(it == variables.end()) throw std::runtime_error("NovellaScript Runtime Error: Cannot set undefined variable '" + name + "'");
 
         it->second = value;
     }
@@ -138,7 +138,7 @@ namespace Novella::NScript::Runtime{
 
         auto it = scriptFunctions.find(name);
 
-        if(it == scriptFunctions.end()) throw std::runtime_error("Cannot call undefined function '" + name + "'");
+        if(it == scriptFunctions.end()) throw std::runtime_error("NovellaScript Runtime Error: Cannot call undefined function '" + name + "'");
 
         return it->second;
     } 

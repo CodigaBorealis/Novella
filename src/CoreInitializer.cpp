@@ -67,6 +67,7 @@ namespace Novella::NScript::CoreInitializer{
         const std::string prefix = "Console.";
 
         runtime.registerNativeFunction(prefix + "print", Modules::Debug::print);
+        runtime.registerNativeFunction(prefix + "clear", Modules::Debug::clear);
     }
 
     void registerMath(Runtime::RuntimeEnvironment& runtime){
