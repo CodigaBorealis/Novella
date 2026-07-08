@@ -4,7 +4,6 @@
 #include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
 #include <cmath>
 #include <cstddef>
-#include <limits>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -65,10 +64,6 @@ namespace Novella::NScript::Runtime{
     }
 
     Parser::Value ExpressionEvaluator::evaluateFunctionCall(const Parser::FunctionCallExpression& call){
-
-        if(callStackDepth >= MAX_CALL_STACK) throw std::runtime_error("NovellaScript Runtime Error: Stack overflow detected, infinite recursion suspected in function: " + call.functionName);
-        
-        CallStackGuard guard(callStackDepth);
         
         auto args = evaluateFunctionArguments(call.arguments);
         

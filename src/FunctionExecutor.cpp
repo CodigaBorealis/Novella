@@ -4,6 +4,21 @@
 #include <vector>
 namespace Novella::NScript::Runtime{
 
+    FunctionExecutor::CallFrameGuard::CallFrameGuard(RuntimeEnvironment* runtime, const std::string& name)
+    :runtime(runtime){
+
+        runtime->functionCalls().push_back({name});
+        runtime->pushScope();
+    }
+
+    FunctionExecutor::CallFrameGuard::~CallFrameGuard(){
+
+        if(!runtime->functionCalls().empty()){
+
+            runtime->functionCalls().pop_back();
+        }
+    }
+
     void FunctionExecutor::setRuntime(RuntimeEnvironment& runtime){
 
         this->runtime = &runtime;
@@ -15,23 +30,26 @@ namespace Novella::NScript::Runtime{
     }
 
     Parser::Value FunctionExecutor::call(const std::string& name, const std::vector<Parser::Value>& args){
-
+        
         if(runtime->isNativeFunction(name)){
             
             return runtime->callNativeFunction(name, args);
         }
 
         if(runtime->isScriptFunction(name)){
+            
+        if(runtime->functionCalls().size() >= runtime->callStackLimit()) throw std::runtime_error("NovellaScript Runtime Error: Infinite recursion detected, last function called: " + runtime->functionCalls().back().functionName);
+
+            CallFrameGuard guard(runtime, name);
 
             const auto& function = runtime->getFunction(name);
 
             statementEvaluator->execute(function.body);
 
-        }else{
-
-            throw std::runtime_error("Function not found: " + name);
+            return {};
         }
 
-        return {};
+        throw std::runtime_error("NovellaScript Runtime Error: Function not found: '" + name + "'");
+        
     }
 }

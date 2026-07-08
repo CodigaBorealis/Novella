@@ -20,6 +20,13 @@ namespace Novella::NScript::Runtime{
 
         private:
 
+        struct CallFrameGuard{
+
+            RuntimeEnvironment* runtime;
+            CallFrameGuard(RuntimeEnvironment* runtime, const std::string& name);
+            ~CallFrameGuard();
+        };
+
         StatementEvaluator* statementEvaluator;
         RuntimeEnvironment* runtime;
     };

@@ -109,29 +109,70 @@ namespace Novella::NScript::Runtime{
 
     void RuntimeEnvironment::createVariable(const std::string& name, const Parser::Value& value){
 
-        auto it = variables.find(name);
+        if(!callStack.empty()){
 
-        if(it != variables.end()) throw std::runtime_error("NovellaScript Runtime Error: A variable with this name already exists '" + name + "'");
+            callStack.back().locals.back()[name] = value;
 
-        variables.emplace(name, value);
+        }else{
+
+            auto it = globalVariables.find(name);
+
+            if(it != globalVariables.end()) throw std::runtime_error("NovellaScript Runtime Error: A global variable with this name already exists '" + name + "'");
+
+            globalVariables.emplace(name, value);
+        }
     }
 
     Parser::Value& RuntimeEnvironment::getVariable(const std::string& name){
 
-        auto it = variables.find(name);
+        if(!callStack.empty()){
 
-        if(it == variables.end()) throw std::runtime_error("NovellaScript Runtime Error: Cannot get undefined variable '" + name + "'");
+            auto& scopeStack = callStack.back().locals;
 
-        return it->second;
+            for(auto it = scopeStack.rbegin(); it != scopeStack.rend(); ++it){
+
+                auto varIt = it->find(name);
+
+                if(varIt != it->end()) return varIt->second;
+            }
+        }
+
+        auto globalIterator = globalVariables.find(name);
+
+        if(globalIterator != globalVariables.end()) return globalIterator->second;
+
+        throw std::runtime_error("NovellaScript Runtime Error: Cannot get undefined variable '" + name + "'");
     }
 
     void RuntimeEnvironment::setVariable(const std::string& name, const Parser::Value& value){
 
-        auto it = variables.find(name);
+        if(!callStack.empty()){
 
-        if(it == variables.end()) throw std::runtime_error("NovellaScript Runtime Error: Cannot set undefined variable '" + name + "'");
+            auto& scopeStack = callStack.back().locals;
 
-        it->second = value;
+            for(auto it = scopeStack.rbegin(); it != scopeStack.rend(); ++it){
+
+                auto varIt = it->find(name);
+
+                if(varIt != it->end()){
+
+                    varIt->second = value;
+
+                    return;
+                }
+            }
+        }
+
+        auto globalIterator = globalVariables.find(name);
+
+        if(globalIterator != globalVariables.end()){
+
+            globalIterator->second = value;
+
+            return;
+        }
+
+        throw std::runtime_error("NovellaScript Runtime Error: Cannot set undefined variable '" + name + "'");
     }
 
     const Parser::FunctionDefinition& RuntimeEnvironment::getFunction(const std::string& name){
@@ -145,11 +186,25 @@ namespace Novella::NScript::Runtime{
 
     void RuntimeEnvironment::clear(){
 
-        this->variables.clear();
+        this->globalVariables.clear();
         this->scriptFunctions.clear();
-        this->persistentStorage.clear();
         this->callStack.clear();
 
+    }
+
+    std::vector<RuntimeEnvironment::CallFrame>& RuntimeEnvironment::functionCalls(){
+
+        return callStack;
+    }
+
+    size_t RuntimeEnvironment::callStackLimit() const{
+
+        return MAX_CALL_STACK;
+    }
+
+    bool RuntimeEnvironment::isGlobal(const std::string& name) const{
+
+        return globalVariables.contains(name);
     }
 /*
     void RuntimeEnvironment::printVariables() const{
@@ -159,4 +214,14 @@ namespace Novella::NScript::Runtime{
             std::cout << "Variable name: " << variable;
         }
     }*/
+
+    void RuntimeEnvironment::pushScope(){
+
+        if(!callStack.empty()) callStack.back().locals.emplace_back();
+    }
+
+    void RuntimeEnvironment::popScope(){
+
+        if(!callStack.empty() && !callStack.back().locals.empty()) callStack.back().locals.pop_back();
+    }
 }

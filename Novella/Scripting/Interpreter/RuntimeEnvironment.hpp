@@ -32,7 +32,7 @@ namespace Novella::NScript::Runtime{
         struct CallFrame{
 
             std::string functionName;
-            std::unordered_map<std::string, Parser::Value> locals;
+            std::vector<std::unordered_map<std::string, Parser::Value>> locals;
         };
 
         public:
@@ -93,17 +93,25 @@ namespace Novella::NScript::Runtime{
 
         bool isScriptFunction(const std::string& name) const;
 
+        bool isGlobal(const std::string& name) const;
+
+        void pushScope();
+        void popScope();
+        
+        std::vector<CallFrame>& functionCalls();
+
         size_t loadedFunctions() const;
 
+        size_t callStackLimit() const;
+        
         private:
         
-        std::unordered_map<std::string, Parser::Value> variables;
+        std::unordered_map<std::string, Parser::Value> globalVariables;
         std::unordered_map<std::string, Parser::FunctionDefinition> scriptFunctions;
         std::unordered_map<std::string, NativeFunction> nativeFunctions;
 
-        std::unordered_map<std::string, std::unordered_map<std::string, Parser::Value>> persistentStorage;
-
         std::vector<CallFrame> callStack;
+        const size_t MAX_CALL_STACK = 500;
 
         Context runtimeContext;
     };

@@ -28,26 +28,6 @@ namespace Novella::NScript::Runtime{
 
         private:
 
-        class CallStackGuard{
-
-            public:
-            CallStackGuard(size_t& depth)
-            :
-            depth(depth){
-
-                depth++;
-            }
-
-            ~CallStackGuard(){
-
-                depth --;
-            }
-            
-            private:
-
-            size_t& depth;            
-        };
-
         Parser::Value evaluateAddition(const Parser::Value& firstValue, const Parser::Value& secondValue);
         Parser::Value evaluateSubstraction(const Parser::Value& firstValue, const Parser::Value& secondValue);
         Parser::Value evaluateMultiplication(const Parser::Value& firstValue, const Parser::Value& secondValue);
@@ -124,10 +104,6 @@ namespace Novella::NScript::Runtime{
         Parser::Value evaluateArrayExpression(const Parser::ArrayExpression& ArrayExpression);
 
         Parser::Value evaluatePostFixExpression(const Parser::PostFixExpression& postFixExpression);
-        
-        size_t callStackDepth = 0;
-
-        const size_t MAX_CALL_STACK = 500;
     };
 
 }

@@ -4,7 +4,6 @@
 #include "../Novella/Scripting/Parser/Definition.hpp"
 #include <variant>
 #include <vector>
-#include <iostream>
 
 namespace Novella::NScript::Runtime{
 
@@ -32,6 +31,10 @@ namespace Novella::NScript::Runtime{
         if(auto expressionStatement = std::get_if<Parser::ExpressionStatement>(&statement)){
 
             expressionEvaluator->evaluate(expressionStatement->expression);
+        
+        }else if(auto variableStament = std::get_if<Parser::VariableStatement>(&statement)){
+
+            runtime.createVariable(variableStament->name, expressionEvaluator->evaluate(variableStament->value));
 
         }else if(auto ifStatement = std::get_if<Parser::IfStatement>(&statement)){
 
@@ -40,15 +43,23 @@ namespace Novella::NScript::Runtime{
             bool boolean = expressionValue.get<bool>();
             
             if(boolean){
-
+                
+                runtime.pushScope();
                 execute(ifStatement->body);
-                    
+                runtime.popScope();
+                
             }else{
                     
                 if(ifStatement->elseBody.empty()) return;
 
+                runtime.pushScope();
                 execute(ifStatement->elseBody);
-            }                
+                runtime.popScope();
+            }    
+
+        }else if(auto returnStatement = std::get_if<Parser::ReturnStatement>(&statement)){
+
+            execute(*returnStatement);
         }
     }
 }
