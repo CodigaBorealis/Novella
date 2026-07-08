@@ -9,8 +9,8 @@ namespace Novella::NScript::CoreInitializer{
 
         runtime.registerNativeFunction(prefix + "setTitle", Modules::Window::setTitle);
 
-        runtime.registerNativeFunction(prefix + "setPositionX", Modules::Window::setPositionX);
-        runtime.registerNativeFunction(prefix + "setPositionY", Modules::Window::setPositionY);
+        runtime.registerNativeFunction(prefix + "setX", Modules::Window::setPositionX);
+        runtime.registerNativeFunction(prefix + "setY", Modules::Window::setPositionY);
         runtime.registerNativeFunction(prefix + "setPosition", Modules::Window::setPosition);
 
         runtime.registerNativeFunction(prefix + "center", Modules::Window::center);
@@ -28,11 +28,11 @@ namespace Novella::NScript::CoreInitializer{
 
         runtime.registerNativeFunction(prefix + "setIcon", Modules::Window::setIcon);
 
-        runtime.registerNativeFunction(prefix + "getWidth", Modules::Window::getWidth);
-        runtime.registerNativeFunction(prefix + "getHeight", Modules::Window::getHeight);
-        runtime.registerNativeFunction(prefix + "getPositionX", Modules::Window::getPositionX);
-        runtime.registerNativeFunction(prefix + "getPositionY", Modules::Window::getPositionY);
-        runtime.registerNativeFunction(prefix + "getTitle", Modules::Window::getTitle);
+        runtime.registerNativeFunction(prefix + "width", Modules::Window::getWidth);
+        runtime.registerNativeFunction(prefix + "height", Modules::Window::getHeight);
+        runtime.registerNativeFunction(prefix + "x", Modules::Window::getPositionX);
+        runtime.registerNativeFunction(prefix + "y", Modules::Window::getPositionY);
+        runtime.registerNativeFunction(prefix + "title", Modules::Window::getTitle);
         
     }
     
@@ -48,8 +48,13 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "play", Modules::Audio::play);
         runtime.registerNativeFunction(prefix + "stop", Modules::Audio::stop);
         runtime.registerNativeFunction(prefix + "stopMusic", Modules::Audio::stopMusic);
-        runtime.registerNativeFunction(prefix + "getCurrentMusic", Modules::Audio::getCurrentMusic);
-        runtime.registerNativeFunction(prefix + "setVolume", Modules::Audio::volume);
+        runtime.registerNativeFunction(prefix + "currentMusic", Modules::Audio::getCurrentMusic);
+
+        runtime.registerNativeFunction(prefix + "setVolume", Modules::Audio::setVolume);
+        runtime.registerNativeFunction(prefix + "setPan", Modules::Audio::setPan);
+        runtime.registerNativeFunction(prefix + "setPitch", Modules::Audio::setPitch);
+
+        runtime.registerNativeFunction(prefix + "masterVolume", Modules::Audio::getMasterVolume);
     }
 
     void registerScene(Runtime::RuntimeEnvironment& runtime){
@@ -58,11 +63,6 @@ namespace Novella::NScript::CoreInitializer{
     }
 
     void registerLayout(Runtime::RuntimeEnvironment& runtime){
-
-        
-    }
-
-    void registerInteraction(Runtime::RuntimeEnvironment& runtime){
 
         
     }
@@ -90,8 +90,8 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "cos", Modules::Math::cos);
         runtime.registerNativeFunction(prefix + "tan", Modules::Math::tan);
         runtime.registerNativeFunction(prefix + "atan2", Modules::Math::atan2);
-        runtime.registerNativeFunction(prefix + "degToRad", Modules::Math::degToRad);
-        runtime.registerNativeFunction(prefix + "radToDeg", Modules::Math::radToDeg);
+        runtime.registerNativeFunction(prefix + "degrees", Modules::Math::degToRad);
+        runtime.registerNativeFunction(prefix + "radians", Modules::Math::radToDeg);
         runtime.registerNativeFunction(prefix + "lerp", Modules::Math::lerp);
         runtime.registerNativeFunction(prefix + "sign", Modules::Math::sign);
 
@@ -107,8 +107,8 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "isNumber", Modules::String::isNumber);
         runtime.registerNativeFunction(prefix + "toBool", Modules::String::toBoolean);
         runtime.registerNativeFunction(prefix + "toNumber", Modules::String::toNumber);
-        runtime.registerNativeFunction(prefix + "size", Modules::String::size);
-        runtime.registerNativeFunction(prefix + "empty", Modules::String::empty);
+        runtime.registerNativeFunction(prefix + "length", Modules::String::size);
+        runtime.registerNativeFunction(prefix + "isEmpty", Modules::String::empty);
         runtime.registerNativeFunction(prefix + "toUpper", Modules::String::toUpper);
         runtime.registerNativeFunction(prefix + "toLower", Modules::String::toLower);
         runtime.registerNativeFunction(prefix + "capitalize", Modules::String::capitalize);
@@ -138,14 +138,14 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "deleteFile", Modules::FileSystem::removeFile);
         runtime.registerNativeFunction(prefix + "createFolder", Modules::FileSystem::createFolder);
         runtime.registerNativeFunction(prefix + "removeFolder", Modules::FileSystem::removeFolder);
-        runtime.registerNativeFunction(prefix + "moveFileToFolder", Modules::FileSystem::moveFileToFolder);
+        runtime.registerNativeFunction(prefix + "move", Modules::FileSystem::moveFileToFolder);
     }
 
     void registerInput(Runtime::RuntimeEnvironment& runtime){
 
         const std::string prefix = "Input.";
 
-        runtime.registerNativeFunction(prefix + "setCursotVisible", Modules::Input::setCursotVisible);
+        runtime.registerNativeFunction(prefix + "setCursorVisible", Modules::Input::setCursorVisible);
         runtime.registerNativeFunction(prefix + "lockCursor", Modules::Input::lockCursor);
         runtime.registerNativeFunction(prefix + "setCursorPosition", Modules::Input::setCursorPosition);
         runtime.registerNativeFunction(prefix + "moveCursor", Modules::Input::moveCursor);
@@ -157,15 +157,27 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "isMousePressed", Modules::Input::isMousePressed);
         runtime.registerNativeFunction(prefix + "isMouseUp", Modules::Input::isMouseUp);
         runtime.registerNativeFunction(prefix + "isMouseReleased", Modules::Input::isMouseReleased);
-        runtime.registerNativeFunction(prefix + "getMouseX", Modules::Input::getMouseX);
-        runtime.registerNativeFunction(prefix + "getMouseY", Modules::Input::getMouseY);
+        runtime.registerNativeFunction(prefix + "mouseX", Modules::Input::getMouseX);
+        runtime.registerNativeFunction(prefix + "mouseY", Modules::Input::getMouseY);
+    }
+
+    void registerRandomModule(Runtime::RuntimeEnvironment &runtime){
+
+        const std::string prefix = "Random.";
+
+        runtime.registerNativeFunction(prefix + "int", Modules::Random::randomInt);
+        runtime.registerNativeFunction(prefix + "float", Modules::Random::randomFloat);
+        runtime.registerNativeFunction(prefix + "bool", Modules::Random::randomBool);
+        runtime.registerNativeFunction(prefix + "string", Modules::Random::randomString);
+
+
     }
 
     #ifdef _WIN32
     void registerOS(Runtime::RuntimeEnvironment& runtime){
         
         const std::string prefix = "OS.";
-        runtime.registerNativeFunction(prefix + "getCurrentUsername", Modules::Win32::getUserEnv);
+        runtime.registerNativeFunction(prefix + "user", Modules::Win32::getUserEnv);
     }
     #endif
 
@@ -174,7 +186,7 @@ namespace Novella::NScript::CoreInitializer{
 
         const std::string prefix = "OS.";
 
-        runtime.registerNativeFunction(prefix + "getCurrentUsername", Modules::Linux::getUserEnv);
+        runtime.registerNativeFunction(prefix + "user", Modules::Linux::getUserEnv);
 
     }
     

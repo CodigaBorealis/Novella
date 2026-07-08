@@ -2,6 +2,7 @@
 #include <optional>
 #include <raylib.h>
 #include <stdexcept>
+#include <string>
 namespace Novella::Audio{
 
     AudioBackend::AudioBackend(ResourceManager& resources)
@@ -196,5 +197,15 @@ namespace Novella::Audio{
             }
          
         }
+    }
+
+    bool AudioBackend::isRegistered(const std::string& name){
+
+        return musicStreams.contains(name) || musicStreams.contains(name);
+    }
+
+    float AudioBackend::getMasterVolume() const{
+
+        return ::GetMasterVolume();
     }
 }

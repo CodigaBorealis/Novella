@@ -46,6 +46,10 @@ namespace Novella::Audio{
 
         void execute(const std::vector<Command>& commands);
 
+        bool isRegistered(const std::string& name);
+
+        float getMasterVolume() const;
+
         ::Music& getMusicStream(const std::string& name);
         ::Sound& getSoundStream(const std::string& name);
 

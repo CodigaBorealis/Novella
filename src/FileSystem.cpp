@@ -14,7 +14,7 @@ namespace Novella::Utils{
 
     std::filesystem::path Filesystem::getRelativePath(const std::filesystem::path &path){
 
-        #ifdef WIN32
+        #ifdef _WIN32
         const char* home = std::getenv("USERPROFILE");
 
         if(!home) throw std::runtime_error("Could not determine home directory");

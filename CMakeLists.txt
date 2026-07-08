@@ -39,7 +39,7 @@ add_executable(Novella
 
     src/FileSystem.cpp
     src/String.cpp
-    
+
     src/SceneLoader.cpp
     src/ComponentBuilder.cpp
 
@@ -73,6 +73,8 @@ add_executable(Novella
     src/StringModule.cpp
     src/LinuxModule.cpp
     src/FileSystemModule.cpp
+    src/RandomModule.cpp
+    
     src/Logger.cpp
     
     src/Engine.cpp

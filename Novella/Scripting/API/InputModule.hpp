@@ -9,7 +9,7 @@ namespace Novella{
 
 namespace Novella::NScript::Modules::Input{
 
-    void setCursotVisible(Runtime::Context& context, bool val);
+    void setCursorVisible(Runtime::Context& context, bool val);
     void lockCursor(Runtime::Context& context, bool val);
     void setCursorPosition(Runtime::Context& context, double x, double y);
     void moveCursor(Runtime::Context& context, double deltaX, double deltaY);

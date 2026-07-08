@@ -58,4 +58,14 @@ namespace Novella{
         backend.reloadResources();
 
     }
+
+    bool AudioSystem::isRegistered(const std::string& name){
+
+        return backend.isRegistered(name);
+    }
+
+    float AudioSystem::getMasterVolume() const{
+
+        return backend.getMasterVolume();   
+    }
 }

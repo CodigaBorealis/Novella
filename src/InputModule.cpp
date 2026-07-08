@@ -5,7 +5,7 @@
 
 namespace Novella::NScript::Modules::Input{
 
-    void setCursotVisible(Runtime::Context& context, bool val){
+    void setCursorVisible(Runtime::Context& context, bool val){
 
         if(!val) InputSystem::hideCursor();
 

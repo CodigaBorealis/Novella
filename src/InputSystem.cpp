@@ -15,7 +15,7 @@ namespace Novella{
 
     void InputSystem::setMousePosition(const Vector2f& position){
 
-        ::SetMousePosition(position.x, position.y);
+        ::SetMousePosition(static_cast<int>(position.x), static_cast<int>(position.y));
     }
 
     Vector2f InputSystem::mousePosition(){

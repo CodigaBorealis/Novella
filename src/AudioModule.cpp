@@ -1,13 +1,18 @@
 #include "../Novella/Scripting/API/AudioModule.hpp"
 #include "../Novella/Systems/Audio/AudioSystem.hpp"
+#include <stdexcept>
 namespace Novella::NScript::Modules::Audio{
 
     void play(Runtime::Context& context, const std::string& id){
+
+        if(!isRegistered(context, id)) throw std::runtime_error("NovellaScript Runtime Error: No audio resource registered with this name '" + id + "'");
 
         context.audio->play(id);
     }
 
     void stop(Runtime::Context &context, const std::string &id){
+        
+        if(!isRegistered(context, id)) throw std::runtime_error("NovellaScript Runtime Error: No audio resource registered with this name '" + id + "'");
 
         context.audio->stop(id);
     }
@@ -21,9 +26,30 @@ namespace Novella::NScript::Modules::Audio{
         context.audio->stop(trackName);
     }
 
-    void volume(Runtime::Context &context, const std::string &id, double value){
+    void setVolume(Runtime::Context &context, const std::string &id, double value){
+
+        if(!isRegistered(context, id)) throw std::runtime_error("NovellaScript Runtime Error: No audio resource registered with this name '" + id + "'");
 
         context.audio->volume(id, static_cast<float>(value));
+    }
+
+    void setPitch(Runtime::Context& context, const std::string& id, double pitch){
+        
+        if(!isRegistered(context, id)) throw std::runtime_error("NovellaScript Runtime Error: No audio resource registered with this name '" + id + "'");
+
+        context.audio->pitch(id, pitch);
+    }
+
+    void setPan(Runtime::Context& context, const std::string& id, double pan){
+
+        if(!isRegistered(context, id)) throw std::runtime_error("NovellaScript Runtime Error: No audio resource registered with this name '" + id + "'");
+
+        context.audio->pitch(id, pan);
+    }
+
+    bool isRegistered(Runtime::Context &context, const std::string &id){
+
+        return context.audio->isRegistered(id);
     }
 
     std::string getCurrentMusic(Runtime::Context &context){
@@ -34,4 +60,10 @@ namespace Novella::NScript::Modules::Audio{
 
         return currentBGM.value();
     }
+
+    double getMasterVolume(Runtime::Context& context){
+
+        return  static_cast<double>(context.audio->getMasterVolume());
+    }
+
 }

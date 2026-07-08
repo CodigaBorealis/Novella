@@ -13,8 +13,6 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerLayout(Runtime::RuntimeEnvironment& runtime);
 
-    void registerInteraction(Runtime::RuntimeEnvironment& runtime);
-
     void registerLogger(Runtime::RuntimeEnvironment& runtime);
 
     void registerMath(Runtime::RuntimeEnvironment& runtime);
@@ -24,6 +22,8 @@ namespace Novella::NScript::CoreInitializer{
     void registerFilesystem(Runtime::RuntimeEnvironment& runtime);
     
     void registerInput(Runtime::RuntimeEnvironment& runtime);
-    
+
+    void registerRandomModule(Runtime::RuntimeEnvironment& runtime);
+
     void registerOS(Runtime::RuntimeEnvironment& runtime);
 }

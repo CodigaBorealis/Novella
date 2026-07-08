@@ -36,9 +36,13 @@ namespace Novella{
         
         void clear();
                 
+        bool isRegistered(const std::string& name);
+
         void reloadResources();
 
         const std::optional<std::string> getCurrentBGM() const;
+
+        float getMasterVolume() const;
 
         private:
 

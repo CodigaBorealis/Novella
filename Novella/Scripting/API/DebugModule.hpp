@@ -15,6 +15,8 @@ namespace Novella::NScript::Modules::Debug{
 
     void print(Runtime::Context& context, const std::string& message);
         
+    void clear(Runtime::Context& context);
+
     void registerModule(Runtime::RuntimeEnvironment& runtime);
 
 };
