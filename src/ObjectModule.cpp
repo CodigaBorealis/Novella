@@ -1,44 +1,66 @@
 #include "../Novella/Scripting/API/ObjectModule.hpp"
+#include "../Novella/Scene/SceneManager.hpp"
+#include <cinttypes>
+#include <raylib.h>
+#include <stdexcept>
+#include "../Novella/Scripting/API/DebugModule.hpp"
 
 namespace Novella::NScript::Modules::Object{
 
     Handle get(Runtime::Context& context, const std::string& name){
-
         
+        auto* currentScene = context.scene->getCurrentScene();
+
+        if(!currentScene){
+
+            Debug::print(context, "NovellaScript Runtime Warning: No active scene to fetch '" + name + "'");
+
+            return{};
+        }
+
+        Handle handle = currentScene->getObjectHandle(name);
+
+        if(handle.generation == 0){
+
+            Debug::print(context, "NovellaScript Runtime Warning: Could not find Object '" + name + "' in the scene");
+        }
+
+        return handle;
     }
 
     void destroy(Runtime::Context& context, Handle handle){
 
+        if(handle.generation == 0) return;
         
-    }
-    
-    void setVisible(Runtime::Context& context, Handle handle){
+        auto* currentScene = context.scene->getCurrentScene();
 
-        
-    }
+        if(!currentScene) return;
 
-    bool isVisible(Runtime::Context& context, Handle handle){
-
-        
+        currentScene->removeObject(handle);
     }
 
     bool exists(Runtime::Context& context, Handle handle){
 
-        
+        return getName(context, handle) != "";
     }
 
     std::string getName(Runtime::Context& context, Handle handle){
 
-        
-    }
+        if(handle.generation == 0) return "";
 
-    void setName(Runtime::Context& context, Handle handle, const std::string& string){
+        auto* currentScene = context.scene->getCurrentScene();
 
-        
-    }
+        if(!currentScene) return "";
 
-    bool supports(Runtime::Context& context, Handle handle, const std::string& trait){
+        auto name = currentScene->findName(handle);
 
-        
+        if(!name){
+
+            Debug::print(context, "NovellaScript Runtime Warning: Object has already been destroyed or does not exist");
+
+            return "";
+        }
+
+        return name.value();
     }
 }

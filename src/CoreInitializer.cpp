@@ -230,12 +230,8 @@ namespace Novella::NScript::CoreInitializer{
 
         runtime.registerNativeFunction(prefix + "get", Modules::Object::get);
         runtime.registerNativeFunction(prefix + "destroy", Modules::Object::destroy);
-        runtime.registerNativeFunction(prefix + "setVisible", Modules::Object::setVisible);
-        runtime.registerNativeFunction(prefix + "isVisible", Modules::Object::isVisible);
         runtime.registerNativeFunction(prefix + "exists", Modules::Object::exists);
         runtime.registerNativeFunction(prefix + "name", Modules::Object::getName);
-        runtime.registerNativeFunction(prefix + "setName", Modules::Object::setName);
-        runtime.registerNativeFunction(prefix + "supports", Modules::Object::supports);
 
     }
 

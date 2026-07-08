@@ -1,6 +1,7 @@
 #pragma once
 #include <concepts>
 #include <cstdint>
+#include <optional>
 #include <type_traits>
 #include <memory>
 #include <unordered_map>
@@ -22,6 +23,18 @@ namespace Novella{
 
         Scene() = default;
         
+        template <typename Interface>
+        requires std::is_class_v<Interface>
+
+        Interface* getInterface(const Handle& handle){
+
+            Traits::Object* object = getObjectBase(handle);
+
+            if(!object) return nullptr;
+
+            return dynamic_cast<Interface*>(object);
+        }
+
         template <std::derived_from<Traits::Object> T, typename... Args>
 
         Handle createObject(const std::string& name, Args&&... args){
@@ -63,7 +76,7 @@ namespace Novella{
         Handle addObject(std::unique_ptr<Traits::Object> obj, const std::string& name);
         void removeObject(const Handle& id);
 
-        const Handle& getObjectHandle(const std::string& name) const;
+        const Handle getObjectHandle(const std::string& name) const;
 
         Traits::Object* getObjectBase(const Handle& handle);
 
@@ -81,11 +94,15 @@ namespace Novella{
                 }
             }
         }
-
+        
+        void markDirty();
+        
         void clearDirtyFlag();
         bool needsSorting() const;
 
         float getScale() const;
+
+        std::optional<std::string> findName(Handle targetHandle) const;
 
         private:
 

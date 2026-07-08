@@ -1,6 +1,7 @@
 #include "../Novella/Scene/Scene.hpp"
 #include "../Novella/Components/Traits/Object.hpp"
 #include <memory>
+#include <optional>
 #include <stdexcept>
 #include <string>
 
@@ -8,16 +9,16 @@ namespace Novella{
 
     Handle Scene::addObject(std::unique_ptr<Traits::Object> obj, const std::string& name){
         
-        if(name.empty()) throw std::runtime_error("Name cannot be empty");
+        if(name.empty()) throw std::runtime_error("NovellaScript Runtime Error: Creating an object requires a name");
 
-        if(names.contains(name)) throw std::runtime_error("An object with this name already exists: " + name);
+        if(names.contains(name)) throw std::runtime_error("NovellaScript Runtime Error: An object with this name already exists: " + name);
 
         uint32_t index;
 
         if(freeSlots.empty()){
 
             index = slots.size();
-            slots.push_back({std::move(obj), 0, name});
+            slots.push_back({std::move(obj), 1, name});
 
         }else{
 
@@ -83,15 +84,16 @@ namespace Novella{
         
     }
 
-    const Handle& Scene::getObjectHandle(const std::string& name) const{
+    const Handle Scene::getObjectHandle(const std::string& name) const{
 
         auto it = names.find(name);
         
-        if(it == names.end()) throw std::runtime_error("Object not found: " + name);
+        if(it == names.end()) return {};
         
-        const Handle& handle = it->second;
+        const Handle handle = it->second;
 
-        if(handle.index >= slots.size() || slots[handle.index].generation != handle.generation) throw std::runtime_error("Stale handle in name map: " + name);
+        if(handle.index >= slots.size() || slots[handle.index].generation != handle.generation) return {};
+
         return it->second;
     }
 
@@ -103,5 +105,20 @@ namespace Novella{
     bool Scene::needsSorting() const{
 
         return this->dirty;
+    }
+
+    std::optional<std::string> Scene::findName(Handle handle) const{
+
+        for(const auto& [name, h] : names){
+
+            if(h.generation == handle.generation && h.index == handle.index) return name;
+        }
+        
+        return std::nullopt;
+    }
+
+    void Scene::markDirty(){
+
+        this->dirty = true;
     }
 }
