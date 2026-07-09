@@ -29,11 +29,11 @@ namespace Novella::NScript::Parser{
 
                 if(const auto* value = std::get_if<DecayedT>(&primitive)) return *value;
                 
-                throw std::runtime_error("Attempted to extract value of incorrect type");
+                throw std::runtime_error("NovellaScript Runtime Error: Function cannot be executed because the received arguments have an unexpected type");
                 
             },[](const std::vector<PrimitiveValue>& vec) -> T{
 
-                throw std::runtime_error("Attempted to extract a primitive from an array wrapper");
+                throw std::runtime_error("NovellaScript Runtime Error: Attempted to extract a primitive from an array wrapper");
             }
 
             }, underlyingValue);

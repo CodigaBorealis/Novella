@@ -8,7 +8,7 @@
 #include "../Novella/Core/Engine.hpp"
 #include <vector>
 #include "../Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
-
+#include <iostream>
 namespace Novella::NScript::Runtime{
 
     size_t RuntimeEnvironment::loadedFunctions() const{

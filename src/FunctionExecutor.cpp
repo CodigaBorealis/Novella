@@ -1,7 +1,9 @@
 #include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
 #include "../Novella/Scripting/Interpreter/ReturnException.hpp"
+#include <cstddef>
 #include <stdexcept>
+#include <string>
 #include <vector>
 namespace Novella::NScript::Runtime{
 
@@ -45,7 +47,19 @@ namespace Novella::NScript::Runtime{
 
             const auto& function = runtime->getFunction(name);
 
-            try{
+            const auto& params = function.parameters;
+
+            if(params.size() != args.size()) throw std::runtime_error("NovellaScript Runtime Error: Argument mismatch for function '" + function.name + "' expected " + std::to_string(params.size()) + " got: " + std::to_string(args.size()));
+            
+            if(!params.empty()){
+
+                for(size_t x = 0; x < params.size(); x ++){
+
+                    runtime->createVariable(params[x], args[x]);
+                }
+            }
+
+            try{    
 
                 statementEvaluator->execute(function.body);
 
