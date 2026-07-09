@@ -7,6 +7,8 @@ namespace Novella::NScript::Modules::Audio{
 
         if(!isRegistered(context, id)) throw std::runtime_error("NovellaScript Runtime Error: No audio resource registered with this name '" + id + "'");
 
+        if(!getCurrentMusic(context).empty()) stopMusic(context);
+
         context.audio->play(id);
     }
 
@@ -44,7 +46,7 @@ namespace Novella::NScript::Modules::Audio{
 
         if(!isRegistered(context, id)) throw std::runtime_error("NovellaScript Runtime Error: No audio resource registered with this name '" + id + "'");
 
-        context.audio->pitch(id, pan);
+        context.audio->pan(id, pan);
     }
 
     bool isRegistered(Runtime::Context &context, const std::string &id){

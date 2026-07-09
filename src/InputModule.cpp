@@ -137,6 +137,11 @@ namespace Novella::NScript::Modules::Input{
 
         auto* layoutable = currentScene->getInterface<Traits::Layoutable>(handle);
         
+        if(!layoutable){
+
+            Debug::print(context, "NovellaScript Runtime Warning: Input.isMouseOver() cannot be used on a deleted object");
+        }
+
         float mouseX = InputSystem::getMouseX();
         float mouseY = InputSystem::getMouseY();
 
@@ -146,7 +151,7 @@ namespace Novella::NScript::Modules::Input{
         float rectWidth = layoutable->getComputedRectangle().width;
         float rectHeight = layoutable->getComputedRectangle().height;
 
-        return(mouseX >= rectX && mouseX <= rectX + rectWidth && mouseY >= rectY && mouseY <= rectY + rectHeight);
+        return (mouseX >= rectX && mouseX <= rectX + rectWidth && mouseY >= rectY && mouseY <= rectY + rectHeight);
     }
 
     bool isObjectClicked(Runtime::Context& context, Handle handle, const std::string& button){

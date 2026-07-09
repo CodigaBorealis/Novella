@@ -57,7 +57,9 @@ namespace Novella::Audio{
             auto& music = getMusicStream(name);
 
             ::PlayMusicStream(music);
-
+            
+            music.looping = true;
+            
             currentBGM = name;
 
         }else if(resource.type == "sfx"){

@@ -93,6 +93,19 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "radians", Modules::Math::radToDeg);
         runtime.registerNativeFunction(prefix + "lerp", Modules::Math::lerp);
         runtime.registerNativeFunction(prefix + "sign", Modules::Math::sign);
+        runtime.registerNativeFunction(prefix + "pi", Modules::Math::pi);
+        runtime.registerNativeFunction(prefix + "e", Modules::Math::e);
+        runtime.registerNativeFunction(prefix + "phi", Modules::Math::phi);
+        runtime.registerNativeFunction(prefix + "sqrt2", Modules::Math::sqrt2);
+        runtime.registerNativeFunction(prefix + "sqrt3", Modules::Math::sqrt3);
+        runtime.registerNativeFunction(prefix + "invPi", Modules::Math::invPi);
+        runtime.registerNativeFunction(prefix + "invSqrtPi", Modules::Math::invSqrtPi);
+        runtime.registerNativeFunction(prefix + "ln2", Modules::Math::ln2);
+        runtime.registerNativeFunction(prefix + "ln10", Modules::Math::ln10);
+        runtime.registerNativeFunction(prefix + "log2e", Modules::Math::log2e);
+        runtime.registerNativeFunction(prefix + "log10e", Modules::Math::log10e);
+        runtime.registerNativeFunction(prefix + "egamma", Modules::Math::egamma);
+
 
     }
 
@@ -198,7 +211,7 @@ namespace Novella::NScript::CoreInitializer{
         const std::string prefix = "Sprite.";
     
         runtime.registerNativeFunction(prefix + "setTexture", Modules::Sprite::setTexture);
-        runtime.registerNativeFunction(prefix + "setTint", Modules::Sprite::setTint);
+        runtime.registerNativeFunction(prefix + "setColor", Modules::Sprite::setTint);
         runtime.registerNativeFunction(prefix + "texture", Modules::Sprite::getTexture);
   
     }
@@ -238,6 +251,19 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "destroy", Modules::Object::destroy);
         runtime.registerNativeFunction(prefix + "exists", Modules::Object::exists);
         runtime.registerNativeFunction(prefix + "name", Modules::Object::getName);
+
+    }
+
+    void registerLayoutModule(Runtime::RuntimeEnvironment& runtime){
+
+        const std::string prefix = "Layout.";
+
+        runtime.registerNativeFunction(prefix + "setWidth", Modules::Layout::setWidth);
+        runtime.registerNativeFunction(prefix + "setHeight", Modules::Layout::setHeight);
+        runtime.registerNativeFunction(prefix + "setSize", Modules::Layout::setSize);
+        runtime.registerNativeFunction(prefix + "width", Modules::Layout::getWidth);
+        runtime.registerNativeFunction(prefix + "height", Modules::Layout::getHeight);
+
 
     }
 

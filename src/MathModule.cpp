@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <numbers>
 #include <sys/types.h>
+
 namespace Novella::NScript::Modules::Math{
 
     double clamp(Runtime::Context& context, double value, double min, double max){
@@ -93,5 +94,65 @@ namespace Novella::NScript::Modules::Math{
         if(value < 0) return -1.0;
 
         return 0.0;
+    }
+
+    double pi(Runtime::Context& context){
+
+        return std::numbers::pi;
+    }
+
+    double e(Runtime::Context& context){
+
+        return std::numbers::e;
+    }
+
+    double phi(Runtime::Context& context){
+
+        return std::numbers::phi;
+    }
+
+    double sqrt2(Runtime::Context& context){
+
+        return std::numbers::sqrt2;
+    }
+
+    double sqrt3(Runtime::Context& context){
+
+        return std::numbers::sqrt3;
+    }
+
+    double invPi(Runtime::Context& context){
+
+        return std::numbers::inv_pi;
+    }
+
+    double invSqrtPi(Runtime::Context& context){
+
+        return std::numbers::inv_sqrtpi;
+    }
+
+    double ln2(Runtime::Context& context){
+
+        return std::numbers::ln2;
+    }
+
+    double ln10(Runtime::Context& context){
+
+        return std::numbers::ln10;
+    }
+
+    double log2e(Runtime::Context& context){
+
+        return std::numbers::log2e;
+    }
+
+    double log10e(Runtime::Context& context){
+
+        return std::numbers::log10e;
+    }
+
+    double egamma(Runtime::Context& context){
+
+        return std::numbers::egamma;
     }
 }

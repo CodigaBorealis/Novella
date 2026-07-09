@@ -79,6 +79,7 @@ namespace Novella::NScript::Runtime{
         CoreInitializer::registerTextModule(*this);
         CoreInitializer::registerUIModule(*this);
         CoreInitializer::registerObjectModule(*this);
+        CoreInitializer::registerLayoutModule(*this);
         CoreInitializer::registerOS(*this);
 
     }

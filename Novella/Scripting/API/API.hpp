@@ -15,3 +15,4 @@
 #include "TextModule.hpp"
 #include "TransformModule.hpp"
 #include "UIModule.hpp"
+#include "LayoutModule.hpp"

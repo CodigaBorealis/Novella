@@ -33,5 +33,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerObjectModule(Runtime::RuntimeEnvironment& runtime);
     
+    void registerLayoutModule(Runtime::RuntimeEnvironment& runtime);
+    
     void registerOS(Runtime::RuntimeEnvironment& runtime);
 }

@@ -3,6 +3,8 @@
 
 namespace Novella::NScript::Modules::Math{
 
+    double wrap(Runtime::Context& context, double value);
+    
     double clamp(Runtime::Context& context, double value, double min, double max);
 
     double squareRoot(Runtime::Context& context, double value);
@@ -36,5 +38,29 @@ namespace Novella::NScript::Modules::Math{
     double lerp(Runtime::Context& context, double a, double b, double t);
 
     double sign(Runtime::Context& context, double value);
+
+    double pi(Runtime::Context& context);
+
+    double e(Runtime::Context& context);
+
+    double phi(Runtime::Context& context);
+
+    double sqrt2(Runtime::Context& context);
+
+    double sqrt3(Runtime::Context& context);
+
+    double invPi(Runtime::Context& context);
+
+    double invSqrtPi(Runtime::Context& context);
+
+    double ln2(Runtime::Context& context);
+
+    double ln10(Runtime::Context& context);
+
+    double log2e(Runtime::Context& context);
+
+    double log10e(Runtime::Context& context);
+
+    double egamma(Runtime::Context& context);
 
 }
