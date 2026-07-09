@@ -4,7 +4,6 @@
 #include "FunctionExecutor.hpp"
 #include "RuntimeEnvironment.hpp"
 #include "ExpressionEvaluator.hpp"
-#include "../../Systems/Input/InputEvent.hpp"
 #include "../Parser/Expression.hpp"
 
 namespace Novella::Input{

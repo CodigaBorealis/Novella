@@ -1,0 +1,91 @@
+#A general overview of how to use the language
+var assign = "hello";
+var variableA = 1;
+var variableB = -1;
+var variableC = 0;
+var sum = variableA + variableB;
+var bool = true;
+var array = [1, 2, 3, 4, 5, 6, "name", true, sum];
+var thing = not true;
+var otherPressCount = 0;
+var pressCount = 0;
+var button = Object.get("playButton");
+
+fn sum(a,b):
+
+    return a + b;
+endFn
+
+fn showMessage():
+
+    Console.print(String.numberToString(sum(1,2)));
+    if Input.isKeyPressed("0") then
+
+        Window.close();
+    endIf
+
+    if Input.isKeyPressed("LALT") then
+
+        Audio.stopMusic();
+    endIf
+
+    if Input.isKeyPressed("RALT") then
+
+        Audio.play("bgm");
+    endIf
+
+    if Input.isKeyPressed("ENTER") then
+
+        Sprite.setTexture(button,"character");
+    endIf
+
+        if Input.isKeyPressed("E") then
+
+        Audio.setPitch("bgm",2);
+    endIf    
+
+    if Input.isKeyPressed("R") then
+
+        Audio.setPan("bgm",0.5);
+    endIf
+
+    if Input.isKeyPressed("U") then
+
+        Sprite.setColor(button, 200, 100,0, 255);
+    endIf
+
+    if Input.isMouseOver(button) then
+
+        Input.setCursor("hand");
+
+        if(Input.isObjectClicked(button, "Left")) then
+
+            Object.destroy(button);
+        endIf
+        
+    else
+
+    Input.setCursor("default");
+
+    endIf
+endFn
+
+fn main():
+
+    showMessage();
+endFn
+
+#reserved words:
+#var
+#fn
+#return
+#if
+#else
+#true
+#false
+#not
+#then
+#and
+#or
+#endFn
+#endIf

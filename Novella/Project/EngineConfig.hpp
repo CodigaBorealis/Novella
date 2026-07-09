@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <filesystem>
-#include "../Windowing/WindowFlags.hpp"
+#include "../Windowing/Window.hpp"
 
 namespace Novella{
 

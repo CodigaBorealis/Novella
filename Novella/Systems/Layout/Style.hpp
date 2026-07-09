@@ -1,10 +1,31 @@
 #pragma once
-#include "Anchor.hpp"
-#include "SizeMode.hpp"
 #include "../../Core/Math/Vector2x.hpp"
 
 namespace Novella{
 
+    enum class Anchor : int{
+
+        TopLeft,
+        TopCenter,
+        TopRight,
+
+        CenterLeft,
+        Center,
+        CenterRight,
+
+        BottomLeft,
+        BottomCenter,
+        BottomRight
+        };
+
+        enum class SizeMode : int{
+
+        Fixed,
+        Percent,
+        FitWidth,
+        FitHeight
+        };
+        
     struct Style{
 
         Anchor anchor = Anchor::Center;

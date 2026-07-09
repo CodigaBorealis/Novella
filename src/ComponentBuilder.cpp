@@ -2,7 +2,6 @@
 #include "../Novella/Core/Engine.hpp"
 #include "../Novella/Scene/Parser/SceneDefinition.hpp"
 #include "../Novella/Systems/Layout/Style.hpp"
-#include "../Novella/Systems/Layout/SizeMode.hpp"
 #include "../Novella/Components/UI/Button.hpp"
 #include "../Novella/Components/UI/Label.hpp"
 #include "../Novella/Components/UI/Sprite.hpp"
