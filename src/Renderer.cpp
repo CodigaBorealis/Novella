@@ -52,7 +52,7 @@ namespace Novella{
     void Renderer::beginFrame(){
 
         ::BeginTextureMode(canvas);
-        ::ClearBackground(Colors::Black);
+        ::ClearBackground(backgroundColor);
     }
     
     void Renderer::endFrame(){
@@ -60,7 +60,7 @@ namespace Novella{
         ::EndTextureMode();
 
         ::BeginDrawing();
-        ::ClearBackground(Colors::Black);
+        ::ClearBackground(backgroundColor);
 
         Rectangle source{0.0f, 0.0f, baseResolution.x, -baseResolution.y};//The texture is flipped otherwise
 
@@ -123,7 +123,7 @@ namespace Novella{
 
         renderTargetOffset.x = (windowSize.x - (baseResolution.x * scale)) * 0.5f;
         renderTargetOffset.y = (windowSize.y - (baseResolution.y * scale)) * 0.5f;
-
+        
     }
 
     Vector2f Renderer::virtualResolution() const{
@@ -145,4 +145,13 @@ namespace Novella{
         ::DrawText(error.c_str(), 10, 10, 40, Colors::Red);
     }
 
+    void Renderer::setBackgroundColor(const Color& color){
+
+        this->backgroundColor = color;
+    }
+
+    void Renderer::drawRectangle(const Rectangle& rectangle){
+
+        ::DrawRectangleLines(rectangle.x, rectangle.y, rectangle.width, rectangle.height, Colors::Red);
+    }
 }

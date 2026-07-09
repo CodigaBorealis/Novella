@@ -25,6 +25,7 @@ namespace Novella{
     
     static float getMouseX();
     static float getMouseY();
+
     static void setMousePosition(const Vector2f& position);
 
     static Vector2f mousePosition();
@@ -138,5 +139,6 @@ namespace Novella{
 
         return ::IsMouseButtonReleased(toRaylib(button));
     }    
+
 };
 }

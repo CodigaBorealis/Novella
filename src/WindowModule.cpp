@@ -1,5 +1,7 @@
 #include "../Novella/Scripting/API/WindowModule.hpp"
 #include "../Novella/Windowing/Window.hpp"
+#include <cmath>
+#include <cstdint>
 #include <raylib.h>
 #include <stdexcept>
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
@@ -62,9 +64,11 @@ namespace Novella::NScript::Modules::Window{
 
     void setPositionX(Runtime::Context& context, double value){
 
+        if(!std::isfinite(value) || std::floor(value) != value) throw std::runtime_error("NovellaScript Runtime Error: Window.setPositionX() value axis must be a finite integer");
+
         int x = static_cast<int>(value);
 
-        if(x < 0) throw std::runtime_error("setPositionX: Can't move window X axis to a negative coordinate");
+        if(x < 0) throw std::runtime_error("NovellaScript Runtime Error: Window.setPositionX() Can't move window X axis to a negative coordinate");
 
         context.window->setPosition({x, context.window->getPosition().y});
     }

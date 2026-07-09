@@ -2,7 +2,7 @@
 #include <optional>
 #include <raylib.h>
 namespace Novella{
-    
+
     float InputSystem::getMouseX(){
 
         return ::GetMouseX();
@@ -94,5 +94,6 @@ namespace Novella{
         return std::nullopt;
     }
 
+    
 
 }

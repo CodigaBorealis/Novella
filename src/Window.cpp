@@ -28,7 +28,7 @@ namespace Novella{
 
         setIcon(icon);
     }
-    
+
     bool Window::hasWindowFlag(WindowFlags flags){
 
         return ::IsWindowState(toRaylib(flags));
@@ -37,11 +37,6 @@ namespace Novella{
     bool Window::isOpen() const{
 
         return ::IsWindowReady() && !::WindowShouldClose();
-    }
-
-    void Window::clear(const Color& color){
-
-        ::ClearBackground(color);
     }
 
     void Window::toggleFullscreen(){

@@ -1,7 +1,12 @@
 #include "../Novella/Scripting/API/InputModule.hpp"
+#include "../Novella/Scripting/API/DebugModule.hpp"
+#include "../Novella/Systems/Input/InputSystem.hpp"
+#include "../Novella/Components/Traits/Layoutable.hpp"
 #include "../Novella/Windowing/Window.hpp"
+#include "../Novella/Scene/SceneManager.hpp"
 #include "../Novella/Utils/String.hpp"
 #include <stdexcept>
+#include <string>
 
 namespace Novella::NScript::Modules::Input{
 
@@ -106,6 +111,49 @@ namespace Novella::NScript::Modules::Input{
     double getMouseY(Runtime::Context& context){
 
         return InputSystem::getMouseY();
+    }
+    
+    //This 'works' in the sense that it works just fine in traditional non tiling window managers
+    //It breaks on niri but works just fine if you just increase your window size until it uses the
+    //entire mosaic
+         
+    bool isMouseOver(Runtime::Context& context, Handle handle){
+
+        if(handle.generation == 0){
+
+            Debug::print(context, "NovellaScript Runtime Warning: Input.isMouseOver() cannot be used with an invalid object");
+
+            return false;
+        }
+
+        auto* currentScene = context.scene->getCurrentScene();
+
+        if(!currentScene){
+
+            Debug::print(context, "NovellaScript Runtime Warning: Input.isMouseOver() requires a scene to exist in order to query");
+
+            return false;
+        }
+
+        auto* layoutable = currentScene->getInterface<Traits::Layoutable>(handle);
+        
+        float mouseX = InputSystem::getMouseX();
+        float mouseY = InputSystem::getMouseY();
+
+        float rectX = layoutable->getComputedRectangle().x;
+        float rectY = layoutable->getComputedRectangle().y;
+
+        float rectWidth = layoutable->getComputedRectangle().width;
+        float rectHeight = layoutable->getComputedRectangle().height;
+
+        return(mouseX >= rectX && mouseX <= rectX + rectWidth && mouseY >= rectY && mouseY <= rectY + rectHeight);
+    }
+
+    bool isObjectClicked(Runtime::Context& context, Handle handle, const std::string& button){
+
+        if(!isMouseOver(context, handle)) return false;
+
+        return isMousePressed(context, button);
     }
 
 }

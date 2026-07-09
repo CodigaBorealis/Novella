@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Systems/Input/InputSystem.hpp"
 #include "../Interpreter/RuntimeContext.hpp"
+#include "../../Scene/Handle.hpp"
 
 namespace Novella{
 
@@ -24,6 +24,9 @@ namespace Novella::NScript::Modules::Input{
     bool isMouseUp(Runtime::Context& context, const std::string& button);
     bool isMouseReleased(Runtime::Context& context, const std::string& button);
     
+    bool isMouseOver(Runtime::Context& context, Handle handle);
+    bool isObjectClicked(Runtime::Context& context, Handle handle, const std::string& button);
+
     double getMouseX(Runtime::Context& context);
     double getMouseY(Runtime::Context& context);
 

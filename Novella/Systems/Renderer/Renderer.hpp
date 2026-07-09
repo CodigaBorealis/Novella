@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Core/Math/Vector2x.hpp"
+#include "../../Components/Primitives/Color.hpp"
 #include <string>
 #include <vector>
 
@@ -40,11 +41,17 @@ namespace Novella{
 
         void drawErrorMessage(const std::string& error);
         
+        void setBackgroundColor(const Color& color);
+
+        void drawRectangle(const Rectangle& rectangle);
+        
         Vector2f virtualResolution() const;
         
         Vector2f toVirtualCoordinates(const Vector2f& mousePosition) const;
 
         private:
+
+        Color backgroundColor{0,0,0,0};
 
         ::RenderTexture2D canvas{};
         Vector2f baseResolution;

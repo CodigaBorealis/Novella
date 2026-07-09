@@ -40,8 +40,6 @@ namespace Novella{
 
         bool isOpen() const;
 
-        void clear(const Color& color);
-
         void toggleFullscreen();
         bool isFullScreen() const;
 
@@ -80,6 +78,5 @@ namespace Novella{
         private:
 
         std::string title;
-
     };
 }
