@@ -1,6 +1,4 @@
 #include "../Novella/Core/Engine.hpp"
-#include "../Novella/Systems/Input/InteractionSystem.hpp"
-#include "../Novella/Systems/Input/InputSystem.hpp"
 #include <exception>
 #include <memory>
 #include <stdexcept>
@@ -30,9 +28,8 @@ namespace Novella{
         displayWindow(config.width, config.height , config.title, config.targetFPS, root / config.icon, config.flags),
         sceneManager(resourceManager,audioSystem),
         windowRenderer(config.width, config.height),
-        audioSystem(resourceManager),
-        interactionSystem(interpreter)
-            {
+        audioSystem(resourceManager){
+
                 interpreter.initialize(*this);
             }
 
@@ -68,7 +65,6 @@ namespace Novella{
 
             handleAudio(sceneManager.getCurrentScene());
             computeLayout(sceneManager.getCurrentScene());
-            handleInput(sceneManager.getCurrentScene());
             handleRendering(sceneManager.getCurrentScene());     
             handleScripting(sceneManager.getCurrentScene());    
                  
@@ -105,11 +101,6 @@ namespace Novella{
         return this->layoutSystem;
     }
 
-    InteractionSystem& Engine::input(){
-
-        return this->interactionSystem;
-    }
-
     NScript::Runtime::Interpreter& Engine::script(){
 
         return this->interpreter;
@@ -130,19 +121,6 @@ namespace Novella{
         layoutSystem.compute(*currentScene, virtualResolution);
         
     }
-        void Engine::handleInput(Scene* currentScene){
-
-            if(!currentScene) return;
-            
-            Vector2f virtualMouse = windowRenderer.toVirtualCoordinates(InputSystem::mousePosition());
-
-            interactionSystem.handleKeyboardInput(*currentScene);
-
-            interactionSystem.handleMouseInput(*currentScene, virtualMouse);
-
-            interactionSystem.handleInteractions();
-        }
-
         void Engine::handleRendering(Scene* currentScene){
 
             windowRenderer.beginFrame();

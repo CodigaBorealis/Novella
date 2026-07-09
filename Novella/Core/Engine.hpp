@@ -7,7 +7,6 @@
 #include "../Systems/Renderer/Renderer.hpp"
 #include "../Systems/Resources/ResourceManager.hpp"
 #include "../Scene/SceneManager.hpp"
-#include "../Systems/Input/InteractionSystem.hpp"
 #include <memory>
 
 namespace Novella{
@@ -50,7 +49,6 @@ namespace Novella{
         explicit Engine(const EngineConfig& config, const std::filesystem::path& projectRoot);
 
         void computeLayout(Scene* currentScene);
-        void handleInput(Scene* currentScene);
         void handleRendering(Scene* currentScene);
         void handleAudio(Scene* currentScene);
         void handleScripting(Scene* currentScene);
@@ -66,7 +64,6 @@ namespace Novella{
         SceneManager sceneManager;
         LayoutSystem layoutSystem;
         NScript::Runtime::Interpreter interpreter;
-        InteractionSystem interactionSystem;
         Logger lg;
     };
 

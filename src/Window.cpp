@@ -36,7 +36,7 @@ namespace Novella{
     
     bool Window::isOpen() const{
 
-        return ::IsWindowReady() && !::WindowShouldClose();
+        return ::IsWindowReady() && !::WindowShouldClose() && !requestedClose;
     }
 
     void Window::toggleFullscreen(){
@@ -110,7 +110,7 @@ namespace Novella{
 
         if(::IsWindowReady()){
 
-            ::CloseWindow();
+            requestedClose = true;
         }
 
     }

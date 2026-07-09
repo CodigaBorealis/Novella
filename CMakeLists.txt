@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+    #add_compile_options(-fsanitize=address)
+
+    #add_link_options(-fsanitize=address)
+
 find_package(raylib 5.0 REQUIRED)
 
 
@@ -35,7 +39,6 @@ add_executable(Novella
     src/LayoutSystem.cpp
     
     src/InputSystem.cpp
-    src/InteractionSystem.cpp
 
     src/FileSystem.cpp
     src/String.cpp
@@ -58,7 +61,6 @@ add_executable(Novella
     src/RuntimeEnvironment.cpp
     src/StatementEvaluator.cpp
     src/FunctionExecutor.cpp
-    src/EventHandler.cpp
     src/Converter.cpp
     src/CoreInitializer.cpp
     

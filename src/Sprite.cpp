@@ -16,7 +16,7 @@ namespace Novella::UI{
             }
 
         void Sprite::draw(Renderer& renderer){
-
-            renderer.drawTexture(*getTexture(), getComputedRectangle(), getRotation(), getColor());
+            
+            renderer.drawTexture(getTexture().get(), getComputedRectangle(), getRotation(), getColor());
         }
 }

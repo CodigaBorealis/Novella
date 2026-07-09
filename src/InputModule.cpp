@@ -140,6 +140,8 @@ namespace Novella::NScript::Modules::Input{
         if(!layoutable){
 
             Debug::print(context, "NovellaScript Runtime Warning: Input.isMouseOver() cannot be used on a deleted object");
+
+            return false;
         }
 
         float mouseX = InputSystem::getMouseX();

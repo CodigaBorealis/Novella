@@ -77,6 +77,7 @@ namespace Novella{
         
         private:
 
+        bool requestedClose = false;
         std::string title;
     };
 }

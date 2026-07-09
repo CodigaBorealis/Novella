@@ -203,7 +203,7 @@ namespace Novella::Audio{
 
     bool AudioBackend::isRegistered(const std::string& name){
 
-        return musicStreams.contains(name) || musicStreams.contains(name);
+        return musicStreams.contains(name) || soundStreams.contains(name);
     }
 
     float AudioBackend::getMasterVolume() const{

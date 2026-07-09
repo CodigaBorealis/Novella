@@ -15,8 +15,8 @@ namespace Novella{
         Font(const Font&) = delete;
         Font& operator=(const Font&) = delete;
 
-        Font(Font&&) noexcept = default;
-        Font& operator=(Font&&) noexcept = default;
+        Font(Font&&) noexcept = delete;
+        Font& operator=(Font&&) noexcept = delete;
 
         const ::Font& getHandle() const;
 

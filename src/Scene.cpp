@@ -1,5 +1,6 @@
 #include "../Novella/Scene/Scene.hpp"
 #include "../Novella/Components/Traits/Object.hpp"
+#include <cstddef>
 #include <memory>
 #include <optional>
 #include <stdexcept>
@@ -120,5 +121,10 @@ namespace Novella{
     void Scene::markDirty(){
 
         this->dirty = true;
+    }
+
+    size_t Scene::objectCount() const{
+
+        return slots.size() - freeSlots.size();
     }
 }

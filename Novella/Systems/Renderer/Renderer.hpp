@@ -31,7 +31,7 @@ namespace Novella{
         void beginFrame();
         void endFrame();
 
-        void drawTexture(const Texture& texture, const Rectangle& rect, float rotation, const Color& tint);
+        void drawTexture(const Texture* texture, const Rectangle& rect, float rotation, const Color& tint);
 
         void drawFont(const Font& font, const std::string& text, const Rectangle& rect, int fontSize, float spacing, const Color& tint);
 

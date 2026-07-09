@@ -5,6 +5,7 @@
 #include "../Novella/Components/Primitives/Color.hpp"
 #include "../Novella/Scripting/API/ObjectModule.hpp"
 #include "../Novella/Scene/SceneManager.hpp"
+#include "../Novella/Systems/Resources/ResourceManager.hpp"
 #include <cmath>
 
 namespace Novella::NScript::Modules::Sprite{
@@ -30,8 +31,18 @@ namespace Novella::NScript::Modules::Sprite{
             return;
         }
 
+        auto texture = context.resources->getTexture(name);
+
+        if(!texture){
+
+            std::string objectName = Modules::Object::getName(context, handle);
+
+            Debug::print(context, "NovellaScript Runtime Warning: Sprite.setTexture() could not change the texture of '" + objectName + "' because '" + name +"' is not a registered texture");
+
+            return;
+        }
         
-        //texturable->setTexture(context.renderer.);     
+        texturable->setTexture(texture);     
     }
     
     void setTint(Runtime::Context& context, Handle handle, double r, double g, double b, double a){
@@ -72,11 +83,4 @@ namespace Novella::NScript::Modules::Sprite{
         renderable->setColor(color);
 
     }
-    
-    std::string getTexture(Runtime::Context& context, Handle handle){
-
-        return "";
-    }
-    
-
 }

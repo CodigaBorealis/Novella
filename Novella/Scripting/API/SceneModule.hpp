@@ -15,5 +15,10 @@ namespace Novella::NScript::Modules::Scene{
 
     double objectCount(Runtime::Context& context);
 
-    void reset(Runtime::Context& context);
+    std::string name(Runtime::Context& context);
+
+    std::string path(Runtime::Context& context);
+
+    bool preload(Runtime::Context& context, const std::string& name);
+
 };   

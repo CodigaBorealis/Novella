@@ -34,32 +34,17 @@ namespace Novella::NScript::Runtime{
 
         return scriptFunctions.contains(name);
     } 
-/*
-    void RuntimeEnvironment::printNativeFunctionAddresses() const{
 
-        using ExpectedTargetType = Parser::Value(*)(Context&, const std::vector<Parser::Value>&);
-
-        for(const auto& [name,func] : nativeFunctions){
-
-            if(auto* const* targetPtr = func.target<ExpectedTargetType>()){
-
-                void* address = reinterpret_cast<void*>(*targetPtr);
-
-            }else{
-            }
-        }
-    }
-*/
     void RuntimeEnvironment::initializeContext(Engine& engine){
 
         this->runtimeContext.audio = &engine.audio();
-        this->runtimeContext.input = &engine.input();
         this->runtimeContext.layout = &engine.layout();
         this->runtimeContext.logger = &engine.logger();
         this->runtimeContext.renderer = &engine.renderer();
         this->runtimeContext.scene = &engine.scene();
         this->runtimeContext.window = &engine.window();
         this->runtimeContext.projectRoot = engine.projectRoot();
+        this->runtimeContext.resources = &engine.resources();
     }
 
     void RuntimeEnvironment::registerCoreFunctions(){
@@ -82,6 +67,11 @@ namespace Novella::NScript::Runtime{
         CoreInitializer::registerLayoutModule(*this);
         CoreInitializer::registerOS(*this);
 
+    }
+
+    Context& RuntimeEnvironment::context(){
+
+        return this->runtimeContext;
     }
 
     void RuntimeEnvironment::registerData(const Parser::Script& script, ExpressionEvaluator& expressionEvaluator){
@@ -207,14 +197,6 @@ namespace Novella::NScript::Runtime{
 
         return globalVariables.contains(name);
     }
-/*
-    void RuntimeEnvironment::printVariables() const{
-
-        for(const auto& [variable, value] : variables){
-
-            std::cout << "Variable name: " << variable;
-        }
-    }*/
 
     void RuntimeEnvironment::pushScope(){
 

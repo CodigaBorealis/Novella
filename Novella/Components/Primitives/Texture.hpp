@@ -13,8 +13,8 @@ namespace Novella{
         Texture(const Texture&) = delete;
         Texture& operator=(const Texture&) = delete;
 
-        Texture(Texture&&) noexcept = default;
-        Texture& operator=(Texture&&) noexcept = default;
+        Texture(Texture&&) noexcept = delete;
+        Texture& operator=(Texture&&) noexcept = delete;
 
         const ::Texture2D& getHandle() const;
 

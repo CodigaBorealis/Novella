@@ -26,8 +26,3 @@ int main(){
     return 0;
 } 
 
-//TODO:
-//Make if statements work
-//Make variables work
-//Make operators work
-//make returns work

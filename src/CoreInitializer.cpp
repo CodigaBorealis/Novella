@@ -62,7 +62,11 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerScene(Runtime::RuntimeEnvironment& runtime){
 
-        
+        const std::string prefix = "Scene.";
+
+        runtime.registerNativeFunction(prefix + "load", Modules::Scene::load);
+        runtime.registerNativeFunction(prefix + "reload", Modules::Scene::reload);
+        runtime.registerNativeFunction(prefix + "objectCount", Modules::Scene::objectCount);
     }
 
     void registerLogger(Runtime::RuntimeEnvironment& runtime){
@@ -212,9 +216,7 @@ namespace Novella::NScript::CoreInitializer{
         const std::string prefix = "Sprite.";
     
         runtime.registerNativeFunction(prefix + "setTexture", Modules::Sprite::setTexture);
-        runtime.registerNativeFunction(prefix + "setColor", Modules::Sprite::setTint);
-        runtime.registerNativeFunction(prefix + "texture", Modules::Sprite::getTexture);
-  
+        runtime.registerNativeFunction(prefix + "setColor", Modules::Sprite::setTint);  
     }
 
 

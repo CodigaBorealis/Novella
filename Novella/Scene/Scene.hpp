@@ -1,5 +1,6 @@
 #pragma once
 #include <concepts>
+#include <cstddef>
 #include <cstdint>
 #include <optional>
 #include <type_traits>
@@ -94,6 +95,8 @@ namespace Novella{
                 }
             }
         }
+        
+        size_t objectCount() const;
         
         void markDirty();
         

@@ -2,6 +2,7 @@
 #include <cstddef>
 #include <filesystem>
 #include <memory>
+#include <stdexcept>
 
 namespace Novella{
 
@@ -10,6 +11,8 @@ namespace Novella{
         clear();
     };
         void ResourceManager::loadImage(const std::string& name, const std::filesystem::path& src){
+        
+        if(name.empty()) throw std::runtime_error("Cannot load an image without a name");
 
         auto image = std::make_shared<Image>(src);
 
@@ -24,6 +27,8 @@ namespace Novella{
     }
 
     void ResourceManager::loadTexture(const std::string& name, const std::filesystem::path& src){
+
+        if(name.empty()) throw std::runtime_error("Cannot load a texture without a name");
 
         if(!std::filesystem::exists(src)) throw std::runtime_error("File not found: " + src.string());
 
@@ -40,6 +45,8 @@ namespace Novella{
     }
 
     void ResourceManager::loadFont(const std::string& name, const std::filesystem::path& src){
+        
+        if(name.empty()) throw std::runtime_error("Cannot load a font without a name");
 
         if(!std::filesystem::exists(src)) throw std::runtime_error("File not found: " + src.string());
 

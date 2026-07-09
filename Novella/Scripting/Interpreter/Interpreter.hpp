@@ -1,7 +1,6 @@
 #pragma once
 #include <variant>
 #include <vector>
-#include "EventHandler.hpp"
 #include "FunctionExecutor.hpp"
 #include "RuntimeEnvironment.hpp"
 #include "ExpressionEvaluator.hpp"
@@ -40,13 +39,7 @@ namespace Novella{
 namespace Novella::NScript::Runtime{
 
     class Interpreter{
-        
-        struct RuntimeBinding{
-            
-            std::string triggerName;
-            std::shared_ptr<Parser::FunctionCallExpression> callbackAction;
-        };
-
+                
         public:
 
         Interpreter():
@@ -63,8 +56,6 @@ namespace Novella::NScript::Runtime{
 
         void loadScript(const Parser::Script& definition);
 
-        void interpretEvent(const Event& event);
-
         void clear();
         
         void initialize(Engine& engine);
@@ -77,7 +68,6 @@ namespace Novella::NScript::Runtime{
         ExpressionEvaluator expressionEvaluator;
         StatementEvaluator statementEvaluator;
         FunctionExecutor functionExecutor;
-        EventHandler eventHandler;
 
         RunTimeValue callFunction(const std::string& moduleName, const std::string& functionName, const std::vector<RunTimeValue>& args = {});
 

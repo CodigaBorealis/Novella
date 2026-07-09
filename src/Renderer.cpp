@@ -28,19 +28,21 @@ namespace Novella{
         canvas = ::LoadRenderTexture(width, height);
     }
 
-    void Renderer::drawTexture(const Texture& texture, const Rectangle& rect, float rotation, const Color& tint){
+    void Renderer::drawTexture(const Texture* texture, const Rectangle& rect, float rotation, const Color& tint){
         
+        if(!texture) return;
+
         Vector2f origin{0.f, 0.f};
 
         Rectangle source{
 
             0.0f,
             0.0f,
-            static_cast<float>(texture.width()),
-            static_cast<float>(texture.height())
+            static_cast<float>(texture->width()),
+            static_cast<float>(texture->height())
         };
         
-        ::DrawTexturePro(texture.getHandle(), source, rect, origin, rotation, tint);
+        ::DrawTexturePro(texture->getHandle(), source, rect, origin, rotation, tint);
     }
 
     void Renderer::drawFont(const Font& font, const std::string& text, const Rectangle& rect, int fontSize, float spacing, const Color& tint){

@@ -20,6 +20,7 @@ namespace Novella::NScript::Runtime{
 
         Window* window;
         Renderer* renderer;
+        ResourceManager* resources;
         AudioSystem* audio;
         SceneManager* scene;
         LayoutSystem* layout;

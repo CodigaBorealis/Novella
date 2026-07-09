@@ -39,6 +39,7 @@ namespace Novella::NScript::Runtime{
 
         RuntimeEnvironment() = default;
 
+        Context& context();
         void initializeContext(Engine& engine);
 
         void registerCoreFunctions();
@@ -54,6 +55,7 @@ namespace Novella::NScript::Runtime{
         const Parser::FunctionDefinition& getFunction(const std::string& name);
 
         void registerFunction(const Parser::FunctionDefinition& definition);
+        void printNativeFunctionAddresses() const;
 
         //Maybe i should just work at a convenience store instead because what even is this anymore
         template <typename Return, typename... Args>
@@ -82,9 +84,6 @@ namespace Novella::NScript::Runtime{
             });
         }
 
-        //void printNativeFunctionAddresses() const;
-
-        //void printVariables() const;
         void createVariable(const std::string& name, const Parser::Value& value);
         
         Parser::Value callNativeFunction(const std::string& name, const std::vector<Parser::Value>& args);

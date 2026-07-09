@@ -13,8 +13,8 @@ namespace Novella{
         Image(const Image&) = delete;
         Image& operator=(const Image&) = delete;
 
-        Image(Image&&) noexcept = default;
-        Image& operator=(Image&&) noexcept = default;
+        Image(Image&&) noexcept = delete;
+        Image& operator=(Image&&) noexcept = delete;
 
         const ::Image& getHandle() const;
 
