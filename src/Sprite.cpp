@@ -3,45 +3,20 @@
 
 namespace Novella::UI{
 
-        Sprite::Sprite(std::shared_ptr<Texture> texture, const Style& style, int renderLayer)
-            :
-            texture(texture),
-            Traits::Layoutable(style),
-            rLayer(renderLayer)
-            {}
+        Sprite::Sprite(std::shared_ptr<Texture> texture){
+
+            setTexture(texture);
+        }
+
+        Sprite::Sprite(std::shared_ptr<Texture> texture, const Style& style, int renderLayer){
+
+                setTexture(texture);
+                setRenderLayer(renderLayer);
+                setStyle(style);
+            }
 
         void Sprite::draw(Renderer& renderer){
 
-            renderer.drawTexture(*texture, computedRectangle, rotation, tint);
-        }
-
-        void Sprite::setRenderLayer(int layer){
-
-            this->rLayer = layer;
-        }
-        
-        int Sprite::renderLayer() const{
-
-            return this->rLayer;
-        }
-
-        void Sprite::setColor(const Color& color){
-
-            this->tint = color;
-        }
-
-        const Color& Sprite::getColor() const{
-
-            return this->tint;
-        }
-
-        void Sprite::setRotation(float degrees){
-
-            this->rotation = degrees;
-        }
-            
-        float Sprite::getRotation() const{
-
-            return this->rotation;
+            renderer.drawTexture(*getTexture(), getComputedRectangle(), getRotation(), getColor());
         }
 }

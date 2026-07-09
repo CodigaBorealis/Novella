@@ -157,6 +157,7 @@ namespace Novella::NScript::CoreInitializer{
 
         const std::string prefix = "Input.";
 
+        runtime.registerNativeFunction(prefix + "setCursor", Modules::Input::setCursorType);
         runtime.registerNativeFunction(prefix + "setCursorVisible", Modules::Input::setCursorVisible);
         runtime.registerNativeFunction(prefix + "lockCursor", Modules::Input::lockCursor);
         runtime.registerNativeFunction(prefix + "setCursorPosition", Modules::Input::setCursorPosition);

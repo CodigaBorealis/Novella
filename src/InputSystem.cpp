@@ -94,6 +94,44 @@ namespace Novella{
         return std::nullopt;
     }
 
-    
+    void InputSystem::setCursorType(CursorType type){
 
+        switch (type){
+        
+            case CursorType::Default:
+            
+                ::SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+
+                return;
+
+            case CursorType::Arrow:
+            
+                ::SetMouseCursor(MOUSE_CURSOR_ARROW);
+
+                return;            
+
+            case CursorType::Crosshair:
+            
+                ::SetMouseCursor(MOUSE_CURSOR_CROSSHAIR);
+
+                return; 
+        
+            case CursorType::Hand:
+            
+                ::SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+
+                return;
+
+            case CursorType::Ibeam:
+
+                ::SetMouseCursor(MOUSE_CURSOR_IBEAM);
+                return;
+
+            case CursorType::NotAllowed:
+
+                ::SetMouseCursor(MOUSE_CURSOR_NOT_ALLOWED);
+
+                return;
+        }   
+    }
 }

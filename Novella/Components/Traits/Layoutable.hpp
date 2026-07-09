@@ -25,13 +25,8 @@ namespace Novella::Traits{
 
                 return this->computedRectangle;
             }
-        
-        protected:
-
-        Layoutable(const Style& style)
-            :
-            style(style)
-            {}
+            
+        private:
 
             Style style;
             Rectangle computedRectangle;

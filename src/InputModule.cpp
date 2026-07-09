@@ -161,4 +161,45 @@ namespace Novella::NScript::Modules::Input{
         return isMousePressed(context, button);
     }
 
+    void setCursorType(Runtime::Context &context, const std::string &string){
+
+        std::string sanitized = Utils::String::toUpper(Utils::String::trim(string));
+
+        if(sanitized == "DEFAULT"){
+
+            InputSystem::setCursorType(InputSystem::CursorType::Default);
+
+            return;
+
+        }else if(sanitized == "ARROW"){
+
+            InputSystem::setCursorType(InputSystem::CursorType::Arrow);
+
+            return;
+
+        }else if(sanitized == "HAND"){
+
+            InputSystem::setCursorType(InputSystem::CursorType::Hand);
+            
+            return;
+
+        }else if(sanitized == "CROSSHAIR"){
+
+            InputSystem::setCursorType(InputSystem::CursorType::Crosshair);
+            
+            return;
+
+        }else if(sanitized == "IBEAM"){
+
+            InputSystem::setCursorType(InputSystem::CursorType::Ibeam);
+            
+        }else if(sanitized == "NOTALLOWED"){
+
+            InputSystem::setCursorType(InputSystem::CursorType::NotAllowed);
+            
+            return;
+        }
+
+        throw std::runtime_error("NovellaScript Runtime Error: Unknown cursor type '" + sanitized + "'");
+    }
 }

@@ -44,6 +44,17 @@ namespace Novella{
     static std::optional<Button> getMouseButtonPressed();
     static std::optional<Key> getKeyboardKeyPressed();
 
+    enum class CursorType : short{
+
+        Default,
+        Arrow,
+        Hand,
+        Crosshair,
+        Ibeam,
+        NotAllowed
+        
+    };
+
     static inline Key keyFromRaylib(int key){
 
         switch(key){
@@ -140,5 +151,6 @@ namespace Novella{
         return ::IsMouseButtonReleased(toRaylib(button));
     }    
 
+    static void setCursorType(CursorType type);
 };
 }

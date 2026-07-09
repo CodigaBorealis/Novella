@@ -6,8 +6,11 @@ namespace Novella::Traits{
     struct Clickable{
 
         virtual ~Clickable() = default;
-                        
-        virtual bool contains(const Vector2f& mousePos) const = 0;
         
+        bool acceptsMouseInput() const{return acceptInput;}
+        void setAcceptInput(bool val){acceptInput = val;}
+        private:
+
+        bool acceptInput = true;
     };
 }

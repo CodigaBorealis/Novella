@@ -412,7 +412,7 @@ namespace Novella::NScript::Runtime{
 
             return a >= b;
             
-        }, "Type Mismatch: greaterEquals requires two numeric operands");
+        }, "NovellaScript Rutnime Error: operator '>=' requires two numeric operands");
     }
 
     Parser::Value ExpressionEvaluator::evaluateEquals(const Parser::Value& firstValue, const Parser::Value& secondValue){
@@ -426,7 +426,17 @@ namespace Novella::NScript::Runtime{
 
                 return a == b;
                 
-            }, "Type Mismatch: equals requires two numeric operands or two boolean operands");
+            }, "NovellaScript Rutnime Error: operator 'is' requires the two compared values to be of the same type");
+
+        }
+
+        if(std::holds_alternative<std::string>(primitiveFirst) && std::holds_alternative<std::string>(primitiveSecond)){
+
+            return applyPrimitiveOperation<std::string, std::string>(firstValue, secondValue,[](const std::string&  a, const std::string& b){
+
+                return a == b;
+                
+            }, "NovellaScript Rutnime Error: operator 'is' requires the two compared values to be of the same type");
 
         }
 
@@ -434,7 +444,7 @@ namespace Novella::NScript::Runtime{
 
             return a == b;
             
-        }, "Type Mismatch: equals requires two numeric operands or two boolean operands");
+        }, "NovellaScript Rutnime Error: operator 'is' requires the two compared values to be of the same type");
     }
 
     Parser::Value ExpressionEvaluator::evaluateNotEquals(const Parser::Value& firstValue, const Parser::Value& secondValue){
@@ -448,14 +458,25 @@ namespace Novella::NScript::Runtime{
 
                 return a != b;
                 
-            }, "Type Mismatch: or requires two numeric operands or two boolean operands");
+            }, "NovellaScript Rutnime Error: operator 'not equals' requires the two compared values to be of the same type");
 
         }
+
+        if(std::holds_alternative<std::string>(primitiveFirst) && std::holds_alternative<std::string>(primitiveSecond)){
+
+            return applyPrimitiveOperation<std::string, std::string>(firstValue, secondValue,[](const std::string&  a, const std::string& b){
+
+                return a != b;
+                
+            }, "NovellaScript Rutnime Error: operator 'not equals' requires the two compared values to be of the same type");
+
+        }
+
         return applyPrimitiveOperation<double, double>(firstValue, secondValue,[](double a, double b){
 
             return a != b;
             
-        }, "Type Mismatch: notEquals requires two numeric operands or two boolean operands");
+        }, "NovellaScript Rutnime Error: operator 'is not' requires the two compared values to be of the same type");
 
     }
 

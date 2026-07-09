@@ -6,6 +6,10 @@ namespace Novella::Traits{
         
         virtual ~Interactable() = default;
         
-        virtual bool acceptsKeyboardInput() = 0;
+        bool acceptsKeyboardInput() const {return listenInput;}
+        void setListenInput(bool value){listenInput = value;}
+        private:
+
+        bool listenInput = true;
     };
 }

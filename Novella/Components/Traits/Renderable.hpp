@@ -14,11 +14,17 @@ namespace Novella::Traits{
 
         virtual void draw(Renderer& renderer) = 0;
 
-        virtual int renderLayer() const = 0;
+        int renderLayer() const {return rLayer;};
 
-        virtual void setColor(const Color& color) = 0;
-        
-        virtual const Color& getColor() const = 0;
+        void setRenderLayer(int layer){rLayer = layer;};
 
+        void setColor(const Color& color){tint = color;};
+                
+        const Color& getColor() const{return tint;};
+
+        private:
+
+        int rLayer = 0;
+        Color tint = {255,255,255,255};
     };  
 }

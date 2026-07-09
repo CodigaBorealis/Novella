@@ -7,13 +7,13 @@ namespace Novella{
 
     struct Style{
 
-        Anchor anchor = Anchor::TopLeft;
+        Anchor anchor = Anchor::Center;
 
         SizeMode widthMode = SizeMode::Fixed;
         SizeMode heightMode  = SizeMode::Fixed;
         
-        int width = 0.0f;
-        int height = 0.0f;
+        int width = 100.0f;
+        int height = 100.0f;
 
         float widthPercent = 100.0f;
         float heightPercent = 100.0f;

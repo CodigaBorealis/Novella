@@ -1,5 +1,6 @@
 #include "../Novella/Scripting/API/SpriteModule.hpp"
 #include "../Novella/Scripting/API/DebugModule.hpp"
+#include "../Novella/Components/Traits/Texturable.hpp"
 #include "../Novella/Components/Traits/Renderable.hpp"
 #include "../Novella/Components/Primitives/Color.hpp"
 #include "../Novella/Scripting/API/ObjectModule.hpp"
@@ -10,7 +11,27 @@ namespace Novella::NScript::Modules::Sprite{
 
     void setTexture(Runtime::Context& context, Handle handle, const std::string& name){
 
+        if(handle.generation == 0) return;
+
+        auto* currentScene = context.scene->getCurrentScene();
+
+        if(!currentScene) return;
+
+        auto* texturable = currentScene->getInterface<Traits::Texturable>(handle);
+
+        if(!texturable){
+
+            std::string objectName = Modules::Object::getName(context, handle);
+
+            if(objectName.empty()) objectName = "NULL";
+
+            Debug::print(context, "NovellaScript Runtime Warning: Object '" + objectName + "' does not support Sprite.setTexture()");
+
+            return;
+        }
+
         
+        //texturable->setTexture(context.renderer.);     
     }
     
     void setTint(Runtime::Context& context, Handle handle, double r, double g, double b, double a){
@@ -54,7 +75,7 @@ namespace Novella::NScript::Modules::Sprite{
     
     std::string getTexture(Runtime::Context& context, Handle handle){
 
-
+        return "";
     }
     
 
