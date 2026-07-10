@@ -3,7 +3,6 @@
 #include "../Novella/Utils/FileSystem.hpp"
 #include "../Novella/Scene/Parser/Lexer.hpp"
 #include "../Novella/Scene/Parser/Parser.hpp"
-#include "../Novella/Core/Engine.hpp"
 #include <filesystem>
 #include <stdexcept>
 #include "../Novella/Scene/Serialization/ComponentBuilder.hpp"
@@ -14,6 +13,9 @@
 #include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
 #include "../Novella/Scripting/Parser/Script.hpp"
 #include "../Novella/Scripting/Interpreter/Interpreter.hpp"
+#include "../Novella/Systems/Resources/ResourceManager.hpp"
+#include "../Novella/Systems/Audio/AudioSystem.hpp"
+#include "../Novella/Scene/SceneManager.hpp"
 
 namespace Novella::NScene::Serialization{
 

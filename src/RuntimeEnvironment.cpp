@@ -8,7 +8,6 @@
 #include "../Novella/Core/Engine.hpp"
 #include <vector>
 #include "../Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
-#include <iostream>
 namespace Novella::NScript::Runtime{
 
     size_t RuntimeEnvironment::loadedFunctions() const{
@@ -16,6 +15,11 @@ namespace Novella::NScript::Runtime{
         return scriptFunctions.size();
     }
     
+    bool RuntimeEnvironment::sceneChangeRequested() const{
+
+        return runtimeContext.scene->requestedSwap();
+    }
+
     Parser::Value RuntimeEnvironment::callNativeFunction(const std::string& name, const std::vector<Parser::Value>& args){
 
         auto it = nativeFunctions.find(name);

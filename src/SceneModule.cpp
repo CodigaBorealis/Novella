@@ -8,7 +8,7 @@ namespace Novella::NScript::Modules::Scene{
 
     void load(Runtime::Context& context,const std::string& name){
 
-        context.scene->loadSceneFromName(context, name);
+        context.scene->requestSwap(name);
     }
 
     double objectCount(Runtime::Context& context){
@@ -27,6 +27,6 @@ namespace Novella::NScript::Modules::Scene{
 
         if(!scene) return;
 
-        context.scene->loadSceneFromFile(context, context.scene->currentSceneFile());
+        context.scene->loadFile(context, context.scene->currentSceneFile());
     }
 }

@@ -1,6 +1,7 @@
 #include "../Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
 #include "../Novella/Scripting/Interpreter/StatementEvaluator.hpp"
 #include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
+#include "../Novella/Scene/SceneManager.hpp"
 #include "../Novella/Scripting/Parser/Definition.hpp"
 #include "../Novella/Scripting/Interpreter/ReturnException.hpp"
 #include <variant>
@@ -22,6 +23,8 @@ namespace Novella::NScript::Runtime{
     void StatementEvaluator::execute(const std::vector<Parser::Statement>& statements) const{
         
         for(const auto& statement : statements){
+
+            if(runtime.sceneChangeRequested()) break;
 
             execute(statement);
         }

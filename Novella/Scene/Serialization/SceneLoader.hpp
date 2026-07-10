@@ -21,7 +21,7 @@ namespace Novella::NScene::Serialization{
         static void load(NScript::Runtime::Context& context, const std::filesystem::path& file);
 
         private:
-
+        
         static void build(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
 
         static void loadResources(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);

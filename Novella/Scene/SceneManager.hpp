@@ -2,9 +2,11 @@
 #include "Scene.hpp"
 #include "SceneWatcher.hpp"
 #include <memory>
+#include <optional>
 #include <stdexcept>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 #include "../Components/Traits/Object.hpp"
 #include "../Project/EngineConfig.hpp"
 
@@ -28,12 +30,16 @@ namespace Novella{
         SceneManager() = delete;
 
         SceneManager(ResourceManager& resourceManager, AudioSystem& audio);
-        
+
+        bool requestedSwap() const;
+
+        void requestSwap(const std::string& name);
+
         void registerScenes(const EngineConfig& config);
 
-        void loadSceneFromName(NScript::Runtime::Context& context, const std::string& name);
+        void loadSceneFromName(NScript::Runtime::Context& context);
 
-        void loadSceneFromFile(NScript::Runtime::Context& context, const std::filesystem::path& src);
+        void loadFile(NScript::Runtime::Context& context, const std::filesystem::path& src);
 
         Scene* getCurrentScene();
         Scene& createScene();
@@ -58,6 +64,8 @@ namespace Novella{
         SceneWatcher sceneWatcher;
         ResourceManager& resourceManager;
         AudioSystem& audioSystem;
+
+        std::optional<std::string> swapRequest;
 
         std::unordered_map<std::string, std::filesystem::path> sceneRegistry;
     };

@@ -43,11 +43,13 @@ namespace Novella{
         
         while(displayWindow.isOpen()){
                         
+            if(sceneManager.requestedSwap()) sceneManager.loadSceneFromName(interpreter.runtimeContext());
+
             if(sceneManager.modifiedSceneFile()){
 
             try{
 
-                sceneManager.loadSceneFromFile(interpreter.runtimeContext(), sceneManager.currentSceneFile());
+                sceneManager.loadFile(interpreter.runtimeContext(), sceneManager.currentSceneFile());
 
                 lastError.clear();
 
@@ -142,7 +144,7 @@ namespace Novella{
 
     void Engine::loadSceneFromName(const std::string& name){
 
-        sceneManager.loadSceneFromName(interpreter.runtimeContext(), name);
+        sceneManager.requestSwap(name);
     }
 
     void Engine::handleAudio(Scene* scene){

@@ -15,6 +15,8 @@ namespace Novella::NScript::Runtime{
 
     void Interpreter::run(){
 
+        if(runtime.sceneChangeRequested()) return;
+
         if(runtime.isScriptFunction("main")){
 
             const auto& mainFunction = runtime.getFunction("main");

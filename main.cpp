@@ -12,8 +12,6 @@ int main(){
     try{
 
         engine.loadSceneFromName("other");
-
-        engine.audio().play("bgm");
         
         engine.run();
 

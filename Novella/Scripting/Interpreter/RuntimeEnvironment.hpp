@@ -40,6 +40,9 @@ namespace Novella::NScript::Runtime{
         RuntimeEnvironment() = default;
 
         Context& context();
+
+        bool sceneChangeRequested() const;
+        
         void initializeContext(Engine& engine, Interpreter& interpreter);
 
         void registerCoreFunctions();

@@ -1,10 +1,8 @@
 #include "../Novella/Project/Parser.hpp"
 #include "../Novella/Project/Lexer.hpp"
 #include "../Novella/Project/EngineConfig.hpp"
-
 #include <stdexcept>
 #include <vector>
-#include <iostream>
 namespace Novella::Project{
 
     EngineConfig Parser::parse(){
