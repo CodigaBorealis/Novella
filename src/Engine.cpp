@@ -31,6 +31,7 @@ namespace Novella{
         audioSystem(resourceManager){
 
                 interpreter.initialize(*this);
+                sceneManager.registerScenes(config);
             }
 
     const std::filesystem::path& Engine::projectRoot() const{
@@ -139,10 +140,9 @@ namespace Novella{
             windowRenderer.endFrame();
         }
 
-    void Engine::loadSceneFromFile(const std::filesystem::path& src){
-        
-        sceneManager.loadSceneFromFile(interpreter.runtimeContext(), interpreter.runtimeContext().projectRoot / src);
-        
+    void Engine::loadSceneFromName(const std::string& name){
+
+        sceneManager.loadSceneFromName(interpreter.runtimeContext(), name);
     }
 
     void Engine::handleAudio(Scene* scene){

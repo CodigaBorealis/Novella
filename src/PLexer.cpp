@@ -2,7 +2,6 @@
 #include "../Novella/Project/Token.hpp"
 #include <stdexcept>
 #include <string>
-#include <iostream>
 
 namespace Novella::Project{
 
@@ -45,23 +44,10 @@ Token Lexer::next(){
 
         if(std::isalpha(static_cast<unsigned char>(c)) || c == '_') return identifier();
 
-        std::cout << "SOURCE: " << source << "\n";
-
         char received = source.at(currentCharacter);
 
         unsigned char casted = static_cast<unsigned char>(received);
 
-        std::cout << "RECEIVED: \n";
-
-        std::cout << received;
-
-        std::cout << "\n";
-
-        std::cout << "CASTED\n";
-        
-        std::cout << casted;
-
-        std::cout << "\n";
         throw std::runtime_error(std::string("PLEXER: Unexpected character '" ) + c + "' at : " + std::to_string(line) + ":" + std::to_string(column));
 
     }

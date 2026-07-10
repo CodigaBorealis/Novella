@@ -3,8 +3,10 @@
 #include "SceneWatcher.hpp"
 #include <memory>
 #include <stdexcept>
+#include <unordered_map>
 #include <utility>
 #include "../Components/Traits/Object.hpp"
+#include "../Project/EngineConfig.hpp"
 
 namespace Novella::NScript::Runtime{
 
@@ -27,10 +29,11 @@ namespace Novella{
 
         SceneManager(ResourceManager& resourceManager, AudioSystem& audio);
         
-        void loadSceneFromName(const std::string& name);
+        void registerScenes(const EngineConfig& config);
+
+        void loadSceneFromName(NScript::Runtime::Context& context, const std::string& name);
 
         void loadSceneFromFile(NScript::Runtime::Context& context, const std::filesystem::path& src);
-        void loadSceneFromFile(Engine& engine, const std::filesystem::path& src);
 
         Scene* getCurrentScene();
         Scene& createScene();
@@ -55,6 +58,8 @@ namespace Novella{
         SceneWatcher sceneWatcher;
         ResourceManager& resourceManager;
         AudioSystem& audioSystem;
+
+        std::unordered_map<std::string, std::filesystem::path> sceneRegistry;
     };
 
 }

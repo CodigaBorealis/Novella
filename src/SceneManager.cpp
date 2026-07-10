@@ -1,11 +1,11 @@
 #include "../Novella/Scene/SceneManager.hpp"
-#include "../Novella/Systems/Audio/AudioSystem.hpp"
-#include "../Novella/Scene/SceneManager.hpp"
 #include "../Novella/Scene/Serialization/SceneLoader.hpp"
+#include "../Novella/Utils/FileSystem.hpp"
+#include "../Novella/Project/EngineConfig.hpp"
 #include "../Novella/Components/Traits/Object.hpp"//clangd swears this file is unused, it IS used
-#include "../Novella/Core/Engine.hpp"
+#include "../Novella/Scripting/Interpreter/RuntimeContext.hpp"
 #include <memory>
-
+#include <stdexcept>
 namespace Novella{
 
     SceneManager::SceneManager(ResourceManager& resourceManager, AudioSystem& audio)
@@ -14,9 +14,23 @@ namespace Novella{
         audioSystem(audio)
         {}
 
-    void SceneManager::loadSceneFromName(const std::string& name){
+    void SceneManager::registerScenes(const EngineConfig& config){
 
+        for(const auto& pair : config.sceneData){
 
+            sceneRegistry.emplace(pair.first,std::filesystem::path{pair.second});
+            
+        }
+
+    }
+
+    void SceneManager::loadSceneFromName(NScript::Runtime::Context& context, const std::string& name){
+
+        auto it = sceneRegistry.find(name);
+
+        if(it == sceneRegistry.end()) throw std::runtime_error("This scene is not registered on the project file: " + name);
+
+        loadSceneFromFile(context,  context.projectRoot / it->second);
     }
         
     void SceneManager::loadSceneFromFile(NScript::Runtime::Context& context, const std::filesystem::path& src){
@@ -24,6 +38,8 @@ namespace Novella{
         const std::string extension = src.extension().string();
         
         if(extension != ".nsc") throw std::runtime_error("Could not load the scene: expected a '.nsc' file got '" + extension + "'");
+
+        if(!Utils::Filesystem::exists(src)) throw std::runtime_error("Could not load the scene: file not found '" + src.string() + "'");
 
         sceneWatcher.setSceneFile(src);
 

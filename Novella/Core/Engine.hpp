@@ -26,9 +26,9 @@ namespace Novella{
 
         Engine(Engine&&) noexcept = delete;
         Engine& operator=(Engine&&) noexcept = delete;
-
-        void loadSceneFromFile(const std::filesystem::path& src);
         
+        void loadSceneFromName(const std::string& name);
+
         void run();
 
         ResourceManager& resources();

@@ -17,6 +17,7 @@
 
 namespace Novella::NScene::Serialization{
 
+
     void Loader::load(NScript::Runtime::Context& context, const std::filesystem::path& file){
 
         std::string fileContents = Utils::Filesystem::getContentsFromFile(context.projectRoot / file);

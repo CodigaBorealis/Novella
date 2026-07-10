@@ -8,9 +8,9 @@ namespace Novella::NScript::Modules::Scene{
 
     void load(Runtime::Context& context,const std::string& name){
 
-        
+        context.scene->loadSceneFromName(context, name);
     }
-    
+
     double objectCount(Runtime::Context& context){
 
         auto* currentScene = context.scene->getCurrentScene();

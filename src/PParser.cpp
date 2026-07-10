@@ -4,7 +4,7 @@
 
 #include <stdexcept>
 #include <vector>
-
+#include <iostream>
 namespace Novella::Project{
 
     EngineConfig Parser::parse(){
@@ -16,11 +16,17 @@ namespace Novella::Project{
             if(current().text == "Window"){
 
                 registerSeenSection("Window");
+                
                 parseWindow(config);
+
+            }else if(current().text == "Scenes"){
+
+                registerSeenSection("Scenes");
+                parseScenes(config);
 
             }else{
 
-                throw std::runtime_error("Unknown section: '" + current().text + "'");
+                throw std::runtime_error("Unexpected section: '" + current().text + "'");
             }
         }
 
@@ -99,6 +105,33 @@ namespace Novella::Project{
         }
 
         expect(Token::Type::RBrace);
+    }
+
+    void Parser::parseScenes(EngineConfig& config){
+
+        expect(Token::Type::Identifier);
+        expect(Token::Type::LBrace);
+
+        while (current().type != Token::Type::RBrace) {
+        
+        if(current().type == Token::Type::EndOfFile) throw std::runtime_error("Unexpected end of file");
+
+        std::string sceneName = current().text;
+
+        expect(Token::Type::Identifier);
+
+        expect(Token::Type::Equals);
+
+        std::string src = current().text;
+
+        expect(Token::Type::String);
+        
+        config.sceneData.push_back({sceneName, src});
+        
+        }
+
+        expect(Token::Type::RBrace);
+
     }
 
     void Parser::parseWindowProperty(EngineConfig& config){

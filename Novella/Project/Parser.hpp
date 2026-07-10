@@ -42,6 +42,7 @@ namespace Novella::Project{
     enum class Section : unsigned short{
 
         Window,
+        Scenes,
         Unknown
     };
 
@@ -74,7 +75,9 @@ namespace Novella::Project{
         static constexpr Section stringToSection(const std::string& section){
 
             if(section == "Window") return Section::Window;
-                
+            
+            if(section == "Scenes") return Section::Scenes;
+
             return Section::Unknown;
 
         }
@@ -92,6 +95,8 @@ namespace Novella::Project{
 
         void parseWindow(EngineConfig& config);
         
+        void parseScenes(EngineConfig& config);
+
         void parseFlags(EngineConfig& config);
 
         void parseWindowProperty(EngineConfig& config);
@@ -112,7 +117,8 @@ namespace Novella::Project{
 
         std::unordered_map<Section, ParseRegistry> parseRegistry{
 
-            {Section::Window, ParseRegistry{false}}
+            {Section::Window, ParseRegistry{false}},
+            {Section::Scenes, ParseRegistry{false}}
         };
 
         std::unordered_set<std::string> seenProperties;
