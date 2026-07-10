@@ -19,6 +19,4 @@ namespace Novella::NScript::Modules::Scene{
 
     std::string path(Runtime::Context& context);
 
-    bool preload(Runtime::Context& context, const std::string& name);
-
 };   

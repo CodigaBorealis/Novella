@@ -1,5 +1,5 @@
-/build/
-/build-*/
+**/build/
+**/build-*/
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
@@ -12,5 +12,5 @@ Makefile
 *.so
 *.dylib
 *.exe
-/Test/
-/test/
+Core/Test/
+Core/test/

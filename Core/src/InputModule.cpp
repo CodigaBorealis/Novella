@@ -121,7 +121,7 @@ namespace Novella::NScript::Modules::Input{
 
         if(handle.generation == 0){
 
-            Debug::print(context, "NovellaScript Runtime Warning: Input.isMouseOver() cannot be used with an invalid object");
+            //Debug::print(context, "NovellaScript Runtime Warning: Input.isMouseOver() cannot be used with an invalid object");
 
             return false;
         }
@@ -204,4 +204,24 @@ namespace Novella::NScript::Modules::Input{
 
         throw std::runtime_error("NovellaScript Runtime Error: Unknown cursor type '" + sanitized + "'");
     }
+
+    std::string getKeyPressed(Runtime::Context& context){
+
+        auto key = InputSystem::getKeyboardKeyPressed();
+
+        if(!key) return "";
+
+        return toString(key.value());
+
+    }
+
+    std::string getButtonPressed(Runtime::Context& context){
+
+        auto button = InputSystem::getMouseButtonPressed();
+
+        if(!button) return "";
+
+        return toString(button.value());
+    }
+
 }

@@ -27,6 +27,8 @@ namespace Novella{
         this->title = title;
 
         setIcon(icon);
+
+        ::SetExitKey(::KEY_NULL);
     }
 
     bool Window::hasWindowFlag(WindowFlags flags){

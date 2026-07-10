@@ -178,6 +178,8 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "mouseY", Modules::Input::getMouseY);
         runtime.registerNativeFunction(prefix + "isMouseOver", Modules::Input::isMouseOver);
         runtime.registerNativeFunction(prefix + "isObjectClicked", Modules::Input::isObjectClicked);
+        runtime.registerNativeFunction(prefix + "getButtonPressed", Modules::Input::getButtonPressed);
+        runtime.registerNativeFunction(prefix + "getKeyPressed", Modules::Input::getKeyPressed);
 
     }
 

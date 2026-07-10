@@ -90,7 +90,6 @@ namespace Novella::NScene::Parser{
 
     struct SceneDefinition{
 
-        std::vector<Property> windowProperties;
         std::vector<ResourceDefinition> resources;
         std::vector<ObjectDefinition> objects;
         std::vector<ScriptDefinition> scripts;

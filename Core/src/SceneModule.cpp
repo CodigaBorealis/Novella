@@ -29,4 +29,22 @@ namespace Novella::NScript::Modules::Scene{
 
         context.scene->loadFile(context, context.scene->currentSceneFile());
     }
+
+    std::string name(Runtime::Context& context){
+
+        auto* scene = context.scene->getCurrentScene();
+
+        if(!scene) return "";
+
+        return context.scene->getSceneName(context.scene->currentSceneFile());
+    }
+
+    std::string path(Runtime::Context& context){
+
+        auto* scene = context.scene->getCurrentScene();
+
+        if(!scene) return "";
+
+        return context.scene->currentSceneFile();
+    }
 }

@@ -21,6 +21,51 @@ namespace Novella{
 
     };
 
+    static constexpr std::string toString(Key key){
+
+        if (key >= Key::A && key <= Key::Z){
+
+            static constexpr std::string letters[] = {"A","B","C","D","E","F","G","H","I","J","K","L","M",
+                "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
+            };
+
+            return letters[static_cast<int>(key) - static_cast<int>(Key::A)];
+        }
+
+        switch (key){
+
+            case Key::Num0: return "0";
+            case Key::Num1: return "1";
+            case Key::Num2: return "2";
+            case Key::Num3: return "3";
+            case Key::Num4: return "4";
+            case Key::Num5: return "5";
+            case Key::Num6: return "6";
+            case Key::Num7: return "7";
+            case Key::Num8: return "8";
+            case Key::Num9: return "9";
+            case Key::Escape:   return "ESCAPE";
+            case Key::Space:    return "SPACE";
+            case Key::Enter:    return "ENTER";
+            case Key::Backspace:return "BACKSPACE";
+            case Key::Tab:      return "TAB";
+            case Key::Left:     return "LEFT";
+            case Key::Right:    return "RIGHT";
+            case Key::Up:       return "UP";
+            case Key::Down:     return "DOWN";
+            case Key::LShift:   return "LSHIFT";
+            case Key::RShift:   return "RSHIFT";
+            case Key::LControl: return "LCONTROL";
+            case Key::RControl: return "RCONTROL";
+            case Key::LAlt:     return "LALT";
+            case Key::RAlt:     return "RALT";
+
+            default:
+
+            return "UNKOWN";
+        }
+    }
+
     static constexpr Key getKey(const std::string& stringRepresentation){
 
     if(stringRepresentation.size() == 1 && stringRepresentation[0] >= 'A' && stringRepresentation[0] <= 'Z'){
@@ -100,6 +145,23 @@ namespace Novella{
 
         return  Button::Left;
     }
+
+    static constexpr std::string toString(Button button){
+
+        switch(button){
+
+            case Button::Left: return "LEFT";
+            case Button::Middle: return "MIDDLE";
+            case Button::Right: return "RIGHT";
+            case Button::Side: return "SIDE";
+            case Button::Extra: return "EXTRA";
+            case Button::Forward: return "FORWARD";
+            case Button::Back: return "BACK";
+        }
+
+        return "UNKOWN";
+    }
+
 
     class InputSystem{
 

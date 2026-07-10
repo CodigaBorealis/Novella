@@ -41,6 +41,8 @@ namespace Novella{
 
         void loadFile(NScript::Runtime::Context& context, const std::filesystem::path& src);
 
+        const std::string& getSceneName(const std::filesystem::path& file) const;
+
         Scene* getCurrentScene();
         Scene& createScene();
 

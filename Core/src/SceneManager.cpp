@@ -8,6 +8,7 @@
 #include <optional>
 #include <stdexcept>
 #include <string>
+#include <iostream>
 namespace Novella{
 
     SceneManager::SceneManager(ResourceManager& resourceManager, AudioSystem& audio)
@@ -19,6 +20,19 @@ namespace Novella{
     bool SceneManager::requestedSwap() const{
 
         return swapRequest != std::nullopt;
+    }
+
+    const std::string& SceneManager::getSceneName(const std::filesystem::path& file) const{
+
+        for(const auto& [name,src] : sceneRegistry){
+
+            if(file == src){
+
+                return name;
+            }
+        }
+
+        throw std::runtime_error("Cannot get the name of the scene because it is not registered, did you load it externally?");
     }
 
     void SceneManager::registerScenes(const EngineConfig& config){
@@ -46,6 +60,8 @@ namespace Novella{
 
             if(it == sceneRegistry.end()) throw std::runtime_error("This scene is not registered on the project file: " + name);
             
+            std::cout << "REQUESTED A SWAP";
+
             loadFile(context,  context.projectRoot / it->second);
         }
     }
@@ -61,8 +77,11 @@ namespace Novella{
         sceneWatcher.setSceneFile(src);
 
         NScene::Serialization::Loader::load(context, src);
-
+        
+        std::cout << "REACHED LOAD";
+        
         swapRequest = std::nullopt;
+
     }
 
     Scene* SceneManager::getCurrentScene(){

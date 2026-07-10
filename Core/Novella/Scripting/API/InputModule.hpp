@@ -30,5 +30,8 @@ namespace Novella::NScript::Modules::Input{
     double getMouseX(Runtime::Context& context);
     double getMouseY(Runtime::Context& context);
 
+    std::string getKeyPressed(Runtime::Context& context);
+    std::string getButtonPressed(Runtime::Context& context);
+    
     void setCursorType(Runtime::Context& context, const std::string& string);
 };
