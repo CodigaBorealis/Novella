@@ -8,6 +8,11 @@
 #include <stdexcept>
 namespace Novella::NScript::Runtime{
 
+    Context& Interpreter::runtimeContext(){
+
+        return runtime.context();
+    }
+
     void Interpreter::run(){
 
         if(runtime.isScriptFunction("main")){
@@ -34,7 +39,7 @@ namespace Novella::NScript::Runtime{
 
     void Interpreter::initialize(Engine& engine){
 
-        runtime.initializeContext(engine);
+        runtime.initializeContext(engine, *this);
         runtime.registerCoreFunctions();
     }
 

@@ -46,7 +46,7 @@ namespace Novella{
 
             try{
 
-                sceneManager.loadSceneFromFile(*this, sceneManager.currentSceneFile());
+                sceneManager.loadSceneFromFile(interpreter.runtimeContext(), sceneManager.currentSceneFile());
 
                 lastError.clear();
 
@@ -141,7 +141,7 @@ namespace Novella{
 
     void Engine::loadSceneFromFile(const std::filesystem::path& src){
         
-        sceneManager.loadSceneFromFile(*this, this->root / src);
+        sceneManager.loadSceneFromFile(interpreter.runtimeContext(), interpreter.runtimeContext().projectRoot / src);
         
     }
 

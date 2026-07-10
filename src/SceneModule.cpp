@@ -10,12 +10,7 @@ namespace Novella::NScript::Modules::Scene{
 
         
     }
-
-    void reload(Runtime::Context& context){
-
-        
-    }
-
+    
     double objectCount(Runtime::Context& context){
 
         auto* currentScene = context.scene->getCurrentScene();
@@ -26,12 +21,12 @@ namespace Novella::NScript::Modules::Scene{
         return static_cast<float>(context.scene->getCurrentScene()->objectCount());
     }
 
-    void reset(Runtime::Context& context){
+    void reload(Runtime::Context& context){
 
         auto* scene = context.scene->getCurrentScene();
 
         if(!scene) return;
 
-        //context.scene.reload();
+        context.scene->loadSceneFromFile(context, context.scene->currentSceneFile());
     }
 }

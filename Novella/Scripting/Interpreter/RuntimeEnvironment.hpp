@@ -40,7 +40,7 @@ namespace Novella::NScript::Runtime{
         RuntimeEnvironment() = default;
 
         Context& context();
-        void initializeContext(Engine& engine);
+        void initializeContext(Engine& engine, Interpreter& interpreter);
 
         void registerCoreFunctions();
 

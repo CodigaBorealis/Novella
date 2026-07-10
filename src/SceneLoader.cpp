@@ -13,12 +13,13 @@
 #include "../Novella/Components/UI/Label.hpp"
 #include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
 #include "../Novella/Scripting/Parser/Script.hpp"
+#include "../Novella/Scripting/Interpreter/Interpreter.hpp"
 
 namespace Novella::NScene::Serialization{
 
-    void Loader::load(Engine &engine, const std::filesystem::path& file){
+    void Loader::load(NScript::Runtime::Context& context, const std::filesystem::path& file){
 
-        std::string fileContents = Utils::Filesystem::getContentsFromFile(engine.projectRoot() / file);
+        std::string fileContents = Utils::Filesystem::getContentsFromFile(context.projectRoot / file);
 
         Parser::Lexer lexer(fileContents);
 
@@ -26,53 +27,52 @@ namespace Novella::NScene::Serialization{
 
         Parser::SceneDefinition definition = parser.parse();
 
-        build(engine, definition);
+        build(context, definition);
 
     }
 
-    void Loader::build(Engine& engine, const Parser::SceneDefinition& scene){
+    void Loader::build(NScript::Runtime::Context& context, const Parser::SceneDefinition& scene){
                 
-        engine.audio().clear();
-        //engine.input().clear();
-        engine.resources().clear();
+        context.audio->clear();
+        context.resources->clear();
 
-        engine.scene().clear();
+        context.scene->clear();
 
-        engine.scene().createScene();
+        context.scene->createScene();
         
-        loadResources(engine, scene);
+        loadResources(context, scene);
 
-        engine.audio().reloadResources();
+        context.audio->reloadResources();
 
-        loadObjects(engine, scene);
+        loadObjects(context, scene);
 
-        //engine.script().clear();
+        context.interpreter->clear();
 
-        loadScripts(engine, scene);
+        loadScripts(context, scene);
 
     }
 
-    void Loader::loadResources(Engine& engine, const Parser::SceneDefinition& scene){
+    void Loader::loadResources(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene){
 
         for(const auto& resource : scene.resources){
 
-            const std::filesystem::path relativePath = engine.projectRoot() / resource.path;
+            const std::filesystem::path relativePath = context.projectRoot / resource.path;
 
             if(resource.type == "texture"){
 
-                engine.resources().loadTexture(resource.name, relativePath);
+                context.resources->loadTexture(resource.name, relativePath);
 
             }else if (resource.type == "font"){
 
-                engine.resources().loadFont(resource.name, relativePath);
+                context.resources->loadFont(resource.name, relativePath);
             
             }else if(resource.type == "music"){
 
-                engine.resources().loadAudio(resource.name, relativePath, "music");
+                context.resources->loadAudio(resource.name, relativePath, "music");
 
             }else if(resource.type == "sfx"){
 
-                engine.resources().loadAudio(resource.name, relativePath, "sfx");
+                context.resources->loadAudio(resource.name, relativePath, "sfx");
 
             }else{
 
@@ -81,29 +81,29 @@ namespace Novella::NScene::Serialization{
         }
     }
 
-    void Loader::loadObjects(Engine& engine, const Parser::SceneDefinition& scene){
+    void Loader::loadObjects(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene){
 
         for(const auto& object : scene.objects){
 
             if(object.objectType == UI::Sprite::getStaticTypeID()){
 
-                ComponentBuilder::buildSprite(engine, object);
+                ComponentBuilder::buildSprite(context, object);
 
             }else if(object.objectType == UI::Button::getStaticTypeID()){
 
-                ComponentBuilder::buildButton(engine, object);
+                ComponentBuilder::buildButton(context, object);
 
             }else if(object.objectType == UI::Label::getStaticTypeID()){
 
-                ComponentBuilder::buildLabel(engine, object);
+                ComponentBuilder::buildLabel(context, object);
 
             }
         }
     }
 
-    void Loader::loadScripts(Engine& engine, const Parser::SceneDefinition& scene){
+    void Loader::loadScripts(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene){
 
-        const std::filesystem::path root = engine.projectRoot();
+        const std::filesystem::path root = context.projectRoot;
 
         for(const auto& definition : scene.scripts){
 
@@ -111,7 +111,7 @@ namespace Novella::NScene::Serialization{
             
             auto script = NScript::Runtime::ScriptLoader::load(relativePath);
 
-            engine.script().loadScript(script);
+            context.interpreter->loadScript(script);
         }
     }
 }

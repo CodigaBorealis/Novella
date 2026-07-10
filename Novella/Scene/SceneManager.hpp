@@ -3,9 +3,13 @@
 #include "SceneWatcher.hpp"
 #include <memory>
 #include <stdexcept>
-#include <type_traits>
 #include <utility>
 #include "../Components/Traits/Object.hpp"
+
+namespace Novella::NScript::Runtime{
+
+    struct Context;
+}
 
 namespace Novella{
     
@@ -23,8 +27,9 @@ namespace Novella{
 
         SceneManager(ResourceManager& resourceManager, AudioSystem& audio);
         
-        void swapScene(std::unique_ptr<Scene> scene);
+        void loadSceneFromName(const std::string& name);
 
+        void loadSceneFromFile(NScript::Runtime::Context& context, const std::filesystem::path& src);
         void loadSceneFromFile(Engine& engine, const std::filesystem::path& src);
 
         Scene* getCurrentScene();
@@ -32,8 +37,6 @@ namespace Novella{
 
         bool modifiedSceneFile();
         const std::filesystem::path currentSceneFile() const;
-
-        void swapScene(Scene* scene);
 
         template<typename T, typename ... Args>
         

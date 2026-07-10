@@ -35,7 +35,7 @@ namespace Novella::NScript::Runtime{
         return scriptFunctions.contains(name);
     } 
 
-    void RuntimeEnvironment::initializeContext(Engine& engine){
+    void RuntimeEnvironment::initializeContext(Engine& engine, Interpreter& interpreter){
 
         this->runtimeContext.audio = &engine.audio();
         this->runtimeContext.layout = &engine.layout();
@@ -45,6 +45,7 @@ namespace Novella::NScript::Runtime{
         this->runtimeContext.window = &engine.window();
         this->runtimeContext.projectRoot = engine.projectRoot();
         this->runtimeContext.resources = &engine.resources();
+        this->runtimeContext.interpreter = &interpreter;
     }
 
     void RuntimeEnvironment::registerCoreFunctions(){

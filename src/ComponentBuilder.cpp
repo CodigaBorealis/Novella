@@ -9,7 +9,7 @@
 
 namespace Novella::NScene::Serialization{
 
-    void ComponentBuilder::buildSprite(Engine& engine, const NScene::Parser::ObjectDefinition& definition){
+    void ComponentBuilder::buildSprite(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition){
 
             if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without a name");
             
@@ -27,20 +27,20 @@ namespace Novella::NScene::Serialization{
 
             int renderLayer = getInt(*rlayer);
 
-            engine.scene().addObject<UI::Sprite>(
+            context.scene->addObject<UI::Sprite>(
                 
                 definition.objectName,
-                engine.resources().getTexture(texture),
+                context.resources->getTexture(texture),
 
                 style,
 
                 renderLayer
         );
-        
     }
 
-    void ComponentBuilder::buildButton(Engine &engine, const NScene::Parser::ObjectDefinition& definition){
-            
+
+    void ComponentBuilder::buildButton(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition){
+
         if(definition.objectName.empty()) throw std::runtime_error("Can't create button object without a name");
             
         auto* tex = findProperty(definition, "texture");
@@ -57,11 +57,11 @@ namespace Novella::NScene::Serialization{
 
         int renderLayer = getInt(*rlayer);
 
-        engine.scene().addObject<UI::Button>(
+        context.scene->addObject<UI::Button>(
 
             definition.objectName,
 
-            engine.resources().getTexture(texture),
+            context.resources->getTexture(texture),
 
             constructedLayout,
 
@@ -70,9 +70,10 @@ namespace Novella::NScene::Serialization{
         );
     }
 
-    void ComponentBuilder::buildLabel(Engine &engine, const NScene::Parser::ObjectDefinition &definition){
-        
-        if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without a name");
+
+    void ComponentBuilder::buildLabel(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition){
+
+      if(definition.objectName.empty()) throw std::runtime_error("Can't create background object without a name");
             
         auto* fnt = findProperty(definition, "font");
 
@@ -100,11 +101,11 @@ namespace Novella::NScene::Serialization{
 
         int renderLayer = getInt(*rlayer);
 
-        engine.scene().addObject<UI::Label>(
+        context.scene->addObject<UI::Label>(
 
             definition.objectName,
             
-            engine.resources().getFont(font),
+            context.resources->getFont(font),
             
             size,
             

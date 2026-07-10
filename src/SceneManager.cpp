@@ -14,9 +14,20 @@ namespace Novella{
         audioSystem(audio)
         {}
 
-    void SceneManager::swapScene(std::unique_ptr<Scene> scene){
+    void SceneManager::loadSceneFromName(const std::string& name){
 
-        currentScene = std::move(scene);
+
+    }
+        
+    void SceneManager::loadSceneFromFile(NScript::Runtime::Context& context, const std::filesystem::path& src){
+
+        const std::string extension = src.extension().string();
+        
+        if(extension != ".nsc") throw std::runtime_error("Could not load the scene: expected a '.nsc' file got '" + extension + "'");
+
+        sceneWatcher.setSceneFile(src);
+
+        NScene::Serialization::Loader::load(context, src);
     }
 
     Scene* SceneManager::getCurrentScene(){
@@ -44,17 +55,5 @@ namespace Novella{
     const std::filesystem::path SceneManager::currentSceneFile() const{
 
         return sceneWatcher.getSceneFile();
-    }
-
-    void SceneManager::loadSceneFromFile(Engine& engine,const std::filesystem::path& src){
-        
-        const std::string extension = src.extension().string();
-        
-        if(extension != ".nsc") throw std::runtime_error("Could not load the scene: expected a '.nsc' file got '" + extension + "'");
-
-        sceneWatcher.setSceneFile(src);
-
-        NScene::Serialization::Loader::load(engine, src);
-
     }
 }

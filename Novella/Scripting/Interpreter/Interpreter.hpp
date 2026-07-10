@@ -2,6 +2,7 @@
 #include <variant>
 #include <vector>
 #include "FunctionExecutor.hpp"
+#include "RuntimeContext.hpp"
 #include "RuntimeEnvironment.hpp"
 #include "ExpressionEvaluator.hpp"
 #include "../Parser/Expression.hpp"
@@ -61,8 +62,10 @@ namespace Novella::NScript::Runtime{
 
         void run();
         
+        Context& runtimeContext();
+
         private:
-    
+            
         RuntimeEnvironment runtime;
         ExpressionEvaluator expressionEvaluator;
         StatementEvaluator statementEvaluator;

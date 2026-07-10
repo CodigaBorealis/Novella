@@ -20,17 +20,22 @@ namespace Novella {
     class Engine;
 };
 
+namespace Novella::NScript::Runtime{
+
+    struct Context;
+}
+
 namespace Novella::NScene::Serialization{
 
     class ComponentBuilder{
 
         public:
     
-        static void buildSprite(Engine& engine, const NScene::Parser::ObjectDefinition& definition);
+        static void buildSprite(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition);
 
-        static void buildButton(Engine& engine, const NScene::Parser::ObjectDefinition& definition);
+        static void buildButton(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition);
 
-        static void buildLabel(Engine& engine, const NScene::Parser::ObjectDefinition& definition);
+        static void buildLabel(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition);
 
         private:
 
