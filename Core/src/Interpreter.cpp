@@ -19,9 +19,7 @@ namespace Novella::NScript::Runtime{
 
         if(runtime.isScriptFunction("main")){
 
-            const auto& mainFunction = runtime.getFunction("main");
-
-            statementEvaluator.execute(mainFunction.body);
+            functionExecutor.call("main", {});
 
         }else{
 

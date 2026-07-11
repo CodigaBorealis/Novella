@@ -231,6 +231,7 @@ namespace Novella::NScript::Runtime{
             if(unaryExpression.operation == Parser::Token::Type::Not) return applyNot(value);
 
             return value;
+
         }
         
         throw std::runtime_error("Invalid unary operand type" + std::to_string(static_cast<int>(unaryExpression.operation)));
