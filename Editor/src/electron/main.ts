@@ -2,29 +2,42 @@ import { app, BrowserWindow, session } from 'electron';
 import path from 'path';
 import { isDev } from './util.js';
 import { fileURLToPath } from 'url';
+import { registerIpcHandlers } from './ipc.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.whenReady().then(() => {
+main();
 
-    isolate();
+function main(): void {
 
-    createWindow();
+    registerAppEvents();
+}
 
-})
+function registerAppEvents(): void {
 
-app.on("window-all-closed", () => {
+    app.whenReady().then(() => {
 
-    if (process.platform !== "darwin") {
+        configureSecurity();
+        registerIpcHandlers();
+        createWindow();
 
-        app.quit();
-    }
-})
+    })
+
+    app.on("window-all-closed", () => {
+
+        if (process.platform !== "darwin") {
+
+            app.quit();
+        }
+    })
+}
 
 function createWindow(): void {
 
     const mainWindow = new BrowserWindow({
+
+        frame: false,
 
         webPreferences: {
 
@@ -32,7 +45,7 @@ function createWindow(): void {
 
             nodeIntegration: false,
             contextIsolation: true,
-            sandbox: true
+            sandbox: true,
         }
     })
 
@@ -46,7 +59,7 @@ function createWindow(): void {
     }
 }
 
-function isolate(): void {
+function configureSecurity(): void {
 
     app.on("web-contents-created", (_, contents) => {
 
@@ -83,7 +96,7 @@ function isolate(): void {
 
             const url = new URL(details.url);
 
-            if (url.hostname == "localhost" && isDev()) {
+            if (url.hostname === "localhost" && isDev()) {
 
                 callback({ cancel: false });
 
