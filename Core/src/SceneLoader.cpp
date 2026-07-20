@@ -8,7 +8,7 @@
 #include "../Novella/Scene/Serialization/ComponentBuilder.hpp"
 #include "../Novella/Components/UI/Button.hpp"
 #include "../Novella/Components/UI/Sprite.hpp"
-#include "../Novella/Components/UI/DialogueBox.hpp"
+#include "../Novella/Components/Gameplay/DialogueBox.hpp"
 #include "../Novella/Components/UI/Label.hpp"
 #include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
 #include "../Novella/Scripting/Parser/Script.hpp"

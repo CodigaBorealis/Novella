@@ -1,101 +1,167 @@
 # Novella
 ## THIS PROJECT IS STILL UNDER ACTIVE DEVELOPMENT
 
-> A work-in-progress visual novel engine focused on declarative scenes and a 
-> simple and safe scripting language
+> Novella is a visual novel engine based on self-contained declarative scenes and a simple sandboxed scripting language
 
 <p align="center">
   <img src="assets/demo.gif" alt="Novella demo" width="800">
 </p>
 
-## Implemented
-   - Label and Sprite components
-   - Resource loading
-   - Rendering and audio
-   - Parser for both the scene and scripting language
+## Features
+   - Declarative scene format
+   - Built-in scripting language
+   - Resource management
+   - Component-based development framework
+   - Audio playback
+   - Layered rendering
 
 ## Working on
 
-   - Scripting interpreter
-   - Engine API
-   - Runtime Environment
-   - Safe handles to manipulate resources
    - Saving/Loading
-
-> Scenes describe UI and resources, while Scripts define behaviour trough a simple engine API
+   - Adding more components   
+   - Editor
 ## Examples
+> Projects define window properties and the source of the scenes, Scenes describe UI layout, resources and attached scripts, Scripts define behaviour through a simple engine API
 
-### Making a scene
-
-```nscene
+### Creating a project
+>A project file defines the application window and the available scenes
+```nproject
 Window{
-   
-    width = 1280
-    height = 720
-    title = "My VN"
+
+    width = 1920
+    height = 1190
+    title = "My visual novel"    
+    targetFPS = 60
+    icon = "Resources/icon.png"
+
+    Flags{
+
+        resizable
+        undecorated
+        
+    }
 }
 
-Resources{
+Scenes{
 
-    texture background = "bg.png"
-    font ui = "font.ttf"
+    mainMenu = "Scenes/MainMenu.nsc"
+    hallway = "Scenes/Hallway.nsc"
+
+}
+```
+
+### Making a scene
+>Scene files declare resources, Components, and attached scripts
+```nscene
+Resources {
+
+
+    texture background = "Resources/mainMenu.png"
+    texture button = "Resources/button.png"
+    music bgm = "Resources/bgm.ogg"
 }
 
 Components{
 
-   Sprite bg{
+    Sprite bg {
+
         texture = background
-   }
+        renderLayer = -1200
 
-   Label title{
+        Style {
+            anchor = TopLeft
+            widthMode = FitWidth
+            heightMode = FitHeight
+        }
+    }
 
-      font = ui
-      size = 40 #Avoid negative values
-      text = "did you know that sometimes you may or you may not"
+    Button play{
 
-      renderLayer = -10
+        texture = button
+        renderLayer = 0
 
-      layout{
-
+        Style {
             anchor = Center
-            offset = (1,2)
+            widthMode = Fixed
+            heightMode = Fixed
+            width = 400
+            height = 200
+            offset = (0,-300)
+        }
+    }
+
+    Button options{
+
+        texture = button
+        renderLayer = 0
+
+        Style {
+            anchor = Center
+            widthMode = Fixed
+            heightMode = Fixed
+            width = 400
+            height = 200
+            offset = (0,0)
+        }
+    }
+
+    Button close{
+
+        texture = button
+        renderLayer = 0
+
+        Style {
+            anchor = Center
+            widthMode = Fixed
+            heightMode = Fixed
+            width = 400
+            height = 200
+            offset = (0,300)
         }
     }
 }
+
+Scripts{
+
+    mainMenuLogic = "Scripts/mainMenuLogic.nvs"
+}
 ```
 
-### Calling the components in a script(intended API)
+### Calling the components in the main menu
+> Scripts contain gameplay logic and interact with engine objects through the Novella API
 ```nscript
-module Main:
+var playButton = Object.get("play");
+var optionsButton = Object.get("options");
+var closeButton = Object.get("close");
 
-   fn main():
+fn handleButtons():
 
-      var button = getButton("play");
+    var mouseButton = Input.getButtonPressed();
 
-      onClick(button, INPUT.MOUSE.LEFT, startGame());
+    if Input.isObjectClicked(playButton, mouseButton) then
 
-   endFunction
+        Scene.load("hallway");  
+    endIf
 
-   fn startGame():
+    if Input.isObjectClicked(closeButton, mouseButton) then
 
-      showMessage("Starting game!");
+        Window.close();
+    endIf
+endFn
+#script entrypoint
+fn main():
 
-   endFunction;
+    handleButtons();
 
-endModule
+endFn
 
 ```
 ## Documentation
 
-- Scene declaration
-- Components
-- Scripting language
-- Engine API
-
 see the '/docs' directory
 ## Try it out
 
-**Platform Support:** Tested on Arch Linux. Other Linux distributions may work are currently untested. Windows suppport is planned in the future.
+**Platform Support:** Tested on Arch Linux. Other Linux distributions may also work, but they have not yet been tested. Windows support is planned in the future.
 
 1. **Clone the repository:**
 ```bash
@@ -108,6 +174,7 @@ sudo pacman -S raylib
 ```
 3. **Build the project:**
 ```bash
+cd Core
 mkdir build && cd build
 cmake ..
 make
@@ -119,7 +186,7 @@ make
 
 Novella wouldn't be possible without:
 
-- [Raylib] - The Heart of the engine, manages all low level operations like input handling, window rendering and OpenGL drawing
+- [Raylib] - window management, rendering, audio, input, and graphics abstraction
 
 ## License
 

@@ -11,7 +11,7 @@ int main(){
 
     try{
 
-        engine.loadSceneFromName("mainMenu");
+        engine.loadScene("mainMenu");
         
         engine.run();
 

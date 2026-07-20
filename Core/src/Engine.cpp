@@ -142,7 +142,7 @@ namespace Novella{
             windowRenderer.endFrame();
         }
 
-    void Engine::loadSceneFromName(const std::string& name){
+    void Engine::loadScene(const std::string& name){
 
         sceneManager.requestSwap(name);
     }
