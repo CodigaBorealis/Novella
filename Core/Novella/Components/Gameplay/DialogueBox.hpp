@@ -1,31 +1,35 @@
 #pragma once
 #include "../Traits/Object.hpp"
-#include "../Primitives/Texture.hpp"
-#include "../Primitives/Font.hpp"
 #include <cstddef>
-#include <memory>
 #include <string>
 #include <vector>
 #include "../UI/Sprite.hpp"
 #include "../UI/Label.hpp"
+#include <optional>
+
+namespace Novella{
+
+    class ResourceManager;
+}
 
 namespace Novella::Gameplay{
 
-    class DialogueBox : public Traits::RegisteredObject<DialogueBox>{
+    class DialogueBox : public Traits::Renderable, public Traits::Layoutable, public Traits::RegisteredObject<DialogueBox>{
 
-        public:
+        public: 
         
+        DialogueBox() = default;
+
         struct DialogueLine{
             
             std::string backgroundID;
             std::string speaker;
+            std::string speakerFontID;
             std::string text;
+            std::string textFontID;
             std::string portraitID;
             std::string voiceClipID;
-            std::string fontID;
         };
-
-        DialogueBox();
         
         void setDialogue(size_t index);
         void setDialogueLines(std::vector<DialogueLine> lines);
@@ -36,21 +40,22 @@ namespace Novella::Gameplay{
         void clear();
         void reset();
 
+        void draw(Renderer& renderer) override;
+        void updateLayout(LayoutSystem& layoutSystem, const Vector2i& parentSize) override;
+
         const DialogueLine& currentLine() const;
 
         private:    
 
-        void setBackground(std::shared_ptr<Texture> texture);
-        void setPortrait(std::shared_ptr<Texture> texture);
-        void setSpeaker(const std::string& name);
-        void setFont(std::shared_ptr<Font> font);
+        void applyCurrentDialogue(const ResourceManager& resourceManger);
 
         size_t currentIndex = 0;
         std::vector<DialogueLine> lines;
 
-        UI::Sprite portrait;
-        UI::Sprite background;
-        UI::Label speaker;
-        UI::Label text;
+        std::optional<UI::Sprite> portrait;
+        std::optional<UI::Sprite> background;
+        std::optional<UI::Label> speaker;
+        std::optional<UI::Label> text;
+        std::optional<std::string> voiceClip;
     };
 }

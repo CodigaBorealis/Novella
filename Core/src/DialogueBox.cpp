@@ -1,24 +1,43 @@
 #include "../Novella/Components/Gameplay/DialogueBox.hpp"
 #include <stdexcept>
 #include <string>
+#include "../Novella/Systems/Resources/ResourceManager.hpp"
 
 namespace Novella::Gameplay{
-
-    void DialogueBox::setBackground(std::shared_ptr<Texture> texture){
-
-        background.setTexture(texture);
-    }
     
-    void DialogueBox::setPortrait(std::shared_ptr<Texture> texture){
+    void DialogueBox::applyCurrentDialogue(const ResourceManager& resourceManger){
 
-        portrait.setTexture(texture);
-    }
-    
-    void DialogueBox::setSpeaker(const std::string& name){
+        if(!lines[currentIndex].backgroundID.empty() && background.has_value()){
 
-        speaker.setText(name);
+            background->setTexture(resourceManger.getTexture(lines[currentIndex].backgroundID));
+        }
+
+        if(!lines[currentIndex].textFontID.empty() && text.has_value()){
+
+            text->setFont(resourceManger.getFont(lines[currentIndex].textFontID));
+        }   
+
+        if(!lines[currentIndex].speakerFontID.empty() && text.has_value()){
+
+            speaker->setFont(resourceManger.getFont(lines[currentIndex].speakerFontID));
+        }   
+
+        if(!lines[currentIndex].portraitID.empty() && text.has_value()){
+
+            portrait->setTexture(resourceManger.getTexture(lines[currentIndex].portraitID));
+        }
+
+        if(!lines[currentIndex].voiceClipID.empty()){
+
+            voiceClip = lines[currentIndex].voiceClipID;
+        }
+
+        if(!lines[currentIndex].speaker.empty()){
+
+            
+        }
     }
-    
+
     void DialogueBox::setDialogue(size_t index){
 
         if(index >= lines.size()) throw std::runtime_error("Cannot set dialogue to line '" + std::to_string(index) + "' because lines only has size '" + std::to_string(lines.size()) + "'");
@@ -27,13 +46,8 @@ namespace Novella::Gameplay{
 
         const auto& line = lines[index];
         
-        speaker.setText(line.speaker);
-        text.setText(lines[index].text);
-    }
-    
-    void DialogueBox::setFont(std::shared_ptr<Font> font){
-
-        text.setFont(font);
+        speaker->setText(line.speaker);
+        text->setText(lines[index].text);
     }
     
     void DialogueBox::setDialogueLines(std::vector<DialogueLine> lines){
@@ -49,7 +63,7 @@ namespace Novella::Gameplay{
             return;
         }
 
-        text.setText(this->lines.front().text);
+        text->setText(this->lines.front().text);
     }
     
     void DialogueBox::nextLine(){
@@ -78,7 +92,7 @@ namespace Novella::Gameplay{
     
     void DialogueBox::clear(){
 
-        text.setText("");
+        text->setText("");
     }
     
     void DialogueBox::reset(){

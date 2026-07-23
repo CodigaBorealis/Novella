@@ -1,5 +1,6 @@
 #pragma once
 #include <cstddef>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <variant>
@@ -72,7 +73,7 @@ namespace Novella::NScene::Parser{
         std::string objectName;
         std::vector<Property> properties;
         std::vector<ObjectDefinition> children;
-
+        std::optional<std::string> role;
     };
         
     struct ResourceDefinition{

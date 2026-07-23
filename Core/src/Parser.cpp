@@ -72,7 +72,7 @@ namespace Novella::NScene::Parser{
         SceneDefinition scene{};
 
         while(current().type != Token::Type::EndOfFile){
-
+        
         if(current().text == "Resources"){
 
             registerSeenSection(current().text);
@@ -146,6 +146,15 @@ namespace Novella::NScene::Parser{
         if(current().type == Token::Type::Identifier){
 
             object.objectName = current().text;
+
+            expect(Token::Type::Identifier);
+        }
+
+        if(current().type == Token::Type::Colon){
+            
+            consume();
+
+            object.role = current().text;
 
             expect(Token::Type::Identifier);
         }

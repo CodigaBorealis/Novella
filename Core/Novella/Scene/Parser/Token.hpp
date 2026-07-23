@@ -23,7 +23,8 @@ namespace Novella::NScene::Parser{
 
             Comma,
         
-            EndOfFile
+            EndOfFile,
+            Colon
         };
 
         Token(Type type, const std::string& text)

@@ -55,6 +55,12 @@ namespace Novella::NScene::Parser{
 
                 return {Token::Type::Comma, ","};
 
+            case ':':
+
+                advance();
+
+                return {Token::Type::Colon, ":"};
+
             case '"':
 
                 return string();

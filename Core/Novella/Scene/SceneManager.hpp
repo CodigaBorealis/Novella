@@ -6,7 +6,6 @@
 #include <stdexcept>
 #include <unordered_map>
 #include <utility>
-#include <vector>
 #include "../Components/Traits/Object.hpp"
 #include "../Project/EngineConfig.hpp"
 #include "Serialization/SceneLoader.hpp"
