@@ -9,6 +9,7 @@
 #include <vector>
 #include "../Components/Traits/Object.hpp"
 #include "../Project/EngineConfig.hpp"
+#include "Serialization/SceneLoader.hpp"
 
 namespace Novella::NScript::Runtime{
 
@@ -55,7 +56,7 @@ namespace Novella{
 
             if(!currentScene) throw std::runtime_error("SceneManager::addObject: No active scene");
 
-            return currentScene->createObject<T>(name, std::forward<Args>(args)...);
+            return currentScene->createObjectAndGetHandle<T>(name, std::forward<Args>(args)...);
         }
 
         void clear();
@@ -64,6 +65,7 @@ namespace Novella{
 
         std::unique_ptr<Scene> currentScene = nullptr;
         SceneWatcher sceneWatcher;
+        NScene::Serialization::Loader loader;
         ResourceManager& resourceManager;
         AudioSystem& audioSystem;
 

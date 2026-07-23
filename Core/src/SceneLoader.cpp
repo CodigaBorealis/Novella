@@ -5,11 +5,7 @@
 #include "../Novella/Scene/Parser/Parser.hpp"
 #include <filesystem>
 #include <stdexcept>
-#include "../Novella/Scene/Serialization/ComponentBuilder.hpp"
-#include "../Novella/Components/UI/Button.hpp"
-#include "../Novella/Components/UI/Sprite.hpp"
-#include "../Novella/Components/Gameplay/DialogueBox.hpp"
-#include "../Novella/Components/UI/Label.hpp"
+#include "../Novella/Scene/Serialization/ComponentFactory.hpp"
 #include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
 #include "../Novella/Scripting/Parser/Script.hpp"
 #include "../Novella/Scripting/Interpreter/Interpreter.hpp"
@@ -87,19 +83,7 @@ namespace Novella::NScene::Serialization{
 
         for(const auto& object : scene.objects){
 
-            if(object.objectType == UI::Sprite::getStaticTypeID()){
-
-                ComponentBuilder::buildSprite(context, object);
-
-            }else if(object.objectType == UI::Button::getStaticTypeID()){
-
-                ComponentBuilder::buildButton(context, object);
-
-            }else if(object.objectType == UI::Label::getStaticTypeID()){
-
-                ComponentBuilder::buildLabel(context, object);
-
-            }
+            factory.build(object.objectType, context, object);
         }
     }
 

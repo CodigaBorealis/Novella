@@ -9,13 +9,8 @@ namespace Novella::NScript::Modules::Object{
         
         auto* currentScene = context.scene->getCurrentScene();
 
-        if(!currentScene){
-
-            Debug::print(context, "NovellaScript Runtime Warning: No active scene to fetch '" + name + "'");
-
-            return{};
-        }
-
+        if(!currentScene) return{};
+    
         Handle handle = currentScene->getObjectHandle(name);
 
         if(handle.generation == 0){
@@ -52,13 +47,8 @@ namespace Novella::NScript::Modules::Object{
 
         auto name = currentScene->findName(handle);
 
-        if(!name){
-
-            Debug::print(context, "NovellaScript Runtime Warning: Object has already been destroyed or does not exist");
-
-            return "";
-        }
-
+        if(!name) return "";
+        
         return name.value();
     }
 }

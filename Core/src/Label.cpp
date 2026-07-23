@@ -10,7 +10,7 @@ namespace Novella::UI{
         setText(text);
     }
 
-    Label::Label(std::shared_ptr<Font> font, int size, const std::string& text, const Style& style, int renderLayer){
+    Label::Label(std::shared_ptr<Font> font, const std::string& text, int size, const Style& style, int renderLayer){
 
         setFont(font);
         setFontSize(size);

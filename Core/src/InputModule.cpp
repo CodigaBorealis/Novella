@@ -2,12 +2,12 @@
 #include "../Novella/Scripting/API/DebugModule.hpp"
 #include "../Novella/Systems/Input/InputSystem.hpp"
 #include "../Novella/Components/Traits/Layoutable.hpp"
+#include "../Novella/Components/Traits/Clickable.hpp"
 #include "../Novella/Windowing/Window.hpp"
 #include "../Novella/Scene/SceneManager.hpp"
 #include "../Novella/Utils/String.hpp"
 #include <stdexcept>
 #include <string>
-
 namespace Novella::NScript::Modules::Input{
 
     void setCursorVisible(Runtime::Context& context, bool val){
@@ -119,41 +119,31 @@ namespace Novella::NScript::Modules::Input{
          
     bool isMouseOver(Runtime::Context& context, Handle handle){
 
-        if(handle.generation == 0){
-
-            //Debug::print(context, "NovellaScript Runtime Warning: Input.isMouseOver() cannot be used with an invalid object");
-
-            return false;
-        }
-
+        if(handle.generation == 0) return false;
+        
         auto* currentScene = context.scene->getCurrentScene();
 
         if(!currentScene){
 
-            Debug::print(context, "NovellaScript Runtime Warning: Input.isMouseOver() requires a scene to exist in order to query");
+            Debug::print(context, "NovellaScript : Input.isMouseOver() requires a scene to exist in order to query");
 
             return false;
         }
+        
+        auto* clickable = currentScene->getInterface<Traits::Clickable>(handle);
+
+        if(!clickable) return false;
 
         auto* layoutable = currentScene->getInterface<Traits::Layoutable>(handle);
         
-        if(!layoutable){
+        if(!layoutable) return false;
 
-            Debug::print(context, "NovellaScript Runtime Warning: Input.isMouseOver() cannot be used on a deleted object");
+        Vector2f rawMouse = {InputSystem::getMouseX(), InputSystem::getMouseY()};
+        Vector2f virtualMouse = context.renderer->toVirtualCoordinates(rawMouse);
+        
+        const auto& rect = layoutable->getComputedRectangle();
 
-            return false;
-        }
-
-        float mouseX = InputSystem::getMouseX();
-        float mouseY = InputSystem::getMouseY();
-
-        float rectX = layoutable->getComputedRectangle().x;
-        float rectY = layoutable->getComputedRectangle().y;
-
-        float rectWidth = layoutable->getComputedRectangle().width;
-        float rectHeight = layoutable->getComputedRectangle().height;
-
-        return (mouseX >= rectX && mouseX <= rectX + rectWidth && mouseY >= rectY && mouseY <= rectY + rectHeight);
+        return (virtualMouse.x >= rect.x && virtualMouse.x <= rect.x + rect.width && virtualMouse.y >= rect.y && virtualMouse.y <= rect.y + rect.height);
     }
 
     bool isObjectClicked(Runtime::Context& context, Handle handle, const std::string& button){

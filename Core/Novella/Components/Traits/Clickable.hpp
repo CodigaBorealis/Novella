@@ -1,5 +1,4 @@
 #pragma once
-#include "../../Core/Math/Vector2x.hpp"
 
 namespace Novella::Traits{
 
@@ -9,7 +8,7 @@ namespace Novella::Traits{
         
         bool acceptsMouseInput() const{return acceptInput;}
         void setAcceptInput(bool val){acceptInput = val;}
-        private:
+        protected:
 
         bool acceptInput = true;
     };

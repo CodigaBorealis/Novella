@@ -25,8 +25,6 @@ namespace Novella::NScript::Modules::Layout{
 
             if(objectName.empty()) objectName = "NULL";
 
-            Debug::print(context, "NovellaScript Runtime Warning: Object '" + objectName + "' does not support Layout.setWidth()");
-
             return;
         }
 
@@ -59,8 +57,6 @@ namespace Novella::NScript::Modules::Layout{
             std::string objectName = Modules::Object::getName(context, handle);
 
             if(objectName.empty()) objectName = "NULL";
-
-            Debug::print(context, "NovellaScript Runtime Warning: Object '" + objectName + "' does not support Layout.setWidth()");
 
             return;
         }
@@ -103,8 +99,6 @@ namespace Novella::NScript::Modules::Layout{
 
             if(objectName.empty()) objectName = "NULL";
 
-            Debug::print(context, "NovellaScript Runtime Warning: Object '" + objectName + "' does not support Layout.getWidth()");
-
             return 0;
         }
 
@@ -126,8 +120,6 @@ namespace Novella::NScript::Modules::Layout{
             std::string objectName = Modules::Object::getName(context, handle);
 
             if(objectName.empty()) objectName = "NULL";
-
-            Debug::print(context, "NovellaScript Runtime Warning: Object '" + objectName + "' does not support Layout.getWidth()");
 
             return 0;
         }

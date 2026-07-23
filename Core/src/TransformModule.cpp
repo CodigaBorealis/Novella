@@ -62,8 +62,6 @@ namespace Novella::NScript::Modules::Transform{
 
             if(objectName.empty()) objectName = "NULL";
 
-            Debug::print(context, "NovellaScript Runtime Warning: Object '" + objectName + "' does not support Transform.move()");
-
             return;
         }
 

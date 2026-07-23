@@ -26,7 +26,7 @@ namespace Novella{
 
             if(auto* layoutable = dynamic_cast<Traits::Layoutable*>(&object)){
 
-                layoutable->setComputedRectangle(compute(layoutable->getStyle(), windowSize));
+                layoutable->updateLayout(*this, windowSize);
             }
         });
     }

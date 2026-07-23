@@ -26,8 +26,6 @@ namespace Novella::NScript::Modules::Sprite{
 
             if(objectName.empty()) objectName = "NULL";
 
-            Debug::print(context, "NovellaScript Runtime Warning: Object '" + objectName + "' does not support Sprite.setTexture()");
-
             return;
         }
 
@@ -36,8 +34,6 @@ namespace Novella::NScript::Modules::Sprite{
         if(!texture){
 
             std::string objectName = Modules::Object::getName(context, handle);
-
-            Debug::print(context, "NovellaScript Runtime Warning: Sprite.setTexture() could not change the texture of '" + objectName + "' because '" + name +"' is not a registered texture");
 
             return;
         }
@@ -60,8 +56,6 @@ namespace Novella::NScript::Modules::Sprite{
             std::string objectName = Modules::Object::getName(context, handle);
 
             if(objectName.empty()) objectName = "NULL";
-
-            Debug::print(context, "NovellaScript Runtime Warning: Object '" + objectName + "' does not support Sprite.setColor()");
 
             return;
         }

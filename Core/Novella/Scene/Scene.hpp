@@ -6,6 +6,7 @@
 #include <type_traits>
 #include <memory>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 #include "../Components/Traits/Object.hpp"
 #include "Handle.hpp"
@@ -38,7 +39,7 @@ namespace Novella{
 
         template <std::derived_from<Traits::Object> T, typename... Args>
 
-        Handle createObject(const std::string& name, Args&&... args){
+        Handle createObjectAndGetHandle(const std::string& name, Args&&... args){
 
             static_assert(!std::is_abstract_v<T>, "Scene::createObject: Cannot instantiate abstract class");
 
@@ -75,6 +76,7 @@ namespace Novella{
         }
 
         Handle addObject(std::unique_ptr<Traits::Object> obj, const std::string& name);
+        
         void removeObject(const Handle& id);
 
         const Handle getObjectHandle(const std::string& name) const;

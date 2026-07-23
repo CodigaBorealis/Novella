@@ -10,10 +10,10 @@ namespace Novella::UI{
 
         Sprite::Sprite(std::shared_ptr<Texture> texture, const Style& style, int renderLayer){
 
-                setTexture(texture);
-                setRenderLayer(renderLayer);
-                setStyle(style);
-            }
+            setTexture(texture);
+            setRenderLayer(renderLayer);
+            setStyle(style);
+        }
 
         void Sprite::draw(Renderer& renderer){
             

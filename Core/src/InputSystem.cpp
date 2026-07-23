@@ -12,6 +12,13 @@ namespace Novella{
 
         return ::GetMouseY();
     }
+    
+    Vector2f InputSystem::getVirtualMousePosition(const Renderer& renderer){
+
+        Vector2f rawMouse = ::GetMousePosition();
+
+        return renderer.toVirtualCoordinates(rawMouse);
+    }
 
     void InputSystem::setMousePosition(const Vector2f& position){
 

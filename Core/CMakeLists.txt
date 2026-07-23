@@ -45,7 +45,8 @@ add_executable(Novella
     src/String.cpp
 
     src/SceneLoader.cpp
-    src/ComponentBuilder.cpp
+    src/PropertyExtractor.cpp
+    src/ComponentFactory.cpp
 
     src/Lexer.cpp
     src/Parser.cpp

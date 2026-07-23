@@ -5,7 +5,6 @@
 #include <optional>
 #include <stdexcept>
 #include <string>
-
 namespace Novella{
 
     Handle Scene::addObject(std::unique_ptr<Traits::Object> obj, const std::string& name){

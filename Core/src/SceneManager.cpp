@@ -8,7 +8,6 @@
 #include <optional>
 #include <stdexcept>
 #include <string>
-#include <iostream>
 namespace Novella{
 
     SceneManager::SceneManager(ResourceManager& resourceManager, AudioSystem& audio)
@@ -60,8 +59,6 @@ namespace Novella{
 
             if(it == sceneRegistry.end()) throw std::runtime_error("This scene is not registered on the project file: " + name);
             
-            std::cout << "REQUESTED A SWAP";
-
             loadFile(context,  context.projectRoot / it->second);
         }
     }
@@ -76,10 +73,8 @@ namespace Novella{
 
         sceneWatcher.setSceneFile(src);
 
-        NScene::Serialization::Loader::load(context, src);
-        
-        std::cout << "REACHED LOAD";
-        
+        loader.load(context, src);
+                
         swapRequest = std::nullopt;
 
     }

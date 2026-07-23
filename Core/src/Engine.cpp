@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include "../Novella/Project/Project.hpp"
 #include "../Novella/Utils/FileSystem.hpp"
-
 namespace Novella{
 
     std::unique_ptr<Engine> Engine::singleInstance = nullptr;

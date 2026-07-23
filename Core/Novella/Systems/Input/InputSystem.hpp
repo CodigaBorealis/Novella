@@ -3,7 +3,7 @@
 #include <optional>
 #include <raylib.h>
 #include <string>
-
+#include "../Renderer/Renderer.hpp"
 namespace Novella{
 
     enum class Button{
@@ -176,6 +176,8 @@ namespace Novella{
     InputSystem(InputSystem&&) = delete;
     
     InputSystem& operator=(InputSystem&&) = delete;
+
+    static Vector2f getVirtualMousePosition(const Renderer& renderer);
 
     static Key getKeyPressed();
     static char getCharPressed();

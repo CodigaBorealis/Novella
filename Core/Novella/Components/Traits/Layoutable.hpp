@@ -1,30 +1,38 @@
 #pragma once
+#include "../../Systems/Layout/LayoutSystem.hpp"
 #include "../../Systems/Layout/Style.hpp"
 #include "../../Core/Math/Rectangle.hpp"
 
 namespace Novella::Traits{
 
     struct Layoutable{
+        
+        virtual ~Layoutable() = default;
 
-            void setStyle(const Style& style){
+        virtual void updateLayout(LayoutSystem& layoutSystem, const Vector2i& parentSize){
 
-                this->style = style;
-            }
+            computedRectangle = layoutSystem.compute(getStyle(), parentSize);
+        }
 
-            const Style& getStyle() const{
+        void setStyle(const Style& style){
 
-                return this->style;
-            }
+            this->style = style;
+        }
 
-            void setComputedRectangle(const Rectangle& computedRectangle){
+        const Style& getStyle() const{
 
-                this->computedRectangle = computedRectangle;
-            }
+            return this->style;
+        }
 
-            const Rectangle& getComputedRectangle() const{
+        void setComputedRectangle(const Rectangle& computedRectangle){
 
-                return this->computedRectangle;
-            }
+            this->computedRectangle = computedRectangle;
+        }
+
+        const Rectangle& getComputedRectangle() const{
+
+            return this->computedRectangle;
+        }
             
         private:
 

@@ -22,4 +22,8 @@ int main(){
     
     return 0;
 } 
-
+//TODO:
+//Save/load: moderately annoying
+//Generic Builder for components: easy enough
+//Add more components: relies on the feature above
+//Editor: nightmare fuel

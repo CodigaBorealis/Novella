@@ -1,6 +1,7 @@
 #pragma once
 #include <filesystem>
 #include "../Parser/SceneDefinition.hpp"
+#include "ComponentFactory.hpp"
 
 namespace Novella{
 
@@ -18,15 +19,17 @@ namespace Novella::NScene::Serialization{
 
         public:
 
-        static void load(NScript::Runtime::Context& context, const std::filesystem::path& file);
+        void load(NScript::Runtime::Context& context, const std::filesystem::path& file);
 
         private:
         
-        static void build(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
+        ComponentFactory factory;
 
-        static void loadResources(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
-        static void loadObjects(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
-        static void loadScripts(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
+        void build(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
+
+        void loadResources(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
+        void loadObjects(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
+        void loadScripts(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
     };
 
 }
