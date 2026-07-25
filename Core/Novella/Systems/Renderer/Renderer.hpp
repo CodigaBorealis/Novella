@@ -7,7 +7,7 @@
 namespace Novella::Traits{
 
     struct Renderable;
-
+    struct Object;
 }
 
 namespace Novella{
@@ -50,6 +50,8 @@ namespace Novella{
         Vector2f toVirtualCoordinates(const Vector2f& mousePosition) const;
 
         private:
+
+        void collectRenderables(Traits::Object& object, std::vector<Traits::Renderable*>& cache);
 
         Color backgroundColor{0,0,0,0};
 

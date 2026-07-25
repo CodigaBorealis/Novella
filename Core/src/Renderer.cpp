@@ -5,6 +5,7 @@
 #include "../Novella/Components/Primitives/Texture.hpp"
 #include "../Novella/Components/Primitives/Font.hpp"
 #include "../Novella/Scene/Scene.hpp"
+#include "../Novella/Components/Traits/Composite.hpp"
 #include "../Novella/Components/Traits/Object.hpp"
 #include <algorithm>
 #include <raylib.h>
@@ -81,12 +82,11 @@ namespace Novella{
 
     void Renderer::rebuildCache(Scene& scene){
         
+        renderCache.clear();
+
         scene.forEachRootObject([this](Traits::Object& object){
 
-            if(auto* renderable = dynamic_cast<Traits::Renderable*>(&object)){
-
-                renderCache.push_back(renderable);
-            }
+            collectRenderables(object, renderCache);
         });
 
         std::stable_sort(renderCache.begin(), renderCache.end(), [](const auto* a, const auto* b){
@@ -155,5 +155,24 @@ namespace Novella{
     void Renderer::drawRectangle(const Rectangle& rectangle, const Color& color){
 
         ::DrawRectangleLines(rectangle.x, rectangle.y, rectangle.width, rectangle.height, color);
+    }
+
+    void Renderer::collectRenderables(Traits::Object& object, std::vector<Traits::Renderable*>& cache){
+
+        if(auto* renderable = dynamic_cast<Traits::Renderable*>(&object)){
+
+            cache.push_back(renderable);
+        }
+
+        if(auto* composite = dynamic_cast<Traits::Composite*>(&object)){
+
+            for(auto& [name, child] : composite->getChildren()){
+
+                if(child){
+
+                    collectRenderables(*child, cache);
+                }
+            }
+        }
     }
 }
