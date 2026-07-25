@@ -118,8 +118,7 @@ namespace Novella::NScene::Parser{
 
             {"Sprite" , UI::Sprite::getStaticTypeID()},
             {"Label" , UI::Label::getStaticTypeID()},
-            {"Button" , UI::Button::getStaticTypeID()},
-            {"Style", STYLE_TYPE_ID}      //This shouldnt be done like this but it works
+            {"Button" , UI::Button::getStaticTypeID()}
         };
     };
 

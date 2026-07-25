@@ -7,6 +7,7 @@ namespace Novella::UI{
 
     void Button::validate() const{
 
+        //doesnt work right now, but this is the idea
         if(!childAs<Sprite>("background")) throw std::runtime_error("Button requires a Sprite component with the role 'background'");
         
     }

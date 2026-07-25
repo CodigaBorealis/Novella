@@ -90,6 +90,18 @@ namespace Novella::NScene::Serialization{
 
             return button;
         });     
+
+        registerType("DialogueBox", [](NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition){
+            
+            auto common = PropertyExtractor::extractCommon(definition);
+
+            auto box = std::make_unique<UI::DialogueBox>();
+
+            box->setStyle(common.style);
+            box->setRenderLayer(common.renderLayer);
+
+            return box;
+        });   
     }
 
     std::unique_ptr<Traits::Object> ComponentFactory::create(NScript::Runtime::Context& context, const Parser::ObjectDefinition& definition){
