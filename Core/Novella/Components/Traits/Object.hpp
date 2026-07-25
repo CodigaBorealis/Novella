@@ -21,6 +21,7 @@ namespace Novella::Traits{
         virtual uint32_t getTypeID() const = 0;
         
         uint64_t objectHandle(){return objHandle;}
+
         private:
 
         uint64_t objHandle = 0;

@@ -22,20 +22,18 @@ namespace Novella{
 
         public:
         
-        Rectangle compute(const Style& style, const Vector2i& parentSize);
+        Rectangle compute(const Style& style, const Rectangle& parentRectangle, const Rectangle& desiredSize);
 
-        static Rectangle computeLabel(const Style& style, const Vector2f& textSize,  const Vector2i& parentSize);
-
-        void compute(Scene& scene, const Vector2i& windowSize);
+        void compute(Scene& scene, const Rectangle& parentSize);
 
 
         private:    
 
         std::vector<Traits::Layoutable*> layoutCache;
 
-        static Vector2f computeSize(const Style& style, const Vector2i& parentSize);
+        static Rectangle computeSize(const Style& style, const Rectangle& parentSize, const Rectangle& baseSize);
 
-        static Vector2f computePosition(const Style& style, const Vector2f& computedSize, const Vector2i& parentSize);
+        static Rectangle computePosition(const Style& style, const Rectangle& computedSize, const Rectangle& parentSize);
     };
 
 }

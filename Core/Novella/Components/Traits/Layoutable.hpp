@@ -9,10 +9,9 @@ namespace Novella::Traits{
         
         virtual ~Layoutable() = default;
 
-        virtual void updateLayout(LayoutSystem& layoutSystem, const Vector2i& parentSize){
+        virtual void updateLayout(LayoutSystem& layoutSystem, const Rectangle& parentRectangle) = 0;
 
-            computedRectangle = layoutSystem.compute(getStyle(), parentSize);
-        }
+        virtual Vector2f measure(LayoutSystem& layoutSystem) const = 0;
 
         void setStyle(const Style& style){
 
@@ -33,8 +32,10 @@ namespace Novella::Traits{
 
             return this->computedRectangle;
         }
-            
-        private:
+        
+        virtual Rectangle naturalSize() const = 0;
+      
+        protected:
 
             Style style;
             Rectangle computedRectangle;

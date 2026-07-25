@@ -9,8 +9,6 @@ namespace Novella::Traits{
 
         virtual ~Text() = default;
         
-        virtual void computeSize(const Vector2i& parentSize) = 0;
-
         void setFontSize(unsigned int size){fontSize = size;}
         unsigned int getFontSize() const{return fontSize;}
 

@@ -1,10 +1,10 @@
 #pragma once
 #include "../Traits/Object.hpp"
+#include "../Traits/Renderable.hpp"
+#include "../Traits/Layoutable.hpp"
 #include <cstddef>
 #include <string>
 #include <vector>
-#include "../UI/Sprite.hpp"
-#include "../UI/Label.hpp"
 #include <optional>
 
 namespace Novella{
@@ -40,9 +40,6 @@ namespace Novella::Gameplay{
         void clear();
         void reset();
 
-        void draw(Renderer& renderer) override;
-        void updateLayout(LayoutSystem& layoutSystem, const Vector2i& parentSize) override;
-
         const DialogueLine& currentLine() const;
 
         private:    
@@ -52,10 +49,6 @@ namespace Novella::Gameplay{
         size_t currentIndex = 0;
         std::vector<DialogueLine> lines;
 
-        std::optional<UI::Sprite> portrait;
-        std::optional<UI::Sprite> background;
-        std::optional<UI::Label> speaker;
-        std::optional<UI::Label> text;
         std::optional<std::string> voiceClip;
     };
 }

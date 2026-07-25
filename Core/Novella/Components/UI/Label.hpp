@@ -4,10 +4,12 @@
 #include "../Traits/Renderable.hpp"
 #include "../Traits/Layoutable.hpp"
 #include "../Traits/Text.hpp"
+#include "../Traits/Primitive.hpp"
+#include "../Traits/Transformable.hpp"
 
 namespace Novella::UI{
 
-    class Label: public Traits::Renderable, public Traits::Layoutable, public Traits::Text, public Traits::RegisteredObject<Label>{
+    class Label: public Traits::Primitive, public Traits::Renderable, public Traits::Layoutable, public Traits::Transformable, public Traits::Text, public Traits::RegisteredObject<Label>{
 
         public:
 
@@ -15,8 +17,14 @@ namespace Novella::UI{
 
         Label(std::shared_ptr<Font> font, const std::string& text, int size, const Style& style, int renderLayer);
         
-        void computeSize(const Vector2i& parentSize) override;
-
         void draw(Renderer& renderer) override;
+
+        const std::unordered_map<std::string, PropertyDescriptor>& properties() const override;
+
+        Rectangle naturalSize() const override;
+
+        void updateLayout(LayoutSystem& layoutSystem, const Rectangle& parent) override;
+
+        Vector2f measure(LayoutSystem& layout) const override;
     };
 }

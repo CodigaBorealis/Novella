@@ -34,7 +34,7 @@ namespace Novella{
         Handle handle{index, slots[index].generation};
 
         names.emplace(name, handle);
-
+        
         return handle;
 
     }

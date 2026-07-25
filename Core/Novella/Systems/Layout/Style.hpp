@@ -23,15 +23,16 @@ namespace Novella{
         Fixed,
         Percent,
         FitWidth,
-        FitHeight
+        FitHeight,
+        FitContent
         };
         
     struct Style{
 
         Anchor anchor = Anchor::Center;
 
-        SizeMode widthMode = SizeMode::Fixed;
-        SizeMode heightMode  = SizeMode::Fixed;
+        SizeMode widthMode = SizeMode::FitContent;
+        SizeMode heightMode  = SizeMode::FitContent;
         
         int width = 100;
         int height = 100;

@@ -4,7 +4,7 @@
 #include "../Novella/Scene/SceneManager.hpp"
 #include "../Novella/Systems/Resources/ResourceManager.hpp"
 #include "../Novella/Components/Components.hpp"
-#include <stdexcept>
+#include <memory>
 #include <string>
 namespace Novella::NScene::Serialization{
 
@@ -13,37 +13,55 @@ namespace Novella::NScene::Serialization{
         registerDefaultComponents();
     }
 
-    void ComponentFactory::registerType(uint32_t type, FactoryFunc creator){
+    void ComponentFactory::registerType(const std::string& type, FactoryFunc creator){
 
         creators[type] = std::move(creator);
     }
 
-    void ComponentFactory::build(uint32_t type, NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition) const{
+    std::unique_ptr<Traits::Object> ComponentFactory::build(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition) const{
 
-        auto it = creators.find(type);
+        std::unique_ptr<Traits::Object> object;
 
-        if(it == creators.end()) throw std::runtime_error("Unknown component type: " + std::to_string(type));
+        auto it = creators.find(definition.objectType);
 
-        it->second(context, definition);
+        if(it != creators.end()){
+            
+            object = it->second(context, definition);
+
+        }else{
+
+            object = std::make_unique<Generic::Widget>();
+
+        }
+
+        if(auto* composite = dynamic_cast<Traits::Composite*>(object.get())){
+
+            for(const auto& child : definition.children){
+
+                auto childObject = build(context, child);
+
+                composite->addChild(child.objectName, std::move(childObject));
+            }
+        }
+
+        return object;
     }
 
     void ComponentFactory::registerDefaultComponents(){
 
-        registerType(UI::Sprite::getStaticTypeID(), [](NScript::Runtime::Context& context, const Parser::ObjectDefinition& definition){
+        registerType("Sprite", [](NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition){
 
             auto common = PropertyExtractor::extractCommon(definition);
             std::string texture = PropertyExtractor::requireProperty<std::string>(definition, "texture");
+            
+            return std::make_unique<UI::Sprite>(
 
-            context.scene->addObject<UI::Sprite>(
-
-                common.name,
                 context.resources->getTexture(texture),
-                common.style,
-                common.renderLayer
-            );
+                 common.style,
+                  common.renderLayer);
         });
 
-        registerType(UI::Label::getStaticTypeID(), [](NScript::Runtime::Context& context, const Parser::ObjectDefinition& definition){
+        registerType("Label", [](NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition){
 
             auto common = PropertyExtractor::extractCommon(definition);
 
@@ -51,41 +69,38 @@ namespace Novella::NScene::Serialization{
             std::string text = PropertyExtractor::requireProperty<std::string>(definition, "text");
             int size = static_cast<int>(PropertyExtractor::requireProperty<double>(definition, "size"));
 
-            context.scene->addObject<UI::Label>(
-
-                common.name,
+            
+            return std::make_unique<UI::Label>(
+    
                 context.resources->getFont(font),
                 text,
                 size,
                 common.style,
-                common.renderLayer
-            );
+                common.renderLayer);
         });
 
-        registerType(UI::Button::getStaticTypeID(), [](NScript::Runtime::Context& context, const Parser::ObjectDefinition& definition){
+           registerType("Button", [](NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition){
             
-            auto handle = context.scene->addObject<UI::Button>(definition.objectName);
-
-            auto* button = context.scene->getCurrentScene()->getObject<UI::Button>(handle);
-
             auto common = PropertyExtractor::extractCommon(definition);
+
+            auto button = std::make_unique<UI::Button>();
 
             button->setStyle(common.style);
             button->setRenderLayer(common.renderLayer);
 
-            if(auto texture = PropertyExtractor::optionalProperty<std::string>(definition, "texture")){
+            return button;
+        });     
+    }
 
-                button->setSprite(context.resources->getTexture(*texture), common.style, common.renderLayer);
-            }
+    std::unique_ptr<Traits::Object> ComponentFactory::create(NScript::Runtime::Context& context, const Parser::ObjectDefinition& definition){
 
-            auto font = PropertyExtractor::optionalProperty<std::string>(definition, "font");
-            auto text = PropertyExtractor::optionalProperty<std::string>(definition, "text");
-            auto fontSize = PropertyExtractor::optionalProperty<double>(definition, "fontSize");
+        auto object = build(context, definition);
 
-            if(font && text && fontSize){
+        if(auto* validatable = dynamic_cast<Traits::Validatable*>(object.get())){
 
-                button->setLabel(context.resources->getFont(*font), static_cast<int>(*fontSize), *text, common.style, common.renderLayer);
-            }
-        });
+            validatable->validate();
+        }
+
+        return object;
     }
 }

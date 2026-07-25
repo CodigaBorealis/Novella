@@ -139,7 +139,7 @@ namespace Novella::NScene::Parser{
 
         ObjectDefinition object{};
 
-        object.objectType = getTypeID(current().text);
+        object.objectType = current().text;
 
         expect(Token::Type::Identifier);
         

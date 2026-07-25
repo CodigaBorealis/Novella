@@ -81,9 +81,11 @@ namespace Novella::NScene::Serialization{
 
     void Loader::loadObjects(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene){
 
-        for(const auto& object : scene.objects){
+        for(const auto& objectDefinition : scene.objects){
 
-            factory.build(object.objectType, context, object);
+            auto rootObject = factory.build(context, objectDefinition);
+
+            context.scene->getCurrentScene()->addObject(std::move(rootObject), objectDefinition.objectName);
         }
     }
 

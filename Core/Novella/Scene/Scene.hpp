@@ -87,17 +87,17 @@ namespace Novella{
 
         template<typename Func>
 
-        void forEachObject(Func&& callback){
+        void forEachRootObject(Func&& callback){
 
             for(auto& slot : slots){
 
-                if(slot.object){
+                if(slot.object && !slot.parent.has_value()){
 
                     callback(*slot.object);
                 }
             }
         }
-        
+
         size_t objectCount() const;
         
         void markDirty();

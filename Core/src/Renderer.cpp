@@ -8,7 +8,6 @@
 #include "../Novella/Components/Traits/Object.hpp"
 #include <algorithm>
 #include <raylib.h>
-
 namespace Novella{
 
     Renderer::~Renderer(){
@@ -48,6 +47,7 @@ namespace Novella{
     void Renderer::drawFont(const Font& font, const std::string& text, const Rectangle& rect, int fontSize, float spacing, const Color& tint){
 
         ::DrawTextEx(font.getHandle(), text.c_str(), {rect.x, rect.y}, fontSize, spacing, tint);
+
     }
 
 
@@ -81,7 +81,7 @@ namespace Novella{
 
     void Renderer::rebuildCache(Scene& scene){
         
-        scene.forEachObject([this](Traits::Object& object){
+        scene.forEachRootObject([this](Traits::Object& object){
 
             if(auto* renderable = dynamic_cast<Traits::Renderable*>(&object)){
 
@@ -152,8 +152,8 @@ namespace Novella{
         this->backgroundColor = color;
     }
 
-    void Renderer::drawRectangle(const Rectangle& rectangle){
+    void Renderer::drawRectangle(const Rectangle& rectangle, const Color& color){
 
-        ::DrawRectangleLines(rectangle.x, rectangle.y, rectangle.width, rectangle.height, Colors::Red);
+        ::DrawRectangleLines(rectangle.x, rectangle.y, rectangle.width, rectangle.height, color);
     }
 }

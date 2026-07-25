@@ -35,7 +35,6 @@ add_executable(Novella
     src/Sprite.cpp
     src/Label.cpp
     src/Button.cpp
-    src/DialogueBox.cpp
     
     src/LayoutSystem.cpp
     
@@ -85,6 +84,8 @@ add_executable(Novella
     src/LayoutModule.cpp
     
     src/Logger.cpp
+    
+    src/Composite.cpp
     
     src/Engine.cpp
     

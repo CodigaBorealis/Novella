@@ -5,7 +5,6 @@
 #include <string>
 #include <variant>
 #include <vector>
-#include <cstdint>
 
 namespace Novella::NScene::Parser{
 
@@ -69,7 +68,7 @@ namespace Novella::NScene::Parser{
 
     struct ObjectDefinition{
 
-        uint32_t objectType;
+        std::string objectType;
         std::string objectName;
         std::vector<Property> properties;
         std::vector<ObjectDefinition> children;

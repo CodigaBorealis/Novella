@@ -1,8 +1,8 @@
 #pragma once
 #include <functional>
-#include <cstdint>
+#include <memory>
 #include <unordered_map>
-
+#include "../../Components/Traits/Object.hpp"
 namespace Novella::NScript::Runtime{
 
     struct Context;
@@ -22,15 +22,17 @@ namespace Novella::NScene::Serialization{
 
         ComponentFactory();
         
-        using FactoryFunc = std::function<void(NScript::Runtime::Context&, const NScene::Parser::ObjectDefinition&)>;
+        using FactoryFunc = std::function<std::unique_ptr<Traits::Object>(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition&)>;
 
-        void registerType(uint32_t type, FactoryFunc creator);
+        void registerType(const std::string& type, FactoryFunc creator);
 
-        void build(uint32_t type, NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition) const;
+        std::unique_ptr<Traits::Object> build(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition& definition) const;
+        
+        std::unique_ptr<Traits::Object> create(NScript::Runtime::Context& context, const Parser::ObjectDefinition& definition);
 
         private:
 
-        std::unordered_map<uint32_t, FactoryFunc> creators;
+        std::unordered_map<std::string, FactoryFunc> creators;
         
         void registerDefaultComponents();
 

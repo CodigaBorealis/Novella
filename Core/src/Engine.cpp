@@ -120,7 +120,9 @@ namespace Novella{
             
         };
 
-        layoutSystem.compute(*currentScene, virtualResolution);
+        Rectangle windowBounds = {0,0,static_cast<float>(virtualResolution.x), static_cast<float>(virtualResolution.y)};
+        
+        layoutSystem.compute(*currentScene, windowBounds);
         
     }
         void Engine::handleRendering(Scene* currentScene){

@@ -22,53 +22,16 @@ namespace Novella::NScene::Serialization{
         }else if(value  == "FitHeight"){
 
             return SizeMode::FitHeight;
+
+        }else if(value == "FitContent"){
+
+            return SizeMode::FitContent;
         }
 
         throw std::runtime_error("Invalid value for property sizeMode '" + value +"'");
     }    
 
-    Style PropertyExtractor::getStyle(const NScene::Parser::ObjectDefinition& object){
-
-        Style layout{};
-
-        auto* layoutNode = findChild(object, 4294967295);//The style type inside the parser
-
-        if(!layoutNode) throw std::runtime_error("Missing layout block for '" + object.objectName + "'");
-        
-        if(auto* width = findProperty(*layoutNode, "width")){
-
-            layout.width = width->value.as<double>();
-        }
-
-        if(auto* height = findProperty(*layoutNode, "height")){
-
-            layout.height = height->value.as<double>();
-        }
-
-        if(auto* anchor = findProperty(*layoutNode, "anchor")){
-
-            layout.anchor = getAnchor(anchor->value.as<std::string>());
-        }
-
-        if(auto* widthMode = findProperty(*layoutNode, "widthMode")){
-
-            layout.widthMode = getSizeMode(widthMode->value.as<std::string>());
-        }
-
-        if(auto* heightMode = findProperty(*layoutNode, "heightMode")){
-
-            layout.heightMode = getSizeMode(heightMode->value.as<std::string>());
-        }
-
-        if(auto* offset = findProperty(*layoutNode, "offset")){
-
-            layout.offset = getVector<int>(*offset);
-        }
-
-        return layout;
-    }
-
-    const NScene::Parser::ObjectDefinition* PropertyExtractor::findChild(const NScene::Parser::ObjectDefinition& object, uint32_t type){
+    const NScene::Parser::ObjectDefinition* PropertyExtractor::findChild(const NScene::Parser::ObjectDefinition& object, const std::string& type){
 
         for(const auto& child : object.children){
 
@@ -115,8 +78,44 @@ namespace Novella::NScene::Serialization{
     PropertyExtractor::CommonProps PropertyExtractor::extractCommon(const NScene::Parser::ObjectDefinition& definition){
         
         if(definition.objectName.empty()) throw std::runtime_error("Cannot build object without a valid name");
+        
+        CommonProps common{};
 
-        return{definition.objectName, getStyle(definition), static_cast<int>(requireProperty<double>(definition, "renderLayer"))};
+        if(auto val = findProperty(definition, "anchor")){
 
+            common.style.anchor = getAnchor(val->value.as<std::string>());
+        }
+
+        if(auto val = findProperty(definition, "widthMode")){
+
+            common.style.widthMode = getSizeMode(val->value.as<std::string>());
+        }
+
+        if(auto val = findProperty(definition, "heightMode")){
+
+            common.style.heightMode = getSizeMode(val->value.as<std::string>());
+        }
+
+        if(auto val = findProperty(definition, "width")){
+
+            common.style.width = static_cast<int>(val->value.as<double>());
+        }
+
+        if(auto val = findProperty(definition, "height")){
+
+            common.style.height = static_cast<int>(val->value.as<double>());
+        }
+
+        if(auto val = findProperty(definition, "offset")){
+
+            common.style.offset = getVector<int>(*val);
+        }
+
+        if(auto val = findProperty(definition, "renderLayer")){
+
+            common.renderLayer = static_cast<int>(val->value.as<double>());
+        }
+
+        return common;
     }
 }

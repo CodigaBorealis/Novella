@@ -43,7 +43,7 @@ namespace Novella{
         
         void setBackgroundColor(const Color& color);
 
-        void drawRectangle(const Rectangle& rectangle);
+        void drawRectangle(const Rectangle& rectangle, const Color& color);
         
         Vector2f virtualResolution() const;
         
