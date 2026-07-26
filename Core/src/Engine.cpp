@@ -161,9 +161,4 @@ namespace Novella{
 
         interpreter.run();
     }   
-
-    Logger& Engine::logger(){
-
-        return lg;
-    }
 }

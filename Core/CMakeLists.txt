@@ -83,9 +83,7 @@ add_executable(Novella
     src/TransformModule.cpp
     src/UIModule.cpp
     src/LayoutModule.cpp
-    
-    src/Logger.cpp
-    
+        
     src/Composite.cpp
     
     src/Engine.cpp

@@ -1,12 +1,12 @@
 #include "../Novella/Scripting/API/DebugModule.hpp"
-#include "../Novella/Core/Debug/Logger.hpp"
 #include <cstdlib>
+#include <iostream>
 
 namespace Novella::NScript::Modules::Debug{
 
     void print(Runtime::Context& context, const std::string& message){
 
-        context.logger->print(message);
+        std::cout << message << "\n";
     }
 
     void clear(Runtime::Context& context){

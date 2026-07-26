@@ -1,6 +1,5 @@
 #pragma once
 #include "../Systems/Audio/AudioSystem.hpp"
-#include "Debug/Logger.hpp"
 #include "../Systems/Layout/LayoutSystem.hpp"
 #include "../Scripting/Interpreter/Interpreter.hpp"
 #include "../Windowing/Window.hpp"
@@ -39,7 +38,6 @@ namespace Novella{
         LayoutSystem& layout();
         InteractionSystem& input();
         NScript::Runtime::Interpreter& script();
-        Logger& logger();
         const std::filesystem::path& projectRoot() const;
 
         private:
@@ -64,7 +62,6 @@ namespace Novella{
         SceneManager sceneManager;
         LayoutSystem layoutSystem;
         NScript::Runtime::Interpreter interpreter;
-        Logger lg;
     };
 
 }

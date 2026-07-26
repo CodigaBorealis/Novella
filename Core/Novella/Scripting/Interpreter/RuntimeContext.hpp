@@ -9,7 +9,6 @@ namespace Novella{
     class AudioSystem;
     class SceneManager;
     class LayoutSystem;
-    class Logger;
 }
 
 namespace Novella::NScript::Runtime{
@@ -28,7 +27,6 @@ namespace Novella::NScript::Runtime{
         AudioSystem* audio;
         SceneManager* scene;
         LayoutSystem* layout;
-        Logger* logger;
         NScript::Runtime::Interpreter* interpreter;
         std::filesystem::path projectRoot;
     };

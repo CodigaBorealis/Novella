@@ -43,7 +43,6 @@ namespace Novella::NScript::Runtime{
 
         this->runtimeContext.audio = &engine.audio();
         this->runtimeContext.layout = &engine.layout();
-        this->runtimeContext.logger = &engine.logger();
         this->runtimeContext.renderer = &engine.renderer();
         this->runtimeContext.scene = &engine.scene();
         this->runtimeContext.window = &engine.window();
