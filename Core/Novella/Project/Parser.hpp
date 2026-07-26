@@ -15,11 +15,9 @@ namespace Novella{
 
 namespace Novella::Project{
     
-    using ValueData = std::variant<std::string, int>;
-
     struct Value{
 
-        ValueData data;
+        std::variant<std::string, int> data;
 
         bool isInt() const{return std::holds_alternative<int>(data);}
         bool isString() const{return std::holds_alternative<std::string>(data);}

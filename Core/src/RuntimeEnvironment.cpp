@@ -64,12 +64,7 @@ namespace Novella::NScript::Runtime{
         CoreInitializer::registerInput(*this);
         CoreInitializer::registerRandomModule(*this);
         CoreInitializer::registerTransform(*this);
-        CoreInitializer::registerSpriteModule(*this);
-        CoreInitializer::registerTextModule(*this);
-        CoreInitializer::registerUIModule(*this);
         CoreInitializer::registerObjectModule(*this);
-        CoreInitializer::registerLayoutModule(*this);
-        CoreInitializer::registerOS(*this);
 
     }
 

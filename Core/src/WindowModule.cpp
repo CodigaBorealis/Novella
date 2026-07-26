@@ -14,7 +14,7 @@ namespace Novella::NScript::Modules::Window{
 
         int monitor = ::GetCurrentMonitor();
 
-        Vector2i monitorPosition{::GetMonitorPosition(monitor)};
+        Vector2x<int> monitorPosition{::GetMonitorPosition(monitor)};
 
         int monitorWidth = ::GetMonitorWidth(monitor);
         int monitorHeight = ::GetMonitorHeight(monitor);

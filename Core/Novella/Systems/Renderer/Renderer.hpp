@@ -37,7 +37,7 @@ namespace Novella{
 
         void drawScene(Scene& scene);
                 
-        void resize(const Vector2i& windowSize);
+        void resize(const Vector2x<int>& windowSize);
 
         void drawErrorMessage(const std::string& error);
         
@@ -45,9 +45,9 @@ namespace Novella{
 
         void drawRectangle(const Rectangle& rectangle, const Color& color);
         
-        Vector2f virtualResolution() const;
+        Vector2x<float> virtualResolution() const;
         
-        Vector2f toVirtualCoordinates(const Vector2f& mousePosition) const;
+        Vector2x<float> toVirtualCoordinates(const Vector2x<float>& mousePosition) const;
 
         private:
 
@@ -56,8 +56,8 @@ namespace Novella{
         Color backgroundColor{0,0,0,0};
 
         ::RenderTexture2D canvas{};
-        Vector2f baseResolution;
-        Vector2f renderTargetOffset{0.0f, 0.0f};
+        Vector2x<float> baseResolution;
+        Vector2x<float> renderTargetOffset{0.0f, 0.0f};
         float scale = 1.0f;
 
         std::vector<Traits::Renderable*> renderCache;

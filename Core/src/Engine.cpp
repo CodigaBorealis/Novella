@@ -112,7 +112,7 @@ namespace Novella{
 
         if(!currentScene) return;
 
-        Vector2i virtualResolution = {
+        Vector2x<int> virtualResolution = {
 
                 static_cast<int>(windowRenderer.virtualResolution().x),
                 

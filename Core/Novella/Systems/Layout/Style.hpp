@@ -40,7 +40,7 @@ namespace Novella{
         float widthPercent = 100.0f;
         float heightPercent = 100.0f;
 
-        Vector2i offset{0, 0};
+        Vector2x<int> offset{0, 0};
 
     };
 

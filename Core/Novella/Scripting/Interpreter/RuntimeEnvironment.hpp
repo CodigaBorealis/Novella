@@ -8,9 +8,9 @@
 #include "ExpressionEvaluator.hpp"
 #include "StatementEvaluator.hpp"
 #include "../Parser/Definition.hpp"
-#include "NativeFunction.hpp"
 #include "RuntimeContext.hpp"
 #include <utility>
+#include <functional>
 
 namespace Novella::NScript::Parser{
 
@@ -110,7 +110,7 @@ namespace Novella::NScript::Runtime{
         
         std::unordered_map<std::string, Parser::Value> globalVariables;
         std::unordered_map<std::string, Parser::FunctionDefinition> scriptFunctions;
-        std::unordered_map<std::string, NativeFunction> nativeFunctions;
+        std::unordered_map<std::string, std::function<Parser::Value(Runtime::Context& context, const std::vector<Parser::Value>&)>> nativeFunctions;
 
         std::vector<CallFrame> callStack;
         const size_t MAX_CALL_STACK = 500;

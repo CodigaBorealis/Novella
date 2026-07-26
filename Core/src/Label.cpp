@@ -34,7 +34,7 @@ namespace Novella::UI{
     
     Rectangle Label::naturalSize() const{
 
-        Vector2f textSize = ::MeasureTextEx(getFont()->getHandle(), getText().c_str(), static_cast<float>(getFontSize()), getSpacing());
+        Vector2x<float> textSize = ::MeasureTextEx(getFont()->getHandle(), getText().c_str(), static_cast<float>(getFontSize()), getSpacing());
 
         return{0, 0, textSize.x, textSize.y};
     }
@@ -44,7 +44,7 @@ namespace Novella::UI{
         setComputedRectangle(layout.compute(getStyle(),parent, naturalSize()));
     }
 
-    Vector2f Label::measure(LayoutSystem& layout) const{
+    Vector2x<float> Label::measure(LayoutSystem& layout) const{
 
         return{::MeasureTextEx(getFont()->getHandle(), getText().c_str(), static_cast<float>(getFontSize()), getSpacing())};
 

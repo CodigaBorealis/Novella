@@ -11,7 +11,7 @@ namespace Novella::Traits{
 
         virtual void updateLayout(LayoutSystem& layoutSystem, const Rectangle& parentRectangle) = 0;
 
-        virtual Vector2f measure(LayoutSystem& layoutSystem) const = 0;
+        virtual Vector2x<float> measure(LayoutSystem& layoutSystem) const = 0;
 
         void setStyle(const Style& style){
 

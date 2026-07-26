@@ -36,7 +36,7 @@ namespace Novella::UI{
             return {};
         }
         
-        Vector2f Sprite::measure(LayoutSystem& layout) const{
+        Vector2x<float> Sprite::measure(LayoutSystem& layout) const{
 
             if(style.widthMode == SizeMode::Fixed && style.heightMode == SizeMode::Fixed){
 

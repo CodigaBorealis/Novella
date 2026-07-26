@@ -13,24 +13,24 @@ namespace Novella{
         return ::GetMouseY();
     }
     
-    Vector2f InputSystem::getVirtualMousePosition(const Renderer& renderer){
+    Vector2x<float> InputSystem::getVirtualMousePosition(const Renderer& renderer){
 
-        Vector2f rawMouse = ::GetMousePosition();
+        Vector2x<float> rawMouse = ::GetMousePosition();
 
         return renderer.toVirtualCoordinates(rawMouse);
     }
 
-    void InputSystem::setMousePosition(const Vector2f& position){
+    void InputSystem::setMousePosition(const Vector2x<float>& position){
 
         ::SetMousePosition(static_cast<int>(position.x), static_cast<int>(position.y));
     }
 
-    Vector2f InputSystem::mousePosition(){
+    Vector2x<float> InputSystem::mousePosition(){
 
         return ::GetMousePosition();
     }
 
-    Vector2f InputSystem::mouseDelta(){
+    Vector2x<float> InputSystem::mouseDelta(){
 
         return ::GetMouseDelta();
     }
@@ -40,7 +40,7 @@ namespace Novella{
         return ::GetMouseWheelMove();
     }
 
-    Vector2f InputSystem::getMouseWheelMoveV(){
+    Vector2x<float> InputSystem::getMouseWheelMoveV(){
 
         return ::GetMouseWheelMoveV();
     }

@@ -129,9 +129,4 @@ namespace Novella{
         };
 
     };
-
-    using Vector2f = Vector2x<float>;
-    using Vector2d = Vector2x<double>;
-    using Vector2i = Vector2x<int>;
-    using Vector2ui = Vector2x<unsigned int>;
 }

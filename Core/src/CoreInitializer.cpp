@@ -213,41 +213,6 @@ namespace Novella::NScript::CoreInitializer{
 
     }
 
-    void registerSpriteModule(Runtime::RuntimeEnvironment& runtime){
-
-        const std::string prefix = "Sprite";
-    
-        runtime.registerNativeFunction(prefix + "setTexture", Modules::Sprite::setTexture);
-        runtime.registerNativeFunction(prefix + "setColor", Modules::Sprite::setTint);  
-    }
-
-
-    void registerTextModule(Runtime::RuntimeEnvironment& runtime){
-
-        const std::string prefix = "Label";
-
-        runtime.registerNativeFunction(prefix + "setText", Modules::Text::setText);
-        runtime.registerNativeFunction(prefix + "text", Modules::Text::getText);
-        runtime.registerNativeFunction(prefix + "setFont", Modules::Text::setFont);
-        runtime.registerNativeFunction(prefix + "setSize", Modules::Text::setFontSize);
-        runtime.registerNativeFunction(prefix + "setColor", Modules::Text::setFontColor);
-        runtime.registerNativeFunction(prefix + "font", Modules::Text::getFont);
-        runtime.registerNativeFunction(prefix + "size", Modules::Text::getFontSize);
-
-    }
-
-    
-    void registerUIModule(Runtime::RuntimeEnvironment& runtime){
-
-        const std::string prefix = "UI";
-
-        runtime.registerNativeFunction(prefix + "createLabel", Modules::UI::createLabel);
-        runtime.registerNativeFunction(prefix + "createButton", Modules::UI::createButton);
-        runtime.registerNativeFunction(prefix + "createSprite", Modules::UI::createSprite);
-
-
-    }
-
     void registerObjectModule(Runtime::RuntimeEnvironment& runtime){
 
         const std::string prefix = "Object";
@@ -258,36 +223,4 @@ namespace Novella::NScript::CoreInitializer{
         runtime.registerNativeFunction(prefix + "name", Modules::Object::getName);
 
     }
-
-    void registerLayoutModule(Runtime::RuntimeEnvironment& runtime){
-
-        const std::string prefix = "Layout";
-
-        runtime.registerNativeFunction(prefix + "setWidth", Modules::Layout::setWidth);
-        runtime.registerNativeFunction(prefix + "setHeight", Modules::Layout::setHeight);
-        runtime.registerNativeFunction(prefix + "setSize", Modules::Layout::setSize);
-        runtime.registerNativeFunction(prefix + "width", Modules::Layout::getWidth);
-        runtime.registerNativeFunction(prefix + "height", Modules::Layout::getHeight);
-
-
-    }
-
-    #ifdef _WIN32
-    void registerOS(Runtime::RuntimeEnvironment& runtime){
-        
-        const std::string prefix = "OS";
-        runtime.registerNativeFunction(prefix + "user", Modules::Win32::getUserEnv);
-    }
-    #endif
-
-    #ifdef __linux__
-    void registerOS(Runtime::RuntimeEnvironment& runtime){
-
-        const std::string prefix = "OS";
-
-        runtime.registerNativeFunction(prefix + "user", Modules::Linux::getUserEnv);
-
-    }
-    
-    #endif
 }

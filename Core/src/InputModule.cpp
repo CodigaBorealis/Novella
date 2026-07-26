@@ -138,8 +138,8 @@ namespace Novella::NScript::Modules::Input{
         
         if(!layoutable) return false;
 
-        Vector2f rawMouse = {InputSystem::getMouseX(), InputSystem::getMouseY()};
-        Vector2f virtualMouse = context.renderer->toVirtualCoordinates(rawMouse);
+        Vector2x<float> rawMouse = {InputSystem::getMouseX(), InputSystem::getMouseY()};
+        Vector2x<float> virtualMouse = context.renderer->toVirtualCoordinates(rawMouse);
         
         const auto& rect = layoutable->getComputedRectangle();
 

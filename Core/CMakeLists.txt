@@ -74,15 +74,10 @@ add_executable(Novella
     src/WindowModule.cpp
     src/MathModule.cpp
     src/StringModule.cpp
-    src/LinuxModule.cpp
     src/FileSystemModule.cpp
     src/RandomModule.cpp
     src/ObjectModule.cpp
-    src/SpriteModule.cpp
-    src/TextModule.cpp
     src/TransformModule.cpp
-    src/UIModule.cpp
-    src/LayoutModule.cpp
         
     src/Composite.cpp
     

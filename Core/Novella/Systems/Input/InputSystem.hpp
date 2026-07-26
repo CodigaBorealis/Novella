@@ -177,7 +177,7 @@ namespace Novella{
     
     InputSystem& operator=(InputSystem&&) = delete;
 
-    static Vector2f getVirtualMousePosition(const Renderer& renderer);
+    static Vector2x<float> getVirtualMousePosition(const Renderer& renderer);
 
     static Key getKeyPressed();
     static char getCharPressed();
@@ -185,13 +185,13 @@ namespace Novella{
     static float getMouseX();
     static float getMouseY();
 
-    static void setMousePosition(const Vector2f& position);
+    static void setMousePosition(const Vector2x<float>& position);
 
-    static Vector2f mousePosition();
-    static Vector2f mouseDelta();
+    static Vector2x<float> mousePosition();
+    static Vector2x<float> mouseDelta();
 
     static float getMouseWheelMove();
-    static Vector2f getMouseWheelMoveV();
+    static Vector2x<float> getMouseWheelMoveV();
 
     static void showCursor();
     static void hideCursor();

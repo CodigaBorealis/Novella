@@ -32,7 +32,7 @@ namespace Novella{
         
         if(!texture) return;
 
-        Vector2f origin{0.f, 0.f};
+        Vector2x<float> origin{0.f, 0.f};
 
         Rectangle source{
 
@@ -112,7 +112,7 @@ namespace Novella{
         }
     }
 
-    void Renderer::resize(const Vector2i& windowSize){
+    void Renderer::resize(const Vector2x<int>&  windowSize){
 
         if(baseResolution.x == 0 || baseResolution.y == 0) return;
 
@@ -128,12 +128,12 @@ namespace Novella{
         
     }
 
-    Vector2f Renderer::virtualResolution() const{
+    Vector2x<float> Renderer::virtualResolution() const{
 
         return baseResolution;
     }
 
-    Vector2f Renderer::toVirtualCoordinates(const Vector2f& mousePosition) const{
+    Vector2x<float> Renderer::toVirtualCoordinates(const Vector2x<float>& mousePosition) const{
 
         return{
             

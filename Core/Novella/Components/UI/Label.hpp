@@ -25,6 +25,6 @@ namespace Novella::UI{
 
         void updateLayout(LayoutSystem& layoutSystem, const Rectangle& parent) override;
 
-        Vector2f measure(LayoutSystem& layout) const override;
+        Vector2x<float> measure(LayoutSystem& layout) const override;
     };
 }

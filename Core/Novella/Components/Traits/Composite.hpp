@@ -40,7 +40,7 @@ namespace Novella::Traits{
 
         void updateLayout(LayoutSystem& layout, const Rectangle& parent) override;
         
-        Vector2f measure(LayoutSystem& layoutSystem) const override;
+        Vector2x<float> measure(LayoutSystem& layoutSystem) const override;
 
         Rectangle naturalSize() const override;
 

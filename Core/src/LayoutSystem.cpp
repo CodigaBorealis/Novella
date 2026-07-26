@@ -26,7 +26,7 @@ namespace Novella{
 
             if(auto* layoutable = dynamic_cast<Traits::Layoutable*>(&object)){
 
-                Vector2f size =  layoutable->measure(*this);
+                Vector2x<float> size =  layoutable->measure(*this);
                 
                 layoutable->updateLayout(*this, parentRectangle);
             }

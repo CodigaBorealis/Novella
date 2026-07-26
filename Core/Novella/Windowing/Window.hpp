@@ -44,8 +44,8 @@ namespace Novella{
 
         void close();
 
-        void setSize(const Vector2i& dimensions);
-        Vector2i getSize() const;
+        void setSize(const Vector2x<int>& dimensions);
+        Vector2x<int> getSize() const;
         bool isResized() const;
 
 
@@ -59,8 +59,8 @@ namespace Novella{
 
         void create();
         
-        void setPosition(const Vector2i& position);
-        Vector2i getPosition() const;
+        void setPosition(const Vector2x<int>& position);
+        Vector2x<int> getPosition() const;
         
         private:
 

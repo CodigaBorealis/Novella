@@ -24,16 +24,7 @@ namespace Novella::NScript::CoreInitializer{
     void registerInput(Runtime::RuntimeEnvironment& runtime);
 
     void registerRandomModule(Runtime::RuntimeEnvironment& runtime);
-
-    void registerSpriteModule(Runtime::RuntimeEnvironment& runtime);
-
-    void registerTextModule(Runtime::RuntimeEnvironment& runtime);
     
-    void registerUIModule(Runtime::RuntimeEnvironment& runtime);
-
     void registerObjectModule(Runtime::RuntimeEnvironment& runtime);
-    
-    void registerLayoutModule(Runtime::RuntimeEnvironment& runtime);
-    
-    void registerOS(Runtime::RuntimeEnvironment& runtime);
+        
 }

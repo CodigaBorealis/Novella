@@ -37,7 +37,7 @@ namespace Novella::Traits{
 
     void Composite::updateLayout(LayoutSystem& layout, const Rectangle& parent){
 
-        Vector2f preferred = measure(layout);
+        Vector2x<float> preferred = measure(layout);
 
         Rectangle rect = layout.compute(style, parent, {0, 0, preferred.x, preferred.y});
 
@@ -62,7 +62,7 @@ namespace Novella::Traits{
         return children;
     }
 
-    Vector2f Composite::measure(LayoutSystem& layoutSystem) const{
+    Vector2x<float> Composite::measure(LayoutSystem& layoutSystem) const{
 
         float minX = 0;
         float minY = 0;
@@ -75,7 +75,7 @@ namespace Novella::Traits{
 
             if(!layoutable) continue;
 
-            Vector2f contentSize = layoutable->measure(layoutSystem);
+            Vector2x<float> contentSize = layoutable->measure(layoutSystem);
 
             const Style& childStyle = layoutable->getStyle();
 

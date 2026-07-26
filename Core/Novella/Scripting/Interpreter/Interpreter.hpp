@@ -52,8 +52,6 @@ namespace Novella::NScript::Runtime{
             functionExecutor.setRuntime(runtime);
         }
 
-        using RunTimeValue = std::variant<std::monostate, double, bool, std::string, char, std::vector<Parser::Expression>>;
-
         void loadScript(const Parser::Script& definition);
 
         void clear();
@@ -71,7 +69,7 @@ namespace Novella::NScript::Runtime{
         StatementEvaluator statementEvaluator;
         FunctionExecutor functionExecutor;
 
-        RunTimeValue callFunction(const std::string& moduleName, const std::string& functionName, const std::vector<RunTimeValue>& args = {});
+        std::variant<std::monostate, double, bool, std::string, std::vector<Parser::Expression>> callFunction(const std::string& moduleName, const std::string& functionName, const std::vector<std::variant<std::monostate, double, bool, std::string, std::vector<Parser::Expression>>>& args = {});
 
         std::string getFunctionName(const Parser::Expression* answer);
         void executeStatements(const std::vector<Parser::Statement>& statements);

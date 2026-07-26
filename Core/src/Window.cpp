@@ -81,12 +81,12 @@ namespace Novella{
         return ::IsWindowFocused();
     }
 
-    void Window::setSize(const Vector2i& dimensions){
+    void Window::setSize(const Vector2x<int>& dimensions){
 
         ::SetWindowSize(dimensions.x, dimensions.y);
     }
 
-    Vector2i Window::getSize() const{
+    Vector2x<int> Window::getSize() const{
 
         return{::GetScreenWidth(), ::GetScreenHeight()};
     }
@@ -144,12 +144,12 @@ namespace Novella{
         ::SetWindowIcon(icon.getHandle());
     }
 
-    void Window::setPosition(const Vector2i& position){
+    void Window::setPosition(const Vector2x<int>& position){
 
         ::SetWindowPosition(position.x, position.y);
     }
 
-    Vector2i Window::getPosition() const{
+    Vector2x<int> Window::getPosition() const{
 
         return ::GetWindowPosition();
     }

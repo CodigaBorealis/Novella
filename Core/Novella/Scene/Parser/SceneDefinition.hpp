@@ -10,11 +10,9 @@ namespace Novella::NScene::Parser{
 
     struct Value;
 
-    using ValueData = std::variant<bool, double, std::string, std::vector<Value>>;
-
     struct Value{
 
-        ValueData data;
+        std::variant<bool, double, std::string, std::vector<Value>> data;
 
         bool isIdentifier = false;
 
