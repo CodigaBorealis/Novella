@@ -1,9 +1,8 @@
-#include "../Novella/Windowing/Window.hpp"
-#include "../Novella/Components/Primitives/Color.hpp"
+#include "Novella/Windowing/Window.hpp"
 #include <filesystem>
 #include <raylib.h>
 #include <stdexcept>
-#include "../Novella/Components/Primitives/Image.hpp"
+#include "Novella/Primitives/Image.hpp"
 namespace Novella{
 
     Window::~Window(){

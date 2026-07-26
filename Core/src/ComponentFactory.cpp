@@ -1,9 +1,9 @@
-#include "../Novella/Scene/Serialization/ComponentFactory.hpp"
-#include "../Novella/Scene/Serialization/PropertyExtractor.hpp"
-#include "../Novella/Scripting/Interpreter/RuntimeContext.hpp"
-#include "../Novella/Scene/SceneManager.hpp"
-#include "../Novella/Systems/Resources/ResourceManager.hpp"
-#include "../Novella/Components/Components.hpp"
+#include "Novella/Scene/Serialization/ComponentFactory.hpp"
+#include "Novella/Scene/Serialization/PropertyExtractor.hpp"
+#include "Novella/Scripting/Interpreter/RuntimeContext.hpp"
+#include "Novella/Scene/SceneManager.hpp"
+#include "Novella/Systems/Resources/ResourceManager.hpp"
+#include "Novella/Components/Components.hpp"
 #include <memory>
 #include <string>
 namespace Novella::NScene::Serialization{

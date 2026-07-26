@@ -1,8 +1,8 @@
-#include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
-#include "../Novella/Scripting/Parser/Script.hpp"
-#include "../Novella/Scripting/Parser/Parser.hpp"
-#include "../Novella/Scripting/Parser/Lexer.hpp"
-#include "../Novella/Utils/FileSystem.hpp"
+#include "Novella/Scripting/Interpreter/ScriptLoader.hpp"
+#include "Novella/Scripting/Parser/Script.hpp"
+#include "Novella/Scripting/Parser/Parser.hpp"
+#include "Novella/Scripting/Parser/Lexer.hpp"
+#include "Novella/Utils/FileSystem.hpp"
 #include <stdexcept>
 
 namespace Novella::NScript::Runtime{

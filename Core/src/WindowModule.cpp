@@ -1,12 +1,12 @@
-#include "../Novella/Scripting/API/WindowModule.hpp"
-#include "../Novella/Windowing/Window.hpp"
+#include "Novella/Scripting/API/WindowModule.hpp"
+#include "Novella/Windowing/Window.hpp"
 #include <cmath>
 #include <cstdint>
 #include <raylib.h>
 #include <stdexcept>
-#include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
-#include "../Novella/Utils/FileSystem.hpp"
-#include "../Novella/Core/Math/Vector2x.hpp"
+#include "Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
+#include "Novella/Utils/FileSystem.hpp"
+#include "Novella/Core/Math/Vector2x.hpp"
 
 namespace Novella::NScript::Modules::Window{
 

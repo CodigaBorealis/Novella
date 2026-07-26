@@ -1,8 +1,8 @@
 #pragma once
 #include <filesystem>
 #include <memory>
-#include "../../Components/Primitives/Sound.hpp"
-#include "../../Components/Primitives/Music.hpp"
+#include "../../Primitives/Sound.hpp"
+#include "../../Primitives/Music.hpp"
 #include <variant>
 
 namespace Novella{

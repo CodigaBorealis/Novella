@@ -1,7 +1,7 @@
-#include "../Novella/Components/UI/Button.hpp"
+#include "Novella/Components/UI/Button.hpp"
 #include <stdexcept>
 #include <string>
-#include "../Novella/Components/UI/Sprite.hpp"
+#include "Novella/Components/UI/Sprite.hpp"
 
 namespace Novella::UI{
 

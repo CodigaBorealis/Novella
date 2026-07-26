@@ -1,6 +1,6 @@
-#include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
-#include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
-#include "../Novella/Scripting/Interpreter/ReturnException.hpp"
+#include "Novella/Scripting/Interpreter/FunctionExecutor.hpp"
+#include "Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
+#include "Novella/Scripting/Interpreter/ReturnException.hpp"
 #include <cstddef>
 #include <stdexcept>
 #include <string>

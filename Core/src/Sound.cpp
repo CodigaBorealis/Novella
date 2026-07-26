@@ -1,4 +1,4 @@
-#include "../Novella/Components/Primitives/Sound.hpp"
+#include "Novella/Primitives/Sound.hpp"
 #include <raylib.h>
 
 namespace Novella{

@@ -1,5 +1,5 @@
 #pragma once
-#include "../Primitives/Font.hpp"
+#include "../../Primitives/Font.hpp"
 #include "../Traits/Object.hpp"
 #include "../Traits/Widget.hpp"
 #include "../Traits/Text.hpp"

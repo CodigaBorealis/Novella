@@ -1,6 +1,6 @@
-#include "../Novella/Scripting/Parser/Parser.hpp"
-#include "../Novella/Scripting/Parser/Lexer.hpp"
-#include "../Novella/Scripting/Parser/Script.hpp"
+#include "Novella/Scripting/Parser/Parser.hpp"
+#include "Novella/Scripting/Parser/Lexer.hpp"
+#include "Novella/Scripting/Parser/Script.hpp"
 #include <memory>
 #include <stdexcept>
 #include <string>

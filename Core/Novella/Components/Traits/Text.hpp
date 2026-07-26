@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "../Primitives/Font.hpp"
+#include "../../Primitives/Font.hpp"
 #include "../../Core/Math/Vector2x.hpp"
 
 namespace Novella::Traits{

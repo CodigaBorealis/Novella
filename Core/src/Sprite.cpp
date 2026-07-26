@@ -1,4 +1,4 @@
-#include "../Novella/Components/UI/Sprite.hpp"
+#include "Novella/Components/UI/Sprite.hpp"
 #include <raylib.h>
 namespace Novella::UI{
 

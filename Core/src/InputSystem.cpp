@@ -1,4 +1,4 @@
-#include "../Novella/Systems/Input/InputSystem.hpp"
+#include "Novella/Systems/Input/InputSystem.hpp"
 #include <optional>
 #include <raylib.h>
 namespace Novella{

@@ -1,7 +1,7 @@
 #pragma once
 #include <filesystem>
 #include <memory>
-#include "../../Components/Primitives/Image.hpp"
+#include "../../Primitives/Image.hpp"
 
 namespace Novella{
 

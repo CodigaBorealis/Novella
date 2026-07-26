@@ -1,4 +1,4 @@
-#include "../Novella/Scripting/API/StringModule.hpp"
+#include "Novella/Scripting/API/StringModule.hpp"
 #include <cctype>
 #include <cmath>
 #include <cstddef>

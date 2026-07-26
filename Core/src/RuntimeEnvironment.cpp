@@ -1,13 +1,13 @@
-#include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
-#include "../Novella/Scripting/Parser/Definition.hpp"
-#include "../Novella/Scripting/Parser/Script.hpp"
+#include "Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
+#include "Novella/Scripting/Parser/Definition.hpp"
+#include "Novella/Scripting/Parser/Script.hpp"
 #include <cstddef>
 #include <stdexcept>
 #include <variant>
-#include "../Novella/Scripting/Interpreter/CoreInitializer.hpp"
-#include "../Novella/Core/Engine.hpp"
+#include "Novella/Scripting/Interpreter/CoreInitializer.hpp"
+#include "Novella/Core/Engine.hpp"
 #include <vector>
-#include "../Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
+#include "Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
 namespace Novella::NScript::Runtime{
 
     size_t RuntimeEnvironment::loadedFunctions() const{

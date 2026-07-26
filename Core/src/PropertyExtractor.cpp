@@ -1,6 +1,6 @@
-#include "../Novella/Scene/Serialization/PropertyExtractor.hpp"
-#include "../Novella/Scene/Parser/SceneDefinition.hpp"
-#include "../Novella/Systems/Layout/Style.hpp"
+#include "Novella/Scene/Serialization/PropertyExtractor.hpp"
+#include "Novella/Scene/Parser/SceneDefinition.hpp"
+#include "Novella/Systems/Layout/Style.hpp"
 #include <stdexcept>
 
 namespace Novella::NScene::Serialization{

@@ -1,4 +1,4 @@
-#include "../Novella/Components/Traits/Composite.hpp"
+#include "Novella/Components/Traits/Composite.hpp"
 #include <algorithm>
 #include <memory>
 #include <string>

@@ -1,4 +1,4 @@
-#include "../Novella/Scripting/API/RandomModule.hpp"
+#include "Novella/Scripting/API/RandomModule.hpp"
 #include <cmath>
 #include <cstddef>
 #include <cstdint>

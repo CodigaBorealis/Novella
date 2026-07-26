@@ -1,4 +1,4 @@
-#include "../Novella/Components/Primitives/Font.hpp"
+#include "Novella/Primitives/Font.hpp"
 #include <raylib.h>
 
 namespace Novella{

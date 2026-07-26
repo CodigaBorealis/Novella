@@ -1,6 +1,6 @@
 #pragma once
 #include "../../Core/Math/Vector2x.hpp"
-#include "../../Components/Primitives/Color.hpp"
+#include "../../Primitives/Color.hpp"
 #include <string>
 #include <vector>
 

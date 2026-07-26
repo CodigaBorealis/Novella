@@ -1,4 +1,4 @@
-#include "../Novella/Scripting/API/MathModule.hpp"
+#include "Novella/Scripting/API/MathModule.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>

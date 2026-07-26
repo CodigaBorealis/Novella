@@ -1,9 +1,9 @@
-#include "../Novella/Systems/Layout/LayoutSystem.hpp"
+#include "Novella/Systems/Layout/LayoutSystem.hpp"
 #include <algorithm>
 #include <raylib.h>
-#include "../Novella/Components/Traits/Layoutable.hpp"
-#include "../Novella/Scene/Scene.hpp"
-#include "../Novella/Components/Traits/Object.hpp"
+#include "Novella/Components/Traits/Layoutable.hpp"
+#include "Novella/Scene/Scene.hpp"
+#include "Novella/Components/Traits/Object.hpp"
 
 namespace Novella{
 

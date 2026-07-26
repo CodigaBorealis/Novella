@@ -1,4 +1,4 @@
-#include "../Novella/Scene/SceneWatcher.hpp"
+#include "Novella/Scene/SceneWatcher.hpp"
 #include <filesystem>
 
 namespace Novella {

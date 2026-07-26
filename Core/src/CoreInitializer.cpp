@@ -1,5 +1,5 @@
-#include "../Novella/Scripting/Interpreter/CoreInitializer.hpp"
-#include "../Novella/Scripting/API/API.hpp"
+#include "Novella/Scripting/Interpreter/CoreInitializer.hpp"
+#include "Novella/Scripting/API/API.hpp"
 
 namespace Novella::NScript::CoreInitializer{
 

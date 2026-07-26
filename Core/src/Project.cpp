@@ -1,7 +1,7 @@
-#include "../Novella/Project/Project.hpp"
-#include "../Novella/Project/Lexer.hpp"
-#include "../Novella/Project/Parser.hpp"
-#include "../Novella/Utils/FileSystem.hpp"
+#include "Novella/Project/Project.hpp"
+#include "Novella/Project/Lexer.hpp"
+#include "Novella/Project/Parser.hpp"
+#include "Novella/Utils/FileSystem.hpp"
 #include <stdexcept>
 
 namespace Novella::Project{

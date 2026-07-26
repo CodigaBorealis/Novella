@@ -1,5 +1,5 @@
-#include "../Novella/Scripting/API/FileSystemModule.hpp"
-#include "../Novella/Scripting/API/StringModule.hpp"
+#include "Novella/Scripting/API/FileSystemModule.hpp"
+#include "Novella/Scripting/API/StringModule.hpp"
 #include <filesystem>
 #include <stdexcept>
 #include <fstream>

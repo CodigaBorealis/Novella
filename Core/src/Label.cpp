@@ -1,5 +1,5 @@
-#include "../Novella/Components/UI/Label.hpp"
-#include "../Novella/Systems/Layout/LayoutSystem.hpp"
+#include "Novella/Components/UI/Label.hpp"
+#include "Novella/Systems/Layout/LayoutSystem.hpp"
 #include <libintl.h>
 #include <raylib.h>
 namespace Novella::UI{

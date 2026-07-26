@@ -1,8 +1,8 @@
-#include "../Novella/Scripting/API/TransformModule.hpp"
-#include "../Novella/Scene/SceneManager.hpp"
-#include "../Novella/Components/Traits/Layoutable.hpp"
-#include "../Novella/Scripting/API/DebugModule.hpp"
-#include "../Novella/Scripting/API/ObjectModule.hpp"
+#include "Novella/Scripting/API/TransformModule.hpp"
+#include "Novella/Scene/SceneManager.hpp"
+#include "Novella/Components/Traits/Layoutable.hpp"
+#include "Novella/Scripting/API/DebugModule.hpp"
+#include "Novella/Scripting/API/ObjectModule.hpp"
 #include <cmath>
 #include <cstdint>
 #include <limits>

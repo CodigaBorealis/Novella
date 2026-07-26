@@ -1,4 +1,4 @@
-#include "../Novella/Components/Primitives/Texture.hpp"
+#include "Novella/Primitives/Texture.hpp"
 #include <raylib.h>
 
 namespace Novella{

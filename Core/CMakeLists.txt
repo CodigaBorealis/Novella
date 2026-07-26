@@ -5,6 +5,7 @@ project(Novel LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
     #add_compile_options(-fsanitize=address)
 
@@ -93,5 +94,5 @@ target_link_libraries(Novella
 
 target_include_directories(Novella
     PRIVATE
-        ${CMAKE_SOURCE_DIR}/Include
+        ${CMAKE_SOURCE_DIR}
 )

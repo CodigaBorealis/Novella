@@ -1,10 +1,7 @@
-#include "../Novella/Scripting/API/RendererModule.hpp"
-#include "../Novella/Systems/Renderer/Renderer.hpp"
-#include "../Novella/Components/Primitives/Color.hpp"
-#include "../Novella/Scene/SceneManager.hpp"
-#include "../Novella/Components/Traits/Layoutable.hpp"
-#include "../Novella/Scripting/API/ObjectModule.hpp"
-#include "../Novella/Scripting/API/DebugModule.hpp"
+#include "Novella/Scripting/API/RendererModule.hpp"
+#include "Novella/Systems/Renderer/Renderer.hpp"
+#include "Novella/Primitives/Color.hpp"
+#include "Novella/Scene/SceneManager.hpp"
 
 namespace Novella::NScript::Modules::Renderer{
 

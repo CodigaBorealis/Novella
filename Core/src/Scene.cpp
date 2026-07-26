@@ -1,5 +1,5 @@
-#include "../Novella/Scene/Scene.hpp"
-#include "../Novella/Components/Traits/Object.hpp"
+#include "Novella/Scene/Scene.hpp"
+#include "Novella/Components/Traits/Object.hpp"
 #include <cstddef>
 #include <memory>
 #include <optional>

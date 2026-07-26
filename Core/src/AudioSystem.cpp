@@ -1,12 +1,12 @@
-#include "../Novella/Systems/Audio/AudioSystem.hpp"
+#include "Novella/Systems/Audio/AudioSystem.hpp"
 #include <memory>
 #include <raylib.h>
 #include <optional>
 #include <raylib.h>
 #include <string>
 #include <variant>
-#include "../Novella/Systems/Resources/AudioResource.hpp"
-#include "../Novella/Systems/Resources/ResourceManager.hpp"
+#include "Novella/Systems/Resources/AudioResource.hpp"
+#include "Novella/Systems/Resources/ResourceManager.hpp"
 
 namespace Novella{
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "../Primitives/Texture.hpp"
+#include "../../Primitives/Texture.hpp"
 namespace Novella::Traits{
 
     struct Texturable{

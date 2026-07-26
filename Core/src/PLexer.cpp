@@ -1,5 +1,5 @@
-#include "../Novella/Project/Lexer.hpp"
-#include "../Novella/Project/Token.hpp"
+#include "Novella/Project/Lexer.hpp"
+#include "Novella/Project/Token.hpp"
 #include <stdexcept>
 #include <string>
 

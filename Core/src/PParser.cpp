@@ -1,6 +1,6 @@
-#include "../Novella/Project/Parser.hpp"
-#include "../Novella/Project/Lexer.hpp"
-#include "../Novella/Project/EngineConfig.hpp"
+#include "Novella/Project/Parser.hpp"
+#include "Novella/Project/Lexer.hpp"
+#include "Novella/Project/EngineConfig.hpp"
 #include <stdexcept>
 #include <vector>
 namespace Novella::Project{

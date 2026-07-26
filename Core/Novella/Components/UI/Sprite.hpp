@@ -1,5 +1,5 @@
 #pragma once
-#include "../Primitives/Texture.hpp"
+#include "../../Primitives/Texture.hpp"
 #include "../Traits/Object.hpp"
 #include "../Traits/Widget.hpp"
 #include "../Traits/Texturable.hpp"

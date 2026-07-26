@@ -1,6 +1,6 @@
-#include "../Novella/Scripting/API/AudioModule.hpp"
-#include "../Novella/Scripting/API/DebugModule.hpp"
-#include "../Novella/Systems/Audio/AudioSystem.hpp"
+#include "Novella/Scripting/API/AudioModule.hpp"
+#include "Novella/Scripting/API/DebugModule.hpp"
+#include "Novella/Systems/Audio/AudioSystem.hpp"
 namespace Novella::NScript::Modules::Audio{
 
     void play(Runtime::Context& context, const std::string& id){

@@ -1,7 +1,7 @@
-#include "../Novella/Scripting/API/ObjectModule.hpp"
-#include "../Novella/Scene/SceneManager.hpp"
+#include "Novella/Scripting/API/ObjectModule.hpp"
+#include "Novella/Scene/SceneManager.hpp"
 #include <raylib.h>
-#include "../Novella/Scripting/API/DebugModule.hpp"
+#include "Novella/Scripting/API/DebugModule.hpp"
 
 namespace Novella::NScript::Modules::Object{
 

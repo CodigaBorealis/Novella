@@ -1,6 +1,6 @@
-#include "../Novella/Scene/Parser/Parser.hpp"
-#include "../Novella/Scene/Parser/Lexer.hpp"
-#include "../Novella/Scene/Parser/SceneDefinition.hpp"
+#include "Novella/Scene/Parser/Parser.hpp"
+#include "Novella/Scene/Parser/Lexer.hpp"
+#include "Novella/Scene/Parser/SceneDefinition.hpp"
 #include <cstddef>
 #include <stdexcept>
 #include <string>

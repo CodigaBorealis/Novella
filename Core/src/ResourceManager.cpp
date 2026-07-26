@@ -1,4 +1,4 @@
-#include "../Novella/Systems/Resources/ResourceManager.hpp"
+#include "Novella/Systems/Resources/ResourceManager.hpp"
 #include <cstddef>
 #include <filesystem>
 #include <memory>

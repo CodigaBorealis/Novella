@@ -1,5 +1,5 @@
-#include "../Novella/Components/UI/DialogueBox.hpp"
-#include "../Novella/Components/Gameplay/DialogueController.hpp"
+#include "Novella/Components/UI/DialogueBox.hpp"
+#include "Novella/Components/Gameplay/DialogueController.hpp"
 
 #include <string>
 

@@ -1,9 +1,9 @@
-#include "../Novella/Scene/SceneManager.hpp"
-#include "../Novella/Scene/Serialization/SceneLoader.hpp"
-#include "../Novella/Utils/FileSystem.hpp"
-#include "../Novella/Project/EngineConfig.hpp"
-#include "../Novella/Components/Traits/Object.hpp"//clangd swears this file is unused, it IS used
-#include "../Novella/Scripting/Interpreter/RuntimeContext.hpp"
+#include "Novella/Scene/SceneManager.hpp"
+#include "Novella/Scene/Serialization/SceneLoader.hpp"
+#include "Novella/Utils/FileSystem.hpp"
+#include "Novella/Project/EngineConfig.hpp"
+#include "Novella/Components/Traits/Object.hpp"//clangd swears this file is unused, it IS used
+#include "Novella/Scripting/Interpreter/RuntimeContext.hpp"
 #include <memory>
 #include <optional>
 #include <stdexcept>

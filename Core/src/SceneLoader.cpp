@@ -1,17 +1,17 @@
-#include "../Novella/Scene/Serialization/SceneLoader.hpp"
-#include "../Novella/Scene/Scene.hpp"//clangd swears this file is unused, it IS used
-#include "../Novella/Utils/FileSystem.hpp"
-#include "../Novella/Scene/Parser/Lexer.hpp"
-#include "../Novella/Scene/Parser/Parser.hpp"
+#include "Novella/Scene/Serialization/SceneLoader.hpp"
+#include "Novella/Scene/Scene.hpp"//clangd swears this file is unused, it IS used
+#include "Novella/Utils/FileSystem.hpp"
+#include "Novella/Scene/Parser/Lexer.hpp"
+#include "Novella/Scene/Parser/Parser.hpp"
 #include <filesystem>
 #include <stdexcept>
-#include "../Novella/Scene/Serialization/ComponentFactory.hpp"
-#include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
-#include "../Novella/Scripting/Parser/Script.hpp"
-#include "../Novella/Scripting/Interpreter/Interpreter.hpp"
-#include "../Novella/Systems/Resources/ResourceManager.hpp"
-#include "../Novella/Systems/Audio/AudioSystem.hpp"
-#include "../Novella/Scene/SceneManager.hpp"
+#include "Novella/Scene/Serialization/ComponentFactory.hpp"
+#include "Novella/Scripting/Interpreter/ScriptLoader.hpp"
+#include "Novella/Scripting/Parser/Script.hpp"
+#include "Novella/Scripting/Interpreter/Interpreter.hpp"
+#include "Novella/Systems/Resources/ResourceManager.hpp"
+#include "Novella/Systems/Audio/AudioSystem.hpp"
+#include "Novella/Scene/SceneManager.hpp"
 namespace Novella::NScene::Serialization{
 
 

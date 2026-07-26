@@ -1,4 +1,4 @@
-#include "../Novella/Utils/FileSystem.hpp"
+#include "Novella/Utils/FileSystem.hpp"
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>

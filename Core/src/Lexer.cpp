@@ -1,5 +1,5 @@
-#include "../Novella/Scene/Parser/Lexer.hpp"
-#include "../Novella/Scene/Parser/Token.hpp"
+#include "Novella/Scene/Parser/Lexer.hpp"
+#include "Novella/Scene/Parser/Token.hpp"
 #include <cctype>
 #include <stdexcept>
 #include <string>

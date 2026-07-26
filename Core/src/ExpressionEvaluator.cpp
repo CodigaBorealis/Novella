@@ -1,7 +1,7 @@
-#include "../Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
-#include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
-#include "../Novella/Scripting/Parser/Definition.hpp"
-#include "../Novella/Scripting/Interpreter/FunctionExecutor.hpp"
+#include "Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
+#include "Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
+#include "Novella/Scripting/Parser/Definition.hpp"
+#include "Novella/Scripting/Interpreter/FunctionExecutor.hpp"
 #include <cmath>
 #include <cstddef>
 #include <stdexcept>

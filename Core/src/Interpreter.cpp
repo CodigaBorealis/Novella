@@ -1,10 +1,10 @@
-#include "../Novella/Scripting/Interpreter/Interpreter.hpp"
-#include "../Novella/Scripting/Parser/Definition.hpp"
-#include "../Novella/Scripting/Interpreter/ScriptLoader.hpp"
-#include "../Novella/Scripting/Parser/Script.hpp"
-#include "../Novella/Scene/Parser/SceneDefinition.hpp"
-#include "../Novella/Core/Engine.hpp"
-#include "../Novella/Scripting/API/API.hpp"
+#include "Novella/Scripting/Interpreter/Interpreter.hpp"
+#include "Novella/Scripting/Parser/Definition.hpp"
+#include "Novella/Scripting/Interpreter/ScriptLoader.hpp"
+#include "Novella/Scripting/Parser/Script.hpp"
+#include "Novella/Scene/Parser/SceneDefinition.hpp"
+#include "Novella/Core/Engine.hpp"
+#include "Novella/Scripting/API/API.hpp"
 #include <stdexcept>
 namespace Novella::NScript::Runtime{
 

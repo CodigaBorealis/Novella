@@ -1,4 +1,4 @@
-#include "../Novella/Components/Primitives/Image.hpp"
+#include "Novella/Primitives/Image.hpp"
 #include <raylib.h>
 
 namespace Novella{

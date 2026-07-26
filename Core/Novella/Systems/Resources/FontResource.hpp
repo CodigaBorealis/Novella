@@ -1,6 +1,6 @@
 #pragma once
 #include <filesystem>
-#include "../../Components/Primitives/Font.hpp"
+#include "../../Primitives/Font.hpp"
 namespace Novella{
 
         struct FontResource{

@@ -1,4 +1,4 @@
-#include "../Novella/Scripting/API/DebugModule.hpp"
+#include "Novella/Scripting/API/DebugModule.hpp"
 #include <cstdlib>
 #include <iostream>
 

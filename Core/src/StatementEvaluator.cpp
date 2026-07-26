@@ -1,9 +1,9 @@
-#include "../Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
-#include "../Novella/Scripting/Interpreter/StatementEvaluator.hpp"
-#include "../Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
-#include "../Novella/Scene/SceneManager.hpp"
-#include "../Novella/Scripting/Parser/Definition.hpp"
-#include "../Novella/Scripting/Interpreter/ReturnException.hpp"
+#include "Novella/Scripting/Interpreter/ExpressionEvaluator.hpp"
+#include "Novella/Scripting/Interpreter/StatementEvaluator.hpp"
+#include "Novella/Scripting/Interpreter/RuntimeEnvironment.hpp"
+#include "Novella/Scene/SceneManager.hpp"
+#include "Novella/Scripting/Parser/Definition.hpp"
+#include "Novella/Scripting/Interpreter/ReturnException.hpp"
 #include <variant>
 #include <vector>
 
