@@ -212,6 +212,21 @@ namespace Novella::NScript::Runtime{
 
             return value;
 
+        }else if(auto functionCall = std::get_if<Parser::FunctionCallExpression>(unaryExpression.operand.get())){
+
+            Parser::Value value = evaluateFunctionCall(*functionCall);
+
+            if(unaryExpression.operation == Parser::Token::Type::Minus){
+
+                return applyMinus(value);
+            }
+
+            if(unaryExpression.operation == Parser::Token::Type::Not){
+
+                return applyNot(value);
+            }
+
+            throw std::runtime_error("Cannot apply ++ or -- to a function call result");
         }
         
         throw std::runtime_error("Invalid unary operand type" + std::to_string(static_cast<int>(unaryExpression.operation)));
