@@ -1,9 +1,7 @@
 #include "../Novella/Scripting/API/SceneModule.hpp"
 #include "../Novella/Scene/SceneManager.hpp"
-#include <cstddef>
-#include <stdexcept>
 #include <string>
-
+#include "../Novella/Systems/Audio/AudioSystem.hpp"
 namespace Novella::NScript::Modules::Scene{
 
     void load(Runtime::Context& context,const std::string& name){

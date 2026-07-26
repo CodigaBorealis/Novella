@@ -42,7 +42,10 @@ namespace Novella{
         
         while(displayWindow.isOpen()){
                         
-            if(sceneManager.requestedSwap()) sceneManager.loadSceneFromName(interpreter.runtimeContext());
+            if(sceneManager.requestedSwap()){
+                
+                sceneManager.loadSceneFromName(interpreter.runtimeContext());
+            } 
 
             if(sceneManager.modifiedSceneFile()){
 

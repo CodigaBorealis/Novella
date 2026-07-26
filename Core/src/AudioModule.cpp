@@ -4,8 +4,6 @@
 namespace Novella::NScript::Modules::Audio{
 
     void play(Runtime::Context& context, const std::string& id){
-
-        if(!isRegistered(context, id)) return;
     
         if(!getCurrentMusic(context).empty()) stopMusic(context);
 
@@ -14,8 +12,6 @@ namespace Novella::NScript::Modules::Audio{
 
     void stop(Runtime::Context &context, const std::string &id){
         
-        if(!isRegistered(context, id)) return;
-
         context.audio->stop(id);
     }
 
@@ -30,33 +26,21 @@ namespace Novella::NScript::Modules::Audio{
 
     void setVolume(Runtime::Context &context, const std::string &id, double value){
 
-        if(!isRegistered(context, id)){
-
-            return;
-        }
 
         context.audio->volume(id, static_cast<float>(value));
     }
 
     void setPitch(Runtime::Context& context, const std::string& id, double pitch){
         
-        if(!isRegistered(context, id)) return;
         
         context.audio->pitch(id, pitch);
     }
 
     void setPan(Runtime::Context& context, const std::string& id, double pan){
-
-        if(!isRegistered(context, id)) return;
         
         context.audio->pan(id, pan);
     }
-
-    bool isRegistered(Runtime::Context &context, const std::string &id){
-
-        return context.audio->isRegistered(id);
-    }
-
+    
     std::string getCurrentMusic(Runtime::Context &context){
 
         auto currentBGM = context.audio->getCurrentBGM();

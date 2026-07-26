@@ -1,27 +1,35 @@
 #pragma once
 #include <optional>
+#include <raylib.h>
+#include <vector>
 #include <string>
-#include "AudioBackend.hpp"
 
 namespace Novella{
-/**
- * @class AudioSystem
- * @brief Class responsable for coordinating the audio playback, DOES NOT play the audio, just forwards commands to SFMLAudioBackend
- */
-    class AudioSystem{
+    
+    class ResourceManager;
 
-        public:
+    class AudioResource;
+
+    struct Command;
+
+    class AudioSystem {
+
+        public: 
 
         AudioSystem() = delete;
 
         AudioSystem(ResourceManager& resources);
+        
+        AudioSystem(const AudioSystem&) = delete;
 
+        AudioSystem& operator=(const AudioSystem&) = delete;
+
+        AudioSystem(AudioSystem&&) = delete;
+        AudioSystem& operator=(AudioSystem&&) = delete;
+
+        
         ~AudioSystem();
-/**
- * @brief adds
- * @param name the alias
- * @param action the action struct to bind to.
- */        
+        
         void play(const std::string& name);
 
         void stop(const std::string& name);
@@ -31,21 +39,20 @@ namespace Novella{
         void pitch(const std::string& name, float pitch);
 
         void pan(const std::string& name, float pan);
-        
+
         void update();
-        
-        void clear();
-                
-        bool isRegistered(const std::string& name);
 
-        void reloadResources();
-
-        const std::optional<std::string> getCurrentBGM() const;
+        void execute(const std::vector<Command>& commands);
 
         float getMasterVolume() const;
 
-        private:
+        const std::optional<std::string> getCurrentBGM() const;
 
-        Audio::AudioBackend backend;
-    };
+        private:
+        
+        AudioResource* getResource(const std::string& name);
+
+        ResourceManager& resources;
+        std::optional<std::string> currentBGM;
+};
 }

@@ -21,6 +21,4 @@ namespace Novella::NScript::Modules::Audio{
         void setPan(Runtime::Context& context, const std::string& id, double pan);
 
         double getMasterVolume(Runtime::Context& context);
-
-        bool isRegistered(Runtime::Context& context, const std::string& id);
 }; 

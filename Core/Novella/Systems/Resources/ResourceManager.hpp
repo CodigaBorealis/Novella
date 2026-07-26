@@ -3,43 +3,16 @@
 #include <memory>
 #include <unordered_map>
 #include <filesystem>
-#include "../../Components/Primitives/Texture.hpp"
-#include "../../Components/Primitives/Image.hpp"
-#include "../../Components/Primitives/Font.hpp"
-
+#include "ImageResource.hpp"
+#include "AudioResource.hpp"
+#include "TextureResource.hpp"
+#include "FontResource.hpp"
 
 namespace Novella{
 
     class ResourceManager{
 
         public:
-
-        struct ImageResource{
-
-            std::filesystem::path src;
-            std::shared_ptr<Image> image;
-
-        };
-
-        struct TextureResource{
-
-            std::filesystem::path src;
-            std::shared_ptr<Texture> texture;
-
-        };
-
-        struct FontResource{
-            
-            std::filesystem::path src;
-            std::shared_ptr<Font> font;
-        };
-        
-        struct AudioResource{
-        
-            std::string name;
-            std::filesystem::path src;        
-            std::string type;
-        };
 
         ~ResourceManager();
         

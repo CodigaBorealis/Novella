@@ -70,7 +70,17 @@ namespace Novella{
 
         if(type != "sfx" && type != "music") throw std::runtime_error("Invalid audio resource type '" + type + "'");
 
-        AudioResource resource{name, src, type};
+        AudioResource resource{src};
+
+        if(type == "sfx"){
+
+            resource.data = std::make_unique<Sound>(src);
+
+
+        }else{
+
+            resource.data = std::make_unique<Music>(src);;
+        }
 
         soundResources.emplace(name, std::move(resource));
 
@@ -91,7 +101,7 @@ namespace Novella{
 
     }
 
-    const ResourceManager::AudioResource& ResourceManager::getAudio(const std::string& name) const{
+    const AudioResource& ResourceManager::getAudio(const std::string& name) const{
 
         if(!soundResources.contains(name)) throw std::runtime_error(name + " is not a registered audio resource");
 
@@ -113,42 +123,42 @@ namespace Novella{
         return imageResources.size() + textureResources.size() + fontResources.size() + soundResources.size();
     }
     
-    std::unordered_map<std::string, ResourceManager::ImageResource>& ResourceManager::images(){
+    std::unordered_map<std::string, ImageResource>& ResourceManager::images(){
 
         return imageResources;
     }
 
-    const std::unordered_map<std::string, ResourceManager::ImageResource>& ResourceManager::images() const{
+    const std::unordered_map<std::string, ImageResource>& ResourceManager::images() const{
 
         return imageResources;
     }
         
-    const std::unordered_map<std::string, ResourceManager::TextureResource>& ResourceManager::textures() const{
+    const std::unordered_map<std::string, TextureResource>& ResourceManager::textures() const{
 
         return textureResources;
     }
 
-    std::unordered_map<std::string, ResourceManager::TextureResource>& ResourceManager::textures(){
+    std::unordered_map<std::string, TextureResource>& ResourceManager::textures(){
 
         return textureResources;
     }
         
-    const std::unordered_map<std::string, ResourceManager::FontResource>& ResourceManager::fonts() const{
+    const std::unordered_map<std::string, FontResource>& ResourceManager::fonts() const{
 
         return fontResources;
     }
 
-    std::unordered_map<std::string, ResourceManager::FontResource>& ResourceManager::fonts(){
+    std::unordered_map<std::string, FontResource>& ResourceManager::fonts(){
 
         return fontResources;
     }
 
-    const std::unordered_map<std::string, ResourceManager::AudioResource>& ResourceManager::audio() const{
+    const std::unordered_map<std::string, AudioResource>& ResourceManager::audio() const{
 
         return soundResources;
     }
 
-    std::unordered_map<std::string, ResourceManager::AudioResource>& ResourceManager::audio(){
+    std::unordered_map<std::string, AudioResource>& ResourceManager::audio(){
 
         return soundResources;
     }

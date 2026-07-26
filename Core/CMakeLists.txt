@@ -21,11 +21,12 @@ add_executable(Novella
     src/Font.cpp
     src/Image.cpp
     src/Texture.cpp
-
+    src/Sound.cpp
+    src/Music.cpp
+    
     src/Renderer.cpp
     src/ResourceManager.cpp
 
-    src/AudioBackend.cpp
     src/AudioSystem.cpp
 
     src/Scene.cpp

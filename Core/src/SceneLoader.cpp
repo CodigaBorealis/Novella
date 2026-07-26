@@ -31,7 +31,6 @@ namespace Novella::NScene::Serialization{
 
     void Loader::build(NScript::Runtime::Context& context, const Parser::SceneDefinition& scene){
                 
-        context.audio->clear();
         context.resources->clear();
 
         context.scene->clear();
@@ -39,8 +38,6 @@ namespace Novella::NScene::Serialization{
         context.scene->createScene();
         
         loadResources(context, scene);
-
-        context.audio->reloadResources();
 
         loadObjects(context, scene);
 
