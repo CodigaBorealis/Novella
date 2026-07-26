@@ -7,13 +7,14 @@
 #include <variant>
 #include <vector>
 #include "../../Scene/Handle.hpp"
+#include <cstdint>
 
 template<class... Ts> struct overloaded : Ts...{using Ts::operator()...;};
 template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
 namespace Novella::NScript::Parser{
 
-    using PrimitiveValue = std::variant<std::monostate, std::string, double, bool, char, Handle>;
+    using PrimitiveValue = std::variant<std::monostate, std::string, double, int64_t, bool, Handle>;
 
     struct Value{
         

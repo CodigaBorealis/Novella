@@ -53,13 +53,7 @@ namespace Novella{
 
         T* getObject(const Handle& handle){
 
-            Traits::Object* obj = getObjectBase(handle);
-
-            if(!obj) return nullptr;
-
-            if(obj->getTypeID() != T::getStaticTypeID()) return nullptr;
-
-            return static_cast<T*>(obj);
+            return const_cast<T*>(std::as_const(*this).template getObject<T>(handle));
         }
 
         template <std::derived_from<Traits::Object> T>

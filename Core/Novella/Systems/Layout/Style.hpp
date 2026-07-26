@@ -3,7 +3,7 @@
 
 namespace Novella{
 
-    enum class Anchor : int{
+    enum class Anchor : short{
 
         TopLeft,
         TopCenter,
@@ -18,7 +18,7 @@ namespace Novella{
         BottomRight
         };
 
-        enum class SizeMode : int{
+        enum class SizeMode : short{
 
         Fixed,
         Percent,
@@ -34,8 +34,8 @@ namespace Novella{
         SizeMode widthMode = SizeMode::FitContent;
         SizeMode heightMode  = SizeMode::FitContent;
         
-        int width = 100;
-        int height = 100;
+        int32_t width = 100;
+        int32_t height = 100;
 
         float widthPercent = 100.0f;
         float heightPercent = 100.0f;
