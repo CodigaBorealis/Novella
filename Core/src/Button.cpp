@@ -11,4 +11,9 @@ namespace Novella::UI{
         if(!childAs<Sprite>("background")) throw std::runtime_error("Button requires a Sprite component with the role 'background'");
         
     }
+
+    void Button::handleEvent(const Event& event){
+
+
+    }
 }

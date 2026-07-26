@@ -4,12 +4,30 @@ namespace Novella::Traits{
 
     struct Interactable{
         
+        enum class EventType{
+
+            MouseDown,
+            MouseUp,
+            MouseMove,
+            MouseEnter,
+            MouseLeave,
+            KeyDown,
+            KeyUp,
+            FocusGained,
+            FocusLost
+
+        };
+
+        struct Event{
+
+            EventType type;
+
+            //std::variant<typename Types> specific types
+        };
+
         virtual ~Interactable() = default;
         
-        bool acceptsKeyboardInput() const {return listenInput;}
-        void setListenInput(bool value){listenInput = value;}
-        private:
+        virtual void handleEvent(const Event& event) = 0;
 
-        bool listenInput = true;
     };
 }

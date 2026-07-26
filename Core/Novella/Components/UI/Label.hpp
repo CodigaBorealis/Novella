@@ -1,15 +1,14 @@
 #pragma once
 #include "../Primitives/Font.hpp"
 #include "../Traits/Object.hpp"
-#include "../Traits/Renderable.hpp"
-#include "../Traits/Layoutable.hpp"
+#include "../Traits/Widget.hpp"
 #include "../Traits/Text.hpp"
 #include "../Traits/Primitive.hpp"
 #include "../Traits/Transformable.hpp"
 
 namespace Novella::UI{
 
-    class Label: public Traits::Primitive, public Traits::Renderable, public Traits::Layoutable, public Traits::Transformable, public Traits::Text, public Traits::RegisteredObject<Label>{
+    class Label: public Traits::Primitive, public Traits::Widget, public Traits::Transformable, public Traits::Text, public Traits::RegisteredObject<Label>{
 
         public:
 

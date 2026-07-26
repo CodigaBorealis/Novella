@@ -7,13 +7,13 @@
 
 namespace Novella::Generic{
  
-    class Widget : public Traits::Composite,public Traits::RegisteredObject<Widget>{
+    class UserWidget : public Traits::Composite,public Traits::RegisteredObject<UserWidget>{
 
         public:
         
         std::unique_ptr<Traits::Object> create(NScript::Runtime::Context& context, const NScene::Parser::ObjectDefinition&);
 
-        Widget() = default;
+        UserWidget() = default;
 
     };
 }

@@ -1,14 +1,13 @@
 #pragma once
 #include "Object.hpp"
-#include "Renderable.hpp"
-#include "Layoutable.hpp"
+#include "Widget.hpp"
 #include <memory>
 #include <unordered_map>
 #include <utility>
 
 namespace Novella::Traits{
 
-    struct Composite : Traits::Renderable, public Traits::Layoutable{
+    struct Composite : public Widget{
 
         template<class T>
 

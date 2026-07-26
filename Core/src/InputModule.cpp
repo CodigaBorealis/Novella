@@ -2,7 +2,7 @@
 #include "../Novella/Scripting/API/DebugModule.hpp"
 #include "../Novella/Systems/Input/InputSystem.hpp"
 #include "../Novella/Components/Traits/Layoutable.hpp"
-#include "../Novella/Components/Traits/Clickable.hpp"
+#include "../Novella/Components/Traits/Interactable.hpp"
 #include "../Novella/Windowing/Window.hpp"
 #include "../Novella/Scene/SceneManager.hpp"
 #include "../Novella/Utils/String.hpp"
@@ -130,7 +130,7 @@ namespace Novella::NScript::Modules::Input{
             return false;
         }
         
-        auto* clickable = currentScene->getInterface<Traits::Clickable>(handle);
+        auto* clickable = currentScene->getInterface<Traits::Interactable>(handle);
 
         if(!clickable) return false;
 

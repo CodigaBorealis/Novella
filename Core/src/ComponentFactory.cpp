@@ -30,7 +30,7 @@ namespace Novella::NScene::Serialization{
 
         }else{
 
-            object = std::make_unique<Generic::Widget>();
+            object = std::make_unique<Generic::UserWidget>();
 
         }
 
