@@ -5,7 +5,7 @@
 namespace Novella::NScript::Parser{
     
     using Expression = std::variant<LiteralExpression, VariableExpression, FunctionCallExpression,
-    UnaryExpression, BinaryExpression, AssignmentExpression, ArrayExpression, MemberExpression, IndexExpression,
+    UnaryExpression, BinaryExpression, AssignmentExpression, ArrayExpression, IndexExpression,
     PostFixExpression>;
 
     struct ImportStatement{

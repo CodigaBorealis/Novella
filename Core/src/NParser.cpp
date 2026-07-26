@@ -68,11 +68,6 @@ namespace Novella::NScript::Parser{
 
             Expression operand = parseUnary();
             
-            if(!std::holds_alternative<VariableExpression>(operand) && !std::holds_alternative<MemberExpression>(operand) && !std::holds_alternative<IndexExpression>(operand)){
-
-                throw std::runtime_error("Invalid '++' operand at " + std::to_string(position) + " Token: " + current().text);
-            }
-            
             UnaryExpression unary{};
 
             unary.operand = std::make_unique<Expression>(std::move(operand));
@@ -86,12 +81,7 @@ namespace Novella::NScript::Parser{
             consume();
 
             Expression operand = parseUnary();
-            
-            if(!std::holds_alternative<VariableExpression>(operand) && !std::holds_alternative<MemberExpression>(operand) && !std::holds_alternative<IndexExpression>(operand)){
-
-                throw std::runtime_error("Invalid '--' operand at " + std::to_string(position) + " Token: " + current().text);
-            }
-            
+        
             UnaryExpression unary{};
 
             unary.operand = std::make_unique<Expression>(std::move(operand));
@@ -331,11 +321,6 @@ namespace Novella::NScript::Parser{
 
         if(current().type == Token::Type::Assign){
 
-            if(!std::holds_alternative<VariableExpression>(left) && !std::holds_alternative<MemberExpression>(left) && !std::holds_alternative<IndexExpression>(left)){
-
-                throw std::runtime_error("Invalid assigment target at " + std::to_string(position) + " Token: " + current().text);
-            }
-
             consume();
 
             Expression value = parseAssignment();
@@ -479,8 +464,6 @@ namespace Novella::NScript::Parser{
         
     }
 //This is hell
-//Never remove memberExpression
-//It was originally intended for user modules, but the engine API relies on using the dot operator
 
     Expression Parser::parsePostFix(){
 
@@ -488,40 +471,13 @@ namespace Novella::NScript::Parser{
 
         while(true){
 
-            if(current().type == Token::Type::Dot){
-
-                consume();
-
-                std::string member = current().text;
-                
-                expect(Token::Type::Identifier);
-
-                MemberExpression access{};
-
-                access.object = std::make_unique<Expression>(std::move(expression));
-
-                access.member = member;
-
-                expression = std::move(access);
-
-            }else if(current().type == Token::Type::LParen){
+            if(current().type == Token::Type::LParen){
 
                 FunctionCallExpression call{};
 
                 if(auto variableExpression = std::get_if<VariableExpression>(&expression)){
 
                     call.functionName = variableExpression->name;
-
-                }else if(auto memberExpression = std::get_if<MemberExpression>(&expression)){
-
-                    if(auto objectVariable = std::get_if<VariableExpression>(memberExpression->object.get())){
-
-                        call.functionName = objectVariable->name + "." + memberExpression->member;
-
-                    }else{
-
-                        call.functionName = memberExpression->member;
-                    }
                 }
 
                 call.answer = std::make_unique<Expression>(std::move(expression));
@@ -563,11 +519,6 @@ namespace Novella::NScript::Parser{
 
                 consume();
 
-                if(!std::holds_alternative<VariableExpression>(expression) && !std::holds_alternative<MemberExpression>(expression) && !std::holds_alternative<IndexExpression>(expression)){
-
-                    throw std::runtime_error("Invalid '++' operand at " + std::to_string(position) + " Token: " + current().text);
-                }
-
                 PostFixExpression postFix{};
 
                 postFix.operand = std::make_unique<Expression>(std::move(expression));
@@ -579,11 +530,6 @@ namespace Novella::NScript::Parser{
             }else if(current().type == Token::Type::Decrement){
 
                 consume();
-                
-                if(!std::holds_alternative<VariableExpression>(expression) && !std::holds_alternative<MemberExpression>(expression) && !std::holds_alternative<IndexExpression>(expression)){
-
-                    throw std::runtime_error("Invalid '++' operand at " + std::to_string(position) + " Token: " + current().text);
-                }
 
                 PostFixExpression postFix{};
 

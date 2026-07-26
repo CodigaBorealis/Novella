@@ -75,16 +75,6 @@ namespace Novella::NScript::Runtime{
 
                 targetName = variableExpression->name;
 
-            }else if(auto memberExpression = std::get_if<Parser::MemberExpression>(call.answer.get())){
-
-                if(auto objectVar = std::get_if<Parser::VariableExpression>(memberExpression->object.get())){
-
-                    targetName = objectVar->name;
-
-                }else{
-
-                    targetName = memberExpression->member;
-                }
             }
         }
 
@@ -215,16 +205,6 @@ namespace Novella::NScript::Runtime{
         }else if(auto literal = std::get_if<Parser::LiteralExpression>(unaryExpression.operand.get())){
 
             Parser::Value value = evaluateLiteral(*literal);
-
-            if(unaryExpression.operation == Parser::Token::Type::Minus) return applyMinus(value);
-
-            if(unaryExpression.operation == Parser::Token::Type::Not) return applyNot(value);
-
-            return value;
-
-        }else if(auto memberExpression = std::get_if<Parser::FunctionCallExpression>(unaryExpression.operand.get())){
-
-            Parser::Value value = evaluate(*memberExpression);
 
             if(unaryExpression.operation == Parser::Token::Type::Minus) return applyMinus(value);
 

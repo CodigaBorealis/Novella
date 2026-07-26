@@ -129,12 +129,6 @@ namespace Novella::NScript::Parser{
 
                 return {Token::Type::SemiColon, ";"};
 
-            case '.':
-
-                advance();
-
-                return{Token::Type::Dot, "."};
-
             case '[':
 
                 advance();

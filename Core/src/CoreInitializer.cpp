@@ -5,7 +5,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerWindow(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Window.";
+        const std::string prefix = "Window";
 
         runtime.registerNativeFunction(prefix + "setTitle", Modules::Window::setTitle);
 
@@ -39,14 +39,14 @@ namespace Novella::NScript::CoreInitializer{
     
     void registerRenderer(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Renderer.";
+        const std::string prefix = "Renderer";
         runtime.registerNativeFunction(prefix + "setBackgroundColor", Modules::Renderer::setBackgroundColor);
 
     }
 
     void registerAudio(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Audio.";
+        const std::string prefix = "Audio";
 
         runtime.registerNativeFunction(prefix + "play", Modules::Audio::play);
         runtime.registerNativeFunction(prefix + "stop", Modules::Audio::stop);
@@ -62,7 +62,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerScene(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Scene.";
+        const std::string prefix = "Scene";
 
         runtime.registerNativeFunction(prefix + "load", Modules::Scene::load);
         runtime.registerNativeFunction(prefix + "reload", Modules::Scene::reload);
@@ -71,7 +71,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerLogger(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Console.";
+        const std::string prefix = "Console";
 
         runtime.registerNativeFunction(prefix + "print", Modules::Debug::print);
         runtime.registerNativeFunction(prefix + "clear", Modules::Debug::clear);
@@ -79,7 +79,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerMath(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Math.";
+        const std::string prefix = "Math";
 
         runtime.registerNativeFunction(prefix + "clamp", Modules::Math::clamp);
         runtime.registerNativeFunction(prefix + "sqrt", Modules::Math::squareRoot);
@@ -115,7 +115,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerString(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "String.";
+        const std::string prefix = "String";
 
         runtime.registerNativeFunction(prefix + "numberToString", Modules::String::numberToString);
         runtime.registerNativeFunction(prefix + "boolToString", Modules::String::boolToString);
@@ -148,7 +148,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerFilesystem(Runtime::RuntimeEnvironment &runtime){
 
-        const std::string prefix = "FileSystem.";
+        const std::string prefix = "FileSystem";
 
         runtime.registerNativeFunction(prefix + "createFile", Modules::FileSystem::createFile);
         runtime.registerNativeFunction(prefix + "deleteFile", Modules::FileSystem::removeFile);
@@ -159,7 +159,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerInput(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Input.";
+        const std::string prefix = "Input";
 
         runtime.registerNativeFunction(prefix + "setCursor", Modules::Input::setCursorType);
         runtime.registerNativeFunction(prefix + "setCursorVisible", Modules::Input::setCursorVisible);
@@ -185,7 +185,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerRandomModule(Runtime::RuntimeEnvironment &runtime){
 
-        const std::string prefix = "Random.";
+        const std::string prefix = "Random";
 
         runtime.registerNativeFunction(prefix + "int", Modules::Random::randomInt);
         runtime.registerNativeFunction(prefix + "float", Modules::Random::randomFloat);
@@ -197,7 +197,7 @@ namespace Novella::NScript::CoreInitializer{
     
     void registerTransform(Runtime::RuntimeEnvironment& runtime){
         
-        const std::string prefix = "Transform.";
+        const std::string prefix = "Transform";
 
         runtime.registerNativeFunction(prefix + "setRotation", Modules::Transform::setRotation);
         runtime.registerNativeFunction(prefix + "rotate", Modules::Transform::rotate);
@@ -215,7 +215,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerSpriteModule(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Sprite.";
+        const std::string prefix = "Sprite";
     
         runtime.registerNativeFunction(prefix + "setTexture", Modules::Sprite::setTexture);
         runtime.registerNativeFunction(prefix + "setColor", Modules::Sprite::setTint);  
@@ -224,7 +224,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerTextModule(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Label.";
+        const std::string prefix = "Label";
 
         runtime.registerNativeFunction(prefix + "setText", Modules::Text::setText);
         runtime.registerNativeFunction(prefix + "text", Modules::Text::getText);
@@ -239,7 +239,7 @@ namespace Novella::NScript::CoreInitializer{
     
     void registerUIModule(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "UI.";
+        const std::string prefix = "UI";
 
         runtime.registerNativeFunction(prefix + "createLabel", Modules::UI::createLabel);
         runtime.registerNativeFunction(prefix + "createButton", Modules::UI::createButton);
@@ -250,7 +250,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerObjectModule(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Object.";
+        const std::string prefix = "Object";
 
         runtime.registerNativeFunction(prefix + "get", Modules::Object::get);
         runtime.registerNativeFunction(prefix + "destroy", Modules::Object::destroy);
@@ -261,7 +261,7 @@ namespace Novella::NScript::CoreInitializer{
 
     void registerLayoutModule(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "Layout.";
+        const std::string prefix = "Layout";
 
         runtime.registerNativeFunction(prefix + "setWidth", Modules::Layout::setWidth);
         runtime.registerNativeFunction(prefix + "setHeight", Modules::Layout::setHeight);
@@ -275,7 +275,7 @@ namespace Novella::NScript::CoreInitializer{
     #ifdef _WIN32
     void registerOS(Runtime::RuntimeEnvironment& runtime){
         
-        const std::string prefix = "OS.";
+        const std::string prefix = "OS";
         runtime.registerNativeFunction(prefix + "user", Modules::Win32::getUserEnv);
     }
     #endif
@@ -283,7 +283,7 @@ namespace Novella::NScript::CoreInitializer{
     #ifdef __linux__
     void registerOS(Runtime::RuntimeEnvironment& runtime){
 
-        const std::string prefix = "OS.";
+        const std::string prefix = "OS";
 
         runtime.registerNativeFunction(prefix + "user", Modules::Linux::getUserEnv);
 

@@ -83,12 +83,6 @@ namespace Novella::NScript::Parser{
         std::vector<Expression> elements;
     };
 
-    struct MemberExpression{
-
-        std::shared_ptr<Expression> object;
-        std::string member;
-    };
-
     struct IndexExpression{
 
         std::shared_ptr<Expression> object;

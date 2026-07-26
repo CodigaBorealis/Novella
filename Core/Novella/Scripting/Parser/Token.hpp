@@ -59,8 +59,6 @@ namespace Novella::NScript::Parser{
             Comma,
             SemiColon,
             Colon,
-            Dot,
-
 
             EndOfFile
         };
