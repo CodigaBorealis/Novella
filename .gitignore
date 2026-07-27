@@ -13,4 +13,4 @@ Makefile
 *.dylib
 *.exe
 Core/Test/
-Core/test/
+Core/test/*

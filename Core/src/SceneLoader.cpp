@@ -12,6 +12,8 @@
 #include "Novella/Systems/Resources/ResourceManager.hpp"
 #include "Novella/Systems/Audio/AudioSystem.hpp"
 #include "Novella/Scene/SceneManager.hpp"
+#include "Novella/Scene/Serialization/ResourceType.hpp"
+
 namespace Novella::NScene::Serialization{
 
 
@@ -53,19 +55,19 @@ namespace Novella::NScene::Serialization{
 
             const std::filesystem::path relativePath = context.projectRoot / resource.path;
 
-            if(resource.type == "texture"){
+            if(resource.type == ResourceType::TEXTURE){
 
                 context.resources->loadTexture(resource.name, relativePath);
 
-            }else if (resource.type == "font"){
+            }else if (resource.type == ResourceType::FONT){
 
                 context.resources->loadFont(resource.name, relativePath);
             
-            }else if(resource.type == "music"){
+            }else if(resource.type == ResourceType::MUSIC){
 
                 context.resources->loadAudio(resource.name, relativePath, "music");
 
-            }else if(resource.type == "sfx"){
+            }else if(resource.type == ResourceType::SFX){
 
                 context.resources->loadAudio(resource.name, relativePath, "sfx");
 

@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <memory>
 #include <stdexcept>
+#include "Novella/Scene/Serialization/ResourceType.hpp"
 
 namespace Novella{
 
@@ -68,7 +69,7 @@ namespace Novella{
 
         if(soundResources.contains(name)) throw std::runtime_error("There is already an audio resource with this name: " + name);
 
-        if(type != "sfx" && type != "music") throw std::runtime_error("Invalid audio resource type '" + type + "'");
+        if(type != NScene::Serialization::ResourceType::SFX && type != NScene::Serialization::ResourceType::MUSIC) throw std::runtime_error("Invalid audio resource type '" + type + "'");
 
         AudioResource resource{src};
 

@@ -25,7 +25,7 @@ namespace Novella::NScene::Serialization{
         private:
         
         ComponentFactory factory;
-        
+
         void build(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
 
         void loadResources(NScript::Runtime::Context& context, const NScene::Parser::SceneDefinition& scene);
